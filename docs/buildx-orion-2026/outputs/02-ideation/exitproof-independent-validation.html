@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>EXITPROOF Independent Validation</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">EXITPROOF Independent Validation</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#independent-validation-exitproof"
+id="toc-independent-validation-exitproof">Independent Validation —
+EXITPROOF</a>
+<ul>
+<li><a href="#executive-conclusion"
+id="toc-executive-conclusion">Executive conclusion</a></li>
+<li><a href="#validation-scorecard"
+id="toc-validation-scorecard">Validation scorecard</a></li>
+<li><a href="#is-the-problem-real" id="toc-is-the-problem-real">1. Is
+the problem real?</a></li>
+<li><a href="#does-the-mechanism-address-the-problem"
+id="toc-does-the-mechanism-address-the-problem">2. Does the mechanism
+address the problem?</a>
+<ul>
+<li><a href="#exit-liquidity" id="toc-exit-liquidity">Exit
+liquidity</a></li>
+<li><a href="#backing-redemption" id="toc-backing-redemption">Backing
+redemption</a></li>
+<li><a href="#plain-answer" id="toc-plain-answer">Plain answer</a></li>
+</ul></li>
+<li><a href="#does-it-need-ai-and-does-it-need-a-chain"
+id="toc-does-it-need-ai-and-does-it-need-a-chain">3. Does it need AI,
+and does it need a chain?</a>
+<ul>
+<li><a href="#ai" id="toc-ai">AI</a></li>
+<li><a href="#chain" id="toc-chain">Chain</a></li>
+</ul></li>
+<li><a href="#novelty-against-the-242-row-corpus-and-live-agents"
+id="toc-novelty-against-the-242-row-corpus-and-live-agents">4. Novelty
+against the 242-row corpus and live agents</a>
+<ul>
+<li><a href="#corpus-verification" id="toc-corpus-verification">Corpus
+verification</a></li>
+<li><a href="#what-is-genuinely-absent-from-the-checked-corpus"
+id="toc-what-is-genuinely-absent-from-the-checked-corpus">What is
+genuinely absent from the checked corpus</a></li>
+<li><a href="#what-merely-appears-absent-or-is-already-live-elsewhere"
+id="toc-what-merely-appears-absent-or-is-already-live-elsewhere">What
+merely appears absent or is already live elsewhere</a></li>
+<li><a href="#solana-specific-check-required-by-the-validation-skill"
+id="toc-solana-specific-check-required-by-the-validation-skill">Solana-specific
+check required by the validation skill</a></li>
+</ul></li>
+<li><a href="#does-it-create-a-market-with-no-demonstrated-demand"
+id="toc-does-it-create-a-market-with-no-demonstrated-demand">5. Does it
+create a market with no demonstrated demand?</a></li>
+<li><a href="#feasibility-for-one-person-by-2026-08-21-and-2026-09-02"
+id="toc-feasibility-for-one-person-by-2026-08-21-and-2026-09-02">6.
+Feasibility for one person by 2026-08-21 and 2026-09-02</a></li>
+<li><a href="#strongest-case-against-building-it"
+id="toc-strongest-case-against-building-it">7. Strongest case against
+building it</a></li>
+<li><a href="#verdict" id="toc-verdict">8. Verdict</a>
+<ul>
+<li><a href="#modify" id="toc-modify">MODIFY</a></li>
+<li><a href="#integration-first-assessment"
+id="toc-integration-first-assessment">Integration-first
+assessment</a></li>
+</ul></li>
+<li><a href="#what-would-change-the-verdict"
+id="toc-what-would-change-the-verdict">9. What would change the
+verdict?</a></li>
+<li><a href="#brief-audit-leading-structure-and-factual-corrections"
+id="toc-brief-audit-leading-structure-and-factual-corrections">Brief-audit:
+leading structure and factual corrections</a></li>
+<li><a href="#reproduction-log" id="toc-reproduction-log">Reproduction
+log</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="independent-validation-exitproof">Independent Validation —
+EXITPROOF</h1>
+<p><strong>Fact — validation date:</strong> 2026-08-16.
+<strong>Inference — verdict:</strong> <strong>MODIFY</strong>, with
+<strong>0.82</strong> confidence.</p>
+<h2 id="executive-conclusion">Executive conclusion</h2>
+<ul>
+<li><strong>Fact — checked demand evidence:</strong> Aave risk
+discussions explicitly use market depth and slippage to set collateral
+parameters, and a 2026 Aave assessment says redemption-liquidity
+concerns contributed to an earlier recommendation against listing
+USDai/sUSDai. Sources: <a
+href="https://governance.aave.com/t/arc-gauntlet-asset-listing-framework-market-risk-and-community-consensus-check/9277">Gauntlet
+asset-listing framework</a>, <a
+href="https://governance.aave.com/t/arfc-onboard-usdai-susdai-to-aave-v3-arbitrum-instance/23260/7">Chaos
+Labs USDai/sUSDai assessment</a>.</li>
+<li><strong>Inference — one phrase:</strong> The underlying problem is
+real because collateral protocols make parameter and listing decisions
+from exit and redemption evidence.</li>
+<li><strong>Fact — checked demand limit:</strong> No source checked
+shows an X Layer protocol requesting EXITPROOF, agreeing to consume its
+registry, or specifying a score schema.</li>
+<li><strong>Inference — one phrase:</strong> “Risk analysis is
+purchased” is supported; “this score will be integrated” is not.</li>
+<li><strong>Fact — checked substitution evidence:</strong> Pharos
+already publishes stablecoin scores with a dedicated Exit pillar,
+reviewed redemption routes, executable-capacity fields, DEX context,
+eligibility, delay, confidence, and a public API. Sources: <a
+href="https://pharos.watch/methodology/">Pharos methodology</a>, <a
+href="https://pharos.watch/docs/api-reference/">Pharos API
+reference</a>.</li>
+<li><strong>Fact — checked substitution evidence:</strong> Birdeye
+documents a position-independent exit-liquidity API, and live X Layer
+agents Phylax and Sentinel advertise xStocks liquidity/execution checks
+and position-sized real exit cost respectively. Sources: <a
+href="https://bds-support.birdeye.so/hc/en-us/articles/47859371294233-Exit-Liquidity-Understanding-and-Implementing-Birdeye-s-Exit-Liquidity-API">Birdeye
+Exit Liquidity API</a>; reproduce the agent results with
+<code>onchainos agent search --query xStocks</code> and
+<code>onchainos agent search --query 'portfolio risk'</code> using CLI
+v4.4.2.</li>
+<li><strong>Inference — one phrase:</strong> EXITPROOF’s public-state
+score, API, MCP surface, and contract-readable risk-object pattern are
+not novel enough to carry the project.</li>
+<li><strong>Fact — checked novelty limit:</strong> None of the 242
+corpus rows checked describes scheduled real issuer-redemption probes
+that publish latency, realized size, and failure receipts.</li>
+<li><strong>Inference — one phrase:</strong> The executed-probe layer is
+the clearest differentiation, but corpus absence is not proof of global
+novelty.</li>
+<li><strong>Fact — checked feasibility conflict:</strong> xStocks
+documentation now says direct redemption requires issuer onboarding,
+KYC/AML, wallet whitelisting, a <strong>$5,000 minimum</strong>, and
+normally operates 24/5. Sources: <a
+href="https://docs.xstocks.fi/docs/issuance-and-redemption">xStocks
+issuance and redemption</a>, <a
+href="https://docs.xstocks.fi/docs/frequently-asked-questions">xStocks
+FAQ</a>.</li>
+<li><strong>Inference — one phrase:</strong> The distinct layer cannot
+credibly be built or demonstrated by one unfunded builder before August
+21.</li>
+<li><strong>Inference — verdict:</strong> Do not build EXITPROOF as a
+universal score, probe network, reconciliation engine, registry, and
+bonded challenge market. Build a narrow <strong>X Layer xStock Exit
+Certificate</strong> that reports position-sized executable DEX evidence
+and cited issuer-policy facts without claiming to prove backing
+redemption or stress capacity.</li>
+</ul>
+<h2 id="validation-scorecard">Validation scorecard</h2>
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 40%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr>
+<th>Dimension</th>
+<th style="text-align: right;">Result</th>
+<th>Claim type and basis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Demand evidence</td>
+<td style="text-align: right;">Moderate — 2/3</td>
+<td><strong>Fact:</strong> Aave decisions use liquidity and redemption
+analysis; <strong>Inference:</strong> no demand is shown for this exact
+product.</td>
+</tr>
+<tr>
+<td>Competition</td>
+<td style="text-align: right;">Crowded components; sparse exact
+bundle</td>
+<td><strong>Fact:</strong> Pharos, Birdeye, Chainlink PoR, Particula,
+Phylax, and Sentinel cover major components; <strong>Inference:</strong>
+scheduled executed probes remain differentiated.</td>
+</tr>
+<tr>
+<td>Technical feasibility</td>
+<td style="text-align: right;">Full scope not feasible by Aug 21</td>
+<td><strong>Fact:</strong> mandatory mainnet deployment is due August
+21; <strong>Inference:</strong> issuer access and calibrated scoring
+require weeks or months.</td>
+</tr>
+<tr>
+<td>Narrow MVP</td>
+<td style="text-align: right;">4–6 days</td>
+<td><strong>Inference:</strong> one asset family, quote curves,
+citations, API/MCP, and a minimal registry can fit if deployment funding
+and accounts are ready.</td>
+</tr>
+<tr>
+<td>Founder fit</td>
+<td style="text-align: right;">2/3</td>
+<td><strong>Fact:</strong> the brief reports a Uniswap v4 hook prize;
+<strong>Inference:</strong> that supports DEX work but not issuer
+onboarding, RWA legal analysis, or oracle governance.</td>
+</tr>
+<tr>
+<td>MVP speed</td>
+<td style="text-align: right;">1/3</td>
+<td><strong>Inference:</strong> the full mechanism is several products,
+and the source tree has no implementation.</td>
+</tr>
+<tr>
+<td>Distribution clarity</td>
+<td style="text-align: right;">1/3</td>
+<td><strong>Fact:</strong> no integration or design partner is
+named.</td>
+</tr>
+<tr>
+<td>Market pull</td>
+<td style="text-align: right;">2/3</td>
+<td><strong>Fact:</strong> adjacent risk work affects protocol decisions
+and has downstream use; <strong>Inference:</strong> pull for EXITPROOF
+remains untested.</td>
+</tr>
+<tr>
+<td>Revenue path</td>
+<td style="text-align: right;">1/3</td>
+<td><strong>Fact:</strong> no buyer, price, budget, or contract is
+shown.</td>
+</tr>
+<tr>
+<td>Overall</td>
+<td style="text-align: right;"><strong>7/15 — pivot/modify</strong></td>
+<td><strong>Inference:</strong> below the skill’s 8/15 go
+threshold.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="is-the-problem-real">1. Is the problem real?</h2>
+<ul>
+<li><strong>Fact — checked:</strong> Gauntlet’s Aave listing framework
+records community questions including how much liquidity an asset needs,
+what initial parameters it should have, and how to protect the protocol
+from insolvency. Source: <a
+href="https://governance.aave.com/t/arc-gauntlet-asset-listing-framework-market-risk-and-community-consensus-check/9277">Aave/Gauntlet
+framework</a>.</li>
+<li><strong>Fact — checked:</strong> Chaos Labs’ 2026 USDai/sUSDai
+review says an earlier recommendation against listing was driven partly
+by redemption-liquidity risk, and the later conditional support followed
+changes including a liquidity buffer and utilization constraint. Source:
+<a
+href="https://governance.aave.com/t/arfc-onboard-usdai-susdai-to-aave-v3-arbitrum-instance/23260/7">Aave
+USDai/sUSDai review</a>.</li>
+<li><strong>Fact — checked:</strong> Aave’s current risk-provider
+proposal describes dedicated RWA simulation for settlement friction and
+redemption-buffer depletion, plus real-time risk dashboards. Source: <a
+href="https://governance.aave.com/t/arfc-renew-llamarisk-as-risk-service-provider-epoch-4/24446">LlamaRisk
+renewal proposal</a>.</li>
+<li><strong>Fact — checked:</strong> Yeelds displays Pharos stablecoin
+safety as a distinct third-party risk signal on a live vault page.
+Source: <a
+href="https://www.yeelds.ai/pool/2e53bb82-f13f-4157-a3bf-b1a91b94b6a4">Yeelds
+vault risk page</a>.</li>
+<li><strong>Inference — one phrase:</strong> These are concrete users
+and workflows for exit-risk information, not merely proof that
+information is missing.</li>
+<li><strong>Fact — checked:</strong> No checked source identifies an X
+Layer lending market currently waiting for an xStock exit score.</li>
+<li><strong>Fact — checked:</strong> Direct
+<code>getReservesList()</code> against Aave V3 Pool
+<code>0xE3F3...f116</code> on X Layer returned nine assets and none of
+the eleven xStock addresses in the brief. Reproduce with
+<code>cast call 0xE3F3Caefdd7180F884c01E57f65Df979Af84f116 'getReservesList()(address[])' --rpc-url https://rpc.xlayer.tech</code>.</li>
+<li><strong>Inference — one phrase:</strong> The broad problem is real,
+but the claimed first customer on the target chain is hypothetical.</li>
+</ul>
+<p><strong>Inference — rubric score:</strong> Demand is <strong>2/3
+(moderate)</strong>.</p>
+<ul>
+<li><strong>Inference — rubric application:</strong> There is at least
+one strong signal because redemption risk changed a real listing
+recommendation, plus several adjacent product and integration
+signals.</li>
+<li><strong>Inference — rubric limit:</strong> There is no signed design
+partner, requested integration, manual workaround from an X Layer user,
+or willingness-to-pay evidence for EXITPROOF itself.</li>
+</ul>
+<h2 id="does-the-mechanism-address-the-problem">2. Does the mechanism
+address the problem?</h2>
+<h3 id="exit-liquidity">Exit liquidity</h3>
+<ul>
+<li><strong>Fact — checked:</strong> Birdeye defines exit liquidity as
+the value that can be sold before crossing a material slippage
+threshold; it distinguishes that from headline pool liquidity. Source:
+<a
+href="https://bds-support.birdeye.so/hc/en-us/articles/47859371294233-Exit-Liquidity-Understanding-and-Implementing-Birdeye-s-Exit-Liquidity-API">Birdeye
+documentation</a>.</li>
+<li><strong>Inference — one phrase:</strong> Raw pool depth normalized
+by market cap or supply does not answer what a specific holder can sell
+at a specified slippage.</li>
+<li><strong>Inference — one phrase:</strong> An exit measurement must be
+a notional-by-notional route curve with block number, timestamp, route,
+output asset, market-hours state, fees, price impact, and executable
+minimum output.</li>
+<li><strong>Fact — checked:</strong> The X Layer Aave reserve list
+contains no xStock token.</li>
+<li><strong>Inference — one phrase:</strong> Aave’s available stablecoin
+liquidity is not an xStock exit route and should not be blended into an
+xStock score.</li>
+<li><strong>Inference — conclusion:</strong> The public-state layer
+addresses exit liquidity only after replacing generic ratios with
+position-sized route simulation or quotes.</li>
+</ul>
+<h3 id="backing-redemption">Backing redemption</h3>
+<ul>
+<li><strong>Fact — checked:</strong> xStocks now publishes that retail
+users may redeem directly subject to KYC and a $5,000 minimum; issuer
+issuance/redemption normally runs 24/5, and only whitelisted wallets can
+use the infrastructure. Source: <a
+href="https://docs.xstocks.fi/docs/frequently-asked-questions">xStocks
+FAQ</a>, <a
+href="https://docs.xstocks.fi/docs/issuance-and-redemption">issuance and
+redemption guide</a>.</li>
+<li><strong>Fact — checked:</strong> xStocks publishes proof-of-reserves
+access, and Chainlink lists xStocks/Backed among Proof of Reserve
+integrations. Sources: <a href="https://docs.xstocks.fi/docs">xStocks
+documentation</a>, <a
+href="https://chain.link/proof-of-reserve">Chainlink Proof of
+Reserve</a>.</li>
+<li><strong>Fact — checked:</strong> Direct Ethereum calls to USDY
+InstantManager returned <code>minimumRedemptionUSD() = 1e18</code>,
+<code>redeemPaused() = false</code>, and
+<code>subscribePaused() = false</code> at validation time. Reproduce
+against <code>https://ethereum-rpc.publicnode.com</code> at
+<code>0xa42613C243b67BF6194Ac327795b926B4b491f15</code>.</li>
+<li><strong>Inference — one phrase:</strong> A successful small
+redemption proves operational access for one eligible identity at one
+moment; it does not prove aggregate capacity, equal access for other
+identities, or backing solvency.</li>
+<li><strong>Inference — one phrase:</strong> A published rate limit is a
+ceiling, not a guarantee that funds, operations, banks, and compliance
+will complete the redemption at that size.</li>
+<li><strong>Inference — conclusion:</strong> EXITPROOF can test
+small-notional operational redeemability for enrolled users; it cannot
+establish that backing exists or that stress-scale redemption will
+succeed.</li>
+</ul>
+<h3 id="plain-answer">Plain answer</h3>
+<ul>
+<li><strong>Inference:</strong> The mechanism can solve a narrower
+exit-execution problem.</li>
+<li><strong>Inference:</strong> It only partially solves redemption
+accessibility.</li>
+<li><strong>Inference:</strong> It does not solve backing verification,
+reserve sufficiency, or system-wide run capacity.</li>
+</ul>
+<h2 id="does-it-need-ai-and-does-it-need-a-chain">3. Does it need AI,
+and does it need a chain?</h2>
+<h3 id="ai">AI</h3>
+<ul>
+<li><strong>Fact — design inspection:</strong> All numeric measurements
+in the brief are deterministic, and the model is assigned only document
+reading and prose reconciliation.</li>
+<li><strong>Inference — one phrase:</strong> The measurement product
+works without AI.</li>
+<li><strong>Inference — one phrase:</strong> AI is useful for
+maintaining cited policy extraction across changing, unstructured issuer
+documents and support transcripts, but it is not necessary to compute
+exit capacity.</li>
+<li><strong>Inference — conclusion:</strong> AI is a workflow
+accelerator and hackathon-eligibility feature, not the core technical
+necessity.</li>
+</ul>
+<h3 id="chain">Chain</h3>
+<ul>
+<li><strong>Fact — design inspection:</strong> RPC reads, route quotes,
+issuer documents, APIs, and signed receipts can all exist without
+deploying a new contract.</li>
+<li><strong>Fact — checked:</strong> X Layer’s event requires AI in the
+product and deployments to both X Layer testnet and mainnet. Source: <a
+href="https://web3.okx.com/xlayer/build-x-series">Build X AI
+Season</a>.</li>
+<li><strong>Inference — one phrase:</strong> A chain becomes
+product-necessary only when a contract consumes a fresh,
+provenance-bound result to change an action such as a cap, collateral
+factor, or trade limit.</li>
+<li><strong>Fact — checked:</strong> No consumer integration is
+shown.</li>
+<li><strong>Inference — conclusion:</strong> The chain is ornamental for
+the current human/API use case and potentially necessary for a
+demonstrated contract consumer.</li>
+</ul>
+<h2 id="novelty-against-the-242-row-corpus-and-live-agents">4. Novelty
+against the 242-row corpus and live agents</h2>
+<h3 id="corpus-verification">Corpus verification</h3>
+<ul>
+<li><strong>Fact — checked:</strong> The spreadsheet was downloaded as
+raw CSV and parsed as <strong>242 rows, 51 columns, and 57 distinct
+hackathons</strong>; SHA-256
+<code>f29245f60edae1829c74635c33b617501dc220c9e5b75a53cbeb59bbdfe694f8</code>
+matches the workspace copy. Source: <a
+href="https://docs.google.com/spreadsheets/d/1jPAQFjKaBbjoBe5cj_z-1dR8WD9-apNOT68CtFYeVfQ">winners
+spreadsheet</a>.</li>
+<li><strong>Fact — checked:</strong> A narrow
+<code>\brwa\b|real.world asset</code> scan across the twelve analytical
+text fields returned 16 rows.</li>
+<li><strong>Fact — checked:</strong> A
+<code>proof.?of.?reserve|backing attestation</code> scan returned one
+row, <strong>Anyware</strong>, because its target users include
+engineers building proof-of-reserves systems; Anyware itself is a
+cross-chain state-proof project.</li>
+<li><strong>Fact — correction:</strong> The brief identifies the single
+proof-of-reserve match as Eliver, but the current raw row matching the
+stated pattern is Anyware; Eliver is hardware-signed logistics
+telemetry.</li>
+<li><strong>Inference — one phrase:</strong> The brief’s single-hit
+statistic does not establish one backing-verification project and
+illustrates the fragility of keyword counts.</li>
+<li><strong>Fact — checked:</strong> Five rows matched
+<code>redeem|redemption|exit capacity|exit liquidity</code>: DobDex,
+Bundl, xStream, Cocoa Monster, and SnowBall.</li>
+<li><strong>Fact — checked:</strong> Manual review of all five found no
+scheduled real issuer-redemption testing.</li>
+<li><strong>Fact — checked:</strong> Manual review of the 16 narrow-RWA
+rows found structuring, DEX, lending, baskets, credit, telemetry, and
+compliance projects, but no project that empirically verifies an
+issuer’s underlying backing.</li>
+</ul>
+<h3 id="what-is-genuinely-absent-from-the-checked-corpus">What is
+genuinely absent from the checked corpus</h3>
+<ul>
+<li><strong>Fact — checked corpus only:</strong> No row combines
+scheduled issuer redemptions, signed latency/failure receipts, public
+policy reconciliation, and a contract-readable publication.</li>
+<li><strong>Fact — checked corpus only:</strong> No row reports repeated
+real redemption probes across notional sizes.</li>
+<li><strong>Inference — caution:</strong> Those mechanisms are absent
+from this corpus, not proven absent from the market.</li>
+</ul>
+<h3 id="what-merely-appears-absent-or-is-already-live-elsewhere">What
+merely appears absent or is already live elsewhere</h3>
+<ul>
+<li><strong>Fact — corpus analogue:</strong> Cronos Shield turns
+deterministic risk output into a signed, on-chain-verifiable object for
+transaction gating.</li>
+<li><strong>Fact — corpus analogue:</strong> The Wallet Shift uses
+health probes to separate registered services from callable ones.</li>
+<li><strong>Fact — corpus analogue:</strong> MotivaTON repeatedly polls
+third-party evidence to release escrow.</li>
+<li><strong>Inference — one phrase:</strong> EXITPROOF recombines
+precedented patterns even if the exact bundle is not in the corpus.</li>
+<li><strong>Fact — live direct substitute:</strong> Pharos scores DEX
+and direct-redemption exit paths and publishes them through an API.
+Source: <a href="https://pharos.watch/methodology/">Pharos
+methodology</a>.</li>
+<li><strong>Fact — live adjacent substitute:</strong> Particula
+publishes continuously monitored, rules-based asset-backed token ratings
+using on-chain and issuer data. Source: <a
+href="https://particula.io/risk-ratings">Particula methodology</a>.</li>
+<li><strong>Fact — live backing substitute:</strong> Chainlink Proof of
+Reserve publishes contract-consumable reserve verification, and xStocks
+documents a public proof-of-reserves portal. Sources: <a
+href="https://chain.link/proof-of-reserve">Chainlink PoR</a>, <a
+href="https://docs.xstocks.fi/docs/frequently-asked-questions">xStocks
+FAQ</a>.</li>
+<li><strong>Fact — live X Layer competitors:</strong> OnchainOS search
+returned Phylax (#6127) for xStocks/RWA liquidity and execution
+preflight, and Sentinel (#3597) for position-sized exit cost; both
+results showed no recorded <code>soldCount</code> value at validation
+time.</li>
+<li><strong>Inference — conclusion:</strong> Novelty is <strong>low for
+scoring/API/on-chain publication, moderate for xStocks-specific cited
+evidence, and potentially high for permissioned executed
+probes</strong>.</li>
+</ul>
+<h3
+id="solana-specific-check-required-by-the-validation-skill">Solana-specific
+check required by the validation skill</h3>
+<ul>
+<li><strong>Fact — checked:</strong> Search found live Solana token-risk
+and slippage products, including a Jupiter slippage-ladder service and
+Pharos coverage of Solana stablecoins, but no checked Solana product
+matching the complete scheduled issuer-probe mechanism. Sources: <a
+href="https://www.x402scan.com/server/08b01f29-c058-403e-972a-d9b740a66fe8">Solana
+DeFi Intelligence listing</a>, <a
+href="https://pharos.watch/stablecoin/usdv-solomon/">Pharos USDv
+profile</a>.</li>
+<li><strong>Inference — one phrase:</strong> Solana confirms that
+quote-based exit analysis is commoditizing; it does not eliminate the
+possible probe-layer differentiation.</li>
+</ul>
+<h2 id="does-it-create-a-market-with-no-demonstrated-demand">5. Does it
+create a market with no demonstrated demand?</h2>
+<ul>
+<li><strong>Fact — design inspection:</strong> The full design requires
+issuers willing to authorize probes, funded probe wallets, score
+consumers, bonded challengers, challenge adjudication, and contracts
+willing to act on the score.</li>
+<li><strong>Fact — checked:</strong> No issuer permission, probe-wallet
+funding, consumer integration, challenger, bond size, dispute rule, or
+adjudicator is provided.</li>
+<li><strong>Inference — one phrase:</strong> The design assumes three
+unproven second-order markets into existence: issuer-approved testing,
+score consumption, and bonded score disputes.</li>
+<li><strong>Fact — checked:</strong> Existing demand evidence is
+strongest for raw facts and bespoke risk assessments, not for a
+universal scalar score.</li>
+<li><strong>Inference — one phrase:</strong> The score and challenge
+market are product expansion before the evidence object has a user.</li>
+</ul>
+<h2 id="feasibility-for-one-person-by-2026-08-21-and-2026-09-02">6.
+Feasibility for one person by 2026-08-21 and 2026-09-02</h2>
+<ul>
+<li><strong>Fact — checked:</strong> Build X closes August 21, 2026 at
+23:59 UTC and requires testnet followed by mainnet deployment plus an
+active dedicated X account and submission post. Source: <a
+href="https://web3.okx.com/xlayer/build-x-series">official event
+page</a>.</li>
+<li><strong>Fact — checked:</strong> Orion’s public bundle states August
+12–September 2, a roughly $10 ETH ignition fee, Base wallet
+registration, and an optional but strongly recommended demo.</li>
+<li><strong>Fact — local inspection:</strong> <code>contracts/</code> is
+empty; each <code>apps/*</code> directory contains only
+<code>node_modules</code>; there is no root <code>package.json</code> or
+application source.</li>
+<li><strong>Fact — not independently reproducible:</strong> The brief
+reports that the intended wallet is unfunded but supplies no address, so
+that claim could not be rechecked.</li>
+<li><strong>Inference — one phrase:</strong> Fewer than six days remain
+for a source-less implementation plus mainnet/social operations.</li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Scope element</th>
+<th>By Aug 21</th>
+<th>By Sep 2</th>
+<th>Claim type and reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X Layer chain reads and token metadata</td>
+<td>Reachable</td>
+<td>Reachable</td>
+<td><strong>Fact:</strong> RPC and contracts respond;
+<strong>Inference:</strong> straightforward TypeScript work.</td>
+</tr>
+<tr>
+<td>One xStock position-sized DEX quote curve</td>
+<td>Reachable with route discovery</td>
+<td>Reachable with validation/history</td>
+<td><strong>Inference:</strong> feasible if a liquid route and quoter
+are identified early.</td>
+</tr>
+<tr>
+<td>Minimal web/API/MCP over shared handlers</td>
+<td>Reachable</td>
+<td>Reachable</td>
+<td><strong>Inference:</strong> narrow data shape, not a general
+platform.</td>
+</tr>
+<tr>
+<td>Minimal registry storing a snapshot hash and metadata</td>
+<td>Reachable if funded</td>
+<td>Reachable</td>
+<td><strong>Inference:</strong> small Solidity surface; deployment
+funding remains operational.</td>
+</tr>
+<tr>
+<td>Cited issuer-policy extraction</td>
+<td>One issuer only</td>
+<td>Several issuers</td>
+<td><strong>Inference:</strong> AI can structure documents, with
+deterministic citations retained.</td>
+</tr>
+<tr>
+<td>Real small DEX swap</td>
+<td>Possible if funded</td>
+<td>Likely</td>
+<td><strong>Inference:</strong> requires token inventory, OKB, and
+accepting market loss.</td>
+</tr>
+<tr>
+<td>Real xStocks issuer redemption</td>
+<td>Not credible</td>
+<td>Uncertain</td>
+<td><strong>Fact:</strong> KYC, whitelisting, 24/5, and $5,000 minimum;
+<strong>Inference:</strong> timing and capital are blockers.</td>
+</tr>
+<tr>
+<td>Scheduled probe history</td>
+<td>No</td>
+<td>Thin at best</td>
+<td><strong>Inference:</strong> elapsed time and repeated capital cycles
+are irreducible.</td>
+</tr>
+<tr>
+<td>Calibrated universal score</td>
+<td>No</td>
+<td>No</td>
+<td><strong>Inference:</strong> no ground truth, backtest, or consumer
+utility function.</td>
+</tr>
+<tr>
+<td>Bonded challenge market</td>
+<td>No</td>
+<td>No</td>
+<td><strong>Inference:</strong> dispute semantics, security, and
+participants are undefined.</td>
+</tr>
+<tr>
+<td>Real lending-market integration</td>
+<td>No evidence</td>
+<td>Uncertain</td>
+<td><strong>Fact:</strong> no design partner;
+<strong>Inference:</strong> cannot be scheduled as internal engineering
+work.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Inference — feasibility conclusion:</strong> A credible
+evidence demo is reachable; the mechanism in §1 is not.</li>
+</ul>
+<h2 id="strongest-case-against-building-it">7. Strongest case against
+building it</h2>
+<ul>
+<li><strong>Fact — checked:</strong> Pharos already implements the
+closest product thesis for stablecoins, Birdeye exposes exit liquidity,
+Chainlink/xStocks expose backing data, Particula rates tokenized assets,
+and X Layer agents already advertise position-sized exit risk.</li>
+<li><strong>Inference — one phrase:</strong> Four of EXITPROOF’s five
+visible surfaces are substitute assembly rather than invention.</li>
+<li><strong>Fact — checked:</strong> The distinctive issuer-probe layer
+requires KYC, whitelisting, $5,000 minimum xStocks redemption, capital,
+time, and issuer cooperation.</li>
+<li><strong>Inference — one phrase:</strong> The moat is the one
+component the builder cannot demo.</li>
+<li><strong>Inference — one phrase:</strong> Cooperative issuers can
+self-select into testing and recognize probe wallets, so probe coverage
+may reward cooperative optics rather than measure the riskiest
+assets.</li>
+<li><strong>Inference — one phrase:</strong> Small scheduled probes
+measure liveness at the probe size, not stress capacity, and can create
+false confidence if promoted into a universal score.</li>
+<li><strong>Inference — one phrase:</strong> Combining jurisdiction,
+identity eligibility, market hours, issuer limits, DEX curves, latency,
+and reserve facts into one scalar destroys decision-relevant
+detail.</li>
+<li><strong>Inference — one phrase:</strong> A contract-readable wrong
+score has a larger blast radius than an API report because downstream
+automation can liquidate, reject, or cap assets mechanically.</li>
+<li><strong>Fact — checked:</strong> No downstream protocol has agreed
+to own that automation risk.</li>
+<li><strong>Inference — strongest countercase:</strong> EXITPROOF risks
+becoming polished risk theater: authoritative-looking output without
+representative probes, validated calibration, or a consumer who can
+define what “good” means.</li>
+</ul>
+<h2 id="verdict">8. Verdict</h2>
+<h3 id="modify">MODIFY</h3>
+<ul>
+<li><strong>Inference — smallest change that fixes the largest
+weakness:</strong> Remove the universal score, bonded challenge market,
+and backing-redemption claim from the hackathon MVP; publish a
+<strong>position-specific Exit Certificate</strong> instead.</li>
+<li><strong>Inference — proposed certificate:</strong> For one X Layer
+xStock and a user-supplied notional, return the best executable route,
+quoted output, price impact, min-out, block, timestamp, market-hours
+state, route provenance, and cited primary-redemption policy facts.</li>
+<li><strong>Inference — AI’s bounded role:</strong> Use the model to
+extract issuer-policy passages and explain discrepancies; never let it
+generate capacity numbers or eligibility claims.</li>
+<li><strong>Inference — chain’s bounded role:</strong> Store a content
+hash plus asset, notional, block, timestamp, and expiry on X Layer;
+demonstrate one consumer contract that rejects stale or over-slippage
+certificates.</li>
+<li><strong>Inference — positioning:</strong> “Can this agent exit this
+position now, and what evidence supports the answer?” is more precise
+and defensible than “this asset has score 83.”</li>
+<li><strong>Inference — deferred work:</strong> Treat issuer probes as a
+post-hackathon experiment gated on onboarding, capital, consent, and a
+preregistered methodology.</li>
+</ul>
+<h3 id="integration-first-assessment">Integration-first assessment</h3>
+<ul>
+<li><strong>Fact — checked:</strong> X Layer is EVM-compatible and has
+Uniswap deployments; the proposed publication logic is novel but
+small.</li>
+<li><strong>Inference — one phrase:</strong> Integrate existing pool
+quoters, RPCs, issuer APIs, xStocks proof-of-reserves, and document
+sources rather than building routing, reserve verification, or a custom
+oracle network.</li>
+<li><strong>Inference — one phrase:</strong> Build only the narrow
+certificate registry and consumer adapter because those are the
+composability demonstration.</li>
+<li><strong>Fact — scope note:</strong> The Solana protocol catalog
+required by the validation skill is not technically relevant to this X
+Layer build.</li>
+</ul>
+<h2 id="what-would-change-the-verdict">9. What would change the
+verdict?</h2>
+<ul>
+<li><strong>Fact criterion:</strong> A named X Layer lending protocol,
+vault, or agent signs off on a concrete certificate schema and commits
+to a test integration.</li>
+<li><strong>Inference effect:</strong> That would upgrade demand from
+adjacent to product-specific and make the chain necessary.</li>
+<li><strong>Fact criterion:</strong> The builder completes issuer
+onboarding and produces successful xStocks redemption receipts at two
+materially different notionals, with the exact X Layer-to-issuer path
+documented.</li>
+<li><strong>Inference effect:</strong> That would make the distinct
+probe layer feasible and test whether latency/cost changes with
+size.</li>
+<li><strong>Fact criterion:</strong> A comparison shows that Pharos,
+Birdeye, Sentinel, and Phylax do not cover the selected X Layer xStock
+route or required position-sized evidence fields.</li>
+<li><strong>Inference effect:</strong> That would establish a concrete
+coverage wedge rather than corpus-only novelty.</li>
+<li><strong>Fact criterion:</strong> A preregistered score model
+predicts an observable outcome—failed exit, realized slippage, or
+latency—on held-out incidents better than raw route features.</li>
+<li><strong>Inference effect:</strong> That would justify a score;
+without it, publish facts.</li>
+<li><strong>Fact criterion:</strong> Testnet and mainnet OKB, Base ETH
+for Orion’s fee, token inventory for a real swap, and the dedicated X
+account are ready before core coding ends.</li>
+<li><strong>Inference effect:</strong> That would reduce operational
+disqualification risk but would not validate demand.</li>
+</ul>
+<h2
+id="brief-audit-leading-structure-and-factual-corrections">Brief-audit:
+leading structure and factual corrections</h2>
+<ul>
+<li><strong>Fact — checked:</strong> The official Build X page currently
+contains the seven criteria in Terms clause 4, but its FAQ/disclaimer
+also says the organizer will consider on-chain data, code quality,
+innovation, and market potential. Source: <a
+href="https://web3.okx.com/xlayer/build-x-series">official event
+page</a>.</li>
+<li><strong>Inference — one phrase:</strong> The brief’s claim that the
+seven are “these seven and no others” is too strong.</li>
+<li><strong>Fact — checked:</strong> The current event page has 14
+numbered terms, not the 12 stated in the brief.</li>
+<li><strong>Fact — checked:</strong> xStocks’ current documentation
+resolves the policy-level part of the brief’s redemption unknown: retail
+redemption is published as KYC-gated with a $5,000 minimum.</li>
+<li><strong>Fact — checked:</strong> Whether an X Layer-held xStock can
+complete the exact issuer path without an intermediate supported-chain
+transfer remains unproven by the checked sources.</li>
+<li><strong>Fact — checked:</strong> The corpus’s single
+proof-of-reserve keyword match is Anyware under the stated search fields
+and pattern, not Eliver.</li>
+<li><strong>Inference — one phrase:</strong> The brief leads toward a
+novelty conclusion by emphasizing sparse corpus keywords and curated
+analogies while omitting live market substitutes such as Pharos,
+Birdeye, Chainlink PoR, and xStocks’ own redemption documentation.</li>
+<li><strong>Inference — balancing note:</strong> The brief also exposes
+unknowns, the empty build state, permission requirements, and the
+absence of integrations, which materially support a negative
+verdict.</li>
+</ul>
+<h2 id="reproduction-log">Reproduction log</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sL</span> <span class="st">&quot;https://docs.google.com/spreadsheets/d/1jPAQFjKaBbjoBe5cj_z-1dR8WD9-apNOT68CtFYeVfQ/gviz/tq?tqx=out:csv&amp;sheet=web3%20hackathon%20winners&quot;</span> <span class="at">-o</span> winners.csv</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-c</span> <span class="st">&quot;import csv;r=list(csv.DictReader(open(&#39;winners.csv&#39;)));print(len(r),&#39;rows&#39;,len(r[0]),&#39;cols&#39;,len(set(x[&#39;Hackathon&#39;] for x in r)),&#39;distinct hackathons&#39;)&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">cast</span> chain-id <span class="at">--rpc-url</span> https://rpc.xlayer.tech</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">cast</span> chain-id <span class="at">--rpc-url</span> https://testrpc.xlayer.tech/terigon</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">cast</span> codesize 0xc845b2894dbddd03858fd2d643b4ef725fe0849d <span class="at">--rpc-url</span> https://rpc.xlayer.tech</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">cast</span> call 0xE3F3Caefdd7180F884c01E57f65Df979Af84f116 <span class="st">&#39;getReservesList()(address[])&#39;</span> <span class="at">--rpc-url</span> https://rpc.xlayer.tech</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">cast</span> call 0xa42613C243b67BF6194Ac327795b926B4b491f15 <span class="st">&#39;minimumRedemptionUSD()(uint256)&#39;</span> <span class="at">--rpc-url</span> https://ethereum-rpc.publicnode.com</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">cast</span> call 0xa42613C243b67BF6194Ac327795b926B4b491f15 <span class="st">&#39;redeemPaused()(bool)&#39;</span> <span class="at">--rpc-url</span> https://ethereum-rpc.publicnode.com</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">onchainos</span> agent search <span class="at">--query</span> xStocks</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">onchainos</span> agent search <span class="at">--query</span> <span class="st">&#39;portfolio risk&#39;</span></span></code></pre></div>
+</body>
+</html>

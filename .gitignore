@@ -1,0 +1,23 @@
+# Machine/local state — never commit
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules/
+.secrets/
+
+# Local tool state (not part of the AFTERHOURS deliverable)
+.impeccable/
+.superstack/
+
+# contracts/ is its own independent git repo (Foundry's `forge install` sets up
+# lib/ dependencies as real git submodules of that repo, verified working —
+# see DECISIONS.md/deviations log). It gets its own GitHub repo when publishing
+# and is linked from this repo's README rather than nested here.
+contracts/
+
+# Build artifacts
+apps/*/dist/
+apps/*/.next/
+apps/*/out/
+*.tsbuildinfo

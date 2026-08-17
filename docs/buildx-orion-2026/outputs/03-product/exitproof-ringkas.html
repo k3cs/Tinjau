@@ -1,0 +1,205 @@
+<meta charset="utf-8">
+<title>EXITPROOF</title>
+<style>
+  @page { size: A4; margin: 20mm 18mm 18mm 18mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+         font-size: 10.5pt; line-height: 1.6; color: #1a1a1a; margin: 0; }
+  h1 { font-size: 26pt; margin: 0 0 2pt; letter-spacing: -0.5pt; }
+  .sub { font-size: 11.5pt; color: #555; margin: 0 0 4pt; }
+  .meta { font-size: 8.5pt; color: #888; border-bottom: 1.5px solid #1a1a1a;
+          padding-bottom: 10pt; margin-bottom: 20pt; }
+  h2 { font-size: 13pt; margin: 22pt 0 7pt; padding-top: 9pt;
+       border-top: 1px solid #ddd; }
+  h2.first { border-top: none; padding-top: 0; margin-top: 0; }
+  h3 { font-size: 10.5pt; margin: 13pt 0 4pt; color: #000; }
+  p { margin: 0 0 8pt; }
+  ul { margin: 0 0 8pt; padding-left: 17pt; }
+  li { margin-bottom: 4pt; }
+  .lead { font-size: 11.5pt; line-height: 1.55; }
+  .box { border-left: 3px solid #1a1a1a; background: #f6f6f4;
+         padding: 11pt 13pt; margin: 12pt 0; }
+  .box p:last-child, .box ul:last-child { margin-bottom: 0; }
+  .quote { font-style: italic; color: #333; }
+  table { width: 100%; border-collapse: collapse; margin: 10pt 0 12pt;
+          font-size: 9.5pt; }
+  th { text-align: left; border-bottom: 1.5px solid #1a1a1a;
+       padding: 5pt 8pt 5pt 0; font-size: 8.5pt; text-transform: uppercase;
+       letter-spacing: 0.5pt; color: #555; }
+  td { padding: 5pt 8pt 5pt 0; border-bottom: 1px solid #e8e8e8; }
+  td.n, th.n { text-align: right; padding-right: 0; }
+  .hi { font-weight: 600; }
+  .warn { color: #a11; font-weight: 600; }
+  .page-break { page-break-before: always; }
+  .foot { margin-top: 24pt; padding-top: 9pt; border-top: 1px solid #ddd;
+          font-size: 8.5pt; color: #888; }
+  .tag { display: inline-block; font-size: 8pt; letter-spacing: 0.5pt;
+         text-transform: uppercase; background: #1a1a1a; color: #fff;
+         padding: 2pt 6pt; border-radius: 2pt; margin-right: 5pt; }
+  .no { color: #a11; }
+  .yes { color: #161; }
+</style>
+
+<h1>EXITPROOF</h1>
+<p class="sub">Berapa banyak yang sebenarnya bisa kamu jual, sekarang.</p>
+<p class="meta">Ringkasan ide &middot; X Layer Build X Series (AI Season) + Orion Builder Hackathon &middot; 16 Agustus 2026</p>
+
+<h2 class="first">Masalahnya, dalam satu paragraf</h2>
+
+<p class="lead">Setiap token yang menjanjikan kamu bisa keluar &mdash; saham tertokenisasi,
+stablecoin, posisi lending &mdash; menampilkan satu angka likuiditas di dashboard.
+Angka itu hampir selalu jauh lebih besar dari yang benar-benar bisa kamu jual tanpa
+merusak harganya sendiri. Tidak ada yang menerbitkan selisihnya.</p>
+
+<h2>Contoh nyata, diukur hari ini</h2>
+
+<p>NVIDIA xStock (NVDAx) di X Layer. Angka likuiditas yang dipublikasikan:
+<span class="hi">$478.411</span>. Yang benar-benar terjadi kalau kamu coba jual:</p>
+
+<table>
+  <tr><th>Kalau kamu jual</th><th class="n">Kamu terima</th><th class="n">Harga jatuh</th></tr>
+  <tr><td>100 lembar</td><td class="n">$22.500</td><td class="n">0,06%</td></tr>
+  <tr><td>250 lembar</td><td class="n">$55.885</td><td class="n">0,72%</td></tr>
+  <tr><td>500 lembar</td><td class="n">$111.118</td><td class="n">1,30%</td></tr>
+  <tr><td>750 lembar</td><td class="n warn" colspan="2">tidak ada rute sama sekali</td></tr>
+</table>
+
+<div class="box">
+<p><span class="hi">Artinya:</span> dari $478.411 yang tertulis, kamu berhenti di sekitar
+<span class="hi">$111.000</span> &mdash; bukan karena mahal, tapi karena <span class="hi">tidak ada
+rute sama sekali</span> di atas itu. Angka yang dipublikasikan melebih-lebihkan sekitar
+<span class="hi">empat kali lipat</span>.</p>
+<p style="font-size:9pt;color:#555;margin-bottom:0;">Diukur Minggu, 16 Agustus 2026, saat bursa saham
+AS tutup. Tiga pembacaan dalam satu jam memberi hasil yang berbeda &mdash; satu di antaranya jauh
+lebih buruk. Justru itu poinnya: angka ini bergerak, dan tidak ada yang memantaunya.</p>
+</div>
+
+<p>Kalau kamu pegang $300.000 NVDAx, dashboard bilang kamu aman. Kenyataannya kamu
+terjebak. Itu yang EXITPROOF ukur dan terbitkan.</p>
+
+<h3>Dan ada waktunya yang jauh lebih buruk</h3>
+<p>Saham tertokenisasi diperdagangkan 24/7, tapi bursa yang jadi acuannya
+<span class="hi">tutup sekitar dua pertiga waktu dalam seminggu</span>. Saat tutup, tidak ada
+lagi yang bisa melindungi posisi dengan membeli saham aslinya &mdash; jadi likuiditasnya menipis
+persis ketika kamu paling mungkin panik. Tidak ada satu pun dashboard yang menampilkan itu.</p>
+
+<h2>Apa yang dibangun</h2>
+
+<p>Sebuah layanan yang, untuk setiap aset, menjawab satu pertanyaan secara terus-menerus:
+<span class="hi">berapa banyak yang bisa dijual sekarang, di tiap tingkat kerugian harga.</span></p>
+
+<ul>
+  <li><span class="hi">Mengukur, bukan memperkirakan.</span> Angkanya diambil dengan
+      benar-benar menanyakan harga ke tempat penukaran yang sesungguhnya, di berbagai
+      ukuran posisi &mdash; bukan rumus dari angka likuiditas.</li>
+  <li><span class="hi">Membandingkan janji dengan kenyataan.</span> AI membaca dokumen
+      dan kebijakan penerbit, lalu menyandingkannya dengan hasil pengukuran. Setiap
+      pernyataan disertai kutipan sumbernya.</li>
+  <li><span class="hi">Menerbitkan hasilnya di blockchain</span>, supaya aplikasi lain
+      bisa membacanya tanpa harus percaya pada kami atau pada penerbit asetnya.</li>
+  <li><span class="hi">Bisa dipanggil manusia maupun AI agent</span> lewat satu antarmuka
+      yang sama.</li>
+</ul>
+
+<h2>Siapa yang butuh</h2>
+
+<p>Bukan tebakan &mdash; ini sudah dikerjakan orang, dengan tangan.</p>
+
+<div class="box">
+<p class="quote">&ldquo;Current sell side liquidity conditions, measured as the maximum
+size that can be swapped within 5% price impact, are as follows: USDai: ~$5M to USDC
+(down from $30M); sUSDai: ~$4.5M to USDC (down from $35M).&rdquo;</p>
+<p style="font-size:9pt;color:#666;margin-top:6pt;">&mdash; Chaos Labs, forum tata kelola Aave, 2026</p>
+</div>
+
+<p>Chaos Labs adalah firma analisis risiko. Angka itu mereka hitung manual untuk
+memutuskan berapa banyak uang boleh dipinjamkan atas sebuah aset &mdash; dan hasilnya
+menetapkan batas 55 juta dolar serta keputusan untuk <span class="hi">tidak</span>
+mengizinkan aset itu dipakai sebagai jaminan sama sekali.</p>
+
+<p>Jadi pengukuran ini <span class="hi">sudah dibeli orang hari ini</span>. Yang belum
+ada: versi otomatis, untuk saham tertokenisasi, di X Layer.</p>
+
+<div class="page-break"></div>
+
+<h2 class="first">Kenapa perlu AI, dan kenapa perlu blockchain</h2>
+
+<h3>Kenapa AI</h3>
+<p>Angkanya sendiri dihitung mesin secara pasti &mdash; AI tidak menyentuhnya. Tugas AI
+adalah membaca yang tidak berbentuk angka: dokumen penerbit, pengumuman, syarat penebusan.
+Lalu menjawab apakah yang dijanjikan cocok dengan yang terukur, sambil menunjuk kalimat
+persisnya. Itu pekerjaan bahasa, dan tidak ada rumus untuk itu.</p>
+
+<h3>Kenapa blockchain</h3>
+<p>Hasilnya dipakai aplikasi lain untuk mengatur risiko mereka sendiri. Jadi ia harus bisa
+dibaca dan diperiksa oleh program yang <span class="hi">tidak mempercayai penerbit asetnya,
+maupun kami</span>. Dan riwayatnya tidak boleh bisa diam-diam diedit belakangan &mdash;
+skor yang bisa diubah setelah kejadian tidak ada gunanya.</p>
+
+<h2>Yang sudah ada, dan bedanya di mana</h2>
+
+<p>Ini bukan wilayah kosong, dan itu justru kabar baik &mdash; artinya masalahnya nyata dan
+ada yang mendanainya.</p>
+
+<table>
+  <tr><th>Yang sudah ada</th><th>Bedanya</th></tr>
+  <tr>
+    <td><span class="hi">Pharos</span><br><span style="font-size:9pt;color:#666;">skor exit &amp; penebusan, 113 chain</span></td>
+    <td>Hanya <span class="hi">stablecoin</span>. Kapasitasnya <span class="hi">dimodelkan</span> di 5% pasokan; kami <span class="hi">menanyakannya langsung</span> di ukuran posisi nyata. Dan hasilnya dashboard, bukan objek di blockchain.</td>
+  </tr>
+  <tr>
+    <td><span class="hi">Chaos Labs</span><br><span style="font-size:9pt;color:#666;">analisis risiko untuk Aave</span></td>
+    <td>Dikerjakan manual, per aset, saat dibutuhkan. Tidak berjalan terus-menerus, dan tidak mencakup saham tertokenisasi.</td>
+  </tr>
+  <tr>
+    <td><span class="hi">Dashboard likuiditas</span><br><span style="font-size:9pt;color:#666;">umum di semua chain</span></td>
+    <td>Menampilkan satu angka total &mdash; angka $478.411 yang tadi. Itu justru angka yang menyesatkan.</td>
+  </tr>
+</table>
+
+<h2>Yang dibangun, dan yang tidak</h2>
+
+<p>Batas ini ditetapkan setelah dua tinjauan independen, dan sengaja dijaga sempit.</p>
+
+<table>
+  <tr><th style="width:52%">Dibangun sekarang</th><th>Tidak dibangun</th></tr>
+  <tr>
+    <td class="yes">Kurva kedalaman exit untuk 11 saham tertokenisasi di X Layer</td>
+    <td class="no">Penebusan sungguhan ke penerbit &mdash; minimum $5.000 per percobaan, plus verifikasi identitas</td>
+  </tr>
+  <tr>
+    <td class="yes">Pembacaan batas penebusan resmi dari data publik</td>
+    <td class="no">Pasar taruhan untuk menyanggah skor &mdash; belum ada pesertanya</td>
+  </tr>
+  <tr>
+    <td class="yes">Perbandingan dokumen penerbit dengan hasil ukur, berkutipan</td>
+    <td class="no">Verifikasi bahwa asetnya benar ada &mdash; penerbitnya sudah menerbitkan bukti cadangan sendiri</td>
+  </tr>
+  <tr>
+    <td class="yes">Penerbitan skor di X Layer + tampilan web + antarmuka untuk AI agent</td>
+    <td class="no">Klaim bahwa ada protokol yang sudah memakai skornya</td>
+  </tr>
+</table>
+
+<h2>Yang jujur harus disebut</h2>
+
+<ul>
+  <li>Belum ada satu pun aplikasi di X Layer yang memakai skor ini. Kontrak contoh yang
+      kami buat adalah <span class="hi">contoh integrasi, bukan bukti adopsi</span>.</li>
+  <li>Kami tidak memverifikasi asetnya benar ada. Penerbitnya sudah melakukan itu.
+      Yang kami jawab hanya: <span class="hi">bisakah kamu keluar, di ukuranmu</span>.</li>
+  <li>Metodenya bukan hal baru. Yang baru: kelas asetnya, chain-nya, cara mengukurnya, dan
+      hasilnya diterbitkan di blockchain.</li>
+</ul>
+
+<div class="box">
+<p><span class="tag">Inti</span> Semua orang menerbitkan berapa banyak yang <em>ada</em>.
+Tidak ada yang menerbitkan berapa banyak yang bisa <em>keluar</em>. Selisihnya delapan kali
+lipat, dan itulah yang membuat orang terjebak.</p>
+</div>
+
+<p class="foot">
+Semua angka dalam dokumen ini diukur langsung dari blockchain pada 16 Agustus 2026 dan
+dapat direproduksi. Kutipan Chaos Labs diambil verbatim dari forum tata kelola Aave.
+Ruang lingkup mengikuti keputusan DEC-003 setelah dua validasi independen.
+</p>

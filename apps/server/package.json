@@ -1,0 +1,27 @@
+{
+  "name": "afterhours-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "AFTERHOURS off-chain event-parsing pipeline: EDGAR poller, HTML stripper, three-way LLM parse, per-field diff, severity grade.",
+  "scripts": {
+    "poller": "tsx src/edgar/poller.ts",
+    "pipeline": "tsx src/pipeline.ts",
+    "test": "tsx --test test/**/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "3.0.83",
+    "ai": "6.0.208",
+    "dotenv": "17.4.2",
+    "hono": "4.12.26",
+    "ws": "8.21.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.0",
+    "@types/ws": "8.18.1",
+    "tsx": "4.22.4",
+    "typescript": "5.9.3"
+  }
+}

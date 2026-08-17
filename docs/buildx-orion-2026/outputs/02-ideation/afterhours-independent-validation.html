@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AFTERHOURS — Independent Validation</title>
+  <style>
+    :root { color-scheme: dark; --bg:#09100f; --panel:#111b19; --line:#29413b; --ink:#edf7f2; --muted:#a8bbb4; --accent:#76e1b5; --warn:#ffcf70; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:linear-gradient(160deg,#08100e 0%,#10211c 100%); color:var(--ink); font:16px/1.55 Inter,ui-sans-serif,system-ui,sans-serif; }
+    main { width:min(1120px,calc(100% - 32px)); margin:48px auto 80px; }
+    header { border-left:4px solid var(--accent); padding:4px 0 4px 20px; margin-bottom:32px; }
+    h1 { margin:0; font-size:clamp(2rem,5vw,4.2rem); letter-spacing:-.055em; }
+    h2 { margin:38px 0 14px; font-size:1.45rem; }
+    h3 { color:var(--accent); }
+    p,li { color:var(--muted); }
+    strong { color:var(--ink); }
+    a { color:var(--accent); }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:14px; background:rgba(17,27,25,.9); }
+    table { width:100%; border-collapse:collapse; min-width:780px; }
+    th,td { padding:14px 16px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { color:var(--accent); font-size:.78rem; text-transform:uppercase; letter-spacing:.09em; }
+    tr:last-child td { border-bottom:0; }
+    td:nth-child(2) { white-space:nowrap; color:var(--warn); font-weight:750; }
+    section { padding:0 2px; }
+    .callout { padding:18px 20px; border:1px solid var(--line); border-radius:14px; background:var(--panel); }
+    li { margin:10px 0; }
+  </style>
+</head>
+<body>
+<main>
+  <header><h1>AFTERHOURS</h1><p>Independent validation · 2026-08-16</p></header>
+  <section>
+    <h2>1. Event A — X Layer Build X Series, AI Season</h2>
+    <p><strong>Fact — source:</strong> Event A publishes seven unweighted criteria in clause 4 of its <a href="https://web3.okx.com/xlayer/build-x-series">official terms</a>; the scores are evidence-weighted inferences, not forecasts that assume every planned component ships.</p>
+    <div class="table-wrap"><table><thead><tr><th>Criterion</th><th>Score</th><th>One-sentence justification</th></tr></thead><tbody>
+      <tr><td>Application of AI</td><td>4/5 — Inference</td><td><strong>Fact — brief §5:</strong> model-graded materiality directly changes swap fees; <strong>Inference:</strong> this is substantive, but unmeasured errors and a single signer prevent a 5.</td></tr>
+      <tr><td>Innovation</td><td>3/5 — Inference</td><td><strong>Fact — brief §6 and Uniswap docs:</strong> adjacent risk hooks exist and event-driven fees are a documented v4 use case; <strong>Inference:</strong> the xStock corporate-event combination is differentiated, not a new primitive.</td></tr>
+      <tr><td>Product completeness</td><td>2/5 — Inference</td><td><strong>Fact — brief §§2, 4–5:</strong> implementation, funds, accounts, and live ingestion are missing while mainnet is mandatory; <strong>Inference:</strong> the vertical slice is coherent but currently incomplete.</td></tr>
+      <tr><td>User value</td><td>3/5 — Inference</td><td><strong>Fact — LVR paper and brief §7:</strong> stale-price adverse selection is documented generally but not measured on X Layer xStocks; <strong>Inference:</strong> value is plausible, not locally validated.</td></tr>
+      <tr><td>Integration with X Layer</td><td>4/5 — Inference</td><td><strong>Fact — brief §§3 and 5:</strong> the design uses X Layer xStocks, v4, a registry, and both networks; <strong>Inference:</strong> integration is deep although protected liquidity may have to be created.</td></tr>
+      <tr><td>Growth potential</td><td>2/5 — Inference</td><td><strong>Fact — brief §§3, 5, 7:</strong> eleven equities provide expansion but the MVP has one pool and no migration commitment; <strong>Inference:</strong> growth depends on unproven liquidity acquisition.</td></tr>
+      <tr><td>Ecosystem contribution</td><td>3/5 — Inference</td><td><strong>Fact — brief §5 and Uniswap docs:</strong> the registry could be reusable but a hook does not automatically attract routed liquidity; <strong>Inference:</strong> contribution is credible but modest until reused or funded.</td></tr>
+    </tbody></table></div>
+  </section>
+  <section>
+    <h2>2. Event B — Orion Builder Hackathon</h2>
+    <div class="table-wrap"><table><thead><tr><th>Criterion</th><th>Score</th><th>One-sentence justification</th></tr></thead><tbody>
+      <tr><td>Usefulness</td><td>6/10 — Inference</td><td><strong>Fact — brief §§5 and 7:</strong> the agent changes an executable control against a documented loss class but target-chain harm and demand are unmeasured; <strong>Inference:</strong> useful, but not proven necessary.</td></tr>
+      <tr><td>Execution</td><td>5/10 — Inference</td><td><strong>Fact — brief §§4–5:</strong> the loop is clear and builder fit is strong but no implementation or operational setup exists; <strong>Inference:</strong> execution evidence is halfway to runnable.</td></tr>
+      <tr><td>Originality</td><td>7/10 — Inference</td><td><strong>Fact — brief §6 and Uniswap docs:</strong> component patterns exist but the supplied record has no identical control loop; <strong>Inference:</strong> it is a distinctive recombination.</td></tr>
+    </tbody></table></div>
+  </section>
+  <section><h2>3. Most likely lower-score reason</h2><p class="callout"><strong>Inference:</strong> AFTERHOURS protects a self-seeded demonstration pool from a hypothesised X Layer loss rather than protecting existing liquidity from a measured loss; <strong>Fact — brief §7 and Uniswap docs:</strong> no realised overnight-gap loss, incumbent v4 xStock pool, or migration commitment is shown, and a hook does not automatically attract routed liquidity.</p></section>
+  <section><h2>4. 5.7-day scope</h2><p><strong>Inference — not credible as written:</strong> keep only the registry, hook, one minimally seeded NVDA pool, EDGAR-only ingestion, one historical replay, two injected judge cases, both deployments, and the minimum status page.</p><ul><li><strong>Inference:</strong> Cut live halt, issuer-release, and general-news ingestion to replay fixtures.</li><li><strong>Inference:</strong> Cut the separate attestation-feed workstream; expose registry reads instead.</li><li><strong>Inference:</strong> Keep size caps, second pools, dashboards, MCP, x402, ERC-8004, and autonomous multi-source scheduling out.</li></ul><p><strong>Fact — official requirements:</strong> testnet then mainnet, the dedicated X account, tagged post, and form cannot be cut.</p></section>
+  <section><h2>5. Verdict</h2><h3>Submit with changes</h3><ul><li><strong>Inference:</strong> Position it as a prototype for newly bootstrapped liquidity, not proven protection of current LPs.</li><li><strong>Inference:</strong> Fund deployment and seed wallets and create the project X account on day one.</li><li><strong>Inference:</strong> Bound model output to a versioned enum, fee ceiling, expiry, duplicate guard, signer, and emergency pause.</li><li><strong>Inference:</strong> Publish a small labelled historical NVDA evaluation with prompt and model version.</li><li><strong>Inference:</strong> Make the complete two-case transaction demo one click and externally runnable.</li><li><strong>Inference:</strong> Verify the live venue and measure one historical or replayed event before making migration claims.</li></ul></section>
+</main>
+</body>
+</html>
