@@ -1,0 +1,113 @@
+{
+  "filing": {
+    "ticker": "NVDA",
+    "tokenSymbol": "NVDAx",
+    "cik": "0001045810",
+    "form": "8-K",
+    "accessionNumber": "SYNTHETIC-P4.4-0002",
+    "filingDate": "2026-08-18",
+    "acceptanceDateTime": "2026-08-18T02:59:38.818Z",
+    "primaryDocument": "nvdax-8k-nonmaterial-annual-meeting.html",
+    "primaryDocDescription": "SYNTHETIC — fabricated for AFTERHOURS task P4.4, not an SEC filing.",
+    "documentUrl": "synthetic://afterhours/P4.4/nvdax-8k-nonmaterial-annual-meeting.html"
+  },
+  "contentHash": "4899c46626c5fff7b0099b9e929cc2a9252ea3f4f1bf3f7a7b5aceccac20af80",
+  "strippedTextLength": 2263,
+  "attempts": [
+    {
+      "status": "ok",
+      "attempt": 1,
+      "data": {
+        "eventType": "other",
+        "effectiveDates": [
+          "2026-08-17"
+        ],
+        "declaredAmounts": [],
+        "affectedToken": "NVDAx",
+        "futureAnnouncedDates": [],
+        "summary": "NVIDIA Corporation reported the voting results from its Annual Meeting of Stockholders held on August 17, 2026, where stockholders re-elected twelve directors, ratified the independent accounting firm, approved executive compensation, and approved a certificate of incorporation amendment."
+      }
+    },
+    {
+      "status": "error",
+      "attempt": 2,
+      "error": "Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\nPlease retry in 59.622484919s."
+    },
+    {
+      "status": "error",
+      "attempt": 3,
+      "error": "Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\nPlease retry in 58.699270162s."
+    }
+  ],
+  "agreement": {
+    "fields": [
+      {
+        "field": "eventType",
+        "isKeyField": true,
+        "agreement": "agree",
+        "values": [
+          "other"
+        ],
+        "agreedValue": "other"
+      },
+      {
+        "field": "affectedToken",
+        "isKeyField": true,
+        "agreement": "agree",
+        "values": [
+          "NVDAx"
+        ],
+        "agreedValue": "NVDAx"
+      },
+      {
+        "field": "effectiveDates",
+        "isKeyField": false,
+        "agreement": "agree",
+        "values": [
+          [
+            "2026-08-17"
+          ]
+        ],
+        "agreedValue": [
+          "2026-08-17"
+        ]
+      },
+      {
+        "field": "declaredAmounts",
+        "isKeyField": false,
+        "agreement": "agree",
+        "values": [
+          []
+        ],
+        "agreedValue": []
+      },
+      {
+        "field": "futureAnnouncedDates",
+        "isKeyField": false,
+        "agreement": "agree",
+        "values": [
+          []
+        ],
+        "agreedValue": []
+      }
+    ],
+    "successfulParseCount": 1,
+    "totalAttempts": 3,
+    "readyToPost": false,
+    "flaggedForReview": true,
+    "flagReasons": [
+      "insufficient_successful_parses"
+    ],
+    "summaries": [
+      "NVIDIA Corporation reported the voting results from its Annual Meeting of Stockholders held on August 17, 2026, where stockholders re-elected twelve directors, ratified the independent accounting firm, approved executive compensation, and approved a certificate of incorporation amendment."
+    ]
+  },
+  "severityGrade": {
+    "kind": "unbonded_severity_grade",
+    "grade": {
+      "severity": "NORMAL",
+      "direction": "unclear",
+      "rationale": "This filing reports standard results from the annual stockholders meeting where all routine proposals passed as expected, indicating no material change to business operations or governance."
+    }
+  }
+}
