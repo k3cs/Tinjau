@@ -354,6 +354,17 @@ Prefer current official sources for rules, deadlines, eligibility, judging, subm
 - Verified on: 2026-08-17
 - Adaptation notes: self-attested by the machine owner
 
+### REF-027 — Event A mainnet-deployment timing (official FAQ, direct re-verification)
+
+- Link or artifact path: https://web3.okx.com/xlayer/build-x-series — Requirements section + FAQ ("Does the project need to be deployed on Mainnet during the Hackathon?")
+- Type: documentation (primary source, same page as REF-001, re-fetched specifically for this question)
+- Relevant part: FAQ answer, quoted verbatim: "The project must be deployed on the X Layer Testnet during the Hackathon and subsequently launched on the X Layer Mainnet." Fetched twice independently (once for a broad summary, once demanding verbatim quotes only) with consistent wording both times.
+- Applicable lesson: "subsequently" places mainnet launch after the hackathon window — testnet deployment by the 2026-08-21 23:59 UTC submission deadline satisfies the eligibility requirement; mainnet is not gating submission or judging. This corrects an earlier reading (HACKATHON.md's original "must subsequently deploy on X Layer Mainnet" line, written before this specific FAQ pairing was checked) that had been treated as an undated blanket "must," creating pressure to fund and deploy to mainnet before the Event A deadline when the source does not actually require that.
+- Relevance: high — reorders task-tracker.md's Event A critical path (P0.2, P0.4, P1.9, P4.3 move off the pre-deadline critical path)
+- Verification: verified
+- Verified on: 2026-08-17
+- Adaptation notes: read via WebFetch (a summarizing intermediate step), not raw HTML inspected directly by the orchestrator — two independent fetches agreed, but per LEARN-006 (never conclude coverage from a summarised fetch without checking), a direct human read of the live FAQ is still the fully independent confirmation if this fact is ever load-bearing for a dispute.
+
 ## Source Conflicts
 
 - Topic: X Layer Testnet chain ID

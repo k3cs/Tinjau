@@ -36,7 +36,7 @@ Record decisions that affect eligibility, idea selection, scope, architecture, i
 - Stage: 1
 - Status: approved
 - Decision requested: which chain ID to configure for X Layer Testnet
-- Selected option: chain ID 1952, RPC `https://testrpc.xlayer.tech/terigon`, gas token OKB, explorer `https://www.okx.com/web3/explorer/xlayer-test`. Mainnet is 196 at `https://rpc.xlayer.tech`
+- Selected option: chain ID 1952, RPC `https://testrpc.xlayer.tech/terigon`, gas token OKB, explorer `https://web3.okx.com/explorer/x-layer-testnet` (verified 2026-08-17 — canonical form; the older `xlayer-test` path 301-redirects here). Mainnet is 196 at `https://rpc.xlayer.tech`
 - Rationale: first-party OKX documentation. The competing value 195 comes from third-party aggregators, and Chainlist's own 195 entry is labelled deprecated — it refers to the pre-OP-Stack testnet
 - Alternatives: chain ID 195 as reported by Chainlist, evmchainlist.org, rpc.info, thirdweb, Alchemy — rejected as stale
 - Evidence and reference IDs: REF-005 (official), REF-006 (third-party)
