@@ -1,14 +1,17 @@
 /**
- * End-to-end orchestration: poll → strip → 3x parse → diff → grade → (stub) post.
+ * End-to-end off-chain orchestration: poll → strip → 3x parse → diff → grade.
  *
- * This wires together P1.1-P1.5 into one callable pipeline per filing. It does NOT post
- * anywhere on-chain — that's a different executor's task (the EventState registry
- * contract, P1.6-P1.9). `postToRegistry()` below is a clearly-marked stub that logs what
- * WOULD be posted and returns immediately; wiring it to a real contract call is out of
- * scope here.
+ * This wires together P1.1-P1.5 into one callable pipeline per filing. Deliberately
+ * chain-free — this module imports no chain/RPC client, so it stays unit-testable without
+ * a private key or network access to X Layer. Actual on-chain posting (mapping this
+ * result to `EventStateRegistry.postEvent()` args, bonding, sending the tx, reading the
+ * result back) is task P1.8, implemented in `src/chain/postEvent.ts` and
+ * `src/chain/mapEventToRegistry.ts` — see `src/chain/runOnce.ts` for the end-to-end
+ * entrypoint that calls this pipeline and then posts.
  *
  * Run standalone against one real filing: `tsx src/pipeline.ts <ticker> <accessionNumber>`
- * (requires GEMINI_API_KEY to actually run the LLM steps — see src/llm/provider.ts).
+ * (requires GEMINI_API_KEY to actually run the LLM steps — see src/llm/provider.ts). This
+ * only runs P1.1-P1.5 and prints the result; it does not post on-chain.
  */
 
 import "dotenv/config";
@@ -20,18 +23,28 @@ import { parseFilingThreeWays } from "./llm/parseFiling.js";
 import { gradeFilingSeverity, type SeverityGradeResult } from "./llm/gradeFiling.js";
 import { buildAgreementReport, type AgreementReport } from "./diff/agreement.js";
 import type { FilingRecord } from "./types.js";
+import type { ParseAttemptResult } from "./llm/parseFiling.js";
 
 export interface PipelineResult {
   filing: FilingRecord;
   contentHash: string;
   strippedTextLength: number;
+  /** All 3 independent P1.3 parse attempts, successes and failures alike — exposed (not
+   * just the agreement-diffed summary) so downstream consumers like P1.8's
+   * `mapEventToRegistry.ts` can do their own modal-value selection / agreement counting
+   * per field without re-casting through `unknown`. */
+  attempts: ParseAttemptResult[];
   agreement: AgreementReport;
   severityGrade: SeverityGradeResult;
 }
 
-/** Runs P1.2-P1.5 for one already-fetched filing record. */
-export async function runPipelineForFiling(filing: FilingRecord): Promise<PipelineResult> {
-  const rawHtml = await fetchFilingDocument(filing);
+/**
+ * Runs P1.2-P1.5 for one already-fetched filing record.
+ * @param opts.rawHtml Skip `fetchFilingDocument` and use this HTML instead (P1.8's
+ * `--fixture` fallback flag, for SEC rate-limit contingency during a live demo run).
+ */
+export async function runPipelineForFiling(filing: FilingRecord, opts: { rawHtml?: string } = {}): Promise<PipelineResult> {
+  const rawHtml = opts.rawHtml ?? (await fetchFilingDocument(filing));
   const contentHash = createHash("sha256").update(rawHtml, "utf8").digest("hex");
   const { text } = stripFilingHtml(rawHtml);
 
@@ -53,37 +66,10 @@ export async function runPipelineForFiling(filing: FilingRecord): Promise<Pipeli
     filing,
     contentHash,
     strippedTextLength: text.length,
+    attempts,
     agreement,
     severityGrade,
   };
-}
-
-/**
- * STUB — logs the record that would be posted on-chain and returns without doing
- * anything else. Wiring this to the real EventState registry contract is a different
- * executor's task (P1.6-P1.9). Deliberately does not import any chain/RPC client.
- */
-export function postToRegistry(result: PipelineResult): { posted: false; reason: string } {
-  console.log("[pipeline] STUB postToRegistry — NOT actually posting on-chain. Would post:");
-  console.log(
-    JSON.stringify(
-      {
-        token: result.filing.tokenSymbol,
-        form: result.filing.form,
-        accessionNumber: result.filing.accessionNumber,
-        acceptanceDateTime: result.filing.acceptanceDateTime,
-        sourceUrl: result.filing.documentUrl,
-        contentHash: result.contentHash,
-        readyToPost: result.agreement.readyToPost,
-        flaggedForReview: result.agreement.flaggedForReview,
-        severity: result.severityGrade.grade.severity,
-        direction: result.severityGrade.grade.direction,
-      },
-      null,
-      2,
-    ),
-  );
-  return { posted: false, reason: "postToRegistry is a stub — real on-chain posting is a separate task (P1.6-P1.9)" };
 }
 
 // Standalone entrypoint: `tsx src/pipeline.ts NVDA 0001193125-26-341297`
@@ -119,7 +105,9 @@ if (isMain) {
 
   runPipelineForFiling(filing)
     .then((result) => {
-      postToRegistry(result);
+      // This standalone entrypoint only runs P1.1-P1.5 and prints the result — it does
+      // NOT post on-chain. Use `tsx src/chain/runOnce.ts` (P1.8) to poll + pipeline + post.
+      console.log(JSON.stringify(result, null, 2));
     })
     .catch((err) => {
       console.error("[pipeline] failed:", err);

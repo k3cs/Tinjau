@@ -19,7 +19,9 @@
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import type { LanguageModel } from "ai";
 
-const DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"; // "Flash tier" per SVC-004
+const DEFAULT_GEMINI_MODEL = "gemini-3.6-flash"; // "Flash tier" per SVC-004 — corrected 2026-08-17,
+// live API call confirmed "gemini-2.5-flash" is deprecated ("no longer available to new
+// users"), Google's own error response named this as the replacement
 
 /**
  * Resolves the Gemini API key from whichever supported env var is set, without

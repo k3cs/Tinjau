@@ -7,6 +7,11 @@
   "scripts": {
     "poller": "tsx src/edgar/poller.ts",
     "pipeline": "tsx src/pipeline.ts",
+    "study:p2_1": "tsx src/studies/parseAccuracySample.ts",
+    "post:event": "tsx src/chain/runOnce.ts",
+    "post:synthetic": "tsx src/chain/runSynthetic.ts",
+    "swap:once": "tsx src/chain/swapOnce.ts",
+    "xbot": "tsx src/xbot/main.ts",
     "test": "tsx --test test/**/*.test.ts",
     "typecheck": "tsc --noEmit"
   },
@@ -15,6 +20,7 @@
     "ai": "6.0.208",
     "dotenv": "17.4.2",
     "hono": "4.12.26",
+    "viem": "2.53.1",
     "ws": "8.21.0",
     "zod": "3.25.76"
   },
@@ -23,5 +29,10 @@
     "@types/ws": "8.18.1",
     "tsx": "4.22.4",
     "typescript": "5.9.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }
