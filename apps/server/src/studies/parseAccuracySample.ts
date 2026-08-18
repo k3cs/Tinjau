@@ -70,6 +70,7 @@ import {
 } from "../llm/parseFiling.js";
 import { buildAgreementReport, type AgreementReport } from "../diff/agreement.js";
 import type { FilingRecord } from "../types.js";
+import { getGeminiModelId } from "../llm/provider.js";
 
 // ---------------------------------------------------------------------------
 // Paths
@@ -472,6 +473,12 @@ export interface RawFilingOutcome {
   gapFillPasses: RunFilingResult[];
   /** The last pass run for this filing (pass1 if no gap-fill was needed). */
   finalResult: RunFilingResult;
+  /** Which Gemini model actually produced this row (`getGeminiModelId()` at call time) —
+   * recorded per-row, not assumed constant, because this session's daily free-tier quota
+   * forced switching models mid-collection. A row's accuracy score is only comparable to
+   * another row scored against the same model; never silently treat this field as constant
+   * across the sample. */
+  geminiModel: string;
 }
 
 const PASS1_RETRY_OPTIONS: RetryOptions = { retries: 4, delayMs: 5000 };
@@ -535,6 +542,7 @@ export async function processSample(rows: FrozenSampleRow[], opts: ProcessSample
       pass1,
       gapFillPasses,
       finalResult: result,
+      geminiModel: getGeminiModelId(),
     };
     outcomes.push(outcome);
     if (!opts.skipAppend) appendJsonlRow(outcome);

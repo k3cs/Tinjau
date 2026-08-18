@@ -237,3 +237,90 @@ given the Gemini free-tier quota constraint (confirmed empirically at 20 request
 *Results (Tier A/B/C/D figures) are appended below this line once real parses run. As of
 2026-08-17, nothing below this line exists yet — no live Gemini call has been made for
 this study.*
+
+## Results (appended 2026-08-18, after all 30 rows ran)
+
+**⚠️ Read this before the numbers below: the sample was NOT parsed by a single model.**
+Google's Gemini free tier caps daily requests at 20 per (API key, model) pair. That limit
+was hit repeatedly during collection on 2026-08-18 — the production model
+(`gemini-3.6-flash`, what `agent.ts` actually runs) was already exhausted from earlier
+same-day work before this study started, and 4 more models were exhausted in turn over the
+course of collecting these 30 rows. The actual split:
+
+| Model | Rows |
+|---|---|
+| `gemini-3.5-flash` | 3 (indices 0-2) |
+| `gemini-3.1-flash-lite` | 10 (indices 3-8, 23-26) |
+| `gemini-flash-latest`\* | 4 (indices 9-12) |
+| `gemini-3.5-flash-lite` | 10 (indices 13-22) |
+| `gemini-flash-lite-latest` | 3 (indices 27-29) |
+
+\* Found out the hard way that `gemini-flash-latest` is an **alias**, not an independent
+quota bucket — its quota-exceeded error named the underlying model as `gemini-3.7-flash`.
+Rows 13-14 were first attempted under this alias, both returned `successfulParseCount=0`
+(quota exhausted mid-alias), and were re-run cleanly under `gemini-3.5-flash-lite` — the
+failed attempt is not in the raw JSONL, only the successful re-run.
+
+**What this means for the numbers below**: they measure the accuracy of *a pipeline that
+had to hop across 5 Gemini-family models in one day*, not the accuracy of the model this
+project actually runs in production. Treat every figure below as provisional and
+re-verify against `gemini-3.6-flash` alone once a full 30-row run is possible on a single
+model (either after quota resets, or once P1.11's Claude migration lands). This is
+disclosed rather than smoothed over, per this project's own standing rule.
+
+**Coverage**: 30/30 rows, 0 document-fetch failures, 30/30 with `successfulParseCount=3`
+(no vacuous-agreement rows in this run) after gap-fill correction on rows 13-14.
+
+### Tier A — deterministic checks (n=30 filings, 90 individual parse attempts)
+
+- **A1, affectedToken correct**: 90/90 attempts (**100%**). Expected near-ceiling per
+  §2.3's own framing ("sanity floor, not parse skill" — the ticker is in the prompt).
+- **A2, effectiveDates contains reportDate, all 90 attempts**: 85/90 (**94.4%**).
+- **A2, meaningful subset (10 filings where reportDate ≠ filingDate, indices
+  2,3,4,5,13,15,18,23,27,28)**: 25/30 attempts (**83.3%**) — this is the number that
+  actually says something about date-extraction skill, per §2.3's own instruction to read
+  this subset, not the all-90 figure, as the meaningful one. A real, non-trivial gap from
+  the sanity-floor A1 number.
+
+### Tier B — item-code weak label on eventType (n=16 item-decidable filings)
+
+**15/16 correct (93.75%)**. 14 filings were non-decidable (item list didn't map to exactly
+one `eventType`, per the pre-registered mapping — excluded, not scored as failures, per
+§2.3). Zero filings excluded for incomplete parses (all 16 decidable filings had 3/3
+successful parses).
+
+### Tier C — adjudicated spot-check (n=8, indices 0,4,8,12,16,20,24,28)
+
+**Not run.** Requires a human (or a separately-designed LLM-as-judge pass with its own
+methodology) reading verbatim source text for all 6 fields per filing — a genuinely manual
+step, not something this aggregation script does. Left open per §2.3's own "this tier runs
+later" framing; not silently skipped or faked.
+
+### Tier D — inter-model agreement rate (N3 = 30, no exclusions needed this run)
+
+| Field | Agreement rate |
+|---|---|
+| `eventType` (key) | 93.3% |
+| `affectedToken` (key) | 100% |
+| `effectiveDates` | 93.3% |
+| `declaredAmounts` | 50.0% |
+| `futureAnnouncedDates` | 73.3% |
+
+**Key-field unanimity** (both `eventType` and `affectedToken` agree): **93.3%** (28/30).
+**`readyToPost` rate over full N=30**: **93.3%** (28/30) — consistent with this
+project's own earlier, independent finding elsewhere in the pipeline that
+`declaredAmounts` is the field parses disagree on most often (verbatim-labeling
+differences between independent LLM calls, not necessarily wrong extractions — Tier C
+adjudication would be needed to tell the two apart, which is exactly why it's a separate,
+still-open tier).
+
+### How this was computed
+
+`apps/server/src/studies/scoreParseAccuracy.ts` — a read-only aggregator over
+`data/p2_1_parse_accuracy_raw.jsonl`, makes no LLM/network calls, safe to re-run any
+number of times as more rows/tiers are added. Tier A1/A2 are computed per-attempt inside
+each row at collection time (`parseAccuracySample.ts`'s `groundTruth.perAttempt`); this
+script only aggregates. Tier B and D are computed here for the first time, directly from
+`buildAgreementReport()`'s own output — no independent reimplementation of the agreement
+logic, deliberately, since the point is to score what the real pipeline's diff logic
+actually produced, not a parallel guess at it.

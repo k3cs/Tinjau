@@ -8,6 +8,7 @@
     "poller": "tsx src/edgar/poller.ts",
     "pipeline": "tsx src/pipeline.ts",
     "study:p2_1": "tsx src/studies/parseAccuracySample.ts",
+    "study:p2_1:score": "tsx src/studies/scoreParseAccuracy.ts",
     "post:event": "tsx src/chain/runOnce.ts",
     "post:synthetic": "tsx src/chain/runSynthetic.ts",
     "swap:once": "tsx src/chain/swapOnce.ts",
