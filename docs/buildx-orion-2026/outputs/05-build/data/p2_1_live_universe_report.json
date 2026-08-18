@@ -1,0 +1,23 @@
+{
+  "generatedBy": "orchestrator, 2026-08-17, filling a gap left by the stalled build-only executor run",
+  "note": "Diff between the pre-registered frozen 30-row sample and what selectSample() would produce if run fresh today. Universe grew from 171 to 172 (MSTR filed a new 8-K today), shifting 6 of MSTR's 15 systematic-pick indices. The frozen sample remains authoritative per parse-accuracy-study.md section 2.2 -- this file is a diagnostic record only.",
+  "frozenSha256": "e228ab2c9f05974d519e8d479ab211434983600a623b047bcc47693cead04ae2",
+  "liveSha256Today": "5279ec827102ef3aceb1a876ba1f61e49e8e06192f1cdcf608f69a9c4ccf21a2",
+  "onlyInFrozen": [
+    "0001193125-26-000264",
+    "0001193125-26-032731",
+    "0001050446-26-000024",
+    "0001193125-26-249768",
+    "0001193125-26-270366",
+    "0001193125-26-308369"
+  ],
+  "onlyInLive": [
+    "0001193125-26-001550",
+    "0001193125-26-033573",
+    "0001193125-26-215754",
+    "0001193125-26-260709",
+    "0001193125-26-276717",
+    "0001193125-26-316917"
+  ],
+  "unchangedCount": 24
+}
