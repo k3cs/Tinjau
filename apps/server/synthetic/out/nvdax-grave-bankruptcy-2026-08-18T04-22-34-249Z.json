@@ -1,0 +1,222 @@
+{
+  "filing": {
+    "ticker": "NVDA",
+    "tokenSymbol": "NVDAx",
+    "cik": "0001045810",
+    "form": "8-K",
+    "accessionNumber": "SYNTHETIC-P4.4-0001",
+    "filingDate": "2026-08-18",
+    "acceptanceDateTime": "2026-08-18T04:22:28.827Z",
+    "primaryDocument": "nvdax-8k-grave-bankruptcy.html",
+    "primaryDocDescription": "SYNTHETIC — fabricated for AFTERHOURS task P4.4, not an SEC filing.",
+    "documentUrl": "synthetic://afterhours/P4.4/nvdax-8k-grave-bankruptcy.html"
+  },
+  "contentHash": "cec4a8eb4ac19d728c0cddccd5808a88f18081822c0ea37a3544f83f34e1a0c1",
+  "strippedTextLength": 2245,
+  "attempts": [
+    {
+      "status": "ok",
+      "attempt": 1,
+      "data": {
+        "eventType": "bankruptcy_or_restructuring",
+        "effectiveDates": [
+          "2026-08-17"
+        ],
+        "declaredAmounts": [
+          {
+            "label": "accelerated senior notes aggregate principal amount",
+            "value": 8250000000,
+            "unit": "USD"
+          }
+        ],
+        "affectedToken": "NVDAx",
+        "futureAnnouncedDates": [
+          {
+            "kind": "other",
+            "date": "2026-08-24",
+            "description": "Trading in the Company's common stock is expected to be suspended at the opening of business on Nasdaq."
+          }
+        ],
+        "summary": "NVIDIA Corporation filed voluntary petitions for Chapter 11 bankruptcy on August 17, 2026. This filing accelerated $8.25 billion in outstanding senior notes and prompted Nasdaq to initiate delisting proceedings."
+      }
+    },
+    {
+      "status": "ok",
+      "attempt": 2,
+      "data": {
+        "eventType": "bankruptcy_or_restructuring",
+        "effectiveDates": [
+          "2026-08-17"
+        ],
+        "declaredAmounts": [
+          {
+            "label": "accelerated senior notes aggregate principal amount",
+            "value": 8250000000,
+            "unit": "USD"
+          }
+        ],
+        "affectedToken": "NVDAx",
+        "futureAnnouncedDates": [
+          {
+            "kind": "other",
+            "date": "2026-08-24",
+            "description": "Trading in the Company's common stock is expected to be suspended at the opening of business due to delisting proceedings."
+          }
+        ],
+        "summary": "NVIDIA Corporation filed voluntary petitions for Chapter 11 bankruptcy on August 17, 2026, accelerating $8.25 billion of senior notes and leading to Nasdaq commencing delisting proceedings."
+      }
+    },
+    {
+      "status": "ok",
+      "attempt": 3,
+      "data": {
+        "eventType": "bankruptcy_or_restructuring",
+        "effectiveDates": [
+          "2026-08-17"
+        ],
+        "declaredAmounts": [
+          {
+            "label": "accelerated senior notes aggregate principal amount",
+            "value": 8250000000,
+            "unit": "USD"
+          }
+        ],
+        "affectedToken": "NVDAx",
+        "futureAnnouncedDates": [
+          {
+            "kind": "other",
+            "date": "2026-08-24",
+            "description": "Trading in the Company's common stock is expected to be suspended at the opening of business."
+          }
+        ],
+        "summary": "On August 17, 2026, NVIDIA Corporation filed voluntary petitions for Chapter 11 bankruptcy. This filing accelerated $8.25 billion in senior notes and led to a Nasdaq delisting notice with trading suspension expected on August 24, 2026."
+      }
+    }
+  ],
+  "agreement": {
+    "fields": [
+      {
+        "field": "eventType",
+        "isKeyField": true,
+        "agreement": "agree",
+        "values": [
+          "bankruptcy_or_restructuring",
+          "bankruptcy_or_restructuring",
+          "bankruptcy_or_restructuring"
+        ],
+        "agreedValue": "bankruptcy_or_restructuring"
+      },
+      {
+        "field": "affectedToken",
+        "isKeyField": true,
+        "agreement": "agree",
+        "values": [
+          "NVDAx",
+          "NVDAx",
+          "NVDAx"
+        ],
+        "agreedValue": "NVDAx"
+      },
+      {
+        "field": "effectiveDates",
+        "isKeyField": false,
+        "agreement": "agree",
+        "values": [
+          [
+            "2026-08-17"
+          ],
+          [
+            "2026-08-17"
+          ],
+          [
+            "2026-08-17"
+          ]
+        ],
+        "agreedValue": [
+          "2026-08-17"
+        ]
+      },
+      {
+        "field": "declaredAmounts",
+        "isKeyField": false,
+        "agreement": "agree",
+        "values": [
+          [
+            {
+              "label": "accelerated senior notes aggregate principal amount",
+              "value": 8250000000,
+              "unit": "USD"
+            }
+          ],
+          [
+            {
+              "label": "accelerated senior notes aggregate principal amount",
+              "value": 8250000000,
+              "unit": "USD"
+            }
+          ],
+          [
+            {
+              "label": "accelerated senior notes aggregate principal amount",
+              "value": 8250000000,
+              "unit": "USD"
+            }
+          ]
+        ],
+        "agreedValue": [
+          {
+            "label": "accelerated senior notes aggregate principal amount",
+            "value": 8250000000,
+            "unit": "USD"
+          }
+        ]
+      },
+      {
+        "field": "futureAnnouncedDates",
+        "isKeyField": false,
+        "agreement": "disagree",
+        "values": [
+          [
+            {
+              "kind": "other",
+              "date": "2026-08-24",
+              "description": "Trading in the Company's common stock is expected to be suspended at the opening of business on Nasdaq."
+            }
+          ],
+          [
+            {
+              "kind": "other",
+              "date": "2026-08-24",
+              "description": "Trading in the Company's common stock is expected to be suspended at the opening of business due to delisting proceedings."
+            }
+          ],
+          [
+            {
+              "kind": "other",
+              "date": "2026-08-24",
+              "description": "Trading in the Company's common stock is expected to be suspended at the opening of business."
+            }
+          ]
+        ]
+      }
+    ],
+    "successfulParseCount": 3,
+    "totalAttempts": 3,
+    "readyToPost": true,
+    "flaggedForReview": false,
+    "flagReasons": [],
+    "summaries": [
+      "NVIDIA Corporation filed voluntary petitions for Chapter 11 bankruptcy on August 17, 2026. This filing accelerated $8.25 billion in outstanding senior notes and prompted Nasdaq to initiate delisting proceedings.",
+      "NVIDIA Corporation filed voluntary petitions for Chapter 11 bankruptcy on August 17, 2026, accelerating $8.25 billion of senior notes and leading to Nasdaq commencing delisting proceedings.",
+      "On August 17, 2026, NVIDIA Corporation filed voluntary petitions for Chapter 11 bankruptcy. This filing accelerated $8.25 billion in senior notes and led to a Nasdaq delisting notice with trading suspension expected on August 24, 2026."
+    ]
+  },
+  "severityGrade": {
+    "kind": "unbonded_severity_grade",
+    "grade": {
+      "severity": "GRAVE",
+      "direction": "negative",
+      "rationale": "NVIDIA's Chapter 11 bankruptcy filing and subsequent Nasdaq delisting notice represent an extremely severe and negative credit event that severely impacts the company's financial standing and equity/token value."
+    }
+  }
+}

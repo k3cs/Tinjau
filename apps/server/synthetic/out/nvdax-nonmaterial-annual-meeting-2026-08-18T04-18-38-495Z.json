@@ -1,0 +1,145 @@
+{
+  "filing": {
+    "ticker": "NVDA",
+    "tokenSymbol": "NVDAx",
+    "cik": "0001045810",
+    "form": "8-K",
+    "accessionNumber": "SYNTHETIC-P4.4-0002",
+    "filingDate": "2026-08-18",
+    "acceptanceDateTime": "2026-08-18T04:18:31.860Z",
+    "primaryDocument": "nvdax-8k-nonmaterial-annual-meeting.html",
+    "primaryDocDescription": "SYNTHETIC — fabricated for AFTERHOURS task P4.4, not an SEC filing.",
+    "documentUrl": "synthetic://afterhours/P4.4/nvdax-8k-nonmaterial-annual-meeting.html"
+  },
+  "contentHash": "4899c46626c5fff7b0099b9e929cc2a9252ea3f4f1bf3f7a7b5aceccac20af80",
+  "strippedTextLength": 2263,
+  "attempts": [
+    {
+      "status": "ok",
+      "attempt": 1,
+      "data": {
+        "eventType": "other",
+        "effectiveDates": [
+          "2026-08-17"
+        ],
+        "declaredAmounts": [],
+        "affectedToken": "NVDAx",
+        "futureAnnouncedDates": [],
+        "summary": "NVIDIA Corporation held its 2026 Annual Meeting of Stockholders on August 17, 2026, where stockholders approved director elections, ratified the independent auditor, and approved executive compensation and an amendment to the certificate of incorporation."
+      }
+    },
+    {
+      "status": "ok",
+      "attempt": 2,
+      "data": {
+        "eventType": "other",
+        "effectiveDates": [
+          "2026-08-17"
+        ],
+        "declaredAmounts": [],
+        "affectedToken": "NVDAx",
+        "futureAnnouncedDates": [],
+        "summary": "NVIDIA Corporation reported the results of its 2026 Annual Meeting of Stockholders held on August 17, 2026, where stockholders voted to elect twelve directors, ratify the appointment of the independent registered public accounting firm, approve executive compensation, and approve a charter amendment."
+      }
+    },
+    {
+      "status": "ok",
+      "attempt": 3,
+      "data": {
+        "eventType": "other",
+        "effectiveDates": [
+          "2026-08-17"
+        ],
+        "declaredAmounts": [],
+        "affectedToken": "NVDAx",
+        "futureAnnouncedDates": [],
+        "summary": "NVIDIA Corporation reported the results of its 2026 Annual Meeting of Stockholders held on August 17, 2026, where stockholders approved the election of twelve directors, ratified the appointment of its independent registered public accounting firm, approved executive compensation, and approved an amendment to the Certificate of Incorporation."
+      }
+    }
+  ],
+  "agreement": {
+    "fields": [
+      {
+        "field": "eventType",
+        "isKeyField": true,
+        "agreement": "agree",
+        "values": [
+          "other",
+          "other",
+          "other"
+        ],
+        "agreedValue": "other"
+      },
+      {
+        "field": "affectedToken",
+        "isKeyField": true,
+        "agreement": "agree",
+        "values": [
+          "NVDAx",
+          "NVDAx",
+          "NVDAx"
+        ],
+        "agreedValue": "NVDAx"
+      },
+      {
+        "field": "effectiveDates",
+        "isKeyField": false,
+        "agreement": "agree",
+        "values": [
+          [
+            "2026-08-17"
+          ],
+          [
+            "2026-08-17"
+          ],
+          [
+            "2026-08-17"
+          ]
+        ],
+        "agreedValue": [
+          "2026-08-17"
+        ]
+      },
+      {
+        "field": "declaredAmounts",
+        "isKeyField": false,
+        "agreement": "agree",
+        "values": [
+          [],
+          [],
+          []
+        ],
+        "agreedValue": []
+      },
+      {
+        "field": "futureAnnouncedDates",
+        "isKeyField": false,
+        "agreement": "agree",
+        "values": [
+          [],
+          [],
+          []
+        ],
+        "agreedValue": []
+      }
+    ],
+    "successfulParseCount": 3,
+    "totalAttempts": 3,
+    "readyToPost": true,
+    "flaggedForReview": false,
+    "flagReasons": [],
+    "summaries": [
+      "NVIDIA Corporation held its 2026 Annual Meeting of Stockholders on August 17, 2026, where stockholders approved director elections, ratified the independent auditor, and approved executive compensation and an amendment to the certificate of incorporation.",
+      "NVIDIA Corporation reported the results of its 2026 Annual Meeting of Stockholders held on August 17, 2026, where stockholders voted to elect twelve directors, ratify the appointment of the independent registered public accounting firm, approve executive compensation, and approve a charter amendment.",
+      "NVIDIA Corporation reported the results of its 2026 Annual Meeting of Stockholders held on August 17, 2026, where stockholders approved the election of twelve directors, ratified the appointment of its independent registered public accounting firm, approved executive compensation, and approved an amendment to the Certificate of Incorporation."
+    ]
+  },
+  "severityGrade": {
+    "kind": "unbonded_severity_grade",
+    "grade": {
+      "severity": "NORMAL",
+      "direction": "unclear",
+      "rationale": "This filing reports routine voting results from the company's annual stockholder meeting. All proposals passed as expected, representing standard corporate governance with no immediate material impact on the stock or associated token's market price."
+    }
+  }
+}
