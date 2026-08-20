@@ -1,7 +1,7 @@
 # Team — Build X Series AI Season + Orion Builder
 
 - Mode: solo
-- Capacity last reviewed: 2026-08-16
+- Capacity last reviewed: 2026-08-20
 
 > Mode is `[inferred]` — Dien speaks in the first person singular throughout and no collaborators have been named. Confirm before Checkpoint 2.
 
@@ -18,8 +18,9 @@
 |---|---|---|---|---|
 | Hackathon profile | Claude | Dien | 2026-08-16 | completed |
 | Winner-pattern analysis | Claude | Dien | 2026-08-16 | completed |
-| Idea shortlist + recommendation | Claude | Dien | 2026-08-16 | needs-review |
-| Service plan and integrations | Claude | Dien | before Checkpoint 2 | not-started |
+| Idea shortlist + recommendation | Claude | Dien | 2026-08-16 | completed |
+| Revised LP Risk Autopilot design | Codex | Dien | 2026-08-20 | completed |
+| Revised service plan and integrations | Codex | Dien | before reopened Checkpoint 2 | in-progress — SVC-007/SVC-008 pending |
 | MVP happy path | Dien | Claude | before 2026-08-21 23:59 UTC | not-started |
 | Event A submission package | Dien | Claude | 2026-08-21 23:59 UTC | not-started |
 | Event B submission package | Dien | Claude | 2026-09-02 23:59 UTC | not-started |
@@ -27,18 +28,18 @@
 ## Capacity and Parallel Work
 
 - Maximum concurrent workstreams: 1 primary implementation task at a time for the human (solo-mode limit, unchanged)
-- **Agent-tooling exception (Stage 4, 2026-08-17):** the human team stays solo, but Stage 5 build work is executed via multiple Claude Code sessions — one orchestrator, up to 2 concurrent executors — per the protocol in `outputs/04-planning/task-tracker.md` §1. This is parallel *tooling*, not parallel *headcount*: Dien remains the single reviewer who verifies evidence and closes tasks, which is exactly why the executor cap is set by review capacity (2) rather than by how many agent sessions could technically run. Only unblocked tasks (task-tracker.md §2 dependency spine) run concurrently; the orchestrator sequences everything else by hand.
+- **Prospective execution rule (revised 2026-08-20):** the default is one active implementation task. A second independent workstream or executor agent is permitted only after Dien explicitly authorizes it; the revised tracker does not infer that authorization from the historical DEC-006 plan.
 - Integration owner: Dien
-- Integration schedule: task-tracker.md §2 (dependency spine) — set during Stage 4
-- Solo-mode work-in-progress limit: one primary implementation task for Dien's own review attention; up to 2 for agent executors under orchestrator supervision
+- Integration schedule: `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md` §3 — pending revised Checkpoint 2 approval
+- Solo-mode work-in-progress limit: one primary implementation task; one additional independent stream only with Dien's explicit authorization
 
 **Ideation exception (LEARN-001):** during Stage 2 this capacity picture is deliberately *not* used as an idea filter. Feasibility screening resumes at Checkpoint 1, at Dien's explicit request.
 
 ## Team Risks
 
-- Risk: Event A deadline is ~5.7 days out while Stage 2 is only starting.
-- Early warning: Checkpoint 1 not approved by end of 2026-08-17.
-- Mitigation: Event A governs scope; Event B reuses the same artifact with 11 extra days.
+- Risk: Event A deadline is 2026-08-21 23:59 UTC while the revised implementation plan is awaiting Checkpoint 2 approval.
+- Early warning: T0.1 shows that the existing prototype cannot supply most of the revised P0 vertical slice by reuse.
+- Mitigation: preserve the full evidence → state → bounded action → recovery → three-policy proof loop; cut P1/P2 breadth first and use source-linked replay fixtures if live news/social access is unavailable.
 - Fallback owner: Dien
 
 - Risk: OKX-side review or approval queues (agent/ASP listing) block submission independently of build progress — this was the recorded dominant risk in the prior OKX hackathon (REF-009, LEARN-002).
@@ -58,3 +59,9 @@
 - Scope impact: none yet
 - Pipeline stages affected: Stage 0, Stage 1
 - Decision ID: DEC-001
+
+- Date: 2026-08-20
+- Ownership or capacity change: revised LP Risk Autopilot tracker becomes the prospective plan; default WIP reset to one task and historical multi-executor permission is not carried forward automatically
+- Scope impact: P0 is one complete vertical slice; P1/P2 cannot block it
+- Pipeline stages affected: Stage 4, Checkpoint 2, Stage 5
+- Decision ID: DEC-009, DEC-010

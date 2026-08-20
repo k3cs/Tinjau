@@ -1,5 +1,7 @@
 # Tinjau (formerly AFTERHOURS) — Task Tracker & Multi-Agent Execution Plan
 
+> **Historical tracker notice (2026-08-20):** this file preserves implementation evidence for the original AFTERHOURS/Tinjau prototype. Prospective work for the approved LP Risk Autopilot design is tracked in `tinjau-lp-risk-autopilot-task-tracker.md` and governed by DEC-009/DEC-010. Do not add final-design tasks to this historical tracker.
+
 **Renamed 2026-08-20** (DEC-008): the product is now called **Tinjau** — domain `tinjau.xyz`, X account `@tinjauAI`. Every entry below dated before 2026-08-20 still says "AFTERHOURS" in its evidence text — that is the accurate historical record of what the product was called when that work was done and is intentionally left as written, not retroactively edited. New entries from this point on use "Tinjau."
 
 Stage 4 output for workspace `buildx-orion-2026` (see `../../PIPELINE.md`, Stage 4 — Architecture and Execution Planning). This file is the ordered, checkbox-tracked work breakdown for both events. It does not restate the architecture — that lives in `../02-ideation/afterhours-spec.md` §4 (components) and §4.9 (data flow) — this file only sequences the work and assigns it.

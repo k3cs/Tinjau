@@ -2,7 +2,7 @@
 
 - Workspace slug: buildx-orion-2026
 - Created: 2026-08-16
-- Current stage: 2
+- Current stage: 4
 - Submission readiness: not-ready
 
 Keep exactly one primary stage `in-progress`. A skipped stage requires a reason and impact. A completed stage requires every mandatory exit criterion to be checked.
@@ -252,6 +252,8 @@ Generate, compare, and validate ideas against user value, judging criteria, time
 
 - Status: completed
 
+**Revision 2026-08-20:** DEC-009 evolves the approved product into the Tinjau LP Risk Autopilot. The prospective source of truth is `../superpowers/specs/2026-08-20-tinjau-lp-risk-autopilot-design.md` (REF-028). The original AFTERHOURS definition remains historical evidence.
+
 ### Objective
 
 Turn the approved idea into a focused product definition and demonstrable MVP.
@@ -283,12 +285,12 @@ Turn the approved idea into a focused product definition and demonstrable MVP.
 
 ### Exit Criteria
 
-- [x] Target user and problem are explicit. — spec §1–§2 (target: tokenised-equity holders and LPs on X Layer; problem: information-class corporate events are undisclosed on-chain and disclosure lands almost entirely during closed-market hours)
-- [x] One primary happy path is defined end-to-end. — spec §5.3 demo script (live record → holder digest → forward calendar → reaction-latency study → synthetic injection, in that order)
-- [x] MVP scope fits team capacity and deadline. — spec §5.1 explicit cuts list, execution order, day-1 eligibility gate
-- [x] Excluded features are recorded. — spec §5.1 "Explicitly cut from Event A", §5.2 deferred-to-Event-B list
-- [x] Success criteria and demo narrative are testable. — spec §4.8 evidence pack (pre-registered method, published regardless of outcome)
-- [x] Relevant service categories are derived from product needs. — `SERVICES.md`, populated as part of Stage 4 (task-tracker.md P0.7)
+- [x] Target user and problem are explicit. — REF-028 §2: LPs/pool operators quoting tokenized equities through discontinuous company/reference-market information
+- [x] One primary happy path is defined end-to-end. — REF-028 §11: rumor containment, confirmed bounded protection/recovery, and comparison against simpler policies
+- [x] MVP scope is narrowed to one vertical slice. — REF-028 §14 implementation-plan boundary; schedule compatibility remains a Stage 4/T0.1 verification question
+- [x] Excluded features are recorded. — REF-028 §4 and §14: provider breadth, SDK, x402, Agentic Wallet, mainnet, and live Exchange OS are outside the first plan
+- [x] Success criteria and demo narrative are testable. — REF-028 §11 and §13
+- [x] Relevant service categories are derived from product needs. — SVC-001–SVC-008; final provider/fallback decisions remain Stage 4 work
 
 ### Owner
 
@@ -296,35 +298,35 @@ Turn the approved idea into a focused product definition and demonstrable MVP.
 
 ### Dependencies and Blockers
 
-- Dependencies: Checkpoint 1 approval (DEC-005)
+- Dependencies: Checkpoint 1 approval (DEC-005), product-evolution approval (DEC-009)
 - Blockers: none
 
 ### References and Evidence
 
-- Reference IDs: REF-018, REF-019, REF-020, REF-021, REF-022
+- Reference IDs: REF-018–REF-022, REF-028, REF-029
 - Service IDs: derived, see `SERVICES.md`
 
 ### Things to Avoid
 
-- Learning IDs: LEARN-006, LEARN-007, LEARN-010
-- Stage-specific warning: do not treat "usable at zero adoption" (holder digest, forward calendar) as evidence of adoption — spec §3, §9 keep these claims separated
+- Learning IDs: LEARN-004, LEARN-005, LEARN-006, LEARN-007, LEARN-009, LEARN-010
+- Stage-specific warning: do not treat a first-party reference consumer as adoption or an event-aware design as proof of better LP outcomes; both require separate evidence
 
 ### Decisions
 
-- Decision IDs: DEC-005
+- Decision IDs: DEC-005, DEC-009
 
 ### Skip Record
 
-- Reason: not skipped — backfilled from spec content written during ideation rounds 6–7 rather than produced as a separate artifact
-- Impact: no separate `outputs/03-product/` file for AFTERHOURS; the spec file in `outputs/02-ideation/` serves as the product definition of record
+- Reason: not skipped — the original definition was backfilled from the AFTERHOURS spec; the 2026-08-20 revision has a dedicated approved design (REF-028)
+- Impact: the final design in `docs/superpowers/specs/` is the prospective source of truth; older artifacts remain historical evidence
 
 ### Next Step
 
-- Proceed to Stage 4 with the approved MVP boundary.
+- Revised product definition approved 2026-08-20 (DEC-009). Proceed to the reopened Stage 4 with one official event, one rumor, one market-confirmation path, one bounded action/recovery path, one minimal reusable risk record, and one three-policy benchmark.
 
 ## Stage 4 — Architecture and Execution Planning
 
-- Status: completed
+- Status: in-progress
 
 ### Objective
 
@@ -358,12 +360,12 @@ Design the minimum reliable architecture and an executable plan with clear owner
 
 ### Exit Criteria
 
-- [x] Architecture supports every must-have requirement. — spec §4 (components), §4.9 (data flow); already produced during ideation, not duplicated here
-- [x] Dependencies, interfaces, and integration points are explicit. — `outputs/04-planning/task-tracker.md` §2 (dependency spine) and per-task `Depends on` lines
-- [x] Work items have owners, order, and acceptance criteria. — `outputs/04-planning/task-tracker.md` §3–§4, every task has an ID, order via dependencies, and an `Acceptance` line
-- [x] Testing, deployment, demo, and fallback plans exist. — task-tracker.md P4.4 (negative-control test), P6.1–P6.2 (demo assembly), P0.5/P4.2 (testnet fallback for v4's absence there)
-- [x] The plan fits the remaining time with contingency. — task-tracker.md phases mirror spec §5.1's execution order (eligibility → measurement → hook), which the spec explicitly justifies as protecting the harder-to-de-risk work first
-- [x] Every relevant service category has a decision and every selected service has a complete approval record. — `SERVICES.md` SVC-001–SVC-006 all `selected`/`approved`: SEC EDGAR, X Layer RPC, `onchainos` CLI, Claude API verified live this session; frontend hosting (Vercel) and backend compute (Dien's own VPS) decided 2026-08-17
+- [x] Architecture supports every revised must-have requirement. — REF-028 §6–§8 and revised tracker §2
+- [x] Dependencies, interfaces, and integration points are explicit. — `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md` §3–§4
+- [x] Work items have order, dependencies, acceptance criteria, evidence slots, priority, and HUMAN-ONLY boundaries. — revised tracker §1 and §4–§5
+- [x] Testing, deployment, demo, benchmark, claim, and fallback plans exist. — revised tracker T1.5, T3.4, T4.4–T4.5, T5, T6.5, T7
+- [ ] The plan fits the remaining time with contingency. — T0.1 must first measure how much of the existing prototype is compatible; P1/P2 are already below the cut line
+- [ ] Every relevant service category has a decision and every selected service has a complete approval record. — SVC-007/SVC-008 are `[missing]`/deferred pending T0.3 or explicit replay-fixture fallback approval
 
 ### Owner
 
@@ -371,22 +373,22 @@ Design the minimum reliable architecture and an executable plan with clear owner
 
 ### Dependencies and Blockers
 
-- Dependencies: Checkpoint 1 approval (DEC-005), Stage 3 backfill
-- Blockers: none — the last open item (frontend/backend hosting decisions) closed 2026-08-17; Checkpoint 2 is ready for Dien's explicit approval
+- Dependencies: revised Stage 3 approval (DEC-009), verified historical prototype evidence
+- Blockers: Checkpoint 2 cannot close until the news/social service choice or source-linked replay fallback is explicitly approved and T0.1 confirms the reuse/schedule assumption
 
 ### References and Evidence
 
-- Reference IDs: REF-018, REF-019, REF-020, REF-021, REF-022
-- Service IDs: see `SERVICES.md`
+- Reference IDs: REF-018–REF-022, REF-028, REF-029
+- Service IDs: SVC-001–SVC-008
 
 ### Things to Avoid
 
-- Learning IDs: LEARN-002, LEARN-010
-- Stage-specific warning: do not let executor agents touch `PIPELINE.md`, `DECISIONS.md`, or `SERVICES.md` — orchestrator-only per the protocol in `outputs/04-planning/task-tracker.md` §1
+- Learning IDs: LEARN-002, LEARN-004, LEARN-005, LEARN-009, LEARN-010, LEARN-011
+- Stage-specific warning: do not count historical prototype features as final `NORMAL/WATCH/PROTECT`, Proof of Protection, or external adoption without the revised task's acceptance evidence
 
 ### Decisions
 
-- Decision IDs: DEC-005, DEC-006
+- Decision IDs: DEC-005, DEC-006 (historical), DEC-009, DEC-010 (pending)
 
 ### Skip Record
 
@@ -395,27 +397,29 @@ Design the minimum reliable architecture and an executable plan with clear owner
 
 ### Next Step
 
-- Completed 2026-08-17. Checkpoint 2 approved (DEC-006). Proceed to Stage 5 with `outputs/04-planning/task-tracker.md` as the execution plan.
+- Review the revised tracker, close the SVC-007/SVC-008 fallback choice, then explicitly re-approve Checkpoint 2. Do not begin new-scope Stage 5 work from the historical tracker.
 
 ## Checkpoint 2 — Implementation Plan
 
-- Status: approved
-- Service plan approval: approved
-- Service IDs: SVC-001 through SVC-006 (see `SERVICES.md`)
-- Decision requested: approve `outputs/04-planning/task-tracker.md` as the Stage 5 (Build) execution plan, including the multi-agent orchestrator/executor protocol in its §1
-- Recommendation: approve as written. The task list mirrors spec §5.1's execution order exactly (eligibility → index poller → parsing pipeline → measurement studies → consumer surfaces → v4 hook → scoreboard/feed → submission), and every task's acceptance criterion is grounded in a fact already verified in spec §7 rather than an assumption
-- Alternatives: a single-executor build (no orchestrator/executor split) was the default before this session — rejected per the user's explicit request for multi-agent parallelism; the tracker caps concurrency at 2 executors specifically so evidence review (Dien's bottleneck, not build speed) stays the limiting factor rather than agent count
-- Evidence and reference IDs: REF-018–REF-022; `outputs/02-ideation/afterhours-spec.md` §4, §4.9, §5, §7, §9
-- Risks: backend compute is Dien's own VPS with no managed-platform fallback — if it goes down overnight during the closed-market window (the exact scenario the product argues about), there is no pre-arranged backup host, see SERVICES.md SVC-006; the plan assumes 2 concurrent executors plus the orchestrator are actually available — if Dien is running this solo without separate Claude Code sessions, §1's "Mechanism A" (shared-file mailbox) is the fallback and execution will be slower than the phase ordering implies
-- Things to avoid / learning IDs: LEARN-002, LEARN-010
-- Decision impact: unlocks Stage 5 (Build)
-- Approved by: Dien
-- Approval date: 2026-08-17
-- Decision ID: DEC-006
+- Status: reopened
+- Service plan approval: pending — SVC-007/SVC-008 need a provider decision or explicit source-linked replay-fixture fallback
+- Service IDs: SVC-001 through SVC-008
+- Decision requested: approve `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md` as the prospective Stage 5 plan of record
+- Recommendation: approve after T0.3's fallback is accepted and T0.1 confirms compatibility. Keep the entire P0 proof loop; treat T8/P1 and every P2 item as non-blocking
+- Alternatives: continue the historical plan — rejected because it does not implement the final five differentiators; expand to all roadmap integrations — rejected because it would trade away the mandatory vertical proof
+- Evidence and reference IDs: REF-028, REF-029; revised tracker §2–§9
+- Risks: the remaining Event A window is short; live news/social provider access is unknown; the three-policy result may be neutral or negative and must still be published honestly
+- Things to avoid / learning IDs: LEARN-002, LEARN-009, LEARN-010, LEARN-011
+- Decision impact: approval will complete revised Stage 4 and unlock new-scope Stage 5
+- Approved by: pending
+- Approval date: pending
+- Decision ID: DEC-010
 
 ## Stage 5 — Build
 
-- Status: in-progress
+- Status: not-started
+
+Historical note: the original prototype build reached this stage under DEC-006 and its verified evidence remains in `outputs/04-planning/task-tracker.md`. New-scope implementation is not started until DEC-010 is approved.
 
 ### Objective
 
@@ -457,18 +461,18 @@ Implement the approved MVP and maintain an integration-ready happy path.
 
 ### Owner
 
-- Owner: Dien (orchestrator), executor agents assigned per task via `outputs/04-planning/task-tracker.md` §1
+- Owner: Dien, with Codex implementation support after Checkpoint 2 approval
 
 ### Dependencies and Blockers
 
-- Dependencies: Checkpoint 2 approval (DEC-006); day-1 eligibility tasks (task-tracker.md Phase 0) block most Phase 1+ work
-- Blockers: most of Phase 0 is **[HUMAN-ONLY]** and not yet done (P0.1–P0.4, P0.11, P0.12, P0.13) — this is now the binding constraint on further executor-assignable work, not build capacity. Code-writable, test-verifiable work that does not need live infra or credentials has been completed and independently verified (see below); what remains in Phase 1+ mostly needs the VPS (P0.11) or a Gemini key (P0.13) to test live, or real funds (P0.2/P0.4) to deploy.
+- Dependencies: revised Checkpoint 2 approval (DEC-010)
+- Blockers: SVC-007/SVC-008 decision/fallback and T0.1 compatibility/schedule verification
 
 ### References and Evidence
 
-- Reference IDs: REF-018–REF-022
-- Service IDs: SVC-001 through SVC-006
-- 2026-08-17 progress (orchestrator-verified, not just executor-reported): P1.1–P1.7 and P4.1 code-complete, `tsc`/`forge build` clean, 23/23 + 56/56 tests independently re-run and passing; P2.2/P2.3 (on-chain reaction-latency study, n=46) complete and published at `outputs/05-build/reaction-latency-study.md`, including a real RPC-coverage gap found and closed before the numbers were accepted (LEARN-011). See task-tracker.md §3 evidence lines for detail per task.
+- Reference IDs: REF-018–REF-022, REF-028, REF-029
+- Service IDs: SVC-001 through SVC-008
+- Historical evidence: original prototype progress and commands remain recorded in `outputs/04-planning/task-tracker.md`; each reused component is revalidated by revised task T0.1
 
 ### Things to Avoid
 
@@ -477,7 +481,7 @@ Implement the approved MVP and maintain an integration-ready happy path.
 
 ### Decisions
 
-- Decision IDs: DEC-006
+- Decision IDs: DEC-006 (historical), DEC-009, DEC-010 (pending)
 
 ### Skip Record
 
@@ -486,7 +490,7 @@ Implement the approved MVP and maintain an integration-ready happy path.
 
 ### Next Step
 
-- Most executor-assignable, credential-free work in Phase 1/2 is now done and verified. The binding next step is Dien completing the **[HUMAN-ONLY]** Phase 0 items (P0.1 X account, P0.2 fund mainnet wallet, P0.3 testnet faucet, P0.4 mainnet wNVDAx purchase, P0.11 VPS provisioning, P0.12 Vercel project — frontend, currently paused per Dien's scope instruction, P0.13 Gemini key) — these unblock live testing of P1.1/P1.3/P1.5, the testnet/mainnet contract deploys (P1.8/P1.9/P4.2/P4.3), and everything downstream in Phase 2–6.
+- Await revised Checkpoint 2 approval. Once approved, begin at T0.1 in `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md`.
 
 ## Stage 6 — Testing and Quality Review
 

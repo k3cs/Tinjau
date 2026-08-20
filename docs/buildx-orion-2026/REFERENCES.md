@@ -23,6 +23,8 @@ Prefer current official sources for rules, deadlines, eligibility, judging, subm
 | REF-015 | Chaos Labs Aave assessment — demand evidence for exit-depth measurement | research | high | verified | Stage 2 demand |
 | REF-016 | Pharos — live competitor publishing exit/redemption scores | competitor | high | verified | Stage 2 differentiation |
 | REF-017 | xStocks official docs — redemption terms and proof of reserves | documentation | high | verified | Stage 2 scope |
+| REF-028 | Tinjau LP Risk Autopilot final design | product design | high | verified | Stage 3–7 revised scope |
+| REF-029 | Tinjau competitive-landscape deep research | research | high | verified | Stage 3–4 differentiation and claims |
 
 ## Reference Entry Template
 
@@ -364,6 +366,28 @@ Prefer current official sources for rules, deadlines, eligibility, judging, subm
 - Verification: verified
 - Verified on: 2026-08-17
 - Adaptation notes: read via WebFetch (a summarizing intermediate step), not raw HTML inspected directly by the orchestrator — two independent fetches agreed, but per LEARN-006 (never conclude coverage from a summarised fetch without checking), a direct human read of the live FAQ is still the fully independent confirmation if this fact is ever load-bearing for a dispute.
+
+### REF-028 — Tinjau LP Risk Autopilot final design
+
+- Link or artifact path: `../superpowers/specs/2026-08-20-tinjau-lp-risk-autopilot-design.md`
+- Type: product design
+- Relevant part: final positioning, five required differentiators, `NORMAL/WATCH/PROTECT`, dual confirmation, bounded policy, Risk Registry, Proof of Protection, three-scene demo, measurement rules, scope boundary, and claim rules
+- Applicable lesson: the product is not judged as a complete risk agent unless evidence, market confirmation, bounded action, recovery, and measured outcome are shown as one vertical workflow
+- Relevance: high
+- Verification: verified
+- Verified on: 2026-08-20
+- Adaptation notes: approved by Dien and committed in `b20db69`. This is the prospective product source of truth. Earlier AFTERHOURS specifications remain historical evidence and do not override it
+
+### REF-029 — Tinjau competitive-landscape deep research
+
+- Link or artifact path: `outputs/03-product/tinjau-competitive-landscape-deep-research.html`
+- Type: research / competitor analysis
+- Relevant part: comparison against corporate-action extraction, event/news intelligence, RWA monitoring, and AI-controlled Uniswap v4 projects; identifies which individual components are occupied and narrows Tinjau's differentiation to their combined tokenized-equity workflow
+- Applicable lesson: do not claim first AI hook, first corporate-action oracle, or first on-chain risk registry. Prove causal evidence, rumor containment, dual confirmation, tokenized-equity awareness, and measured protection together
+- Relevance: high
+- Verification: verified
+- Verified on: 2026-08-20
+- Adaptation notes: verified with limitations stated in the artifact; no claim of exhaustive market coverage. Use its competitor matrix consistently in demo, README, documentation, and pitch; preserve the distinction between public evidence and inference
 
 ## Source Conflicts
 

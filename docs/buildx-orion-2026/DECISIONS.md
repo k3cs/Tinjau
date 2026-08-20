@@ -10,6 +10,12 @@ Record decisions that affect eligibility, idea selection, scope, architecture, i
 | DEC-002 | Use X Layer Testnet chain ID 1952, not 195 | 1 | approved | Claude (evidence-resolved) | 2026-08-16 |
 | DEC-003 | Final idea selection | 2 | reversed | Dien | 2026-08-16 |
 | DEC-004 | Reopen Checkpoint 1, abandon EXITPROOF | 2 | approved | Dien | 2026-08-16 |
+| DEC-005 | Select AFTERHOURS, close Checkpoint 1 | 2 | approved | Dien | 2026-08-17 |
+| DEC-006 | Approve original implementation plan (prospectively superseded by DEC-009/DEC-010) | 4 → 5 | approved | Dien | 2026-08-17 |
+| DEC-007 | Use Gemini temporarily and confirm hosting access | 5 | approved | Dien | 2026-08-17 |
+| DEC-008 | Rename AFTERHOURS to Tinjau | 6 | approved | Dien | 2026-08-20 |
+| DEC-009 | Evolve Tinjau into an LP Risk Autopilot | 3 | approved | Dien | 2026-08-20 |
+| DEC-010 | Adopt the revised Hackathon MVP tracker | 4 → 5 | proposed | pending | 2026-08-20 |
 
 ## Decision Entry Template
 
@@ -159,3 +165,39 @@ Record decisions that affect eligibility, idea selection, scope, architecture, i
 - Approved by: Dien
 - Approval date: 2026-08-20
 - Revisit condition: none — this is a completed rename, not conditional
+
+### DEC-009 — Evolve Tinjau into an LP Risk Autopilot
+
+- Stage: 3
+- Status: approved
+- Decision requested: whether Tinjau should remain primarily a corporate-filing oracle/dynamic-fee prototype or become a complete, bounded LP-risk product
+- Selected option: position Tinjau as a **corporate-event-aware market discontinuity guard for tokenized-stock liquidity on X Layer**. Preserve the existing bonded official-evidence pipeline, then add safe rumor containment, an AI Evidence Graph, independent OKX/X Layer market confirmation, `NORMAL/WATCH/PROTECT`, bounded fee action with deterministic recovery, a minimal reusable risk record, and Proof of Protection against static-fee and volatility-only baselines
+- Rationale: the prior prototype proved that the components can be built, but it did not prove protection beyond a generic volatility controller, safe handling of uncertain information, or reusable ecosystem value. The revised vertical workflow makes those claims directly testable without granting an LLM unrestricted execution authority
+- Alternatives: (a) remain a filing-to-fee oracle — rejected because AI, user value, and product completeness remain narrow; (b) add unrestricted news-driven action — rejected because a rumor would become an unsafe execution authority; (c) build all proposed x402, Agentic Wallet, Exchange OS, and multi-provider features now — rejected as incompatible with the Hackathon MVP boundary
+- Evidence and reference IDs: REF-028, REF-029; `outputs/02-ideation/afterhours-independent-validation.md`
+- Service IDs: preserves SVC-001–SVC-006; introduces pending categories SVC-007 and SVC-008
+- Trade-offs: the design is more differentiated but requires one complete proof loop. Breadth is deliberately sacrificed: one official event, one rumor, one asset/pool, one market-confirmation path, one bounded action, and one three-policy benchmark
+- Risks: current contracts and registry do not yet implement the final state/policy schema; current public infrastructure may still expose old branding; live news/social access is unresolved; the measured historical median LP effect is small and tail-concentrated, so results must report the distribution honestly
+- Things to avoid / learning IDs: LEARN-004, LEARN-005, LEARN-007, LEARN-009, LEARN-010, LEARN-011
+- Impact: completes the revised Stage 3 product definition, prospectively supersedes the original implementation scope in DEC-006, and reopens Stage 4/Checkpoint 2. Historical prototype evidence remains valid and must not be rewritten
+- Approved by: Dien
+- Approval date: 2026-08-20
+- Revisit condition: the final vertical slice cannot be implemented safely within the available environment, or the three-policy benchmark shows no added event-aware value; in either case narrow the claim rather than changing the recorded result
+
+### DEC-010 — Adopt the revised Hackathon MVP tracker
+
+- Stage: 4 → 5
+- Status: proposed
+- Decision requested: whether `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md` becomes the prospective Stage 5 plan of record
+- Selected option: proposed approval of the new dependency-ordered P0 vertical slice, with P1 score-raising work below the cut line and P2 roadmap excluded
+- Rationale: the original tracker remains useful historical evidence but does not contain the five final differentiators, three-policy benchmark, final risk states, bounded recovery, or reusable risk record. Mixing new work into it would make completed prototype tasks look like completed final-product behavior
+- Alternatives: (a) continue editing the historical tracker — rejected because it obscures the scope change; (b) treat every roadmap integration as Hackathon MVP — rejected because it weakens completion probability; (c) begin implementation before re-approval — rejected by Checkpoint 2
+- Evidence and reference IDs: REF-028, REF-029; `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md`
+- Service IDs: SVC-001–SVC-008; SVC-007/SVC-008 must be closed or their replay-fixture fallback explicitly approved before this decision becomes approved
+- Trade-offs: the plan prioritizes a defensible proof over provider breadth, mainnet, monetization, and a live Exchange OS adapter
+- Risks: the short remaining Event A window means compatibility/reuse must be established by T0.1 before the plan can be considered schedule-safe; failure to close the service gate limits news/social input to source-linked replay fixtures
+- Things to avoid / learning IDs: LEARN-002, LEARN-009, LEARN-010, LEARN-011
+- Impact: once approved, closes the reopened Checkpoint 2 and unlocks Stage 5 under the new scope; until then, the historical build remains evidence but no new final-scope implementation is authorized by this workspace plan
+- Approved by: pending
+- Approval date: pending
+- Revisit condition: T0.1 reveals that the reusable baseline is materially different from the tracker assumptions, or the user changes the Hackathon MVP boundary
