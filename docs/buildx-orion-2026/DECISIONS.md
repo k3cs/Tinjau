@@ -16,6 +16,7 @@ Record decisions that affect eligibility, idea selection, scope, architecture, i
 | DEC-008 | Rename AFTERHOURS to Tinjau | 6 | approved | Dien | 2026-08-20 |
 | DEC-009 | Evolve Tinjau into an LP Risk Autopilot | 3 | approved | Dien | 2026-08-20 |
 | DEC-010 | Adopt the revised Hackathon MVP tracker | 4 → 5 | approved | Dien | 2026-08-20 |
+| DEC-011 | Split Stage 5 execution at the frontend boundary | 5 | approved | Dien | 2026-08-20 |
 
 ## Decision Entry Template
 
@@ -201,3 +202,21 @@ Record decisions that affect eligibility, idea selection, scope, architecture, i
 - Approved by: Dien
 - Approval date: 2026-08-20
 - Revisit condition: T0.1 reveals that the reusable baseline is materially different from the tracker assumptions, or the user changes the Hackathon MVP boundary
+
+### DEC-011 — Split Stage 5 execution at the frontend boundary
+
+- Stage: 5
+- Status: approved
+- Decision requested: how to divide implementation between an external AI agent that has no prior conversation context and the Codex frontend owner
+- Selected option: Dien's external AI agent owns all non-frontend implementation; Codex owns all frontend implementation; tasks that span both surfaces use separate file lanes and mandatory versioned handoff artifacts. Dien remains integration and product-decision owner
+- Rationale: the external agent needs a self-contained product, safety, evidence, and scope brief, while the frontend owner needs stable schemas and deterministic scenario data. A hard file boundary prevents accidental frontend edits, duplicated implementation, and backend/UI contract drift
+- Alternatives: (a) let one agent implement everything — rejected by Dien; (b) allow both agents to edit `apps/web/**` — rejected because it creates ownership and merge conflicts; (c) let the frontend infer schemas from logs or contracts — rejected because field meaning, provenance, and degraded behavior would be ambiguous
+- Evidence and reference IDs: Dien's explicit instruction on 2026-08-20; REF-028; REF-030; `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md` §0.21–§0.26
+- Service IDs: no service selection changes; SVC-001–SVC-008 remain governed by DEC-010
+- Trade-offs: stable handoff artifacts add documentation work, and some split tasks cannot close until both lanes finish; in return, each agent can work without hidden conversation context or overlapping file ownership
+- Risks: an agent may treat a split task as cross-file authorization, change a schema after handoff without versioning, or claim completion before the other lane passes its acceptance checks
+- Things to avoid / learning IDs: LEARN-009, LEARN-010, LEARN-011
+- Impact: changes Stage 5 execution ownership only. Product scope, architecture, services, claims, and Checkpoint 2 approval remain unchanged, so Checkpoint 2 is not reopened
+- Approved by: Dien
+- Approval date: 2026-08-20
+- Revisit condition: Dien changes the executor assignment, the repository is reorganized so the file boundary is no longer valid, or a required integration cannot be completed through the documented handoff contract

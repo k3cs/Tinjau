@@ -419,7 +419,7 @@ Design the minimum reliable architecture and an executable plan with clear owner
 
 - Status: in-progress
 
-Historical note: the original prototype evidence remains in `outputs/04-planning/task-tracker.md`. Revised work now follows `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md` under DEC-010.
+Historical note: the original prototype evidence remains in `outputs/04-planning/task-tracker.md`. Revised work now follows `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md` under DEC-010, with execution ownership split at the frontend boundary under DEC-011.
 
 ### Objective
 
@@ -461,7 +461,10 @@ Implement the approved MVP and maintain an integration-ready happy path.
 
 ### Owner
 
-- Owner: Dien, with Codex implementation support after Checkpoint 2 approval
+- Product/integration owner: Dien
+- Non-frontend implementation: user-managed external AI agent
+- Frontend implementation: Codex
+- Exact task/file boundaries and handoff requirements: revised tracker §0.21–§0.26
 
 ### Dependencies and Blockers
 
@@ -477,11 +480,11 @@ Implement the approved MVP and maintain an integration-ready happy path.
 ### Things to Avoid
 
 - Learning IDs: LEARN-002, LEARN-010, LEARN-011
-- Stage-specific warning: do not let an executor check its own task's box — orchestrator verifies evidence and closes the box, per task-tracker.md §1 step 7
+- Stage-specific warning: the non-frontend agent starts with no conversation context and must read the revised tracker §0 before acting. It must not edit `apps/web/**` or `DESIGN.md`; split tasks do not authorize cross-lane edits. Schema/API changes after frontend handoff require an explicit version and migration note
 
 ### Decisions
 
-- Decision IDs: DEC-006 (historical), DEC-009, DEC-010 (pending)
+- Decision IDs: DEC-006 (historical), DEC-009, DEC-010, DEC-011
 
 ### Skip Record
 
@@ -490,7 +493,7 @@ Implement the approved MVP and maintain an integration-ready happy path.
 
 ### Next Step
 
-- T0.1 and T0.3 are complete. Begin T0.2: freeze one official event, one source-linked rumor, one asset/pool, and their immutable replay windows.
+- Non-frontend lane: read the revised tracker §0 and begin T0.2—freeze one official event, one source-linked rumor, one asset/pool, and immutable replay windows. Frontend lane: do not begin implementation until Dien explicitly asks Codex and either the required handoff fixtures are stable or the task can proceed independently from an approved frozen contract. No task implementation was delegated to Codex by DEC-011 beyond the frontend lane.
 
 ## Stage 6 — Testing and Quality Review
 
