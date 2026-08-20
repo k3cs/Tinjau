@@ -1,83 +1,178 @@
 import Link from "next/link";
-import { HeroManifest } from "@/components/hero-manifest";
-import { ProcessSteps } from "@/components/process-steps";
-import { EvidenceStrip } from "@/components/evidence-strip";
-import { CoveragePanel } from "@/components/coverage-panel";
+
+const context = [
+  ["Reference asset", "wNVDAx"],
+  ["Pool", "wNVDAx / USDG"],
+  ["Network", "X Layer · 196"],
+  ["Schema", "tinjau.risk / 1.0.0 draft"],
+] as const;
+
+const evidencePath = [
+  { label: "Source evidence", status: "Partial handoff", tone: "text-watch" },
+  { label: "Evidence graph", status: "Not evaluated", tone: "text-ink-muted" },
+  { label: "Policy gate", status: "Fail closed", tone: "text-signal" },
+  { label: "Pool action", status: "Not authorized", tone: "text-protect" },
+] as const;
 
 export default function HomePage() {
   return (
-    <>
-      <section className="relative overflow-hidden border-b border-dock-line/70">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.35]"
-          style={{
-            backgroundImage:
-              "radial-gradient(ellipse 60% 45% at 15% 0%, rgba(194,135,42,0.18), transparent 60%), repeating-linear-gradient(180deg, rgba(0,0,0,0.35) 0px, rgba(0,0,0,0.35) 1px, transparent 1px, transparent 64px)",
-          }}
-        />
-        <div className="relative mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-8">
-          <div>
-            <h1 className="max-w-xl font-stencil text-4xl leading-[1.05] tracking-stencil text-bone sm:text-5xl lg:text-6xl">
-              Every filing held, inspected, and stamped before it&apos;s a fact.
-            </h1>
-            <p className="mt-6 max-w-lg text-[15px] leading-relaxed text-bone-muted sm:text-base">
-              Tokenised US equities trade around the clock, but the SEC filings that move them land
-              almost entirely — <span className="text-bone">~97% of last year&apos;s 8-Ks</span> from
-              the ten underlyings this tracks — while the US market is closed. Tinjau holds every
-              one as bonded cargo — three independent parses, a per-field agreement count, a
-              challenge window — and releases it on-chain instead of asserting it.
-            </p>
-            <p className="mt-3 max-w-lg font-mono text-[11px] leading-relaxed text-bone-muted">
-              ~97% is stated at that precision, not a false-precision decimal: 171 8-Ks in the
-              trailing year, and an independent recount puts 166–168 of them inside closed-market
-              hours depending on how DST and holidays are handled — no published minute-by-minute
-              classifier exists yet for this figure.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/holdings"
-                className="border border-kraft bg-kraft px-5 py-3 text-center font-mono text-[13px] font-bold uppercase tracking-[0.08em] text-kraft-line transition-colors hover:bg-kraft-light"
-              >
-                Look up an address →
-              </Link>
-              <Link
-                href="/calendar"
-                className="border border-dock-line bg-dock-raised px-5 py-3 text-center font-mono text-[13px] uppercase tracking-[0.08em] text-bone transition-colors hover:border-kraft/60 hover:text-kraft-light"
-              >
-                See what&apos;s scheduled next
-              </Link>
+    <div className="circuit-field min-h-[calc(100vh-8rem)]">
+      <section className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+        <div className="control-surface grid divide-y divide-edge overflow-hidden sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
+          {context.map(([label, value]) => (
+            <div key={label} className="px-4 py-3">
+              <p className="data-label text-ink-muted">{label}</p>
+              <p className="mt-1 font-data text-sm text-ink-secondary">{value}</p>
             </div>
-            <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.08em] text-bone-muted">
-              No wallet · no signature · no gas — this is a read, not a transaction.
+          ))}
+        </div>
+
+        <div className="mt-5 overflow-hidden rounded-lg border border-edge bg-canvas">
+          <div className="grid lg:grid-cols-12">
+            <section className="min-h-[390px] border-b border-edge p-6 sm:p-8 lg:col-span-5 lg:border-b-0 lg:border-r lg:p-10">
+              <div className="flex items-center justify-between gap-4">
+                <p className="data-label text-ink-muted">Risk state</p>
+                <span className="rounded border border-watch/50 bg-watch/10 px-2.5 py-1 font-data text-[11px] font-medium uppercase tracking-[0.06em] text-watch">
+                  Integration pending
+                </span>
+              </div>
+
+              <div className="mt-10 flex items-end gap-5">
+                <span className="font-display text-[clamp(5rem,12vw,9rem)] font-semibold leading-[0.78] tracking-display text-ink">
+                  —
+                </span>
+                <span className="mb-2 font-data text-sm uppercase tracking-[0.06em] text-ink-muted">
+                  No inferred state
+                </span>
+              </div>
+
+              <h1 className="mt-12 max-w-xl text-balance font-display text-3xl font-semibold leading-tight tracking-display text-ink sm:text-4xl">
+                Tinjau waits for complete evidence before it changes risk.
+              </h1>
+              <p className="mt-4 max-w-[65ch] text-base leading-relaxed text-ink-secondary">
+                A draft risk schema is available, but the final scenario, market confirmation, and
+                action records are not. The interface fails closed instead of presenting partial
+                input as <span className="font-data text-normal">NORMAL</span>.
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  href="/compare"
+                  className="inline-flex min-h-11 items-center rounded-md bg-signal px-4 font-data text-xs font-semibold uppercase tracking-[0.06em] text-black transition-colors hover:bg-white"
+                >
+                  Inspect comparison gate
+                </Link>
+                <span className="inline-flex min-h-11 items-center rounded-md border border-edge-strong px-4 font-data text-xs uppercase tracking-[0.06em] text-ink-muted">
+                  Aggressive fee not authorized
+                </span>
+              </div>
+            </section>
+
+            <section className="border-b border-edge p-6 sm:p-8 lg:col-span-4 lg:border-b-0 lg:border-r lg:p-10">
+              <p className="data-label text-ink-muted">OKX / X Layer confirmation</p>
+              <p className="mt-7 font-display text-4xl font-semibold tracking-display text-ink-muted">
+                UNAVAILABLE
+              </p>
+              <p className="mt-4 max-w-sm leading-relaxed text-ink-secondary">
+                No final market-confirmation payload has been handed to the frontend. Unavailable
+                means “could not evaluate,” not “looked and found nothing.”
+              </p>
+
+              <dl className="mt-9 divide-y divide-edge border-y border-edge font-data text-xs">
+                <div className="flex items-center justify-between gap-4 py-3">
+                  <dt className="text-ink-muted">Freshness</dt>
+                  <dd className="text-ink-secondary">—</dd>
+                </div>
+                <div className="flex items-center justify-between gap-4 py-3">
+                  <dt className="text-ink-muted">Block</dt>
+                  <dd className="text-ink-secondary">—</dd>
+                </div>
+                <div className="flex items-center justify-between gap-4 py-3">
+                  <dt className="text-ink-muted">Exit depth</dt>
+                  <dd className="text-ink-secondary">—</dd>
+                </div>
+              </dl>
+            </section>
+
+            <section className="p-6 sm:p-8 lg:col-span-3 lg:p-10">
+              <p className="data-label text-ink-muted">Pre-registered envelope</p>
+              <div className="mt-8 space-y-7">
+                <div>
+                  <p className="font-display text-4xl font-semibold tracking-display text-ink">0.05%</p>
+                  <p className="mt-1 font-data text-xs text-ink-muted">Baseline fee · 500</p>
+                </div>
+                <div className="h-px bg-edge" />
+                <div>
+                  <p className="font-display text-4xl font-semibold tracking-display text-protect">2.00%</p>
+                  <p className="mt-1 font-data text-xs text-ink-muted">Maximum fee · 20,000</p>
+                </div>
+                <dl className="grid grid-cols-2 gap-3 font-data text-xs">
+                  <div className="rounded border border-edge bg-canvas-soft p-3">
+                    <dt className="text-ink-muted">Widen</dt>
+                    <dd className="mt-1 text-ink-secondary">1 hour</dd>
+                  </div>
+                  <div className="rounded border border-edge bg-canvas-soft p-3">
+                    <dt className="text-ink-muted">Decay</dt>
+                    <dd className="mt-1 text-ink-secondary">5 hours</dd>
+                  </div>
+                </dl>
+              </div>
+              <p className="mt-7 text-sm leading-relaxed text-ink-muted">
+                These are frozen policy bounds, not proof that an action was requested or applied.
+              </p>
+            </section>
+          </div>
+
+          <section className="border-t border-edge bg-canvas-soft/60 p-4 sm:p-6">
+            <div className="grid gap-px overflow-hidden rounded-md border border-edge bg-edge sm:grid-cols-2 lg:grid-cols-4">
+              {evidencePath.map((step, index) => (
+                <div key={step.label} className="relative bg-canvas px-4 py-4">
+                  <div className="flex items-center gap-3">
+                    <span
+                      aria-hidden
+                      className={`h-2.5 w-2.5 rounded-full ${index === 0 ? "bg-watch" : "bg-edge-strong"}`}
+                    />
+                    <p className="font-data text-xs font-medium uppercase tracking-[0.05em] text-ink-secondary">
+                      {step.label}
+                    </p>
+                  </div>
+                  <p className={`mt-2 pl-[22px] text-sm ${step.tone}`}>{step.status}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <section className="mt-5 grid gap-px overflow-hidden rounded-lg border border-edge bg-edge md:grid-cols-[1.2fr_1fr]">
+          <div className="bg-canvas p-6 sm:p-8">
+            <h2 className="font-display text-2xl font-semibold tracking-display text-ink">
+              Flexible understanding. Deterministic authority.
+            </h2>
+            <p className="mt-3 max-w-[68ch] leading-relaxed text-ink-secondary">
+              AI may parse language, resolve entities, group duplicates, detect contradictions, and
+              explain confidence. Versioned policy validates freshness, promotion rules, fee
+              ceilings, expiry, cooldown, and recovery.
             </p>
           </div>
-
-          <div className="flex justify-center lg:justify-end">
-            <HeroManifest />
+          <div className="bg-canvas-soft p-6 sm:p-8">
+            <p className="data-label text-ink-muted">Data modes remain explicit</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {["LIVE", "OBSERVED", "REPLAY", "SIMULATED"].map((mode) => (
+                <span
+                  key={mode}
+                  className="rounded border border-edge-strong px-2.5 py-1.5 font-data text-[11px] font-medium tracking-[0.05em] text-ink-secondary"
+                >
+                  {mode}
+                </span>
+              ))}
+            </div>
+            <p className="mt-4 text-sm leading-relaxed text-ink-muted">
+              No mode is implied by styling alone, and simulated evidence never receives a fake
+              source link.
+            </p>
           </div>
-        </div>
+        </section>
       </section>
-
-      <ProcessSteps />
-      <EvidenceStrip />
-      <CoveragePanel />
-
-      <section className="border-t border-dock-line/70">
-        <div className="mx-auto max-w-6xl px-5 py-16 text-center sm:px-8 sm:py-20">
-          <h2 className="mx-auto max-w-xl font-stencil text-2xl tracking-stencil text-bone sm:text-3xl">
-            Your holdings have a paper trail. Go read it.
-          </h2>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href="/holdings"
-              className="border border-kraft bg-kraft px-6 py-3 font-mono text-[13px] font-bold uppercase tracking-[0.08em] text-kraft-line transition-colors hover:bg-kraft-light"
-            >
-              Open the holder digest →
-            </Link>
-          </div>
-        </div>
-      </section>
-    </>
+    </div>
   );
 }
