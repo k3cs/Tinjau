@@ -116,6 +116,7 @@ T8 external validation is P1 and never blocks a working P0 demo.
 
 - [ ] **T0.1 — Reproduce the current baseline**  
   Depends on: none  
+  Stage boundary: read-only Stage 4 readiness check; this task may run before Checkpoint 2 approval but must not modify product behavior.  
   Work: run server, web, and contract checks; inventory existing addresses, routes, APIs, fixtures, and public URLs.  
   Acceptance: one evidence note records exact commands, pass/fail counts, deployed addresses, and known failures without modifying results.  
   Evidence: pending.
@@ -128,6 +129,7 @@ T8 external validation is P1 and never blocks a working P0 demo.
 
 - [ ] **T0.3 — Close the news/social service gate**  
   Depends on: T0.2  
+  Stage boundary: Stage 4 service-planning task; provider selection or fallback approval occurs before Checkpoint 2 closes.  
   Work: choose the narrowest permitted intake for the two scenarios. Prefer source-linked public data; if live API access is unavailable, use immutable replay fixtures and record the provider limitation in `SERVICES.md`.  
   Acceptance: SVC-007 and SVC-008 have a decision, provenance rules, readiness test, fallback, cost/access status, and no unapproved credential dependency.  
   Evidence: pending.
