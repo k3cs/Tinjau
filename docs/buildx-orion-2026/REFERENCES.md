@@ -25,6 +25,7 @@ Prefer current official sources for rules, deadlines, eligibility, judging, subm
 | REF-017 | xStocks official docs — redemption terms and proof of reserves | documentation | high | verified | Stage 2 scope |
 | REF-028 | Tinjau LP Risk Autopilot final design | product design | high | verified | Stage 3–7 revised scope |
 | REF-029 | Tinjau competitive-landscape deep research | research | high | verified | Stage 3–4 differentiation and claims |
+| REF-030 | Revised MVP baseline audit | build evidence | high | verified | Stage 4 reuse and schedule readiness |
 
 ## Reference Entry Template
 
@@ -388,6 +389,17 @@ Prefer current official sources for rules, deadlines, eligibility, judging, subm
 - Verification: verified
 - Verified on: 2026-08-20
 - Adaptation notes: verified with limitations stated in the artifact; no claim of exhaustive market coverage. Use its competitor matrix consistently in demo, README, documentation, and pitch; preserve the distinction between public evidence and inference
+
+### REF-030 — Revised MVP baseline audit
+
+- Link or artifact path: `outputs/04-planning/t0-1-baseline-audit.md`
+- Type: build evidence / readiness audit
+- Relevant part: current test/build results, public app/API checks, X Layer Testnet bytecode inventory, reusable components, compatibility gaps, and compressed-schedule conclusion
+- Applicable lesson: the revised MVP can reuse substantial working infrastructure, but none of the missing final risk state, Evidence Graph, market confirmation, or three-policy proof may be counted as implemented
+- Relevance: high
+- Verification: verified
+- Verified on: 2026-08-20
+- Adaptation notes: public deployment and chain state are time-sensitive; reverify at T7 before submission
 
 ## Source Conflicts
 

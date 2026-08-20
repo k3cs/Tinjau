@@ -15,7 +15,7 @@ Record decisions that affect eligibility, idea selection, scope, architecture, i
 | DEC-007 | Use Gemini temporarily and confirm hosting access | 5 | approved | Dien | 2026-08-17 |
 | DEC-008 | Rename AFTERHOURS to Tinjau | 6 | approved | Dien | 2026-08-20 |
 | DEC-009 | Evolve Tinjau into an LP Risk Autopilot | 3 | approved | Dien | 2026-08-20 |
-| DEC-010 | Adopt the revised Hackathon MVP tracker | 4 → 5 | proposed | pending | 2026-08-20 |
+| DEC-010 | Adopt the revised Hackathon MVP tracker | 4 → 5 | approved | Dien | 2026-08-20 |
 
 ## Decision Entry Template
 
@@ -187,17 +187,17 @@ Record decisions that affect eligibility, idea selection, scope, architecture, i
 ### DEC-010 — Adopt the revised Hackathon MVP tracker
 
 - Stage: 4 → 5
-- Status: proposed
+- Status: approved
 - Decision requested: whether `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md` becomes the prospective Stage 5 plan of record
-- Selected option: proposed approval of the new dependency-ordered P0 vertical slice, with P1 score-raising work below the cut line and P2 roadmap excluded
+- Selected option: approve the new dependency-ordered P0 vertical slice, with P1 score-raising work below the cut line, P2 roadmap excluded, and immutable source-linked replay fixtures selected for the P0 news/social paths
 - Rationale: the original tracker remains useful historical evidence but does not contain the five final differentiators, three-policy benchmark, final risk states, bounded recovery, or reusable risk record. Mixing new work into it would make completed prototype tasks look like completed final-product behavior
 - Alternatives: (a) continue editing the historical tracker — rejected because it obscures the scope change; (b) treat every roadmap integration as Hackathon MVP — rejected because it weakens completion probability; (c) begin implementation before re-approval — rejected by Checkpoint 2
-- Evidence and reference IDs: REF-028, REF-029; `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md`
-- Service IDs: SVC-001–SVC-008; SVC-007/SVC-008 must be closed or their replay-fixture fallback explicitly approved before this decision becomes approved
+- Evidence and reference IDs: REF-028, REF-029, REF-030; `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md`
+- Service IDs: SVC-001–SVC-008; Dien explicitly approved SVC-007/SVC-008's repository replay-fixture approach on 2026-08-20
 - Trade-offs: the plan prioritizes a defensible proof over provider breadth, mainnet, monetization, and a live Exchange OS adapter
-- Risks: the short remaining Event A window means compatibility/reuse must be established by T0.1 before the plan can be considered schedule-safe; failure to close the service gate limits news/social input to source-linked replay fixtures
+- Risks: REF-030 confirms substantial reuse but also seven compatibility gaps. The remaining Event A window is compressed, and news/social input is limited to source-linked replay fixtures; no live-monitoring claim is permitted
 - Things to avoid / learning IDs: LEARN-002, LEARN-009, LEARN-010, LEARN-011
-- Impact: once approved, closes the reopened Checkpoint 2 and unlocks Stage 5 under the new scope; until then, the historical build remains evidence but no new final-scope implementation is authorized by this workspace plan
-- Approved by: pending
-- Approval date: pending
+- Impact: closes the reopened Checkpoint 2 and unlocks Stage 5 under the revised scope. The historical build remains reusable evidence, subject to T0.1's recorded compatibility gaps
+- Approved by: Dien
+- Approval date: 2026-08-20
 - Revisit condition: T0.1 reveals that the reusable baseline is materially different from the tracker assumptions, or the user changes the Hackathon MVP boundary

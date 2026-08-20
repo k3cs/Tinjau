@@ -2,7 +2,7 @@
 
 Stage 4 planning artifact for workspace `buildx-orion-2026`.
 
-- Status: **draft — Checkpoint 2 re-approval pending**
+- Status: **approved — Checkpoint 2 re-approved 2026-08-20 (DEC-010)**
 - Created: 2026-08-20
 - Governing design: `../../../superpowers/specs/2026-08-20-tinjau-lp-risk-autopilot-design.md`
 - Historical prototype tracker: `task-tracker.md`
@@ -114,12 +114,12 @@ T8 external validation is P1 and never blocks a working P0 demo.
 
 ### Phase T0 — Freeze the baseline and remove ambiguity
 
-- [ ] **T0.1 — Reproduce the current baseline**  
+- [x] **T0.1 — Reproduce the current baseline**
   Depends on: none  
   Stage boundary: read-only Stage 4 readiness check; this task may run before Checkpoint 2 approval but must not modify product behavior.  
   Work: run server, web, and contract checks; inventory existing addresses, routes, APIs, fixtures, and public URLs.  
   Acceptance: one evidence note records exact commands, pass/fail counts, deployed addresses, and known failures without modifying results.  
-  Evidence: pending.
+  Evidence: `t0-1-baseline-audit.md` — server 153/153 tests and typecheck pass; web production build and sequenced typecheck pass; contracts 56/56 tests pass; public app/API and seven testnet deployments reverified. Seven final-design compatibility gaps remain explicit.
 
 - [ ] **T0.2 — Freeze the demo asset and two scenarios**  
   Depends on: T0.1  
@@ -127,12 +127,12 @@ T8 external validation is P1 and never blocks a working P0 demo.
   Acceptance: both scenarios are reproducible from immutable fixtures; the rumor is visibly labeled `RUMOR` and `REPLAY` or `SIMULATED`; no scenario is selected based on its benchmark result.  
   Evidence: pending.
 
-- [ ] **T0.3 — Close the news/social service gate**  
-  Depends on: T0.2  
+- [x] **T0.3 — Close the news/social service gate**
+  Depends on: none
   Stage boundary: Stage 4 service-planning task; provider selection or fallback approval occurs before Checkpoint 2 closes.  
   Work: choose the narrowest permitted intake for the two scenarios. Prefer source-linked public data; if live API access is unavailable, use immutable replay fixtures and record the provider limitation in `SERVICES.md`.  
   Acceptance: SVC-007 and SVC-008 have a decision, provenance rules, readiness test, fallback, cost/access status, and no unapproved credential dependency.  
-  Evidence: pending.
+  Evidence: Dien explicitly approved immutable source-linked replay fixtures on 2026-08-20. SVC-007/SVC-008 select the repository-local replay approach for P0; live provider discovery is deferred and cannot support a live-monitoring claim.
 
 - [ ] **T0.4 — Pre-register the benchmark method**  
   Depends on: T0.2  
@@ -434,9 +434,15 @@ Record any changed assumption before continuing:
 
 | Date | Task | Status label | Change/blocker | Impact | Decision/fallback | Evidence |
 |---|---|---|---|---|---|---|
-| 2026-08-20 | T0.3 | `[missing]` | Final live news and social providers have not been selected. | Blocks live-provider implementation, not fixture-backed P0 architecture. | Decide SVC-007/SVC-008 before Checkpoint 2 closes; use source-linked immutable replay fixtures if account/API access is unavailable. | Final design §9 and §14 |
+| 2026-08-20 | T0.3 | `[confirmed]` | Dien approved source-linked immutable replay fixtures for P0; no live news/social provider is selected. | P0 can prove normalization and rumor containment, but cannot claim live discovery or real-time monitoring. | SVC-007/SVC-008 selected for MVP; live providers deferred to P2. | User approval; DEC-010 |
 
 ## 9. Checkpoint 2 approval payload
+
+- Status: approved
+- Approved by: Dien
+- Approval date: 2026-08-20
+- Service decision: immutable source-linked replay fixtures approved for SVC-007/SVC-008
+- Readiness evidence: T0.1 / REF-030
 
 Approve this tracker only after confirming:
 

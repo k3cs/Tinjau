@@ -20,8 +20,8 @@
 | Winner-pattern analysis | Claude | Dien | 2026-08-16 | completed |
 | Idea shortlist + recommendation | Claude | Dien | 2026-08-16 | completed |
 | Revised LP Risk Autopilot design | Codex | Dien | 2026-08-20 | completed |
-| Revised service plan and integrations | Codex | Dien | before reopened Checkpoint 2 | in-progress — SVC-007/SVC-008 pending |
-| MVP happy path | Dien | Claude | before 2026-08-21 23:59 UTC | not-started |
+| Revised service plan and integrations | Codex | Dien | before reopened Checkpoint 2 | completed — SVC-007/SVC-008 replay fixtures approved |
+| MVP happy path | Dien | Codex | before 2026-08-21 23:59 UTC | in-progress |
 | Event A submission package | Dien | Claude | 2026-08-21 23:59 UTC | not-started |
 | Event B submission package | Dien | Claude | 2026-09-02 23:59 UTC | not-started |
 
@@ -30,7 +30,7 @@
 - Maximum concurrent workstreams: 1 primary implementation task at a time for the human (solo-mode limit, unchanged)
 - **Prospective execution rule (revised 2026-08-20):** the default is one active implementation task. A second independent workstream or executor agent is permitted only after Dien explicitly authorizes it; the revised tracker does not infer that authorization from the historical DEC-006 plan.
 - Integration owner: Dien
-- Integration schedule: `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md` §3 — pending revised Checkpoint 2 approval
+- Integration schedule: `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md` §3 — approved by DEC-010
 - Solo-mode work-in-progress limit: one primary implementation task; one additional independent stream only with Dien's explicit authorization
 
 **Ideation exception (LEARN-001):** during Stage 2 this capacity picture is deliberately *not* used as an idea filter. Feasibility screening resumes at Checkpoint 1, at Dien's explicit request.

@@ -20,8 +20,8 @@ Use this file as the source of truth for third-party service decisions and readi
 | SVC-004 | LLM parsing | Google Gemini (Flash tier) — **temporary**, Claude Opus 5 planned once billing is set up | selected | approved | Dien | 2026-08-17 |
 | SVC-005 | Frontend hosting (holder digest, forward calendar, scoreboard UI, demo page UI, evidence pages) | Vercel | selected | setup | Dien | 2026-08-17 |
 | SVC-006 | Backend compute (event agent, index poller, X/Telegram bots, demo relayer + scoreboard API) | Dien's own VPS | selected | setup | Dien | 2026-08-17 |
-| SVC-007 | Financial-news intake | provider not selected; source-linked replay fallback proposed | deferred | candidate | Dien | 2026-08-20 |
-| SVC-008 | Social-rumor intake | provider not selected; source-linked replay fallback proposed | deferred | candidate | Dien | 2026-08-20 |
+| SVC-007 | Financial-news intake | Immutable source-linked repository replay fixture | selected | approved | Dien | 2026-08-20 |
+| SVC-008 | Social-rumor intake | Immutable source-linked repository replay fixture | selected | approved | Dien | 2026-08-20 |
 
 ## SVC-001 — Corporate filing data source
 
@@ -159,20 +159,20 @@ Use this file as the source of truth for third-party service decisions and readi
 
 - Category: Financial news / secondary evidence
 - Need: one source-linked news claim for the Hackathon MVP Evidence Graph; later, timely discovery across supported tokenized equities
-- Candidates: `[missing]` — no live provider has yet been compared or selected for access, pricing, timestamp quality, provenance, and redistribution terms
-- Decision: deferred
-- Selected service: none
-- Reason: the final product design was approved after the original Checkpoint 2. Choosing a provider without verifying access and source provenance would create a hidden dependency immediately before implementation
+- Candidates: immutable source-linked repository replay fixture (selected for P0); live financial-news API/provider (deferred to P2 and not selected)
+- Decision: selected
+- Selected service: immutable source-linked repository replay fixture
+- Reason: Dien explicitly approved the reproducible no-account fallback for the Hackathon MVP. It proves normalization, provenance, Evidence Graph behavior, and safe policy handling without creating a credential or paid-provider dependency
 - References: REF-028, REF-029
 - Verified on: 2026-08-20
 - Owner: Dien
-- Plan and budget: no paid account or budget authorized. T0.3 must choose a provider or approve a source-linked immutable replay fixture for the P0 demo
+- Plan and budget: repository-local fixture, zero incremental service cost, no account or credential. Live provider evaluation remains P2
 - Limits: a replay fixture proves normalization, reasoning, safety, and demo reproducibility but not live discovery or real-time latency
 - Integration points: revised tracker T0.3, T2.1–T2.4, T4.4–T4.5
 - Readiness criteria: one article/record is fetched or frozen with original URL, publisher, publication timestamp, affected entity/token, claim text/source pointer, and `LIVE` or `REPLAY` label
-- Status: candidate
+- Status: approved
 - Fallback: immutable source-linked historical replay fixture; must never be presented as live ingestion
-- Lock-in / exit cost: unknown until provider selection
+- Lock-in / exit cost: none; the normalized claim adapter remains provider-portable
 - Decision link: DEC-009, DEC-010
 - Things to avoid: do not count syndications of one original report as independent sources; do not let a single news item authorize `PROTECT`
 - Learnings: LEARN-004, LEARN-005
@@ -181,20 +181,20 @@ Use this file as the source of truth for third-party service decisions and readi
 
 - Category: Social source / rumor discovery
 - Need: one source-linked rumor for the Hackathon MVP negative-control path; later, timely discovery of claims before official confirmation
-- Candidates: `[missing]` — no live read/search API has yet been verified for access, cost, rate limits, provenance, or deletion behavior
-- Decision: deferred
-- Selected service: none
-- Reason: the project has an X posting credential history, but that is not evidence of read/search entitlement. No new account or paid tier should be assumed
+- Candidates: immutable source-linked historical replay fixture (selected for P0); clearly labeled simulated fixture only if no durable historical source can be preserved; live social read/search API (deferred to P2 and not selected)
+- Decision: selected
+- Selected service: immutable source-linked repository replay fixture
+- Reason: Dien explicitly approved the reproducible no-account fallback. Existing X posting credentials are not treated as evidence of read/search entitlement, and no new paid tier is assumed
 - References: REF-028, REF-029
 - Verified on: 2026-08-20
 - Owner: Dien
-- Plan and budget: no paid account or budget authorized. T0.3 must choose a provider or approve a source-linked immutable replay/simulated fixture
+- Plan and budget: repository-local fixture, zero incremental service cost, no account or credential. Live provider evaluation remains P2
 - Limits: a replay or simulated fixture proves rumor containment, not live rumor coverage, source reach, or real-time latency
 - Integration points: revised tracker T0.3, T2.1–T2.4, T4.4
 - Readiness criteria: one rumor fixture preserves original permalink/source ID when available, author/source, timestamp, affected entity/token, claim text/source pointer, and `RUMOR` plus `REPLAY` or `SIMULATED` labels
-- Status: candidate
+- Status: approved
 - Fallback: immutable source-linked historical replay; if no durable source is available, a clearly labeled simulated rumor used only to prove the safety invariant
-- Lock-in / exit cost: unknown until provider selection
+- Lock-in / exit cost: none; the normalized claim adapter remains provider-portable
 - Decision link: DEC-009, DEC-010
 - Things to avoid: never convert speculation into a factual event through paraphrasing; rumor-only evidence must remain capped at `WATCH`
 - Learnings: LEARN-004, LEARN-005

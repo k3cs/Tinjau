@@ -2,7 +2,7 @@
 
 - Workspace slug: buildx-orion-2026
 - Created: 2026-08-16
-- Current stage: 4
+- Current stage: 5
 - Submission readiness: not-ready
 
 Keep exactly one primary stage `in-progress`. A skipped stage requires a reason and impact. A completed stage requires every mandatory exit criterion to be checked.
@@ -326,7 +326,7 @@ Turn the approved idea into a focused product definition and demonstrable MVP.
 
 ## Stage 4 — Architecture and Execution Planning
 
-- Status: in-progress
+- Status: completed
 
 ### Objective
 
@@ -364,8 +364,8 @@ Design the minimum reliable architecture and an executable plan with clear owner
 - [x] Dependencies, interfaces, and integration points are explicit. — `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md` §3–§4
 - [x] Work items have order, dependencies, acceptance criteria, evidence slots, priority, and HUMAN-ONLY boundaries. — revised tracker §1 and §4–§5
 - [x] Testing, deployment, demo, benchmark, claim, and fallback plans exist. — revised tracker T1.5, T3.4, T4.4–T4.5, T5, T6.5, T7
-- [ ] The plan fits the remaining time with contingency. — T0.1 must first measure how much of the existing prototype is compatible; P1/P2 are already below the cut line
-- [ ] Every relevant service category has a decision and every selected service has a complete approval record. — SVC-007/SVC-008 are `[missing]`/deferred pending T0.3 or explicit replay-fixture fallback approval
+- [x] The plan fits the remaining time with contingency. — REF-030 verifies reusable EDGAR/AI, OKX, registry/hook, pool/router, frontend/API, and testing foundations; P1/P2 remain below the cut line and the seven compatibility gaps are explicit
+- [x] Every relevant service category has a decision and every selected service has a complete approval record. — SVC-001–SVC-008; Dien approved repository-local source-linked replay fixtures for SVC-007/SVC-008
 
 ### Owner
 
@@ -374,11 +374,11 @@ Design the minimum reliable architecture and an executable plan with clear owner
 ### Dependencies and Blockers
 
 - Dependencies: revised Stage 3 approval (DEC-009), verified historical prototype evidence
-- Blockers: Checkpoint 2 cannot close until the news/social service choice or source-linked replay fallback is explicitly approved and T0.1 confirms the reuse/schedule assumption
+- Blockers: none; replay fallback approved and T0.1 recorded in REF-030
 
 ### References and Evidence
 
-- Reference IDs: REF-018–REF-022, REF-028, REF-029
+- Reference IDs: REF-018–REF-022, REF-028–REF-030
 - Service IDs: SVC-001–SVC-008
 
 ### Things to Avoid
@@ -388,7 +388,7 @@ Design the minimum reliable architecture and an executable plan with clear owner
 
 ### Decisions
 
-- Decision IDs: DEC-005, DEC-006 (historical), DEC-009, DEC-010 (pending)
+- Decision IDs: DEC-005, DEC-006 (historical), DEC-009, DEC-010
 
 ### Skip Record
 
@@ -397,29 +397,29 @@ Design the minimum reliable architecture and an executable plan with clear owner
 
 ### Next Step
 
-- Review the revised tracker, close the SVC-007/SVC-008 fallback choice, then explicitly re-approve Checkpoint 2. Do not begin new-scope Stage 5 work from the historical tracker.
+- Completed 2026-08-20. Revised Checkpoint 2 approved (DEC-010); proceed to Stage 5 from T0.2 in the revised tracker.
 
 ## Checkpoint 2 — Implementation Plan
 
-- Status: reopened
-- Service plan approval: pending — SVC-007/SVC-008 need a provider decision or explicit source-linked replay-fixture fallback
+- Status: approved
+- Service plan approval: approved
 - Service IDs: SVC-001 through SVC-008
 - Decision requested: approve `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md` as the prospective Stage 5 plan of record
-- Recommendation: approve after T0.3's fallback is accepted and T0.1 confirms compatibility. Keep the entire P0 proof loop; treat T8/P1 and every P2 item as non-blocking
+- Recommendation: approved as recommended after the replay fallback and T0.1 compatibility audit closed both gates. Keep the entire P0 proof loop; treat T8/P1 and every P2 item as non-blocking
 - Alternatives: continue the historical plan — rejected because it does not implement the final five differentiators; expand to all roadmap integrations — rejected because it would trade away the mandatory vertical proof
-- Evidence and reference IDs: REF-028, REF-029; revised tracker §2–§9
+- Evidence and reference IDs: REF-028–REF-030; revised tracker §2–§9
 - Risks: the remaining Event A window is short; live news/social provider access is unknown; the three-policy result may be neutral or negative and must still be published honestly
 - Things to avoid / learning IDs: LEARN-002, LEARN-009, LEARN-010, LEARN-011
-- Decision impact: approval will complete revised Stage 4 and unlock new-scope Stage 5
-- Approved by: pending
-- Approval date: pending
+- Decision impact: completes revised Stage 4 and unlocks new-scope Stage 5
+- Approved by: Dien
+- Approval date: 2026-08-20
 - Decision ID: DEC-010
 
 ## Stage 5 — Build
 
-- Status: not-started
+- Status: in-progress
 
-Historical note: the original prototype build reached this stage under DEC-006 and its verified evidence remains in `outputs/04-planning/task-tracker.md`. New-scope implementation is not started until DEC-010 is approved.
+Historical note: the original prototype evidence remains in `outputs/04-planning/task-tracker.md`. Revised work now follows `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md` under DEC-010.
 
 ### Objective
 
@@ -465,12 +465,12 @@ Implement the approved MVP and maintain an integration-ready happy path.
 
 ### Dependencies and Blockers
 
-- Dependencies: revised Checkpoint 2 approval (DEC-010)
-- Blockers: SVC-007/SVC-008 decision/fallback and T0.1 compatibility/schedule verification
+- Dependencies: revised Checkpoint 2 approval (DEC-010) — satisfied
+- Blockers: none at stage entry; live news/social discovery remains intentionally deferred and does not block fixture-backed P0
 
 ### References and Evidence
 
-- Reference IDs: REF-018–REF-022, REF-028, REF-029
+- Reference IDs: REF-018–REF-022, REF-028–REF-030
 - Service IDs: SVC-001 through SVC-008
 - Historical evidence: original prototype progress and commands remain recorded in `outputs/04-planning/task-tracker.md`; each reused component is revalidated by revised task T0.1
 
@@ -490,7 +490,7 @@ Implement the approved MVP and maintain an integration-ready happy path.
 
 ### Next Step
 
-- Await revised Checkpoint 2 approval. Once approved, begin at T0.1 in `outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md`.
+- T0.1 and T0.3 are complete. Begin T0.2: freeze one official event, one source-linked rumor, one asset/pool, and their immutable replay windows.
 
 ## Stage 6 — Testing and Quality Review
 
