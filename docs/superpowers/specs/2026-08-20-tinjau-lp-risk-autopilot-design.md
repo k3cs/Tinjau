@@ -1,7 +1,7 @@
 # Tinjau LP Risk Autopilot — Product Evolution Design
 
 **Date:** 2026-08-20  
-**Status:** Approved product direction; implementation plan not yet written  
+**Status:** Approved product direction; revised after competitive research; implementation plan not yet written  
 **Primary user:** Liquidity providers and tokenized-equity pool operators on X Layer
 
 ## 1. Summary
@@ -12,9 +12,9 @@ The existing product remains the trusted evidence layer: it reads SEC EDGAR fili
 
 The product must not let an unverified rumor directly control a pool. AI may investigate broad and ambiguous evidence, but contracts enforce narrow, pre-authorized limits.
 
-The long-term position is:
+The product position is:
 
-> AI risk-control infrastructure for tokenized-stock markets on X Layer, detecting corporate events, news, rumors, and cross-venue market discontinuities before LPs absorb the loss.
+> Tinjau is a corporate-event-aware market discontinuity guard for tokenized-stock liquidity on X Layer. It connects source-grounded evidence, safe rumor handling, OKX/X Layer market confirmation, and bounded pool protection.
 
 ## 2. Problem
 
@@ -57,6 +57,40 @@ Three possible directions were considered:
 The implementation order is therefore:
 
 > LP Risk Autopilot first, X Layer Risk Network second, Exchange OS adapter third.
+
+### 5.1 Selected Differentiation Strategy
+
+Three communication strategies were considered:
+
+1. **Feature-led:** present the Evidence Graph, AI agents, dynamic fee, registry, and integrations as separate innovations. This is easy to explain but weak because competitors already have most individual components.
+2. **Competitor-led:** explain Tinjau mainly by comparing it with Chainlink, RiskClaw, Hypernative, and other projects. This establishes awareness but lets competitors define the product story.
+3. **Proof-led vertical workflow:** show one information event moving through evidence resolution, safe rumor containment, market confirmation, bounded LP action, recovery, and measured outcome. This is the selected strategy.
+
+The third strategy is a product requirement, not only a pitch style. The demo, UI, benchmark, README, and submission copy must all expose the same end-to-end proof.
+
+### 5.2 Competitive Novelty Boundary
+
+Competitive research found that Tinjau must not claim the following components as individually novel:
+
+- **Multi-model corporate-action extraction:** Chainlink and institutional partners have demonstrated AI-based extraction, validation, golden records, and distribution.
+- **AI-selected dynamic fees:** RiskClaw, NeuralHook, Sentinel Agent, UniBrain, and other v4 projects already connect market telemetry to bounded fee or liquidity actions.
+- **Generic news and sentiment analysis:** RavenPack and other financial-intelligence providers already resolve entities, events, relevance, novelty, sentiment, and impact.
+- **Broad automated on-chain response:** Hypernative and Chaos Labs already monitor risk and automate protocol actions or parameter updates.
+- **CEX/DEX divergence and fresh-price protection:** existing agents and AMM designs already use cross-venue pricing, volatility, TWAP, or order flow to reduce adverse selection.
+
+Tinjau's defensible claim is the combined vertical workflow:
+
+> A source-grounded corporate event or rumor is mapped to a specific tokenized equity, checked against OKX/X Layer market discontinuity, converted into a bounded LP policy, and evaluated against a reproducible pool-level baseline.
+
+No “first” claim should be made. The accurate statement is that no complete public product with this exact combination was found in the reviewed sources; private, unindexed, or inaccessible projects may exist.
+
+### 5.3 Five Differentiators Tinjau Must Prove
+
+1. **Causal evidence, not only market symptoms.** A volatility hook sees that price moved; Tinjau explains which corporate claim may have caused it and preserves the original source. A verified official event may provide safe lead time before a volatility-only controller reacts.
+2. **Safe rumor containment.** A rumor can accelerate investigation and monitoring, but a single rumor cannot directly trigger an aggressive fee or pool action.
+3. **Dual confirmation.** Tinjau requires both information evidence and an independently observed market consequence before non-official evidence can activate `PROTECT`.
+4. **Tokenized-equity-aware protection.** Decisions include market hours, corporate-action semantics, reference-market discontinuity, token mapping, and executable X Layer exit depth—not only generic token volatility.
+5. **Measured protection data.** Every intervention records whether it improved LP markout, fee revenue, or adverse selection versus both a static-fee policy and a volatility-only policy. This event-to-outcome history can become the long-term data advantage.
 
 ## 6. Risk-State Model
 
@@ -142,7 +176,7 @@ Groups claims about the same underlying event and records:
 - which X Layer tokens and pools may be affected;
 - why the resulting confidence changed.
 
-This is the primary AI contribution. A deterministic rules engine then maps the structured graph and market signals to the three permitted risk states.
+AI is necessary here because claims can be ambiguous, contradictory, duplicated, or expressed before a formal disclosure exists. However, the graph alone is not the product moat. A deterministic rules engine maps the structured graph and market signals to the three permitted risk states, and the complete evidence-to-outcome loop creates the differentiation.
 
 ### 8.4 Market Confirmation Engine
 
@@ -175,11 +209,11 @@ Every completed `PROTECT` period records:
 - triggering evidence and market state;
 - policy and action applied;
 - actual protected-pool outcome;
-- replayed baseline outcome under the previous fee policy;
+- replayed outcomes under the previous static-fee policy and a volatility-only dynamic-fee policy;
 - fees earned, adverse selection, and LP markout;
 - false-positive or false-negative label when measurable.
 
-The UI must distinguish observed facts from replayed counterfactuals. “Loss avoided” is shown only when the replay method and data are available.
+The UI must distinguish observed facts from replayed counterfactuals. “Loss avoided” is shown only when the replay method and data are available. If Tinjau does not outperform the volatility-only baseline on the selected event set, the product must report that result rather than claim event awareness created additional protection.
 
 ## 9. Third-Party Integration Strategy
 
@@ -206,6 +240,8 @@ Adding provider logos without a tested data path is explicitly out of scope.
 ## 10. X Layer-Specific Differentiation
 
 The Solidity contracts remain technically portable because X Layer is EVM-compatible. Tinjau's defensibility must therefore come from an ecosystem-native operating loop rather than a false claim of code exclusivity.
+
+X Layer is not presented as merely the deployment chain. It supplies the tokenized-stock assets, OKX reference-market context, on-chain liquidity, low-cost policy settlement, and future Exchange OS distribution that make the complete protection loop useful. Another chain could copy the contracts, but it would still need to rebuild these data, asset, liquidity, and distribution relationships.
 
 ### 10.1 X Layer Market Discontinuity Guard
 
@@ -236,7 +272,16 @@ This is more chain-specific than a v4 hook because Exchange OS is an X Layer mar
 
 ## 11. End-to-End Demo
 
-The primary demo tells one story:
+The primary demo must prove differentiation rather than tour features. It contains three connected scenes.
+
+### Scene A — Safe Rumor Handling
+
+1. Tinjau ingests a clearly labeled historical or simulated rumor with its original source.
+2. The Evidence Graph identifies the company, token, claim, source independence, contradiction, and confidence.
+3. The asset changes from `NORMAL` to `WATCH`.
+4. The UI and contract policy show that no aggressive fee action is authorized.
+
+### Scene B — Confirmed Event Protection
 
 1. Tinjau ingests a real official filing or a clearly labeled historical replay.
 2. The Evidence Graph displays the source claims, agreement, contradiction, and provenance.
@@ -245,9 +290,39 @@ The primary demo tells one story:
 5. The policy contract proves that the requested fee and duration are within bounds.
 6. The v4 pool executes the adjusted fee.
 7. The system returns to `NORMAL` through deterministic decay.
-8. Proof of Protection compares the protected outcome with the baseline replay.
+8. Proof of Protection records the intervention and outcome.
 
-A second short demo shows a rumor producing only `WATCH`, proving that the system refuses unsafe autonomy.
+### Scene C — Proof Against Simpler Alternatives
+
+The same market replay is run through three policies:
+
+1. a static-fee pool;
+2. a volatility-only dynamic-fee controller;
+3. Tinjau's event-aware controller.
+
+The result compares LP markout, fee revenue, adverse selection, action latency, protection duration, and false-positive cost. This comparison is mandatory because “AI + dynamic fee” is already a crowded category. Tinjau wins the claim only when causal event awareness adds measurable value beyond generic volatility detection.
+
+The demo should make the core difference understandable within the first 30 seconds:
+
+> Other risk hooks react after the market becomes volatile. Tinjau can understand why a tokenized stock may become unsafe, contain uncertain rumors, confirm the effect on X Layer, and prove whether its bounded response helped the LP.
+
+### 11.1 Submission Communication System
+
+Every public artifact must use the same narrative hierarchy:
+
+1. **Problem:** 24/7 tokenized-stock pools can quote stale risk while the underlying company and reference market move discontinuously.
+2. **Existing alternatives:** corporate-action processors explain official events; market-risk hooks react to price or liquidity symptoms; monitoring platforms automate broad responses.
+3. **Tinjau's addition:** one causal, rumor-safe, market-confirmed, bounded, and measurable LP protection loop on X Layer.
+4. **Proof:** a real or clearly labeled replay shows `evidence -> state -> bounded action -> recovery -> outcome`, beside a volatility-only baseline.
+5. **Ecosystem value:** the resulting X Layer risk state is reusable by other pools, wallets, agents, and future Exchange OS markets.
+
+Artifact-specific requirements:
+
+- **Demo:** show the decision boundary and baseline comparison; do not spend most of the video on dashboards or architecture diagrams.
+- **README/documentation:** include “what already exists,” “what Tinjau adds,” source provenance, safety rules, contract limits, deployed evidence, and reproducible benchmark steps.
+- **Pitch/submission copy:** lead with the LP problem and verified outcome, then explain AI and X Layer as necessary parts of the solution.
+- **UI:** visibly distinguish `OFFICIAL`, `NEWS`, and `RUMOR`; show why the state changed, which market signal confirmed it, what action ceiling applies, and whether the measured result is observed or replayed.
+- **Architecture diagram:** emphasize the two trust domains—AI proposes structured evidence and contracts enforce bounded policy.
 
 ## 12. Failure Handling
 
@@ -273,9 +348,10 @@ A second short demo shows a rumor producing only `WATCH`, proving that the syste
 
 ### Market and Policy Evaluation
 
-- Replay every supported historical event under baseline and protected policies.
+- Replay every supported historical event under a static-fee baseline, a volatility-only dynamic-fee baseline, and the Tinjau event-aware policy.
 - Measure LP markout, fee revenue, adverse selection, maximum fee, protection duration, and time to decay.
 - Include neutral events and false rumors, not only dramatic negative examples.
+- Report the full distribution and tail cases; do not use only an average or a hand-picked winning event.
 
 ### Contract Evaluation
 
@@ -293,32 +369,38 @@ The MVP is complete only when it demonstrates:
 3. one bounded on-chain pool action;
 4. one automatic recovery;
 5. one reproducible outcome comparison;
-6. one rumor example safely contained at `WATCH`.
+6. one rumor example safely contained at `WATCH`;
+7. one side-by-side result against a volatility-only dynamic-fee policy;
+8. one concise competitor matrix showing occupied components and Tinjau's combined vertical workflow.
 
 ## 14. Delivery Phases
 
-### Phase 1 — Close the Existing Product Gaps
+### Hackathon MVP — One Narrow Vertical Slice
 
 - Create the single end-to-end protection demo.
 - Add risk-state explanations and bounded policy visibility.
-- Add replay comparison and Proof of Protection.
+- Add replay comparison against static-fee and volatility-only policies and publish Proof of Protection.
 - Preserve all existing bonded-source and challenge behavior.
-
-### Phase 2 — Add Real AI Risk Intelligence
-
-- Build news/social adapters and the Evidence Graph.
+- Build the minimum news/social adapters and Evidence Graph needed for one rumor and one confirmed-event scenario.
 - Add source credibility, independence, contradiction, and recency handling.
 - Add OKX/X Layer market confirmation and executable exit-depth measurement.
 - Demonstrate that a rumor alone remains `WATCH`.
+- Publish a minimal X Layer Risk Registry record or read-only interface that another application can consume.
 
-### Phase 3 — Become X Layer Infrastructure
+### Post-Hackathon Phase 1 — Expand AI Risk Intelligence
+
+- Add more news/social providers and supported event types.
+- Improve source credibility, entity resolution, contradiction, and recency models using labeled evaluations.
+- Expand the historical benchmark beyond the narrow submission scenario.
+
+### Post-Hackathon Phase 2 — Become X Layer Infrastructure
 
 - Generalize the X Layer Risk Registry and pool-consumer interface.
 - Publish a small SDK and machine-readable risk endpoint.
 - Add x402-based usage monetization and, if valuable, Agentic Wallet execution.
 - Integrate one external X Layer pool or market consumer.
 
-### Phase 4 — Exchange OS Expansion
+### Post-Hackathon Phase 3 — Exchange OS Expansion
 
 - Confirm builder access and production interfaces.
 - Implement and test an Exchange OS risk-control adapter.
@@ -327,7 +409,7 @@ The MVP is complete only when it demonstrates:
 
 ### Implementation-Plan Boundary
 
-This roadmap contains several independently deliverable subsystems and must not become one oversized implementation plan. After the written design is approved, the first implementation plan covers **Phase 1 only**: the end-to-end bounded protection loop and its measurable outcome. News and rumor intelligence, the shared X Layer registry/SDK, monetization, and Exchange OS each receive a separate design review or implementation plan after the preceding phase has working evidence.
+The first implementation plan covers the **Hackathon MVP vertical slice only**. It includes one official-event path, one rumor path, one OKX/X Layer confirmation path, one bounded v4 action, automatic recovery, one minimal reusable risk record, and the three-policy benchmark. Broad provider coverage, a full SDK, x402 monetization, Agentic Wallet execution, and Exchange OS remain separate post-hackathon plans.
 
 ## 15. Product Boundaries and Honest Claims
 
@@ -336,8 +418,28 @@ This roadmap contains several independently deliverable subsystems and must not 
 - The existing measured median LP markout is small, while tail events are larger. Marketing and evaluation must report the full distribution and must not imply that every filing creates material loss.
 - The initial v4 demo uses a builder-controlled pool because current meaningful xStock liquidity is primarily elsewhere. It must be labeled accordingly.
 - Exchange OS integration remains roadmap scope until the necessary production interfaces and access are verified.
+- Tinjau must not claim to be the first AI dynamic-fee hook, first multi-agent corporate-action oracle, first CEX/DEX risk agent, first on-chain risk registry, or first self-protecting pool.
+- “AI Evidence Graph” is an internal capability, not a standalone moat. The differentiated asset is the tokenized-equity event-to-policy-to-outcome history.
+- Chainlink, RavenPack, OKX, and similar providers may be upstream data or infrastructure partners. Tinjau's role is the X Layer LP policy, enforcement, and measured-outcome layer.
+
+### Approved Claims
+
+- “Corporate-event-aware market discontinuity guard for tokenized-stock liquidity on X Layer.”
+- “Rumors accelerate monitoring but cannot directly authorize aggressive pool protection.”
+- “For non-official evidence, Tinjau requires independent OKX/X Layer market confirmation before bounded action.”
+- “Every protection period is measured against reproducible static-fee and volatility-only baselines.”
+- “No complete public product with this exact combination was found in the reviewed sources.”
+
+### Claims Requiring Evidence Before Use
+
+- “Tinjau reduces LP loss” requires a reproducible benchmark result on the stated event set.
+- “Real-time” requires measured source-to-state latency.
+- “Production-ready” requires deployment against meaningful external liquidity, not only a builder-controlled test pool.
+- “X Layer-native” requires at least one working OKX/X Layer data path and one on-chain X Layer action or reusable risk record.
 
 ## 16. Primary External References
+
+- Supporting research artifact: [Tinjau Competitive Landscape Deep Research](../../buildx-orion-2026/outputs/03-product/tinjau-competitive-landscape-deep-research.html)
 
 - X Layer and Exchange OS: <https://web3.okx.com/xlayer>
 - Exchange OS introduction: <https://web3.okx.com/learn/exchange-os>
@@ -345,3 +447,11 @@ This roadmap contains several independently deliverable subsystems and must not 
 - OKX Agentic Wallet and Wallet API: <https://web3.okx.com/onchainos/dev-docs/wallet/product-and-service>
 - OKX Unified Tokenized Stocks: <https://www.okx.com/en-gb/help/okx-to-list-unified-tokenized-stocks-xibm-xhood-and-more-for-spot-trading>
 - Uniswap on X Layer: <https://blog.uniswap.org/uniswap-is-now-live-on-x-layer>
+- Chainlink corporate-actions initiative: <https://chain.link/resources/establishing-unified-standard-asset-servicing>
+- Swift corporate-actions collaboration: <https://www.swift.com/news-events/news/modernising-corporate-actions-through-technology-and-collaboration>
+- RiskClaw: <https://ethglobal.com/showcase/riskclaw-ip3a9>
+- NeuralHook: <https://ethglobal.com/showcase/neuralhook-8gxzp>
+- Hypernative automated response: <https://www.hypernative.io/product/onchain-monitoring-automated-response>
+- Chaos Labs Risk Oracles: <https://chaoslabs.xyz/posts/risk-oracles-one-step-beyond-price-oracles>
+- RavenPack News Analytics: <https://www.ravenpack.com/products/news-analytics>
+- Arrakis HOT AMM: <https://docs.arrakis.finance/text/modules/hotAmm/whitepaper.html>
