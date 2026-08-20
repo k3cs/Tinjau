@@ -18,7 +18,7 @@
  *    calls and (in `live` post mode) hundreds of garbage on-chain posts.
  *  - INDEPENDENT AGE CUTOFF. Even a filing not yet in the seen-set is skipped (and
  *    marked seen without processing) if its `acceptanceDateTime` is older than
- *    `AFTERHOURS_MAX_FILING_AGE_MS` — a second, independent safety net in case the state
+ *    `TINJAU_MAX_FILING_AGE_MS` — a second, independent safety net in case the state
  *    file is ever lost or reset.
  *  - SEQUENTIAL PROCESSING ONLY. Filings are processed one at a time (`for...of` with
  *    `await`), never with `Promise.all` across filings — the Gemini quota is a hard
@@ -33,7 +33,7 @@
  *    filing seen once it has been fully processed without throwing — so a transient
  *    failure (network blip, LLM timeout, etc.) is retried on the next tick instead of
  *    being silently dropped forever.
- *  - POST-MODE GATE. `AFTERHOURS_POST_MODE` is `dry-run` or `live`. In `dry-run` (what
+ *  - POST-MODE GATE. `TINJAU_POST_MODE` is `dry-run` or `live`. In `dry-run` (what
  *    this deployment runs), the full pipeline (poll -> strip -> parse -> diff -> grade)
  *    executes normally but `postPipelineResult()` is never called — no testnet gas is
  *    spent and nothing is posted on-chain. Every result is still archived to
@@ -48,7 +48,7 @@
  *    state one more time and exiting 0. This is what makes `systemctl restart` safe.
  *
  * Run standalone: `tsx src/agent.ts` (requires EDGAR_USER_AGENT, GEMINI_API_KEY,
- * POSTER_PRIVATE_KEY, AFTERHOURS_STATE_DIR in the environment — see
+ * POSTER_PRIVATE_KEY, TINJAU_STATE_DIR in the environment — see
  * `/opt/afterhours/env/*.env` on the VPS, or a local `.env` for dev).
  */
 
@@ -77,32 +77,32 @@ function requireEnv(name: string): string {
 requireEnv("EDGAR_USER_AGENT");
 requireEnv("GEMINI_API_KEY");
 requireEnv("POSTER_PRIVATE_KEY");
-const STATE_DIR = requireEnv("AFTERHOURS_STATE_DIR");
+const STATE_DIR = requireEnv("TINJAU_STATE_DIR");
 
 const POLL_INTERVAL_MS = Number(process.env.EDGAR_POLL_INTERVAL_MS ?? 300_000);
-const POST_MODE = (process.env.AFTERHOURS_POST_MODE ?? "dry-run").trim();
-const DAILY_LLM_CALL_BUDGET = Number(process.env.AFTERHOURS_DAILY_LLM_CALL_BUDGET ?? 12);
-const MAX_FILING_AGE_MS = Number(process.env.AFTERHOURS_MAX_FILING_AGE_MS ?? 86_400_000);
+const POST_MODE = (process.env.TINJAU_POST_MODE ?? "dry-run").trim();
+const DAILY_LLM_CALL_BUDGET = Number(process.env.TINJAU_DAILY_LLM_CALL_BUDGET ?? 12);
+const MAX_FILING_AGE_MS = Number(process.env.TINJAU_MAX_FILING_AGE_MS ?? 86_400_000);
 const BOND_AMOUNT_USDT0 = Number(process.env.BOND_AMOUNT_USDT0 ?? 10);
 
 if (POST_MODE !== "dry-run" && POST_MODE !== "live") {
-  throw new Error(`[agent] AFTERHOURS_POST_MODE must be "dry-run" or "live", got: "${POST_MODE}"`);
+  throw new Error(`[agent] TINJAU_POST_MODE must be "dry-run" or "live", got: "${POST_MODE}"`);
 }
 if (!Number.isFinite(POLL_INTERVAL_MS) || POLL_INTERVAL_MS <= 0) {
   throw new Error(`[agent] EDGAR_POLL_INTERVAL_MS must be a positive number, got: "${process.env.EDGAR_POLL_INTERVAL_MS}"`);
 }
 if (!Number.isFinite(DAILY_LLM_CALL_BUDGET) || DAILY_LLM_CALL_BUDGET < 0) {
-  throw new Error(`[agent] AFTERHOURS_DAILY_LLM_CALL_BUDGET must be a non-negative number, got: "${process.env.AFTERHOURS_DAILY_LLM_CALL_BUDGET}"`);
+  throw new Error(`[agent] TINJAU_DAILY_LLM_CALL_BUDGET must be a non-negative number, got: "${process.env.TINJAU_DAILY_LLM_CALL_BUDGET}"`);
 }
 if (!Number.isFinite(MAX_FILING_AGE_MS) || MAX_FILING_AGE_MS <= 0) {
-  throw new Error(`[agent] AFTERHOURS_MAX_FILING_AGE_MS must be a positive number, got: "${process.env.AFTERHOURS_MAX_FILING_AGE_MS}"`);
+  throw new Error(`[agent] TINJAU_MAX_FILING_AGE_MS must be a positive number, got: "${process.env.TINJAU_MAX_FILING_AGE_MS}"`);
 }
 
 /** 3x independent parse + 1x severity grade, run per filing by `runPipelineForFiling`. */
 const LLM_CALLS_PER_FILING = 4;
 
 // ---------------------------------------------------------------------------
-// State paths (all under AFTERHOURS_STATE_DIR, pre-created by the deploy script)
+// State paths (all under TINJAU_STATE_DIR, pre-created by the deploy script)
 // ---------------------------------------------------------------------------
 
 const SEEN_PATH = join(STATE_DIR, "edgar", "seen-accessions.json");
@@ -371,7 +371,7 @@ async function tick(): Promise<void> {
       if (Number.isFinite(acceptedMs) && now - acceptedMs > MAX_FILING_AGE_MS) {
         console.log(
           `[agent] skipping ${filing.accessionNumber} (${filing.ticker}) — acceptanceDateTime ` +
-            `${filing.acceptanceDateTime} exceeds AFTERHOURS_MAX_FILING_AGE_MS=${MAX_FILING_AGE_MS}ms`,
+            `${filing.acceptanceDateTime} exceeds TINJAU_MAX_FILING_AGE_MS=${MAX_FILING_AGE_MS}ms`,
         );
         seenSet.add(filing.accessionNumber);
         persistSeenState();

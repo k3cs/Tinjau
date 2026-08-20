@@ -23,7 +23,7 @@ export function SiteHeader() {
           >
             AH
           </span>
-          <span className="font-stencil text-base tracking-stencil text-bone sm:text-xl">AFTERHOURS</span>
+          <span className="font-stencil text-base tracking-stencil text-bone sm:text-xl">Tinjau</span>
         </Link>
 
         <nav className="hidden items-center gap-1 sm:flex">

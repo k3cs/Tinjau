@@ -4,7 +4,7 @@
  * Long-running, systemd-supervised process (`afterhours-xbot.service`) — structurally
  * decoupled from `agent.ts`/`afterhours-agent.service`: its own env files
  * (`common.env` + `xbot.secrets.env`, never `agent.secrets.env` or
- * `index-poller.secrets.env`), its own state directory (`${AFTERHOURS_STATE_DIR}/xbot/`),
+ * `index-poller.secrets.env`), its own state directory (`${TINJAU_STATE_DIR}/xbot/`),
  * its own credentials. Same discipline `src/index-poller/main.ts` already uses to stay
  * separate from `agent.ts`.
  *
@@ -43,9 +43,9 @@
  * HEARTBEAT. Written after every tick, matching `src/index-poller/main.ts`'s own
  * heartbeat pattern, for a companion `afterhours-xbot-healthcheck` timer.
  *
- * Run standalone: `tsx src/xbot/main.ts` (requires AFTERHOURS_STATE_DIR in the
+ * Run standalone: `tsx src/xbot/main.ts` (requires TINJAU_STATE_DIR in the
  * environment; requires X_API_KEY/X_API_SECRET/X_ACCESS_TOKEN/X_ACCESS_TOKEN_SECRET ONLY
- * when AFTERHOURS_XBOT_POST_MODE=live — the default, dry-run, needs none of them).
+ * when TINJAU_XBOT_POST_MODE=live — the default, dry-run, needs none of them).
  */
 
 import "dotenv/config";
@@ -69,26 +69,26 @@ function requireEnv(name: string): string {
   return v;
 }
 
-const STATE_DIR = requireEnv("AFTERHOURS_STATE_DIR");
+const STATE_DIR = requireEnv("TINJAU_STATE_DIR");
 
-const POST_MODE = (process.env.AFTERHOURS_XBOT_POST_MODE ?? "dry-run").trim();
+const POST_MODE = (process.env.TINJAU_XBOT_POST_MODE ?? "dry-run").trim();
 if (POST_MODE !== "dry-run" && POST_MODE !== "live") {
-  throw new Error(`[xbot] AFTERHOURS_XBOT_POST_MODE must be "dry-run" or "live", got: "${POST_MODE}"`);
+  throw new Error(`[xbot] TINJAU_XBOT_POST_MODE must be "dry-run" or "live", got: "${POST_MODE}"`);
 }
 
 const MIN_POLL_INTERVAL_MS = 30_000;
 const DEFAULT_POLL_INTERVAL_MS = 60_000;
 
 function getPollIntervalMs(): number {
-  const raw = process.env.AFTERHOURS_XBOT_POLL_INTERVAL_MS;
+  const raw = process.env.TINJAU_XBOT_POLL_INTERVAL_MS;
   if (!raw) return DEFAULT_POLL_INTERVAL_MS;
   const parsed = Number(raw);
   if (!Number.isFinite(parsed) || parsed <= 0) {
-    throw new Error(`[xbot] AFTERHOURS_XBOT_POLL_INTERVAL_MS must be a positive number, got: "${raw}"`);
+    throw new Error(`[xbot] TINJAU_XBOT_POLL_INTERVAL_MS must be a positive number, got: "${raw}"`);
   }
   if (parsed < MIN_POLL_INTERVAL_MS) {
     throw new Error(
-      `[xbot] AFTERHOURS_XBOT_POLL_INTERVAL_MS=${parsed} is below the minimum of ${MIN_POLL_INTERVAL_MS}ms.`,
+      `[xbot] TINJAU_XBOT_POLL_INTERVAL_MS=${parsed} is below the minimum of ${MIN_POLL_INTERVAL_MS}ms.`,
     );
   }
   return parsed;

@@ -28,7 +28,7 @@
 import "dotenv/config";
 import { parseEventLogs } from "viem";
 import { getDemoRelayerAccount, getPublicClient, getRegistryAddress, getWalletClientFor, withRpcRetry } from "./client.js";
-import { AFTERHOURS_HOOK_ABI, MOCK_ERC20_ABI, POOL_MANAGER_ABI, POOL_SWAP_TEST_ABI } from "./poolAbi.js";
+import { TINJAU_HOOK_ABI, MOCK_ERC20_ABI, POOL_MANAGER_ABI, POOL_SWAP_TEST_ABI } from "./poolAbi.js";
 import { MAX_SQRT_PRICE, MIN_SQRT_PRICE, getAfterhoursHookAddress, getPoolKey, getPoolManagerAddress, getPoolSwapRouterAddress } from "./poolConfig.js";
 import { EVENT_STATE_REGISTRY_ABI } from "./registryAbi.js";
 import { computeFee, type EventTypeValue } from "./expectedFee.js";
@@ -97,16 +97,16 @@ async function computeExpectedFeeAtBlock(blockNumber: bigint): Promise<bigint> {
 
   const [baseFee, maxFee, widenDuration, decayDuration] = await Promise.all([
     withRpcRetry(() =>
-      publicClient.readContract({ address: hookAddress, abi: AFTERHOURS_HOOK_ABI, functionName: "baseFee", blockNumber }),
+      publicClient.readContract({ address: hookAddress, abi: TINJAU_HOOK_ABI, functionName: "baseFee", blockNumber }),
     ),
     withRpcRetry(() =>
-      publicClient.readContract({ address: hookAddress, abi: AFTERHOURS_HOOK_ABI, functionName: "maxFee", blockNumber }),
+      publicClient.readContract({ address: hookAddress, abi: TINJAU_HOOK_ABI, functionName: "maxFee", blockNumber }),
     ),
     withRpcRetry(() =>
-      publicClient.readContract({ address: hookAddress, abi: AFTERHOURS_HOOK_ABI, functionName: "widenDuration", blockNumber }),
+      publicClient.readContract({ address: hookAddress, abi: TINJAU_HOOK_ABI, functionName: "widenDuration", blockNumber }),
     ),
     withRpcRetry(() =>
-      publicClient.readContract({ address: hookAddress, abi: AFTERHOURS_HOOK_ABI, functionName: "decayDuration", blockNumber }),
+      publicClient.readContract({ address: hookAddress, abi: TINJAU_HOOK_ABI, functionName: "decayDuration", blockNumber }),
     ),
   ]);
 
@@ -247,7 +247,7 @@ async function main() {
 
   // --- Read previewFee before the swap ---
   const previewFee = await withRpcRetry(() =>
-    publicClient.readContract({ address: hookAddress, abi: AFTERHOURS_HOOK_ABI, functionName: "previewFee", args: [key] }),
+    publicClient.readContract({ address: hookAddress, abi: TINJAU_HOOK_ABI, functionName: "previewFee", args: [key] }),
   );
   console.log(`[swapOnce] hook.previewFee(key) = ${previewFee}`);
 

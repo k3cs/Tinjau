@@ -7,7 +7,7 @@
  */
 const CONTRACT = `
 DIRECTION CONTRACT (impeccable new-work, seed key c093dccb)
-THESIS: AFTERHOURS is a customs house for corporate disclosure — every filing is held,
+THESIS: Tinjau is a customs house for corporate disclosure — every filing is held,
 inspected, and released as bonded cargo, never asserted as a headline. Refuses the
 glowing-stat-card crypto-dashboard default.
 OWN-WORLD: a warehouse dock at night — warm graphite ground (#17140F), kraft-tag manifest

@@ -23,7 +23,7 @@ export function getPoolManagerAddress(): Address {
 
 /** AfterhoursFeeHook deployed by contracts/script/DeployTestnetHookAndPool.s.sol (P4.2). */
 export function getAfterhoursHookAddress(): Address {
-  return envAddress("AFTERHOURS_HOOK_ADDRESS", "0xbCb4B7310BA36eA01f2A435A5D64C9b7953d8080");
+  return envAddress("TINJAU_HOOK_ADDRESS", "0xbCb4B7310BA36eA01f2A435A5D64C9b7953d8080");
 }
 
 /** Mock wNVDAx (18 decimals) — currency1 of the demo pool, the token the hook resolves

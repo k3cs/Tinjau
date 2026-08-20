@@ -25,9 +25,9 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AFTERHOURS — a customs house for corporate events",
+  title: "Tinjau — a customs house for corporate events",
   description:
-    "AFTERHOURS holds every SEC filing on a tokenised US equity as bonded cargo — inspected by three independent parses, stamped with an agreement level, and released on-chain with a disputable bond. No wallet, no gas, just the record.",
+    "Tinjau holds every SEC filing on a tokenised US equity as bonded cargo — inspected by three independent parses, stamped with an agreement level, and released on-chain with a disputable bond. No wallet, no gas, just the record.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -11,7 +11,7 @@
  * Design properties this file is responsible for (mirrors `src/index-poller/main.ts` where
  * applicable — one deliberate divergence noted below):
  *
- *  - FAIL-FAST PREFLIGHT. `config.ts` asserts `AFTERHOURS_STATE_DIR` present and present on
+ *  - FAIL-FAST PREFLIGHT. `config.ts` asserts `TINJAU_STATE_DIR` present and present on
  *    disk before anything else runs.
  *  - ONE SHARED CACHE. A single `ScoreboardCache` instance is used both by the HTTP
  *    `/scoreboard` route and by a background refresh loop — so "recompute at most once per
@@ -25,7 +25,7 @@
  *  - NO HEARTBEAT FILE WRITTEN BY THIS PROCESS — deliberate divergence from
  *    `index-poller/main.ts`'s pattern. The deployed unit sets `ReadOnlyPaths=/opt/afterhours/data`
  *    with no `ReadWritePaths=` line at all (this is the first fully read-only AFTERHOURS
- *    unit), so this process cannot write anywhere under `AFTERHOURS_STATE_DIR` even for a
+ *    unit), so this process cannot write anywhere under `TINJAU_STATE_DIR` even for a
  *    heartbeat. Liveness/freshness monitoring instead happens the other direction: the
  *    paired `afterhours-scoreboard-healthcheck.service` (unsandboxed, like the other two
  *    healthcheck scripts) polls this process's own `GET /health` over HTTP and writes ITS
@@ -35,7 +35,7 @@
  *    heartbeat file.
  *  - GRACEFUL SIGTERM. Stops the refresh timer, closes the HTTP server, exits 0.
  *
- * Run standalone: `tsx src/scoreboard-api/main.ts` (requires `AFTERHOURS_STATE_DIR`;
+ * Run standalone: `tsx src/scoreboard-api/main.ts` (requires `TINJAU_STATE_DIR`;
  * optionally `SCOREBOARD_API_PORT`, `XLAYER_TESTNET_RPC_URL`, `EVENT_STATE_REGISTRY_ADDRESS`
  * — see `../chain/client.ts`).
  */

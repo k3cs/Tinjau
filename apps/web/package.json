@@ -1,8 +1,8 @@
 {
-  "name": "afterhours-web",
+  "name": "tinjau-web",
   "version": "0.1.0",
   "private": true,
-  "description": "AFTERHOURS frontend — a customs-house record of corporate events for tokenised US equities on X Layer.",
+  "description": "Tinjau frontend — a customs-house record of corporate events for tokenised US equities on X Layer.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

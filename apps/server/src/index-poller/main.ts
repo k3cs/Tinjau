@@ -3,14 +3,14 @@
  *
  * Long-running supervised loop that polls the `onchainos` CLI's authenticated index-price
  * endpoint for wNVDAx and wMSTRx (see `config.ts`) and appends one NDJSON row per
- * instrument per tick to `${AFTERHOURS_STATE_DIR}/index/index-<INSTRUMENT>-<YYYY-MM-DD>.ndjson`
+ * instrument per tick to `${TINJAU_STATE_DIR}/index/index-<INSTRUMENT>-<YYYY-MM-DD>.ndjson`
  * (see `ndjsonWriter.ts`). Intended to run under systemd as
  * `afterhours-index-poller.service` — a process entirely separate from the EDGAR
  * agent (`agent.ts` / `afterhours-agent.service`); the two never share state or env files.
  *
  * Design properties this file is responsible for:
  *
- *  - FAIL-FAST PREFLIGHT. `ONCHAINOS_BIN`, `ONCHAINOS_HOME`, `AFTERHOURS_STATE_DIR` are
+ *  - FAIL-FAST PREFLIGHT. `ONCHAINOS_BIN`, `ONCHAINOS_HOME`, `TINJAU_STATE_DIR` are
  *    asserted present (and, where applicable, present on disk) before any polling starts.
  *  - SEQUENTIAL, NEVER PARALLEL. The two instruments are polled one after another with
  *    `for...of` + `await`, never `Promise.all` — mirrors the EDGAR agent's own
@@ -24,7 +24,7 @@
  *    healthcheck timer will surface a crash-loop), not silently poll into a black hole.
  *  - LOUD, DISTINCT AUTH/QUOTA ALERTING, NO PROCESS EXIT. On `auth` or `quota`, this
  *    process logs a single-line banner at `error` level (greppable via
- *    `journalctl -p err`), writes `${AFTERHOURS_STATE_DIR}/health/index-poller-alert.json`,
+ *    `journalctl -p err`), writes `${TINJAU_STATE_DIR}/health/index-poller-alert.json`,
  *    and — because a bad credential does not self-heal on a fast timer — backs the poll
  *    interval off to ~5 minutes for as long as the alert is active, so `Restart=always` at
  *    30s doesn't hammer OKX. The process is NOT exited: once the credential/quota issue is
@@ -35,7 +35,7 @@
  *    the heartbeat one more time, exits 0 — this is what makes `systemctl restart` safe.
  *
  * Run standalone: `tsx src/index-poller/main.ts` (requires ONCHAINOS_BIN, ONCHAINOS_HOME,
- * AFTERHOURS_STATE_DIR, OKX_API_KEY, OKX_SECRET_KEY, OKX_PASSPHRASE in the environment —
+ * TINJAU_STATE_DIR, OKX_API_KEY, OKX_SECRET_KEY, OKX_PASSPHRASE in the environment —
  * see `/opt/afterhours/env/{common,index-poller.secrets}.env` on the VPS, or a local
  * `.env` for dev).
  */
@@ -61,7 +61,7 @@ function requireEnv(name: string): string {
 
 const ONCHAINOS_BIN = requireEnv("ONCHAINOS_BIN");
 const ONCHAINOS_HOME = requireEnv("ONCHAINOS_HOME");
-const STATE_DIR = requireEnv("AFTERHOURS_STATE_DIR");
+const STATE_DIR = requireEnv("TINJAU_STATE_DIR");
 
 if (!existsSync(ONCHAINOS_BIN)) {
   throw new Error(`[index-poller] ONCHAINOS_BIN=${ONCHAINOS_BIN} does not exist on disk — refusing to start.`);
@@ -70,7 +70,7 @@ if (!existsSync(ONCHAINOS_HOME)) {
   throw new Error(`[index-poller] ONCHAINOS_HOME=${ONCHAINOS_HOME} does not exist on disk — refusing to start.`);
 }
 if (!existsSync(STATE_DIR)) {
-  throw new Error(`[index-poller] AFTERHOURS_STATE_DIR=${STATE_DIR} does not exist on disk — refusing to start.`);
+  throw new Error(`[index-poller] TINJAU_STATE_DIR=${STATE_DIR} does not exist on disk — refusing to start.`);
 }
 
 const DEFAULT_POLL_INTERVAL_MS = 180_000; // 3 minutes

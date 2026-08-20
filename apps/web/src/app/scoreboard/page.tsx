@@ -1,7 +1,7 @@
 import { ScoreboardTable } from "@/components/scoreboard-table";
 
 export const metadata = {
-  title: "Scoreboard — AFTERHOURS",
+  title: "Scoreboard — Tinjau",
 };
 
 export default function ScoreboardPage() {

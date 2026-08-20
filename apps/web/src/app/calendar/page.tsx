@@ -2,7 +2,7 @@ import { ForwardCalendar } from "@/components/forward-calendar";
 import { TRACKED_TOKENS } from "@/lib/chain/tokenAddresses";
 
 export const metadata = {
-  title: "Forward Calendar — AFTERHOURS",
+  title: "Forward Calendar — Tinjau",
 };
 
 export default function CalendarPage() {

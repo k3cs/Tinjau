@@ -24,7 +24,7 @@ export default function HomePage() {
             <p className="mt-6 max-w-lg text-[15px] leading-relaxed text-bone-muted sm:text-base">
               Tokenised US equities trade around the clock, but the SEC filings that move them land
               almost entirely — <span className="text-bone">~97% of last year&apos;s 8-Ks</span> from
-              the ten underlyings this tracks — while the US market is closed. AFTERHOURS holds every
+              the ten underlyings this tracks — while the US market is closed. Tinjau holds every
               one as bonded cargo — three independent parses, a per-field agreement count, a
               challenge window — and releases it on-chain instead of asserting it.
             </p>

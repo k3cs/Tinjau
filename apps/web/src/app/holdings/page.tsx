@@ -18,7 +18,7 @@ function HoldingsInner() {
         What happened to this address&apos;s holdings
       </h1>
       <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-bone-muted">
-        Paste any address. AFTERHOURS reads its tokenised-equity balances and every posted registry
+        Paste any address. Tinjau reads its tokenised-equity balances and every posted registry
         event for those tokens, directly from X Layer testnet — no wallet connection, no signature, no
         gas.
       </p>

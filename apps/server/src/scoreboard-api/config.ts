@@ -17,10 +17,10 @@ function requireEnv(name: string): string {
   return v;
 }
 
-export const STATE_DIR = requireEnv("AFTERHOURS_STATE_DIR");
+export const STATE_DIR = requireEnv("TINJAU_STATE_DIR");
 
 if (!existsSync(STATE_DIR)) {
-  throw new Error(`[scoreboard-api] AFTERHOURS_STATE_DIR=${STATE_DIR} does not exist on disk — refusing to start.`);
+  throw new Error(`[scoreboard-api] TINJAU_STATE_DIR=${STATE_DIR} does not exist on disk — refusing to start.`);
 }
 
 function getPort(): number {
@@ -43,7 +43,7 @@ export const RATE_LIMIT_PER_MINUTE = 60;
 
 /**
  * How often the background refresh loop attempts a recompute. Note: this process writes no
- * heartbeat file of its own — the deployed unit is read-only on `AFTERHOURS_STATE_DIR`
+ * heartbeat file of its own — the deployed unit is read-only on `TINJAU_STATE_DIR`
  * (`ReadOnlyPaths=/opt/afterhours/data`, no `ReadWritePaths=`), the first fully read-only
  * AFTERHOURS unit. See `main.ts`'s file header for how liveness is monitored instead.
  */

@@ -22,7 +22,7 @@ const poolKeyComponents = [
   { name: "hooks", type: "address" },
 ] as const;
 
-export const AFTERHOURS_HOOK_ABI = [
+export const TINJAU_HOOK_ABI = [
   {
     type: "function",
     name: "previewFee",
