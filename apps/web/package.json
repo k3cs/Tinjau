@@ -8,15 +8,20 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "test:a11y": "playwright test e2e/accessibility.spec.ts"
   },
   "dependencies": {
+    "motion": "^13.1.1",
     "next": "15.5.23",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "viem": "2.53.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.62.1",
     "@types/node": "22.20.0",
     "@types/react": "19.0.2",
     "@types/react-dom": "19.0.2",
