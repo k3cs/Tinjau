@@ -1,5 +1,5 @@
 ---
-name: AFTERHOURS
+name: Tinjau
 description: A customs house for corporate disclosure on tokenised US equities — every filing held, inspected, and stamped before it's a fact.
 colors:
   dock: "#17140F"
@@ -73,13 +73,13 @@ components:
     padding: "4px 10px"
 ---
 
-# Design System: AFTERHOURS
+# Design System: Tinjau
 
 ## Overview
 
 **Creative North Star: "The Bonded Warehouse"**
 
-AFTERHOURS reads a corporate filing the way a customs house reads a shipping manifest: nothing is believed on arrival, everything is held, inspected against its own paperwork, stamped with the outcome, and only then released. The world is a warehouse dock at night (a deliberate literal reading of the product's own name) — a warm graphite floor, kraft-paper cargo tags standing in for registry entries, and stamp inks reserved one-per-meaning rather than spent as decoration. The system was assigned by this project's concept-seed roll (direction 3 of 7 grounded candidates, seed key `c093dccb`) and raised by three borrowed disciplines: alert-color restraint from a VU-meter-bridge challenger (a color states something or it doesn't appear), chrome-deleted typographic honesty from a Metro-tiles challenger (no gradients, no card bezels standing in for content), and measured-state-over-animation from a blacksmith-forge challenger (every state change reads as an exact before/after figure, never a dramatized transition).
+Tinjau reads a corporate filing the way a customs house reads a shipping manifest: nothing is believed on arrival, everything is held, inspected against its own paperwork, stamped with the outcome, and only then released. The world is a warehouse dock at night (a deliberate literal reading of the product's original name, AFTERHOURS, when this visual direction was chosen — the product was renamed to Tinjau on 2026-08-20, after the visual system was already built, so the theme's connection to the name is now historical rather than current) — a warm graphite floor, kraft-paper cargo tags standing in for registry entries, and stamp inks reserved one-per-meaning rather than spent as decoration. The system was assigned by this project's concept-seed roll (direction 3 of 7 grounded candidates, seed key `c093dccb`) and raised by three borrowed disciplines: alert-color restraint from a VU-meter-bridge challenger (a color states something or it doesn't appear), chrome-deleted typographic honesty from a Metro-tiles challenger (no gradients, no card bezels standing in for content), and measured-state-over-animation from a blacksmith-forge challenger (every state change reads as an exact before/after figure, never a dramatized transition).
 
 This is a Persuade-mode world on the landing page and an Operate-mode inheritance on the holder digest and forward calendar — same palette and type, denser and more restrained composition once the visitor is doing a task rather than being told what the product is. Every number the system displays is real: an on-chain read, a measured study, or an honest empty state. No visual device stands in for data the product doesn't have.
 

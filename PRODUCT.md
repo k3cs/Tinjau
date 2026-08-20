@@ -20,11 +20,11 @@ Tertiary: anyone (trader, researcher, or the project's own X feed) who wants to 
 
 ## Product Purpose
 
-AFTERHOURS is a corporate-events oracle for tokenised equities on X Layer. Tokenised US equities trade 24/7, but the companies behind them file SEC disclosures (8-K material events, Form 4 insider trades) almost exclusively while the US market is closed — so nothing on-chain knows those documents exist until someone tells it. AFTERHOURS runs an agent that polls SEC EDGAR, parses each filing three independent times with separate LLM calls into structured fields, diffs the three parses field-by-field, and posts the result on-chain — bonded in USD₮0, with a challenge window anyone can use to dispute a posted field by proving it doesn't match the source document. The frontend is where a holder or a judge actually sees this: a zero-wallet lookup of what happened to a given address's holdings, a forward calendar of what's scheduled next, and (later phases) a scoreboard and an X feed. [Confirmed from spec §1, §4.]
+Tinjau is a corporate-events oracle for tokenised equities on X Layer. Tokenised US equities trade 24/7, but the companies behind them file SEC disclosures (8-K material events, Form 4 insider trades) almost exclusively while the US market is closed — so nothing on-chain knows those documents exist until someone tells it. Tinjau runs an agent that polls SEC EDGAR, parses each filing three independent times with separate LLM calls into structured fields, diffs the three parses field-by-field, and posts the result on-chain — bonded in USD₮0, with a challenge window anyone can use to dispute a posted field by proving it doesn't match the source document. The frontend is where a holder or a judge actually sees this: a zero-wallet lookup of what happened to a given address's holdings, a forward calendar of what's scheduled next, and (later phases) a scoreboard and an X feed. [Confirmed from spec §1, §4.]
 
 ## Positioning
 
-Not a claim — a bonded, disputable, per-field-verifiable on-chain record. A company's own investor-relations page or a third-party analyst thread asserts what happened; nothing forces it to be checked against the source document, and nothing lets a stranger profit from proving it wrong. AFTERHOURS's registry entries carry (a) a SHA-256 hash of the exact source document, (b) a per-field agreement level showing how many of three independent LLM parses agreed on each fact, and (c) a USD₮0 bond that a successful challenger takes. A neighboring product that just summarizes filings with one LLM call cannot truthfully claim any of the three. [Confirmed from spec §1, §3, §4.2.]
+Not a claim — a bonded, disputable, per-field-verifiable on-chain record. A company's own investor-relations page or a third-party analyst thread asserts what happened; nothing forces it to be checked against the source document, and nothing lets a stranger profit from proving it wrong. Tinjau's registry entries carry (a) a SHA-256 hash of the exact source document, (b) a per-field agreement level showing how many of three independent LLM parses agreed on each fact, and (c) a USD₮0 bond that a successful challenger takes. A neighboring product that just summarizes filings with one LLM call cannot truthfully claim any of the three. [Confirmed from spec §1, §3, §4.2.]
 
 ## Operating Context
 
@@ -46,7 +46,7 @@ Not a claim — a bonded, disputable, per-field-verifiable on-chain record. A co
 
 ## Brand Commitments
 
-- Product name is fixed: **AFTERHOURS** (all caps, one word, per the spec and every prior planning document). Not open for redesign.
+- Product name is fixed: **Tinjau** — renamed from AFTERHOURS on 2026-08-20, at Dien's request, one day before the Event A deadline. Domain: `tinjau.xyz`. X account: `@tinjauAI`. Older planning documents and historical task-tracker evidence entries still say "AFTERHOURS" in places — that's the correct record of what the product was called at the time that work was done, not a leftover to hunt down and scrub.
 - No existing logo, color palette, or typography has been chosen. No visual assets exist yet.
 - Tone precedent from the project's own writing (spec, validation docs): plain, factual, willing to state limitations and measured numbers rather than oversell — e.g. the project explicitly refuses to inflate a small measured result into a bigger claim. This factual, non-hype voice is a reasonable default to carry into UI copy, though it has not been explicitly confirmed as a binding brand rule.
 

@@ -141,3 +141,21 @@ Record decisions that affect eligibility, idea selection, scope, architecture, i
 - Approved by: Dien
 - Approval date: 2026-08-17
 - Revisit condition: billing/payment is set up for Claude (task-tracker.md P1.10) — then execute P1.11 per the fallback already recorded in the SVC-004 entry
+
+### DEC-008 — Rename product from AFTERHOURS to Tinjau
+
+- Stage: 6 (Event A submission assembly, ~1 day before deadline)
+- Status: approved
+- Decision requested: Dien requested a full product rename, including the live production VPS infrastructure, one day before the Event A deadline (2026-08-21 23:59 UTC)
+- Selected option: **Tinjau** — domain `tinjau.xyz` (Dien's plan, not yet deployed at decision time), X account already switched to `@tinjauAI` (P0.1's account, renamed in place rather than a new account). Everything user/judge-facing (frontend UI text, page titles/metadata, `PRODUCT.md`, `DESIGN.md`) renamed immediately. Live VPS infrastructure (systemd unit names, `/opt/afterhours/` directory, `AFTERHOURS_*` env var prefixes) renamed next, carefully, preserving all running services' persisted state (cold-start seals, pointers) across the rename — see the task tracker for the exact sequence and verification.
+- Rationale: Dien's own product-naming decision; no technical or judging-criteria reason forced it. Executed as requested despite the deadline proximity because the user was warned of and explicitly accepted the risk (see the tracker's own note on this).
+- Alternatives: rename only the judge-visible surface (frontend + docs), leave VPS internals as `afterhours-*` — this was offered explicitly and Dien chose the fuller rename instead
+- Evidence and reference IDs: none new — this is a naming change, not a fact correction
+- Service IDs: none changed
+- Trade-offs: **locked historical records are deliberately NOT rewritten** — `afterhours-spec.md`'s body text, this file's own DEC-005/DEC-006/DEC-007 entries, and the task tracker's evidence log entries written before 2026-08-20 all still say "AFTERHOURS." That is treated as the correct historical record (the product genuinely was called that when those decisions were made and that work was done), not a leftover requiring a global find-and-replace. A rename note was added at the top of `afterhours-spec.md` and to `PRODUCT.md` instead of rewriting either document's body.
+- Risks: the deployed `AfterhoursFeeHook` contract on X Layer testnet **cannot be renamed at all** — its name is fixed in already-broadcast bytecode. Submission materials must refer to it by its real deployed name and disclose the mismatch with the product's current name, rather than imply a contract called "TinjauFeeHook" exists (it does not). VPS-side rename carries real operational risk this close to the deadline (service downtime, state loss) — mitigated by renaming one service at a time with a state/functionality check after each, never a bulk rename-and-hope.
+- Things to avoid / learning IDs: none new
+- Impact: `apps/web` (all UI text), `PRODUCT.md`, `DESIGN.md` rewritten to "Tinjau." `afterhours-spec.md` and this file's own prior entries left as historical record, with a rename note added. VPS infra rename tracked separately in `task-tracker.md`.
+- Approved by: Dien
+- Approval date: 2026-08-20
+- Revisit condition: none — this is a completed rename, not conditional

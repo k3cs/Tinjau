@@ -1,5 +1,7 @@
 # AFTERHOURS — Full Idea Specification
 
+**Renamed 2026-08-20: the product is now called Tinjau** (domain `tinjau.xyz`, X account `@tinjauAI`), one day before the Event A deadline, at Dien's request. This document is left as originally written — it is a locked, point-in-time spec, and "AFTERHOURS" below refers to the exact same product now called Tinjau. Do not edit the body text below to retrofit the new name; treat every "AFTERHOURS" in this file as "Tinjau." Current-facing documents (`PRODUCT.md`, the frontend, the task tracker's newer entries) use the new name.
+
 Audience: an AI agent (or human) with **zero prior context**. This document is the single source of truth for what AFTERHOURS is, why every design decision was made, what is deliberately excluded, and what remains unproven. Read §3 ("What it is NOT") before forming any summary of the idea.
 
 Status: **locked as the chosen idea** (2026-08-16), scope revised 2026-08-17 after round 6. Companion file: `afterhours-validation-prompt.md` (the neutral brief used for external scoring; that file asks for scores, this file explains). The two files must stay in sync on facts and scope; they deliberately differ in voice — the brief states, this file argues.
