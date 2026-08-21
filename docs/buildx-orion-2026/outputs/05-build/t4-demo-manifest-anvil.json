@@ -1,0 +1,605 @@
+{
+  "_purpose": "Decoded evidence for T4.2 (poster/registry/hook wiring), T4.3 (expiry and deterministic recovery), T4.4 (rumour negative control) and T4.5 (confirmed-event path). Every fee is the value PoolManager charged, read from its own Swap event.",
+  "_warning": "ADDRESSES HERE ARE T4.2 WORKING ADDRESSES, NOT FINAL. T7.2 re-verifies and owns the authoritative list. The pool is BUILDER-CONTROLLED test liquidity and is not a market. Scene B's market leg is CONSTRUCTED and must never be presented as a replay.",
+  "generatedAt": "2026-08-21T03:33:07.218Z",
+  "network": {
+    "networkLabel": "anvil-local",
+    "chainId": 31337,
+    "addresses": {
+      "registry": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      "hook": "0xfD0A3D99642BBAFF7B086dBE54aB139373e4A080",
+      "poolManager": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "swapRouter": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      "liquidityRouter": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+      "riskAsset": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      "quoteAsset": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "token0": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "token1": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      "poolId": "0x90408901f5070166568f187e8bb9f03f3a8552140dae2585089c6e22648dc57f",
+      "tickSpacing": 60
+    },
+    "envelope": {
+      "baseFee": 500,
+      "maxFee": 20000,
+      "widenDuration": 3600,
+      "decayDuration": 18000,
+      "maxProtectDuration": 21600,
+      "cooldown": 3600,
+      "demoEnvelope": false
+    },
+    "accounts": {
+      "assessor": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "poster": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "relayer": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+      "guardian": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+    },
+    "supportsTimeTravel": true
+  },
+  "bytecode": {
+    "registry": {
+      "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      "hasBytecode": true,
+      "codeSize": 6337
+    },
+    "hook": {
+      "address": "0xfD0A3D99642BBAFF7B086dBE54aB139373e4A080",
+      "hasBytecode": true,
+      "codeSize": 6160
+    },
+    "poolManager": {
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "hasBytecode": true,
+      "codeSize": 17151
+    },
+    "swapRouter": {
+      "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      "hasBytecode": true,
+      "codeSize": 5035
+    },
+    "liquidityRouter": {
+      "address": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+      "hasBytecode": true,
+      "codeSize": 4533
+    },
+    "riskAsset": {
+      "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      "hasBytecode": true,
+      "codeSize": 1737
+    },
+    "quoteAsset": {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "hasBytecode": true,
+      "codeSize": 1737
+    }
+  },
+  "addressStatus": "T4.2 working addresses — not final; T7.2 owns the authoritative list",
+  "scenes": [
+    {
+      "scene": "A",
+      "label": "Rumour containment — the aggressive fee stays unauthorised",
+      "provenance": {
+        "evidence": "REPLAYED_SOURCE_LINKED",
+        "marketLeg": "REPLAYED",
+        "pool": "BUILDER_CONTROLLED",
+        "timeShiftSeconds": 2077206,
+        "caveats": [
+          "The rumour claim in this scenario is SIMULATED (T0.2 disclosure): no byte-pinnable social post exists for it. The news chain alongside it is real and source-linked.",
+          "The pool is builder-controlled test liquidity. It demonstrates enforcement; it is not a market.",
+          "Every timestamp was shifted forward by 2077206s so the assessment could be posted on a live chain. State and reason codes were checked to be identical to the unshifted canonical run."
+        ]
+      },
+      "chainId": 31337,
+      "networkLabel": "anvil-local",
+      "decisionState": "WATCH",
+      "decisionReasonCodes": [
+        "DUPLICATE_SYNDICATION",
+        "INSUFFICIENT_SAMPLE",
+        "MARKET_DATA_UNAVAILABLE",
+        "NO_OFFICIAL_CONFIRMATION",
+        "REFERENCE_MARKET_CLOSED",
+        "SINGLE_SOURCE"
+      ],
+      "assetRemap": {
+        "canonicalAsset": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "deployedStandIn": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+        "chainId": 31337,
+        "note": "The decision resolved the canonical asset on X Layer mainnet (chain 196). This chain carries a freely-mintable mock standing in for it in a BUILDER-CONTROLLED pool. Only the `asset` field was remapped; the decision itself is unmodified."
+      },
+      "steps": [
+        {
+          "step": "decide",
+          "atUnixSeconds": 1787283186,
+          "note": "Shifted the frozen scenario forward by 2077206s so its evidence is current relative to chain time.",
+          "decoded": {
+            "canonicalState": "WATCH",
+            "shiftedState": "WATCH",
+            "canonicalReasonCodes": [
+              "DUPLICATE_SYNDICATION",
+              "INSUFFICIENT_SAMPLE",
+              "MARKET_DATA_UNAVAILABLE",
+              "NO_OFFICIAL_CONFIRMATION",
+              "REFERENCE_MARKET_CLOSED",
+              "SINGLE_SOURCE"
+            ],
+            "shiftedReasonCodes": [
+              "DUPLICATE_SYNDICATION",
+              "INSUFFICIENT_SAMPLE",
+              "MARKET_DATA_UNAVAILABLE",
+              "NO_OFFICIAL_CONFIRMATION",
+              "REFERENCE_MARKET_CLOSED",
+              "SINGLE_SOURCE"
+            ],
+            "humanExplanation": "Only one independent origin reported this. Additional outlets carrying the same story are syndications of that origin, not corroboration. Market leg: UNAVAILABLE. Only 0 swap(s) in the window, below the 30 required to form a verdict. A drawdown built from this few trades is an artifact of which trades happened to land, not a property of the market. The OKX reference leg was unavailable, so no artifact may describe this as dual-leg OKX/X Layer confirmation. No bounded action is authorised in state WATCH: the aggressive fee path stays closed and the pool keeps its baseline fee."
+          }
+        },
+        {
+          "step": "postAssessment",
+          "atUnixSeconds": 1787283186,
+          "note": "Relayed by the poster; authorised only by the assessor's EIP-712 signature.",
+          "txHash": "0x111c3cc9342ef132df5fe9ba362b405baa97324ffe58e6dd13b4b2b8978e9421",
+          "decoded": {
+            "assessmentPosted": {
+              "key": "0x02b90a30c6f8d77b625345412b111cdb65e7a383cc04cedf4792e9f7bf24637a",
+              "asset": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+              "poolId": "0x90408901f5070166568f187e8bb9f03f3a8552140dae2585089c6e22648dc57f",
+              "state": "WATCH",
+              "reasonBits": 2115622,
+              "assessedAt": 1787283186,
+              "expiresAt": 1787369586,
+              "evidenceCommitment": "0xa634fa13794a14b3a9a586ba39f357f158d5f78c434ce44d94c03f2fcff6d781"
+            },
+            "failure": null
+          }
+        },
+        {
+          "step": "readback",
+          "atUnixSeconds": 1787283186,
+          "note": "Read from the registry and the hook directly; no dashboard involved.",
+          "decoded": {
+            "record": {
+              "asset": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+              "poolId": "0x90408901f5070166568f187e8bb9f03f3a8552140dae2585089c6e22648dc57f",
+              "state": "WATCH",
+              "confidence": "LOW",
+              "dataMode": "SIMULATED",
+              "confirmation": "UNAVAILABLE",
+              "reasonBits": 2115622,
+              "assessedAt": 1787283186,
+              "expiresAt": 1787369586,
+              "protectStartedAt": 0,
+              "evidenceCommitment": "0xa634fa13794a14b3a9a586ba39f357f158d5f78c434ce44d94c03f2fcff6d781",
+              "policyVersion": "tinjau.policy/1.0.0",
+              "neverAssessed": false
+            },
+            "effectiveState": {
+              "state": "WATCH",
+              "fee": 500,
+              "endsAt": 0
+            },
+            "hookFeeDetail": {
+              "fee": 500,
+              "reason": "None",
+              "state": "WATCH",
+              "protectEndsAt": 0
+            }
+          }
+        },
+        {
+          "step": "swap",
+          "atUnixSeconds": 1787283186,
+          "note": "Fee read from PoolManager's own Swap event — what the pool charged, not what the hook said.",
+          "txHash": "0xe055bc1ef70fc565c34ef7306bc7f1c7077a7cdc360a0df63ca504cfc1ac8a51",
+          "decoded": {
+            "appliedFee": 500,
+            "previewedFee": 500,
+            "tick": -1
+          }
+        }
+      ],
+      "swaps": [
+        {
+          "ok": true,
+          "txHash": "0xe055bc1ef70fc565c34ef7306bc7f1c7077a7cdc360a0df63ca504cfc1ac8a51",
+          "blockNumber": 9,
+          "atUnixSeconds": 1787283186,
+          "appliedFee": 500,
+          "amount0": "-1000000000000000",
+          "amount1": "999499999000999",
+          "tick": -1,
+          "previewedFee": 500,
+          "previewedReason": "None",
+          "failure": null
+        }
+      ],
+      "passed": true,
+      "failures": []
+    },
+    {
+      "scene": "B",
+      "label": "Bounded protection, deterministic recovery, and cooldown",
+      "provenance": {
+        "evidence": "REPLAYED_WITH_CONSTRUCTED_MARKET",
+        "marketLeg": "CONSTRUCTED",
+        "pool": "BUILDER_CONTROLLED",
+        "timeShiftSeconds": 0,
+        "caveats": [
+          "THE MARKET LEG IS CONSTRUCTED. Scenario B's real mainnet replay resolves to WATCH because its market leg is NOT_CONFIRMED (T3.3, published). This scene therefore pairs the real replayed 8-K evidence with a constructed price path on the builder-controlled pool. It must never be presented as a replayed PROTECT.",
+          "The constructed path was scored by the real confirmation engine under its own thresholds; only the market data is constructed, not the verdict.",
+          "The record's on-chain `dataMode` is derived from the EVIDENCE only, so it cannot express 'evidence replayed, market constructed'. That distinction lives here and in the manifest.",
+          "The pool is builder-controlled test liquidity. It demonstrates enforcement; it is not a market."
+        ]
+      },
+      "chainId": 31337,
+      "networkLabel": "anvil-local",
+      "decisionState": "PROTECT",
+      "decisionReasonCodes": [
+        "BONDED_EVIDENCE_PASSED",
+        "DUPLICATE_SYNDICATION",
+        "MARKET_CONFIRMED",
+        "OFFICIAL_FILING",
+        "REFERENCE_MARKET_CLOSED",
+        "STALE_EVIDENCE"
+      ],
+      "assetRemap": {
+        "canonicalAsset": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "deployedStandIn": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+        "chainId": 31337,
+        "note": "The decision resolved the canonical asset on X Layer mainnet (chain 196). This chain carries a freely-mintable mock standing in for it in a BUILDER-CONTROLLED pool. Only the `asset` field was remapped; the decision itself is unmodified."
+      },
+      "steps": [
+        {
+          "step": "compare:canonical-vs-constructed",
+          "atUnixSeconds": 1787283186,
+          "note": "The real mainnet replay of this scenario resolves to WATCH (T3.3, published). This is precisely what the constructed market leg changed, and nothing else.",
+          "decoded": {
+            "canonicalState": "WATCH",
+            "reasonCodeDiff": {
+              "onlyInCanonical": [
+                "ANTI_WICK_FAILED",
+                "MARKET_NOT_CONFIRMED"
+              ],
+              "onlyInConstructed": [
+                "MARKET_CONFIRMED"
+              ]
+            }
+          }
+        },
+        {
+          "step": "decide",
+          "atUnixSeconds": 1787283186,
+          "note": "CONSTRUCTED market leg on the builder-controlled pool, real replayed evidence. The price path was fed to the real confirmation engine; the CONFIRMED verdict is the engine's, not a hand-set value.",
+          "decoded": {
+            "state": "PROTECT",
+            "reasonCodes": [
+              "BONDED_EVIDENCE_PASSED",
+              "DUPLICATE_SYNDICATION",
+              "MARKET_CONFIRMED",
+              "OFFICIAL_FILING",
+              "REFERENCE_MARKET_CLOSED",
+              "STALE_EVIDENCE"
+            ],
+            "confidenceBand": "HIGH",
+            "marketConfirmation": {
+              "status": "CONFIRMED",
+              "observedAt": "2026-08-21T03:33:06.000Z",
+              "blockNumber": "68514150",
+              "fresh": true,
+              "antiWickSatisfied": true,
+              "okxReferencePrice": null,
+              "xLayerPoolPrice": "97",
+              "basisBps": null,
+              "drawdownBps": "300",
+              "tradeVelocity": "0",
+              "executableExitDepth": "14.93434387",
+              "reasonCodes": [
+                "MARKET_CONFIRMED",
+                "MARKET_DATA_UNAVAILABLE",
+                "REFERENCE_MARKET_CLOSED"
+              ]
+            },
+            "requestedFee": "20000",
+            "humanExplanation": "A qualifying official filing passed the bonded-evidence checks and the market independently corroborated the move within the freshness bound, so a bounded fee action is authorised. Market leg: CONFIRMED. Market confirmed on drawdown. The OKX reference leg was unavailable, so this is a single-leg (X Layer pool) confirmation and must not be described as dual-leg. The OKX reference leg was unavailable, so no artifact may describe this as dual-leg OKX/X Layer confirmation. Bounded action PROPOSED (not applied): fee 20000 pips, which is at or below the policy target 20000 for confidence HIGH. The contract recomputes its own target and may lower or reject this proposal; it can never raise it."
+          }
+        },
+        {
+          "step": "postAssessment",
+          "atUnixSeconds": 1787283186,
+          "note": "The registry re-checks confirmation, the rumour bit, pause and cooldown on chain.",
+          "txHash": "0x23ebfd9ccbe91d6767f5592a7b66edfae59a506f222c7171c2a5bc4af1a1b873",
+          "decoded": {
+            "assessmentPosted": {
+              "key": "0x02b90a30c6f8d77b625345412b111cdb65e7a383cc04cedf4792e9f7bf24637a",
+              "asset": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+              "poolId": "0x90408901f5070166568f187e8bb9f03f3a8552140dae2585089c6e22648dc57f",
+              "state": "PROTECT",
+              "reasonBits": 344340,
+              "assessedAt": 1787283186,
+              "expiresAt": 1787304786,
+              "evidenceCommitment": "0x8503b64ddf4565937c4b268de8238fda3b443e954402ecd2bddc896e09f0a9b5"
+            },
+            "failure": null
+          }
+        },
+        {
+          "step": "readback",
+          "atUnixSeconds": 1787283186,
+          "note": "Registry state and pool fee must agree — checked, not assumed.",
+          "decoded": {
+            "record": {
+              "asset": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+              "poolId": "0x90408901f5070166568f187e8bb9f03f3a8552140dae2585089c6e22648dc57f",
+              "state": "PROTECT",
+              "confidence": "HIGH",
+              "dataMode": "REPLAY",
+              "confirmation": "CONFIRMED",
+              "reasonBits": 344340,
+              "assessedAt": 1787283186,
+              "expiresAt": 1787304786,
+              "protectStartedAt": 1787283186,
+              "evidenceCommitment": "0x8503b64ddf4565937c4b268de8238fda3b443e954402ecd2bddc896e09f0a9b5",
+              "policyVersion": "tinjau.policy/1.0.0",
+              "neverAssessed": false
+            },
+            "effectiveState": {
+              "state": "PROTECT",
+              "fee": 20000,
+              "endsAt": 1787304786
+            }
+          }
+        },
+        {
+          "step": "swap:widened",
+          "atUnixSeconds": 1787283186,
+          "note": "The bounded action, actually charged.",
+          "txHash": "0x2210d40b19454b571bb9b9331ea7054785f9ff39f558a98581a7d26d8d8f6c1d",
+          "decoded": {
+            "appliedFee": 20000,
+            "previewedFee": 20000
+          }
+        },
+        {
+          "step": "swap:mid-decay",
+          "atUnixSeconds": 1787295786,
+          "note": "Advanced 12600s (widen + half the decay window). No transaction changed the record.",
+          "txHash": "0x54c4a5375efe6515c345657d1f21375d1a8edf4ae4f135a2ddc992b188336112",
+          "decoded": {
+            "appliedFee": 10250,
+            "previewedFee": 10250
+          }
+        },
+        {
+          "step": "swap:recovered",
+          "atUnixSeconds": 1787304787,
+          "note": "Deterministic recovery: no LLM, no keeper, no transaction ended this. Only time passed. The stored record still reads PROTECT — expiry is applied at read time, not by erasing history.",
+          "txHash": "0xe544b2b46475fced2263facca274a10d00cf577c9b0bdcfe77ddfad718256d6e",
+          "decoded": {
+            "appliedFee": 500,
+            "effectiveState": {
+              "state": "NORMAL",
+              "fee": 500,
+              "endsAt": 1787304786
+            },
+            "storedState": "PROTECT"
+          }
+        },
+        {
+          "step": "postAssessment:stand-down",
+          "atUnixSeconds": 1787304787,
+          "note": "Explicit stand-down. This is what starts the cooldown clock.",
+          "txHash": "0xcf002c08587e97c7f16f9cd686b2034df4953988778b6e09541bea55fce68d9f",
+          "decoded": {
+            "assessmentPosted": {
+              "key": "0x02b90a30c6f8d77b625345412b111cdb65e7a383cc04cedf4792e9f7bf24637a",
+              "asset": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+              "poolId": "0x90408901f5070166568f187e8bb9f03f3a8552140dae2585089c6e22648dc57f",
+              "state": "WATCH",
+              "reasonBits": 344596,
+              "assessedAt": 1787304787,
+              "expiresAt": 1787391187,
+              "evidenceCommitment": "0xa83c764a8ed868c7ccb4be1be84c8876d6d8d388c85e5e05b2521dcee9626a1f"
+            },
+            "protectionEnded": {
+              "key": "0x02b90a30c6f8d77b625345412b111cdb65e7a383cc04cedf4792e9f7bf24637a",
+              "endedAt": 1787304787
+            }
+          }
+        },
+        {
+          "step": "postAssessment:blocked-by-cooldown",
+          "atUnixSeconds": 1787304787,
+          "note": "Immediate re-arming is refused on chain, by the contract, not by the off-chain engine.",
+          "txHash": null,
+          "decoded": {
+            "failure": {
+              "errorName": "CooldownActive",
+              "args": [
+                "1787304787",
+                3600
+              ],
+              "rawMessage": null
+            }
+          }
+        }
+      ],
+      "swaps": [
+        {
+          "ok": true,
+          "txHash": "0x2210d40b19454b571bb9b9331ea7054785f9ff39f558a98581a7d26d8d8f6c1d",
+          "blockNumber": 15,
+          "atUnixSeconds": 1787283186,
+          "appliedFee": 20000,
+          "amount0": "-1000000000000000",
+          "amount1": "979999997080580",
+          "tick": -1,
+          "previewedFee": 20000,
+          "previewedReason": "None",
+          "failure": null
+        },
+        {
+          "ok": true,
+          "txHash": "0x54c4a5375efe6515c345657d1f21375d1a8edf4ae4f135a2ddc992b188336112",
+          "blockNumber": 17,
+          "atUnixSeconds": 1787295786,
+          "appliedFee": 10250,
+          "amount0": "-1000000000000000",
+          "amount1": "989749995101974",
+          "tick": -1,
+          "previewedFee": 10250,
+          "previewedReason": "None",
+          "failure": null
+        },
+        {
+          "ok": true,
+          "txHash": "0xe544b2b46475fced2263facca274a10d00cf577c9b0bdcfe77ddfad718256d6e",
+          "blockNumber": 19,
+          "atUnixSeconds": 1787304787,
+          "appliedFee": 500,
+          "amount0": "-1000000000000000",
+          "amount1": "999499993065469",
+          "tick": -1,
+          "previewedFee": 500,
+          "previewedReason": "LapsedOrExpired",
+          "failure": null
+        },
+        {
+          "ok": true,
+          "txHash": "0xebda1672912556c163c8485057381669838a4baa2851e5c3e459a34bb5720ec4",
+          "blockNumber": 21,
+          "atUnixSeconds": 1787304787,
+          "appliedFee": 500,
+          "amount0": "-1000000000000000",
+          "amount1": "999499991067468",
+          "tick": -1,
+          "previewedFee": 500,
+          "previewedReason": "None",
+          "failure": null
+        }
+      ],
+      "passed": true,
+      "failures": []
+    },
+    {
+      "scene": "F",
+      "label": "A failed action stays visible and claims no protection benefit",
+      "provenance": {
+        "evidence": "REPLAYED_WITH_CONSTRUCTED_MARKET",
+        "marketLeg": "CONSTRUCTED",
+        "pool": "BUILDER_CONTROLLED",
+        "timeShiftSeconds": 0,
+        "caveats": [
+          "The failure is induced by a real guardian pause and refused by the contract. Nothing here is a simulated error path.",
+          "The market leg is constructed, as in Scene B, and must not be presented as a replay."
+        ]
+      },
+      "chainId": 31337,
+      "networkLabel": "anvil-local",
+      "decisionState": "PROTECT",
+      "decisionReasonCodes": [
+        "BONDED_EVIDENCE_PASSED",
+        "DUPLICATE_SYNDICATION",
+        "MARKET_CONFIRMED",
+        "OFFICIAL_FILING",
+        "REFERENCE_MARKET_CLOSED",
+        "STALE_EVIDENCE"
+      ],
+      "assetRemap": {
+        "canonicalAsset": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "deployedStandIn": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+        "chainId": 31337,
+        "note": "The decision resolved the canonical asset on X Layer mainnet (chain 196). This chain carries a freely-mintable mock standing in for it in a BUILDER-CONTROLLED pool. Only the `asset` field was remapped; the decision itself is unmodified."
+      },
+      "steps": [
+        {
+          "step": "guardian:pause",
+          "atUnixSeconds": 1787304788,
+          "note": "The guardian pauses new protections. This is the failure this scene induces.",
+          "txHash": "0x5c1848b6e735d01e998212838e7787c746586d10c2522d2544f513b6cea52e3b",
+          "decoded": {
+            "paused": true
+          }
+        },
+        {
+          "step": "postAssessment:failed",
+          "atUnixSeconds": 1787304788,
+          "note": "The action was authorised by the evidence and REFUSED on chain. Both facts are recorded. No protection benefit may be claimed for this interval.",
+          "txHash": null,
+          "decoded": {
+            "failure": {
+              "errorName": "ProtectionPaused",
+              "args": [],
+              "rawMessage": null
+            },
+            "action": {
+              "authorized": true,
+              "status": "FAILED",
+              "baseFee": "500",
+              "maxFee": "20000",
+              "requestedFee": "20000",
+              "appliedFee": null,
+              "maximumDurationSec": 21600,
+              "txHash": null,
+              "failureReason": "ProtectionPaused"
+            }
+          }
+        },
+        {
+          "step": "swap:after-failure",
+          "atUnixSeconds": 1787304788,
+          "note": "Measured proof that the failed action produced no fee change.",
+          "txHash": "0xfbd1172267c2eebede8e7c5c2aa83e6bceaccf317aebdc5c20d43b69252bbae5",
+          "decoded": {
+            "appliedFee": 500,
+            "hookFeeDetail": {
+              "fee": 500,
+              "reason": "None",
+              "state": "WATCH",
+              "protectEndsAt": 0
+            },
+            "storedRecord": {
+              "asset": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+              "poolId": "0x90408901f5070166568f187e8bb9f03f3a8552140dae2585089c6e22648dc57f",
+              "state": "WATCH",
+              "confidence": "MEDIUM",
+              "dataMode": "REPLAY",
+              "confirmation": "NOT_CONFIRMED",
+              "reasonBits": 344596,
+              "assessedAt": 1787304787,
+              "expiresAt": 1787391187,
+              "protectStartedAt": 0,
+              "evidenceCommitment": "0xa83c764a8ed868c7ccb4be1be84c8876d6d8d388c85e5e05b2521dcee9626a1f",
+              "policyVersion": "tinjau.policy/1.0.0",
+              "neverAssessed": false
+            }
+          }
+        },
+        {
+          "step": "guardian:unpause",
+          "atUnixSeconds": 1787304788,
+          "note": "Restored, so this scene leaves no state behind for the next one.",
+          "txHash": "0x75a212a722ee1413ba195aacf6a815e04a7840346d248ebdb4d22a957683ca5a",
+          "decoded": {
+            "paused": false
+          }
+        }
+      ],
+      "swaps": [
+        {
+          "ok": true,
+          "txHash": "0xfbd1172267c2eebede8e7c5c2aa83e6bceaccf317aebdc5c20d43b69252bbae5",
+          "blockNumber": 27,
+          "atUnixSeconds": 1787304788,
+          "appliedFee": 500,
+          "amount0": "-1000000000000000",
+          "amount1": "999499989069468",
+          "tick": -1,
+          "previewedFee": 500,
+          "previewedReason": "None",
+          "failure": null
+        }
+      ],
+      "passed": true,
+      "failures": []
+    }
+  ],
+  "allPassed": true
+}

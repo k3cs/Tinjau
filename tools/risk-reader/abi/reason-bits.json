@@ -1,0 +1,76 @@
+{
+  "$comment": [
+    "The bit-to-meaning mapping for RiskRecord.reasonBits (uint32).",
+    "",
+    "Tracker §0.12 requires that the ABI mapping of the compact on-chain form be documented.",
+    "This file IS that documentation in machine-readable form, transcribed by hand from the",
+    "REASON_* constants in contracts/src/TinjauRiskTypes.sol. It is not imported from Tinjau's",
+    "code; a stranger with this file can expand a bitmask without running any Tinjau software.",
+    "",
+    "Bit positions are permanent. A retired reason stops being set; its position is never",
+    "reused, or historical records become unreadable.",
+    "",
+    "Positions 15, 22, 23, 29, 30 and 31 are UNDEFINED in schema tinjau.risk/1.0.0. A record",
+    "carrying one of them was written by a newer schema than this reader understands. The",
+    "reader REFUSES such a record instead of masking the bit off: silently dropping a newer",
+    "writer's bit would make the record read as though that fact never existed."
+  ],
+  "schemaVersion": "tinjau.risk/1.0.0",
+  "width": 32,
+  "bits": [
+    { "bit": 0, "code": "RUMOR_ONLY", "group": "capped-or-refused", "meaning": "Evidence is rumour-only (social or unattributed). Hard cap at WATCH; no market argument can lift it." },
+    { "bit": 1, "code": "SINGLE_SOURCE", "group": "capped-or-refused", "meaning": "Only one genuinely independent origin was found. One source alone never authorises the aggressive path." },
+    { "bit": 2, "code": "DUPLICATE_SYNDICATION", "group": "capped-or-refused", "meaning": "Several outlets carried the story, but they trace to one origin, so they count as one source." },
+    { "bit": 3, "code": "CONTRADICTED", "group": "capped-or-refused", "meaning": "Sources conflict on a material field." },
+    { "bit": 4, "code": "STALE_EVIDENCE", "group": "capped-or-refused", "meaning": "The evidence fell outside its recency window." },
+    { "bit": 5, "code": "NO_OFFICIAL_CONFIRMATION", "group": "capped-or-refused", "meaning": "No official filing confirms the claim." },
+    { "bit": 6, "code": "UNSUPPORTED_ASSET", "group": "capped-or-refused", "meaning": "The token is known, but it has no verified pool in the supported set." },
+    { "bit": 7, "code": "AMBIGUOUS_ENTITY", "group": "capped-or-refused", "meaning": "The company is known, but which of its tokens the claim concerns was not resolved." },
+    { "bit": 8, "code": "MARKET_CONFIRMED", "group": "market", "meaning": "The independent market check corroborated the event within the freshness bound." },
+    { "bit": 9, "code": "MARKET_NOT_CONFIRMED", "group": "market", "meaning": "The market was checked and did not corroborate the event." },
+    { "bit": 10, "code": "MARKET_DATA_STALE", "group": "market", "meaning": "Market data existed but was older than the freshness bound." },
+    { "bit": 11, "code": "MARKET_DATA_UNAVAILABLE", "group": "market", "meaning": "The market could not be checked at all (no data, RPC failure, pool untraded)." },
+    { "bit": 12, "code": "ANTI_WICK_FAILED", "group": "market", "meaning": "The price move was a single short-lived spike, not a sustained move." },
+    { "bit": 13, "code": "THIN_EXIT_DEPTH", "group": "market", "meaning": "Executable exit depth in the pool was too thin to conclude anything." },
+    { "bit": 14, "code": "REFERENCE_MARKET_CLOSED", "group": "market", "meaning": "The US reference market was closed during the observation window." },
+    { "bit": 16, "code": "OFFICIAL_FILING", "group": "authorised-or-disqualified", "meaning": "An issuer or regulator filing is present in the evidence set." },
+    { "bit": 17, "code": "TWO_INDEPENDENT_SOURCES", "group": "authorised-or-disqualified", "meaning": "At least two genuinely independent origins were found." },
+    { "bit": 18, "code": "BONDED_EVIDENCE_PASSED", "group": "authorised-or-disqualified", "meaning": "The bonded parse-agreement path passed for the official document." },
+    { "bit": 19, "code": "NON_MATERIAL_EVENT", "group": "authorised-or-disqualified", "meaning": "The filing is real but reports no corporate action affecting obligations, solvency, or listing status. Official does not mean material." },
+    { "bit": 20, "code": "UNKNOWN_COMPANY", "group": "capped-or-refused", "meaning": "The company itself has never been seen before. Distinct from AMBIGUOUS_ENTITY and UNSUPPORTED_ASSET." },
+    { "bit": 21, "code": "INSUFFICIENT_SAMPLE", "group": "market", "meaning": "Market data was present but too sparse to conclude anything. Distinct from MARKET_DATA_UNAVAILABLE, which means the check could not run." },
+    { "bit": 22, "code": "PERSISTENCE_UNOBSERVED", "group": "market", "meaning": "The anti-wick hold interval was unreachable or too sparse to judge, so persistence was never observed either way. Distinct from ANTI_WICK_FAILED, which is a positive finding that the move was watched and retraced." },
+    { "bit": 24, "code": "EXPIRED", "group": "lifecycle", "meaning": "The assessment passed its expiry." },
+    { "bit": 25, "code": "DECAYED_TO_BASELINE", "group": "lifecycle", "meaning": "The bounded fee finished its deterministic decay back to the base fee." },
+    { "bit": 26, "code": "COOLDOWN_ACTIVE", "group": "lifecycle", "meaning": "A new protection cannot re-arm yet; the cooldown after the last one has not elapsed." },
+    { "bit": 27, "code": "PAUSED", "group": "lifecycle", "meaning": "New protections were blocked by the guardian's pause at assessment time." },
+    { "bit": 28, "code": "ACTION_FAILED", "group": "lifecycle", "meaning": "The bounded on-chain action was attempted and failed. Recorded without claiming any protection benefit." }
+  ],
+  "enums": {
+    "RiskState": [
+      { "ordinal": 0, "name": "NORMAL", "meaning": "No material unresolved evidence. Baseline fee only. Also what an unwritten record reads as." },
+      { "ordinal": 1, "name": "WATCH", "meaning": "Monitoring raised. The aggressive fee is NOT authorised." },
+      { "ordinal": 2, "name": "PROTECT", "meaning": "A bounded, time-limited fee action is authorised." }
+    ],
+    "ConfidenceBand": [
+      { "ordinal": 0, "name": "UNKNOWN", "meaning": "Never written. Cannot be posted; reading it means no record exists." },
+      { "ordinal": 1, "name": "LOW", "meaning": "Low confidence. Reaches at most one third of the way up the fee band." },
+      { "ordinal": 2, "name": "MEDIUM", "meaning": "Medium confidence. Reaches at most two thirds of the way up the fee band." },
+      { "ordinal": 3, "name": "HIGH", "meaning": "High confidence. May reach the top of the fee band." }
+    ],
+    "DataMode": [
+      { "ordinal": 0, "name": "UNKNOWN", "meaning": "Never written." },
+      { "ordinal": 1, "name": "LIVE", "meaning": "Observed in real time." },
+      { "ordinal": 2, "name": "OBSERVED", "meaning": "Observed, though not necessarily in real time." },
+      { "ordinal": 3, "name": "REPLAY", "meaning": "Historical data replayed from an immutable fixture. Not live discovery." },
+      { "ordinal": 4, "name": "SIMULATED", "meaning": "Fabricated for testing. NOT evidence of anything real." }
+    ],
+    "ConfirmationStatus": [
+      { "ordinal": 0, "name": "UNKNOWN", "meaning": "Never written." },
+      { "ordinal": 1, "name": "NOT_CONFIRMED", "meaning": "Checked; the market did not corroborate." },
+      { "ordinal": 2, "name": "UNAVAILABLE", "meaning": "Could not check. 'We could not look' is a different finding from 'we looked and saw nothing'." },
+      { "ordinal": 3, "name": "STALE", "meaning": "Data existed but was older than the freshness bound." },
+      { "ordinal": 4, "name": "CONFIRMED", "meaning": "Checked and corroborated within the freshness bound. The only value that satisfies a PROTECT gate." }
+    ]
+  }
+}

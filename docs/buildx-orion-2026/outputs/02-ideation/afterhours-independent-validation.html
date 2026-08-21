@@ -3,57 +3,261 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AFTERHOURS — Independent Validation</title>
+  <meta name="description" content="Independent, evidence-separated evaluation of Tinjau for the X Layer Build X AI Season hackathon.">
+  <title>Tinjau — Independent Evaluation</title>
   <style>
-    :root { color-scheme: dark; --bg:#09100f; --panel:#111b19; --line:#29413b; --ink:#edf7f2; --muted:#a8bbb4; --accent:#76e1b5; --warn:#ffcf70; }
+    :root {
+      color-scheme: dark;
+      --bg: #07100d;
+      --panel: #101b17;
+      --panel-2: #14221d;
+      --line: #29463b;
+      --ink: #effaf5;
+      --muted: #a8bdb4;
+      --green: #67e6ad;
+      --amber: #f6c76a;
+      --red: #ff8b7d;
+      --blue: #84b8ff;
+      --max: 1180px;
+    }
     * { box-sizing: border-box; }
-    body { margin:0; background:linear-gradient(160deg,#08100e 0%,#10211c 100%); color:var(--ink); font:16px/1.55 Inter,ui-sans-serif,system-ui,sans-serif; }
-    main { width:min(1120px,calc(100% - 32px)); margin:48px auto 80px; }
-    header { border-left:4px solid var(--accent); padding:4px 0 4px 20px; margin-bottom:32px; }
-    h1 { margin:0; font-size:clamp(2rem,5vw,4.2rem); letter-spacing:-.055em; }
-    h2 { margin:38px 0 14px; font-size:1.45rem; }
-    h3 { color:var(--accent); }
-    p,li { color:var(--muted); }
-    strong { color:var(--ink); }
-    a { color:var(--accent); }
-    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:14px; background:rgba(17,27,25,.9); }
-    table { width:100%; border-collapse:collapse; min-width:780px; }
-    th,td { padding:14px 16px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
-    th { color:var(--accent); font-size:.78rem; text-transform:uppercase; letter-spacing:.09em; }
-    tr:last-child td { border-bottom:0; }
-    td:nth-child(2) { white-space:nowrap; color:var(--warn); font-weight:750; }
-    section { padding:0 2px; }
-    .callout { padding:18px 20px; border:1px solid var(--line); border-radius:14px; background:var(--panel); }
-    li { margin:10px 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(103, 230, 173, .12), transparent 26rem),
+        linear-gradient(155deg, #06100c 0%, #0b1712 52%, #07100d 100%);
+      color: var(--ink);
+      font: 16px/1.58 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: var(--green); text-underline-offset: 3px; }
+    a:hover { color: #a3ffd3; }
+    main { width: min(var(--max), calc(100% - 32px)); margin: 0 auto 88px; }
+    header { padding: 68px 0 34px; border-bottom: 1px solid var(--line); }
+    .eyebrow { margin: 0 0 10px; color: var(--green); font: 700 .76rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .13em; text-transform: uppercase; }
+    h1 { max-width: 900px; margin: 0; font-size: clamp(2.65rem, 7vw, 6.1rem); line-height: .94; letter-spacing: -.062em; }
+    .lede { max-width: 790px; margin: 24px 0 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.24rem); }
+    h2 { margin: 0 0 18px; font-size: clamp(1.55rem, 3vw, 2.25rem); letter-spacing: -.035em; }
+    h3 { margin: 0 0 8px; font-size: 1.04rem; }
+    p { color: var(--muted); }
+    section { padding-top: 52px; }
+    code { color: var(--ink); }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 25px; }
+    .pill { padding: 7px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: rgba(16, 27, 23, .75); font: 650 .75rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .verdict-grid, .fact-grid, .decision-grid { display: grid; gap: 14px; }
+    .verdict-grid { grid-template-columns: 1.25fr .75fr; margin-top: 24px; }
+    .fact-grid { grid-template-columns: repeat(4, 1fr); }
+    .decision-grid { grid-template-columns: repeat(3, 1fr); }
+    .card { padding: 20px; border: 1px solid var(--line); border-radius: 17px; background: linear-gradient(155deg, rgba(20, 34, 29, .97), rgba(13, 24, 20, .97)); box-shadow: 0 20px 60px rgba(0, 0, 0, .15); }
+    .card p { margin: 8px 0 0; }
+    .card .label { color: var(--muted); font: 700 .72rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .11em; text-transform: uppercase; }
+    .big { margin-top: 8px; font-size: clamp(1.45rem, 3vw, 2.6rem); font-weight: 800; line-height: 1.04; letter-spacing: -.045em; }
+    .go { color: var(--green); }
+    .pivot { color: var(--amber); }
+    .stop { color: var(--red); }
+    .score { color: var(--amber); }
+    .callout { margin-top: 18px; padding: 18px 20px; border-left: 3px solid var(--amber); border-radius: 0 13px 13px 0; background: rgba(246, 199, 106, .08); color: var(--muted); }
+    .callout strong, td strong, li strong { color: var(--ink); }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 17px; background: rgba(16, 27, 23, .92); }
+    table { width: 100%; min-width: 920px; border-collapse: collapse; }
+    th, td { padding: 15px 16px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--green); background: rgba(103, 230, 173, .035); font: 700 .71rem/1.35 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .09em; text-transform: uppercase; }
+    td { color: var(--muted); }
+    tr:last-child td { border-bottom: 0; }
+    td:first-child { color: var(--ink); font-weight: 760; }
+    td:nth-child(2) { white-space: nowrap; }
+    ul, ol { padding-left: 1.25rem; }
+    li { margin: 9px 0; color: var(--muted); }
+    .status-list { display: grid; gap: 10px; padding: 0; list-style: none; }
+    .status-list li { margin: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+    .tag { display: inline-block; min-width: 88px; margin-right: 8px; font: 750 .72rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .06em; text-transform: uppercase; }
+    .implemented { color: var(--green); }
+    .measured { color: var(--blue); }
+    .designed { color: var(--amber); }
+    .missing { color: var(--red); }
+    .rank { display: grid; grid-template-columns: 140px 1fr; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .rank:last-child { border-bottom: 0; }
+    .rank strong.go { color: var(--green); }
+    .rank strong.pivot { color: var(--amber); }
+    .rank strong.stop { color: var(--red); }
+    .fine { color: #789087; font-size: .84rem; }
+    footer { margin-top: 58px; padding-top: 24px; border-top: 1px solid var(--line); }
+    @media (max-width: 850px) {
+      .verdict-grid, .decision-grid { grid-template-columns: 1fr; }
+      .fact-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      main { width: min(100% - 22px, var(--max)); }
+      header { padding-top: 42px; }
+      .fact-grid { grid-template-columns: 1fr; }
+      .rank { grid-template-columns: 1fr; gap: 2px; }
+    }
   </style>
 </head>
 <body>
 <main>
-  <header><h1>AFTERHOURS</h1><p>Independent validation · 2026-08-16</p></header>
+  <header>
+    <p class="eyebrow">Independent evaluation · 20 August 2026</p>
+    <h1>Tinjau is shippable evidence, not yet proven protection.</h1>
+    <p class="lede">A fact-separated assessment of the current repository and deployed prototype against the seven X Layer Build X AI Season criteria. Designed and roadmap features are not counted as shipped.</p>
+    <div class="meta">
+      <span class="pill">Overall: 20 / 35</span>
+      <span class="pill">Hackathon: conditional go</span>
+      <span class="pill">Product: pivot / validate</span>
+      <span class="pill">Confidence: 0.88</span>
+    </div>
+  </header>
+
   <section>
-    <h2>1. Event A — X Layer Build X Series, AI Season</h2>
-    <p><strong>Fact — source:</strong> Event A publishes seven unweighted criteria in clause 4 of its <a href="https://web3.okx.com/xlayer/build-x-series">official terms</a>; the scores are evidence-weighted inferences, not forecasts that assume every planned component ships.</p>
-    <div class="table-wrap"><table><thead><tr><th>Criterion</th><th>Score</th><th>One-sentence justification</th></tr></thead><tbody>
-      <tr><td>Application of AI</td><td>4/5 — Inference</td><td><strong>Fact — brief §5:</strong> model-graded materiality directly changes swap fees; <strong>Inference:</strong> this is substantive, but unmeasured errors and a single signer prevent a 5.</td></tr>
-      <tr><td>Innovation</td><td>3/5 — Inference</td><td><strong>Fact — brief §6 and Uniswap docs:</strong> adjacent risk hooks exist and event-driven fees are a documented v4 use case; <strong>Inference:</strong> the xStock corporate-event combination is differentiated, not a new primitive.</td></tr>
-      <tr><td>Product completeness</td><td>2/5 — Inference</td><td><strong>Fact — brief §§2, 4–5:</strong> implementation, funds, accounts, and live ingestion are missing while mainnet is mandatory; <strong>Inference:</strong> the vertical slice is coherent but currently incomplete.</td></tr>
-      <tr><td>User value</td><td>3/5 — Inference</td><td><strong>Fact — LVR paper and brief §7:</strong> stale-price adverse selection is documented generally but not measured on X Layer xStocks; <strong>Inference:</strong> value is plausible, not locally validated.</td></tr>
-      <tr><td>Integration with X Layer</td><td>4/5 — Inference</td><td><strong>Fact — brief §§3 and 5:</strong> the design uses X Layer xStocks, v4, a registry, and both networks; <strong>Inference:</strong> integration is deep although protected liquidity may have to be created.</td></tr>
-      <tr><td>Growth potential</td><td>2/5 — Inference</td><td><strong>Fact — brief §§3, 5, 7:</strong> eleven equities provide expansion but the MVP has one pool and no migration commitment; <strong>Inference:</strong> growth depends on unproven liquidity acquisition.</td></tr>
-      <tr><td>Ecosystem contribution</td><td>3/5 — Inference</td><td><strong>Fact — brief §5 and Uniswap docs:</strong> the registry could be reusable but a hook does not automatically attract routed liquidity; <strong>Inference:</strong> contribution is credible but modest until reused or funded.</td></tr>
-    </tbody></table></div>
+    <h2>Executive verdict</h2>
+    <div class="verdict-grid">
+      <article class="card">
+        <div class="label">Hackathon decision</div>
+        <div class="big go">Submit the implemented prototype.</div>
+        <p>It has substantive AI, verified X Layer Testnet contracts, a working dynamic-fee path, a public site, and unusually honest measurements. Present it as a filing-aware risk-control prototype—not as the completed rumor-safe LP Risk Autopilot described in the final design.</p>
+      </article>
+      <article class="card">
+        <div class="label">Product decision</div>
+        <div class="big pivot">Pivot / go validate.</div>
+        <p>Do not expand source coverage yet. First prove that event awareness beats a volatility-only controller and that one external LP or pool operator cares enough to test it.</p>
+      </article>
+    </div>
+    <p class="callout"><strong>Most likely judge objection:</strong> the project protects a builder-owned mock testnet pool from a risk whose median measured effect is economically tiny relative to pool TVL; the final differentiators that answer that objection remain designed rather than implemented.</p>
   </section>
+
   <section>
-    <h2>2. Event B — Orion Builder Hackathon</h2>
-    <div class="table-wrap"><table><thead><tr><th>Criterion</th><th>Score</th><th>One-sentence justification</th></tr></thead><tbody>
-      <tr><td>Usefulness</td><td>6/10 — Inference</td><td><strong>Fact — brief §§5 and 7:</strong> the agent changes an executable control against a documented loss class but target-chain harm and demand are unmeasured; <strong>Inference:</strong> useful, but not proven necessary.</td></tr>
-      <tr><td>Execution</td><td>5/10 — Inference</td><td><strong>Fact — brief §§4–5:</strong> the loop is clear and builder fit is strong but no implementation or operational setup exists; <strong>Inference:</strong> execution evidence is halfway to runnable.</td></tr>
-      <tr><td>Originality</td><td>7/10 — Inference</td><td><strong>Fact — brief §6 and Uniswap docs:</strong> component patterns exist but the supplied record has no identical control loop; <strong>Inference:</strong> it is a distinctive recombination.</td></tr>
-    </tbody></table></div>
+    <h2>What was independently checked</h2>
+    <div class="fact-grid">
+      <article class="card"><div class="label">Server</div><div class="big">153 / 153</div><p>Tests passed; TypeScript check passed.</p></article>
+      <article class="card"><div class="label">Contracts</div><div class="big">56 / 56</div><p>Foundry tests passed, including fee bounds and decay.</p></article>
+      <article class="card"><div class="label">Frontend</div><div class="big">Build passed</div><p>TypeScript and Next.js production build passed.</p></article>
+      <article class="card"><div class="label">Deployment</div><div class="big">6 / 6</div><p>All listed X Layer Testnet addresses returned non-zero bytecode.</p></article>
+    </div>
+    <ul class="status-list">
+      <li><span class="tag implemented">Implemented</span><a href="https://tinjau.xyz">tinjau.xyz</a> and its scoreboard API returned HTTP 200. The API returned two records.</li>
+      <li><span class="tag missing">Mismatch</span>The live homepage still served the former AFTERHOURS title and branding during this review.</li>
+      <li><span class="tag implemented">Implemented</span>EDGAR ingestion, HTML cleaning, three parses, field agreement, separate severity grading, event registry, bounded dynamic fee, testnet swaps, and OKX index polling.</li>
+      <li><span class="tag designed">Designed</span>The final <code>NORMAL / WATCH / PROTECT</code> state machine, rumor containment, source-independence logic, multi-signal promotion engine, final reusable risk registry, and three-policy benchmark.</li>
+      <li><span class="tag missing">Unproven</span>Production liquidity, external LPs, prevented loss, third-party risk-feed consumers, revenue, mainnet deployment, and formal ecosystem partnerships.</li>
+    </ul>
+    <p class="fine">Verification commands were run locally on 2026-08-20. This report does not treat passing tests or deployed bytecode as evidence of market demand or economic effectiveness.</p>
   </section>
-  <section><h2>3. Most likely lower-score reason</h2><p class="callout"><strong>Inference:</strong> AFTERHOURS protects a self-seeded demonstration pool from a hypothesised X Layer loss rather than protecting existing liquidity from a measured loss; <strong>Fact — brief §7 and Uniswap docs:</strong> no realised overnight-gap loss, incumbent v4 xStock pool, or migration commitment is shown, and a hook does not automatically attract routed liquidity.</p></section>
-  <section><h2>4. 5.7-day scope</h2><p><strong>Inference — not credible as written:</strong> keep only the registry, hook, one minimally seeded NVDA pool, EDGAR-only ingestion, one historical replay, two injected judge cases, both deployments, and the minimum status page.</p><ul><li><strong>Inference:</strong> Cut live halt, issuer-release, and general-news ingestion to replay fixtures.</li><li><strong>Inference:</strong> Cut the separate attestation-feed workstream; expose registry reads instead.</li><li><strong>Inference:</strong> Keep size caps, second pools, dashboards, MCP, x402, ERC-8004, and autonomous multi-source scheduling out.</li></ul><p><strong>Fact — official requirements:</strong> testnet then mainnet, the dedicated X account, tagged post, and form cannot be cut.</p></section>
-  <section><h2>5. Verdict</h2><h3>Submit with changes</h3><ul><li><strong>Inference:</strong> Position it as a prototype for newly bootstrapped liquidity, not proven protection of current LPs.</li><li><strong>Inference:</strong> Fund deployment and seed wallets and create the project X account on day one.</li><li><strong>Inference:</strong> Bound model output to a versioned enum, fee ceiling, expiry, duplicate guard, signer, and emergency pause.</li><li><strong>Inference:</strong> Publish a small labelled historical NVDA evaluation with prompt and model version.</li><li><strong>Inference:</strong> Make the complete two-case transaction demo one click and externally runnable.</li><li><strong>Inference:</strong> Verify the live venue and measure one historical or replayed event before making migration claims.</li></ul></section>
+
+  <section>
+    <h2>Seven-criterion scorecard</h2>
+    <p>The official criteria do not publish a five-point scoring formula. The scale below is an evaluator convention: 1 = little evidence, 3 = credible prototype evidence, 5 = strong shipped and externally relevant evidence.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Criterion</th><th>Score</th><th>Supporting evidence</th><th>Disconfirming evidence</th><th>Evidence that would change the score most</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Application of AI</td><td class="score">4 / 5</td>
+            <td>Three independent Gemini-family parses produce structured filing fields; per-field agreement gates posting. A 30-filing study records 28/30 key-field unanimity and 28/30 ready-to-post outcomes.</td>
+            <td>The study mixed five model variants because of quotas, human-adjudicated factual accuracy was not completed, and model agreement is not truth. The Evidence Graph, source independence, contradiction handling, and rumor safety are unimplemented.</td>
+            <td>A blinded labeled evaluation using the intended production model, including unsupported-<code>PROTECT</code> and rumor-to-<code>WATCH</code> error rates.</td>
+          </tr>
+          <tr>
+            <td>Innovation</td><td class="score">3 / 5</td>
+            <td>The causal-evidence + rumor-containment + market-confirmation + bounded-action + measured-outcome combination is coherent and no complete public match was found in the reviewed set.</td>
+            <td>Chainlink already demonstrates multi-model corporate-action records; RiskClaw and NeuralHook already demonstrate AI-selected v4 controls. Tinjau's strongest combination-level differentiators are still design scope.</td>
+            <td>One working end-to-end replay that visibly contains a rumor and outperforms a volatility-only controller.</td>
+          </tr>
+          <tr>
+            <td>Product completeness</td><td class="score">3 / 5</td>
+            <td>A public frontend, live backend processes, deployed registry/hook/pool/router, two on-chain examples, 209 passing tests across server and contracts, and clean builds form a credible prototype.</td>
+            <td>The public brand is stale; the final state machine, news/social path, market-confirmation policy, final registry, benchmark, and complete designed demo do not exist. Submission post/form completion was not established by the brief.</td>
+            <td>A public one-click demo proving evidence → state → bounded fee → decay → outcome, plus completed eligibility evidence.</td>
+          </tr>
+          <tr>
+            <td>User value</td><td class="score">2 / 5</td>
+            <td>The measured sample shows 25/32 negative first-trade LP markouts at 60 minutes and materially worse outcomes around the 8-K subset, supporting a real adverse-selection mechanism.</td>
+            <td>The median was only −$0.0614 and −0.002 bps of event-time TVL. Two events generated 76% of total dollar loss. No study shows that Tinjau would have prevented loss, and no target user has committed to using it.</td>
+            <td>A pre-registered three-policy benchmark on neutral and tail events, followed by an external LP/operator pilot or signed test commitment.</td>
+          </tr>
+          <tr>
+            <td>Integration with X Layer</td><td class="score">4 / 5</td>
+            <td>Registry, builder-owned v4 infrastructure, hook, mock assets, router, and swaps are deployed on chain 1952. OKX index polling connects reference data to X Layer instruments.</td>
+            <td>The pool and assets are test infrastructure rather than existing production liquidity. The current fee path reacts to filing fields, not the final OKX/X Layer confirmation rules. Solidity is portable and no external X Layer consumer exists.</td>
+            <td>One production or externally controlled X Layer pool/consumer using the risk state, or a reproducible mainnet-read replay tied to executable depth.</td>
+          </tr>
+          <tr>
+            <td>Growth potential</td><td class="score">2 / 5</td>
+            <td>Tokenized equities trade continuously and can expand across assets, pools, wallets, and agents. Solana's xStocks traction shows the broader category can reach meaningful usage.</td>
+            <td>Tinjau has no users, protected TVL, revenue, external routing, or acquisition channel. x402, Agentic Wallet, xStocks partnership, and Exchange OS are roadmap dependencies, not current distribution.</td>
+            <td>A named design partner, an integration commitment, or repeated external API consumption tied to a credible pricing path.</td>
+          </tr>
+          <tr>
+            <td>Ecosystem contribution</td><td class="score">2 / 5</td>
+            <td>The current event registry and proposed risk record can become reusable infrastructure; the project also publishes unusually transparent measurements and limitations.</td>
+            <td>The deployed registry is not the final reusable pool-risk registry, and there is no third-party consumer. A builder-owned mock pool does not deepen external X Layer liquidity.</td>
+            <td>A minimal stable read interface used by a second application, wallet, market maker, or independent pool.</td>
+          </tr>
+          <tr>
+            <td>Total</td><td class="score"><strong>20 / 35</strong></td>
+            <td colspan="3"><strong>Inference:</strong> technically credible and above “idea-only,” but not yet evidenced as an effective or adopted LP-protection product.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Validation scorecard</h2>
+    <div class="decision-grid">
+      <article class="card"><div class="label">Demand evidence</div><div class="big stop">Weak · 1 / 3</div><p>The problem class and xStocks market are real; product-specific pull is absent.</p></article>
+      <article class="card"><div class="label">Competition</div><div class="big pivot">Crowded / sparse</div><p>Crowded for AI LP controls; sparse for the exact evidence-aware vertical workflow.</p></article>
+      <article class="card"><div class="label">Technical feasibility</div><div class="big go">Hard, solvable</div><p>The prototype de-risks contracts and ingestion; evaluation quality is the harder remaining problem.</p></article>
+      <article class="card"><div class="label">Time to final MVP</div><div class="big pivot">2–4 weeks</div><p>Not credible in the remaining hackathon day without cutting the final design back sharply.</p></article>
+      <article class="card"><div class="label">Startup score</div><div class="big stop">5 / 15</div><p>Founder fit 3, MVP speed 1, distribution 0, market pull 1, revenue 0.</p></article>
+      <article class="card"><div class="label">Recommendation</div><div class="big pivot">Pivot</div><p>Benchmark and secure a design partner before building broad evidence coverage.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <h2>Crypto necessity gut-check</h2>
+    <div class="card">
+      <h3>What breaks if blockchain is removed?</h3>
+      <p>The filing parser, news graph, warnings, and backtest can all run off-chain. What breaks is synchronous enforcement inside a permissionless pool, a common policy record that independent consumers can verify, and composable settlement of the resulting action.</p>
+      <p><strong>Conclusion:</strong> blockchain is necessary for the bounded execution and shared-risk-record product. It is ornamental if Tinjau remains only an alerts dashboard.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Persist, cut, and prove</h2>
+    <div class="rank"><strong class="go">Persist</strong><span>Keep the EDGAR agreement pipeline, existing registry/hook, deterministic fee bounds and decay, X Layer deployment, and explicit observed-versus-counterfactual labeling.</span></div>
+    <div class="rank"><strong class="stop">Cut now</strong><span>Do not attempt broad news/social coverage, x402, Agentic Wallet, Exchange OS, a general SDK, or partnership-style claims before the deadline.</span></div>
+    <div class="rank"><strong class="pivot">Prove next</strong><span>Implement one deterministic <code>NORMAL / WATCH / PROTECT</code> replay with a rumor safety case and a static-vs-volatility-vs-event-aware comparison on a frozen dataset.</span></div>
+    <div class="rank"><strong class="pivot">Validate next</strong><span>Interview five to ten X Layer or xStocks LPs, market makers, and pool operators about their current event-risk workflow. Ask for a replay dataset, integration test, or signed pilot—not an expression of interest.</span></div>
+    <div class="rank"><strong class="go">Integrate first</strong><span>Reuse SEC EDGAR, OKX reference/index endpoints, direct X Layer reads, and Uniswap v4. Build only Tinjau's evidence-state policy, risk-record interface, and reproducible benchmark.</span></div>
+  </section>
+
+  <section>
+    <h2>Missing evidence ranked by decision impact</h2>
+    <ol>
+      <li><strong>Incremental protection:</strong> Does the event-aware policy beat static and volatility-only policies after false-positive cost?</li>
+      <li><strong>External demand:</strong> Will an LP/operator provide data, run a pilot, integrate the record, or commit liquidity?</li>
+      <li><strong>Real venue relevance:</strong> Can the policy operate against executable production routes and meaningful depth rather than mock assets?</li>
+      <li><strong>Safety quality:</strong> What are the unsupported-<code>PROTECT</code>, missed-event, contradiction, stale-data, and source-independence error rates?</li>
+      <li><strong>Distribution:</strong> Is the reusable record actually consumed by another X Layer application?</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Source map</h2>
+    <ul>
+      <li><a href="afterhours-independent-validation.md">Independent evaluation brief</a> — status-separated project claims and evaluator instructions.</li>
+      <li><a href="../../../superpowers/specs/2026-08-20-tinjau-lp-risk-autopilot-design.md">Final product design</a> — approved direction and explicit implementation boundary.</li>
+      <li><a href="../04-planning/task-tracker.md">Task tracker</a> — implementation and deployment evidence.</li>
+      <li><a href="../05-build/parse-accuracy-study.md">Parse-accuracy study</a>, <a href="../05-build/reaction-latency-study.md">reaction-latency study</a>, and <a href="../05-build/markout-study.md">markout study</a>.</li>
+      <li><a href="../03-product/tinjau-competitive-landscape-deep-research.html">Competitive landscape</a>.</li>
+      <li><a href="https://web3.okx.com/xlayer/build-x-series">Official Build X Series page</a> and <a href="https://www.okx.com/en-gb/help/okx-to-list-unified-tokenized-stocks-xibm-xhood-and-more-for-spot-trading">OKX Unified Tokenized Stocks announcement</a>.</li>
+      <li><a href="https://chain.link/resources/establishing-unified-standard-asset-servicing">Chainlink corporate-actions initiative</a>, <a href="https://ethglobal.com/showcase/riskclaw-ip3a9">RiskClaw</a>, and <a href="https://solana.com/id/news/case-study-xstocks">Solana xStocks case study</a>.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p class="fine">This report scores only evidence available and checked on 2026-08-20. It makes no claim about hackathon placement and does not infer uniqueness from incomplete search coverage.</p>
+  </footer>
 </main>
 </body>
 </html>

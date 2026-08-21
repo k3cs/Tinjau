@@ -34,7 +34,10 @@ test("without archive enrichment: falls back to deterministic template, stays un
   const text = composeTweetText(baseInput(), null);
   assert.ok(text.length <= 280);
   assert.match(text, /^\[Testnet\]/);
-  assert.match(text, /Event #7 recorded on AFTERHOURS\./);
+  // Public copy uses the current product name (T0.5). The historical AFTERHOURS name stays
+  // in deployed contract names, systemd units and on-chain source schemes — never here.
+  assert.match(text, /Event #7 recorded on Tinjau\./);
+  assert.doesNotMatch(text, /AFTERHOURS/i);
 });
 
 test("with archive enrichment: includes the real summary text", () => {

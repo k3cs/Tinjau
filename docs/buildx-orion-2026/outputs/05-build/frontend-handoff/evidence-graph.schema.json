@@ -1,0 +1,368 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tinjau.xyz/schemas/evidence-graph/1.0.0.json",
+  "title": "Tinjau EvidenceGraphView",
+  "description": "Claim, provenance and relationship structure behind one risk assessment. Produced by apps/server/src/evidence/{normalize,cluster,graph}.ts. Every field here is DERIVED from source text or from deterministic rules — none of it is a model's free-form opinion, and none of it may be edited by a consumer. CURRENT AS OF 2026-08-21: instantiated by the `.evidenceGraph` field of scenario-rumor-watch.json and scenario-confirmed-protect.json, assembled in frontend-handoff/tools/generate.ts from the production modules and checked against this file by frontend-handoff/tools/validate.mjs. `rejectedProposals` is empty in both, and that is the honest value rather than a stub: the four scenarios' clusters were frozen by hand in T0.2, so no model proposal existed to reject.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "eventKey",
+    "label",
+    "assessedAt",
+    "evidenceWindowSeconds",
+    "resolution",
+    "claims",
+    "independence",
+    "selfRevision",
+    "recency",
+    "independentOriginCount",
+    "usableOriginCount",
+    "revisedOriginKeys",
+    "confidenceFactors",
+    "rejectedProposals"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "tinjau.evidence-graph/1.0.0" },
+    "eventKey": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable identity for the underlying event. Claims about one event share it."
+    },
+    "label": { "type": "string", "description": "Human-readable event name. Never used in any decision." },
+    "assessedAt": { "type": "string", "format": "date-time" },
+    "evidenceWindowSeconds": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "How far back evidence may be published and still count. Frozen in promotionConfig.ts."
+    },
+    "resolution": { "$ref": "#/$defs/resolution" },
+    "claims": { "type": "array", "items": { "$ref": "#/$defs/normalizedClaim" } },
+    "independence": { "type": "array", "items": { "$ref": "#/$defs/independenceFinding" } },
+    "selfRevision": { "type": "array", "items": { "$ref": "#/$defs/selfRevisionFinding" } },
+    "recency": { "type": "array", "items": { "$ref": "#/$defs/recencyFinding" } },
+    "independentOriginCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Distinct non-rumour origins after syndications are collapsed."
+    },
+    "usableOriginCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Origins that may actually corroborate: independentOriginCount minus those disqualified by self-revision. THIS is the number the promotion rules count, not independentOriginCount. A UI showing the larger number beside a WATCH would make the decision look arbitrary."
+    },
+    "revisedOriginKeys": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Origins that stated more than one figure for this event and therefore cannot corroborate."
+    },
+    "confidenceFactors": { "type": "array", "items": { "$ref": "#/$defs/confidenceFactor" } },
+    "rejectedProposals": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/rejectedProposal" },
+      "description": "Cluster proposals the deterministic rules refused. Present so a model's failure is visible rather than silent; usually empty."
+    }
+  },
+  "$defs": {
+    "sourceClass": {
+      "enum": ["OFFICIAL", "NEWS", "RUMOR"],
+      "description": "RUMOR can never authorise an action, whatever the market shows."
+    },
+    "dataMode": {
+      "enum": ["LIVE", "OBSERVED", "REPLAY", "SIMULATED"],
+      "description": "SIMULATED means fabricated for testing. A consumer MUST render it distinctly — it is not evidence of anything real."
+    },
+    "assertionLevel": {
+      "enum": ["ASSERTED", "SPECULATIVE", "REPORTED_UNVERIFIED"],
+      "description": "How strongly the SOURCE asserted the claim, derived from its own language. Never compare these with </> to gate anything; detection may only ever weaken a claim, never strengthen it."
+    },
+    "provenanceViolation": {
+      "enum": [
+        "MISSING_SOURCE_ID",
+        "MISSING_PUBLISHED_AT",
+        "INVALID_PUBLISHED_AT",
+        "MISSING_PUBLISHER_FOR_NON_SIMULATED",
+        "MISSING_URL_FOR_NON_SIMULATED",
+        "RESOLVABLE_URL_ON_SIMULATED_CLAIM",
+        "MISSING_CLAIM_TEXT",
+        "MISSING_COMPANY",
+        "MISSING_TOKEN_SYMBOL",
+        "OFFICIAL_WITHOUT_CONTENT_HASH",
+        "OFFICIAL_WITHOUT_RESOLVABLE_URL"
+      ]
+    },
+    "normalizedClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claimId",
+        "sourceClass",
+        "dataMode",
+        "sourceUrl",
+        "sourceId",
+        "publisherOrAuthor",
+        "publishedAt",
+        "publishedAtPrecision",
+        "sourceContentSha256",
+        "company",
+        "tokenSymbol",
+        "tokenAddress",
+        "eventType",
+        "claimTextOrPointer",
+        "assertionLevel",
+        "describesCompletedEvent",
+        "speculationMarkers",
+        "publisherDisclaimedVerification",
+        "independenceGroup",
+        "relation",
+        "officialConfirmation",
+        "expiresAt",
+        "materiality",
+        "provenanceViolations",
+        "promotable"
+      ],
+      "properties": {
+        "claimId": { "type": "string", "minLength": 1 },
+        "sourceClass": { "$ref": "#/$defs/sourceClass" },
+        "dataMode": { "$ref": "#/$defs/dataMode" },
+        "sourceUrl": {
+          "type": ["string", "null"],
+          "description": "null is CORRECT for a SIMULATED claim and a defect for anything else. A simulated claim carrying a resolvable URL is the most dangerous shape in this system — it looks checkable and is not — and is flagged as a violation."
+        },
+        "sourceId": { "type": "string", "minLength": 1 },
+        "publisherOrAuthor": { "type": ["string", "null"] },
+        "publishedAt": { "type": "string", "format": "date-time" },
+        "publishedAtPrecision": {
+          "enum": ["SECOND", "MINUTE", "HOUR", "DAY"],
+          "description": "A DAY-precision timestamp must not be rendered as though it were exact to the second."
+        },
+        "sourceContentSha256": {
+          "type": ["string", "null"],
+          "description": "sha256 of the exact source bytes. Mandatory for OFFICIAL claims; that is what lets a third party verify the document rather than trust Tinjau."
+        },
+        "company": { "type": "string", "minLength": 1 },
+        "tokenSymbol": { "type": "string", "minLength": 1 },
+        "tokenAddress": { "type": ["string", "null"], "pattern": "^0x[0-9a-fA-F]{40}$" },
+        "eventType": { "type": "string" },
+        "claimTextOrPointer": {
+          "type": "string",
+          "description": "Verbatim span or a pointer to one. NEVER a paraphrase — paraphrasing is how speculation becomes fact."
+        },
+        "assertionLevel": { "$ref": "#/$defs/assertionLevel" },
+        "describesCompletedEvent": {
+          "type": "boolean",
+          "description": "DERIVED from the source's own language, never supplied. False for anything framed as talks, plans, or possibilities. A claim about talks is evidence that talks are happening, not that a deal exists."
+        },
+        "speculationMarkers": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Exactly which hedging phrases matched, so the call can be checked rather than trusted."
+        },
+        "publisherDisclaimedVerification": {
+          "type": "boolean",
+          "description": "True when the publisher itself said it could not confirm the claim."
+        },
+        "independenceGroup": { "type": "string" },
+        "relation": { "enum": ["ORIGIN", "SUPPORTS", "CONTRADICTS", "DUPLICATE"] },
+        "officialConfirmation": {
+          "type": "boolean",
+          "description": "Whether an official document later confirmed this claim. This is NOT the same as describesCompletedEvent, which is about what this source asserted at the time. A hedged report that a filing later confirms is the normal shape of breaking financial news."
+        },
+        "expiresAt": { "type": ["string", "null"], "format": "date-time" },
+        "materiality": {
+          "enum": ["MATERIAL", "NON_MATERIAL", "UNKNOWN"],
+          "description": "Separate axis from provenance. A routine Section 16 Form 4 is an impeccably-sourced OFFICIAL filing that reports no corporate action; promoting on it would raise LP fees for nothing. UNKNOWN fails closed."
+        },
+        "provenanceViolations": { "type": "array", "items": { "$ref": "#/$defs/provenanceViolation" } },
+        "promotable": {
+          "type": "boolean",
+          "description": "DERIVED from provenanceViolations being empty, never supplied. A non-promotable claim is kept and displayed, not discarded — that record is what makes a WATCH explainable."
+        }
+      }
+    },
+    "resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome", "asset", "candidates", "explanation", "mayAuthorizeAction"],
+      "properties": {
+        "outcome": {
+          "enum": ["RESOLVED", "AMBIGUOUS", "UNSUPPORTED_ASSET", "UNKNOWN_COMPANY"],
+          "description": "UNSUPPORTED_ASSET means the token is known but has no verified pool — e.g. NVDAx, the unwrapped sibling of wNVDAx. It is registered deliberately so a claim about it refuses loudly rather than reading as a coverage gap."
+        },
+        "asset": {
+          "oneOf": [{ "$ref": "#/$defs/supportedAsset" }, { "type": "null" }],
+          "description": "Non-null only when outcome is RESOLVED."
+        },
+        "candidates": { "type": "array", "items": { "$ref": "#/$defs/supportedAsset" } },
+        "explanation": { "type": "string", "minLength": 1 },
+        "mayAuthorizeAction": {
+          "type": "boolean",
+          "description": "DERIVED. True for exactly one outcome, RESOLVED. Ambiguity is a refusal, not a tie-break."
+        }
+      }
+    },
+    "supportedAsset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "company",
+        "cik",
+        "ticker",
+        "tokenSymbol",
+        "tokenAddress",
+        "tokenName",
+        "decimals",
+        "chainId",
+        "poolAddress",
+        "quoteSymbol",
+        "hasIndexFeed",
+        "supported",
+        "supportNote"
+      ],
+      "properties": {
+        "company": { "type": "string" },
+        "cik": { "type": "string" },
+        "ticker": { "type": "string" },
+        "tokenSymbol": { "type": "string" },
+        "tokenAddress": { "type": "string", "pattern": "^0x[0-9a-fA-F]{40}$" },
+        "tokenName": { "type": "string" },
+        "decimals": { "type": "integer" },
+        "chainId": { "type": "integer" },
+        "poolAddress": { "type": ["string", "null"], "pattern": "^0x[0-9a-fA-F]{40}$" },
+        "quoteSymbol": { "type": ["string", "null"] },
+        "hasIndexFeed": { "type": "boolean" },
+        "supported": { "type": "boolean" },
+        "supportNote": { "type": "string" }
+      }
+    },
+    "independenceFinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claimId",
+        "derivedOriginKey",
+        "isSyndication",
+        "attributedTo",
+        "evidence",
+        "relaysUnnamedReport",
+        "declaredGroup",
+        "disagreesWithDeclared"
+      ],
+      "properties": {
+        "claimId": { "type": "string" },
+        "derivedOriginKey": {
+          "type": "string",
+          "description": "Canonical origin this claim's reporting traces back to, derived from attribution phrases in the text and byline."
+        },
+        "isSyndication": {
+          "type": "boolean",
+          "description": "True when the claim attributes its reporting to a different outlet. Several syndications of one origin count as ONE source — that invariant is what stops four headlines from looking like four independent confirmations."
+        },
+        "attributedTo": { "type": ["string", "null"] },
+        "evidence": {
+          "type": ["string", "null"],
+          "description": "The matched attribution phrase, so the derivation is checkable rather than magic."
+        },
+        "relaysUnnamedReport": {
+          "type": "boolean",
+          "description": "True for a claim that admits it is relaying a report but never says whose — e.g. a headline ending '- report'. It cannot be merged into an origin and must not be counted as one, since independence is precisely what it disclaimed."
+        },
+        "declaredGroup": { "type": ["string", "null"] },
+        "disagreesWithDeclared": {
+          "type": "boolean",
+          "description": "True when the derivation and the fixture's hand label disagree. Surfaced, never auto-resolved — either could be wrong, and which is right is a question for a human."
+        }
+      }
+    },
+    "selfRevisionFinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["originKey", "revised", "amounts", "explanation"],
+      "properties": {
+        "originKey": { "type": "string" },
+        "revised": {
+          "type": "boolean",
+          "description": "True when one source line stated more than one figure for this event. Such a line may support a WATCH but cannot count toward independent corroboration: it has not established the fact, only that the number is still moving."
+        },
+        "amounts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["claimId", "amount"],
+            "properties": {
+              "claimId": { "type": "string" },
+              "amount": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["value", "text"],
+                "properties": {
+                  "value": { "type": "number", "description": "Whole units of currency." },
+                  "text": { "type": "string", "description": "The matched text, verbatim." }
+                }
+              }
+            }
+          }
+        },
+        "explanation": { "type": "string", "minLength": 1 }
+      }
+    },
+    "recencyFinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claimId", "ageSeconds", "withinWindow", "fromFuture"],
+      "properties": {
+        "claimId": { "type": "string" },
+        "ageSeconds": { "type": "integer" },
+        "withinWindow": { "type": "boolean" },
+        "fromFuture": {
+          "type": "boolean",
+          "description": "A claim dated after the assessment instant. A data defect, surfaced rather than silently accepted."
+        }
+      }
+    },
+    "confidenceFactor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "direction", "explanation", "claimIds"],
+      "description": "Every confidence change carries one of these. §0.9 requires a machine-readable explanation for why confidence changed — a bare number would be unauditable.",
+      "properties": {
+        "code": {
+          "enum": [
+            "SINGLE_ORIGIN",
+            "MULTIPLE_INDEPENDENT_ORIGINS",
+            "SYNDICATION_DETECTED",
+            "SELF_REVISED_SOURCE",
+            "CONTRADICTION_DECLARED",
+            "STALE_EVIDENCE_PRESENT",
+            "OFFICIAL_CONFIRMATION_PRESENT",
+            "UNVERIFIED_ATTRIBUTION"
+          ]
+        },
+        "direction": { "enum": ["RAISES", "LOWERS"] },
+        "explanation": { "type": "string", "minLength": 1 },
+        "claimIds": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "rejectedProposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["eventKey", "claimIds", "label", "reason"],
+      "properties": {
+        "eventKey": { "type": "string" },
+        "claimIds": { "type": "array", "items": { "type": "string" } },
+        "label": { "type": "string" },
+        "reason": {
+          "enum": [
+            "UNKNOWN_CLAIM_ID",
+            "DUPLICATE_CLAIM_ASSIGNMENT",
+            "SPANS_MULTIPLE_COMPANIES",
+            "EMPTY_CLUSTER",
+            "DUPLICATE_EVENT_KEY"
+          ],
+          "description": "UNKNOWN_CLAIM_ID means a proposal named a claim that does not exist — a hallucination, rejected rather than repaired. DUPLICATE_CLAIM_ASSIGNMENT would have let one claim count twice toward independence, which is the one arithmetic that must not be inflatable."
+        }
+      }
+    }
+  }
+}

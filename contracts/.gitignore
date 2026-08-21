@@ -1,0 +1,14 @@
+# Foundry build artifacts — rebuildable, never commit
+cache/
+out/
+
+# Dependencies — managed by `forge install` (git submodules), not vendored in this repo's
+# own history; see README.md for setup instructions.
+lib/
+
+# Local machine state
+.DS_Store
+
+# broadcast/ is intentionally NOT ignored — transaction receipts (tx hash, deployed address)
+# are public on-chain data anyway and serve as reproducible deployment evidence for the
+# task-tracker.md evidence lines and the hackathon submission.

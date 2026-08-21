@@ -1,0 +1,1133 @@
+{
+  "$schema": "./proof-of-protection.schema.json",
+  "schemaVersion": "tinjau.proof-of-protection/1.0.0",
+  "producedByTask": "T5.5",
+  "recordId": "pop-B-confirmed-protect-xlayer-testnet-1952-demo-envelope",
+  "_READ_THIS_FIRST": [
+    "THIS RECORD DEMONSTRATES ENFORCEMENT, NOT BENEFIT.",
+    "No replayed scenario produced a PROTECT. The only observed PROTECT interval that exists anywhere in this project is the one below, and its MARKET LEG IS CONSTRUCTED on a BUILDER-CONTROLLED X Layer Testnet pool seeded with valueless mock tokens.",
+    "The canonical replay of this same 8-K resolves to WATCH, because its market leg is NOT_CONFIRMED (T3.3, published). See `canonicalReplayOfThisEvent`.",
+    "canClaimLossAvoided is FALSE. Nothing here may be presented as evidence that an intervention helped an LP, because no measured event warranted an intervention.",
+    "`observedOnChainProtection` and `replayedCounterfactualBaselines` are different chains, different pools, and different epistemic status. They must never be combined into one figure or shown with one visual treatment."
+  ],
+  "derivedFrom": {
+    "onChainRun": {
+      "artifact": "t4-demo-manifest-xlayer-testnet.json",
+      "runAt": "2026-08-21T03:57:59.774Z",
+      "addressStatus": "T4.2 working addresses — not final; T7.2 owns the authoritative list"
+    },
+    "benchmark": {
+      "artifact": "three-policy-benchmark.json",
+      "schemaVersion": "tinjau.three-policy-benchmark/1.0.0",
+      "producedByTasks": [
+        "T5.1",
+        "T5.2",
+        "T5.3",
+        "T5.4"
+      ]
+    },
+    "frozenScenario": {
+      "artifact": "apps/server/scenarios/scenario-b-confirmed-protect.json",
+      "schemaVersion": "tinjau.scenario/0.2.0",
+      "scenarioId": "B-confirmed-protect",
+      "frozenAt": "2026-08-20",
+      "frozenByTask": "T0.2"
+    },
+    "_determinism": "Every field below is derived from those three artifacts. No wall-clock time is read, so re-running the generator produces a byte-identical file and an empty diff is meaningful evidence."
+  },
+  "trigger": {
+    "inputIdentity": {
+      "scenarioId": "B-confirmed-protect",
+      "title": "Confirmed protection — NVIDIA 8-K, $105bn residual value guaranties, PORTS-Pike",
+      "decisionAnchor": {
+        "at": "2026-08-17T12:41:33Z",
+        "blockNumber": "68201457",
+        "why": "EDGAR acceptance timestamp of accession 0001045810-26-000069, cross-checked against the filing directory's last-modified stamp of 2026-08-17 08:41:33 US/Eastern.",
+        "usReferenceMarketOpen": false,
+        "usReferenceMarketNote": "12:41:33Z is 08:41:33 US/Eastern — Monday pre-market, 49 minutes before the 13:30Z regular-session open. The X Layer wNVDAx/USDG pool was trading."
+      },
+      "evidenceWindow": {
+        "rule": "anchor minus 72 hours .. anchor",
+        "from": "2026-08-14T12:41:33Z",
+        "to": "2026-08-17T12:41:33Z",
+        "_completeness": "Every claim about this asset found in the public record inside this window is listed below, including both non-official clusters. Nothing in-window was omitted to make the official path look cleaner."
+      },
+      "canonicalAsset": {
+        "company": "NVIDIA CORPORATION",
+        "cik": "0001045810",
+        "ticker": "NVDA",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "chainId": 196,
+        "chainName": "X Layer mainnet",
+        "poolIdOrAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2"
+      },
+      "preRegisteredExpectation": "Selected on evidence quality, event materiality, and market-data availability only. The pool's price path inside the replay window was deliberately NOT inspected before this file was frozen. See docs/buildx-orion-2026/outputs/04-planning/t0-2-frozen-scenarios.md §6."
+    },
+    "evidence": {
+      "dataMode": "REPLAY",
+      "claimCount": 6,
+      "claims": [
+        {
+          "claimId": "claim-b-001",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+          "sourceId": "edgar:0001045810-26-000069/nvda-20260817.htm",
+          "publisherOrAuthor": "NVIDIA CORPORATION (SEC EDGAR filer, CIK 0001045810)",
+          "publishedAt": "2026-08-17T12:41:33Z",
+          "eventType": "MATERIAL_DEFINITIVE_AGREEMENT_AND_DIRECT_FINANCIAL_OBLIGATION",
+          "materiality": "MATERIAL",
+          "sourceContentSha256": "1c480e3320f3171e6ac1979a50eecb123d4150637c7b769444d16faf97928133"
+        },
+        {
+          "claimId": "claim-b-002",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/sbeoainvidia-portsrelease.htm",
+          "sourceId": "edgar:0001045810-26-000069/sbeoainvidia-portsrelease.htm",
+          "publisherOrAuthor": "NVIDIA CORPORATION (Exhibit 99.1, furnished under Item 7.01)",
+          "publishedAt": "2026-08-17T12:41:33Z",
+          "eventType": "MATERIAL_DEFINITIVE_AGREEMENT_AND_DIRECT_FINANCIAL_OBLIGATION",
+          "materiality": "MATERIAL",
+          "sourceContentSha256": "e3c39df5be133417c6f3b097cf6f81a5f502443bc4203eba55275fe2ad96f096"
+        },
+        {
+          "claimId": "claim-b-003",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": null,
+          "sourceId": "wsj/2026-08-14/nvidia-scales-back-ohio-guarantee",
+          "publisherOrAuthor": "The Wall Street Journal",
+          "publishedAt": "2026-08-14T00:00:00Z",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "materiality": "MATERIAL"
+        },
+        {
+          "claimId": "claim-b-004",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://finance.yahoo.com/technology/ai/articles/nvidia-scales-back-250-billion-234356524.html",
+          "sourceId": "reuters-via-yahoo/2026-08-14T23:43:56Z/nvidia-scales-back-guarantee",
+          "publisherOrAuthor": "Reuters — Mrinmay Dey (syndicated by Yahoo Finance)",
+          "publishedAt": "2026-08-14T23:43:56Z",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "materiality": "MATERIAL"
+        },
+        {
+          "claimId": "claim-b-005",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://www.theinformation.com/articles/nvidia-talks-invest-3-billion-sb-energy-part-openai-data-center-deal",
+          "sourceId": "theinformation.com/2026-08-15/nvidia-talks-invest-3-billion-sb-energy",
+          "publisherOrAuthor": "The Information — Valida Pau, Ann Davis Vaughan, Phoebe Liu",
+          "publishedAt": "2026-08-15T00:00:00Z",
+          "eventType": "STRATEGIC_PARTNERSHIP_OR_INVESTMENT",
+          "materiality": "MATERIAL"
+        },
+        {
+          "claimId": "claim-b-006",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://finance.yahoo.com/technology/ai/articles/nvidia-talks-invest-3-billion-193826586.html",
+          "sourceId": "reuters-via-yahoo/2026-08-15T19:38:26Z/nvidia-talks-invest-3-billion",
+          "publisherOrAuthor": "Reuters (syndicated by Yahoo Finance)",
+          "publishedAt": "2026-08-15T19:38:26Z",
+          "eventType": "STRATEGIC_PARTNERSHIP_OR_INVESTMENT",
+          "materiality": "MATERIAL"
+        }
+      ],
+      "_note": "The evidence leg is real and source-linked: SEC 8-K accession 0001045810-26-000069, primary document byte-committed. No claim in this scenario is SIMULATED. That is scenario A's rumour fixture, not this one."
+    },
+    "marketObservations": {
+      "dataMode": "CONSTRUCTED",
+      "_WARNING": "CONSTRUCTED. This price path was authored for the builder-controlled testnet pool because the real one does not confirm. It is not a market observation and no market conclusion may be drawn from it.",
+      "whatWasConstructed": "The price path only. The path was scored by the real `confirmMarket` engine under its own frozen thresholds (rule tinjau.confirm/2.0.0), so the CONFIRMED verdict is the engine's, not a hand-set value.",
+      "measuredExtentOfConstruction": {
+        "onlyInCanonical": [
+          "ANTI_WICK_FAILED",
+          "MARKET_NOT_CONFIRMED"
+        ],
+        "onlyInConstructed": [
+          "MARKET_CONFIRMED"
+        ]
+      },
+      "_measuredExtentNote": "Reason-code diff against the canonical replay. All three differing codes are market-leg codes. Every evidence-leg conclusion is identical in both runs, asserted by test in the harness.",
+      "confirmation": {
+        "status": "CONFIRMED",
+        "observedAt": "2026-08-21T03:51:15.000Z",
+        "blockNumber": "68515239",
+        "fresh": true,
+        "antiWickSatisfied": true,
+        "okxReferencePrice": null,
+        "xLayerPoolPrice": "97",
+        "basisBps": null,
+        "drawdownBps": "300",
+        "tradeVelocity": "0",
+        "executableExitDepth": "14.93434387",
+        "reasonCodes": [
+          "MARKET_CONFIRMED",
+          "MARKET_DATA_UNAVAILABLE",
+          "REFERENCE_MARKET_CLOSED"
+        ]
+      },
+      "okxLeg": {
+        "status": "UNAVAILABLE",
+        "_note": "No committed OKX index data covers this anchor (T3.1). This is a single-leg X Layer pool confirmation. No artifact may describe it as dual OKX/X Layer confirmation."
+      }
+    }
+  },
+  "selection": {
+    "state": "PROTECT",
+    "reasonCodes": [
+      "BONDED_EVIDENCE_PASSED",
+      "DUPLICATE_SYNDICATION",
+      "MARKET_CONFIRMED",
+      "OFFICIAL_FILING",
+      "REFERENCE_MARKET_CLOSED",
+      "STALE_EVIDENCE"
+    ],
+    "confidenceBand": "HIGH",
+    "policyVersion": "tinjau.policy/1.0.0",
+    "schemaVersion": "tinjau.risk/1.0.0",
+    "confirmationRuleVersion": "tinjau.confirm/2.0.0",
+    "evidenceCommitment": "0xcad6db77aa45e876a560caa8d297d4e44b3a6b91075975b7205e079dca4e1f09",
+    "reasonBits": 344340,
+    "dataModeOnChain": "REPLAY",
+    "_dataModeCaveat": "The on-chain `dataMode` is derived from the EVIDENCE only, so it reads REPLAY and cannot express 'evidence replayed, market constructed'. That distinction lives in this record and in the demo manifest, not on chain.",
+    "humanExplanation": "A qualifying official filing passed the bonded-evidence checks and the market independently corroborated the move within the freshness bound, so a bounded fee action is authorised. Market leg: CONFIRMED. Market confirmed on drawdown. The OKX reference leg was unavailable, so this is a single-leg (X Layer pool) confirmation and must not be described as dual-leg. The OKX reference leg was unavailable, so no artifact may describe this as dual-leg OKX/X Layer confirmation. Bounded action PROPOSED (not applied): fee 20000 pips, which is at or below the policy target 20000 for confidence HIGH. The contract recomputes its own target and may lower or reject this proposal; it can never raise it.",
+    "assetRemap": {
+      "canonicalAsset": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "deployedStandIn": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
+      "chainId": 1952,
+      "note": "The decision resolved the canonical asset on X Layer mainnet (chain 196). This chain carries a freely-mintable mock standing in for it in a BUILDER-CONTROLLED pool. Only the `asset` field was remapped; the decision itself is unmodified."
+    }
+  },
+  "boundedAction": {
+    "envelope": {
+      "baseFee": 500,
+      "maxFee": 20000,
+      "widenDuration": 60,
+      "decayDuration": 300,
+      "maxProtectDuration": 360,
+      "cooldown": 60,
+      "demoEnvelope": true,
+      "_envelopeCaveat": "DEMO ENVELOPE, compressed 60x from the production envelope (3600/18000/21600 s) so the recovery could be watched inside a demo. The invariants `cap == widen + decay` and `cooldown == widen` are preserved exactly. X Layer Testnet exposes no evm_increaseTime, so the production timings are proven by `forge test` (134/134) and by the local Anvil run, not on chain 1952."
+    },
+    "requestedFeePips": {
+      "value": 20000,
+      "unit": "pips",
+      "basis": "OBSERVED",
+      "note": "A proposal. The contract recomputes its own target and may lower or reject it; it can never raise it."
+    },
+    "appliedFeePips": {
+      "value": 20000,
+      "unit": "pips",
+      "basis": "OBSERVED",
+      "note": "Decoded from PoolManager's own Swap event — what the pool charged, not what a view function returned."
+    },
+    "status": "APPLIED",
+    "postAssessmentTxHash": "0x659cb5553e2f53364445bdc4521dee3e87843b59d31f5861c0e196d471b3be7b",
+    "protectStartedAtUnixSeconds": 1787284278,
+    "protectEndsAtUnixSeconds": 1787284638,
+    "recordExpiresAtUnixSeconds": 1787305875
+  },
+  "observedOnChainProtection": {
+    "_basis": "OBSERVED",
+    "_scope": "What the pool actually charged, and what the contract actually refused. These are enforcement facts. They are NOT an LP outcome and carry no USD figure, because the tokens are freely-mintable mocks with no value and the liquidity is ours.",
+    "chainId": 1952,
+    "networkLabel": "x-layer-testnet",
+    "poolClass": "BUILDER_CONTROLLED",
+    "addresses": {
+      "registry": "0x1a1e17306f789f5Ec7012B1E2CB866DeDB61E2b1",
+      "hook": "0xAb448f70fE44fbbF5f41225F7797fcC7e56c2080",
+      "poolManager": "0x8F862A8b6f00C99b0610dc764228C661c4909ae1",
+      "swapRouter": "0xE76D6fC0A5235155eEb60FbBA8623465520E19dC",
+      "liquidityRouter": "0xefEC4A304eeaA95581B2018b50472D762eE0833c",
+      "riskAsset": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
+      "quoteAsset": "0x666e81CCb9D4d6c2e7A3ed9f317E3dFBa2410e99",
+      "token0": "0x666e81CCb9D4d6c2e7A3ed9f317E3dFBa2410e99",
+      "token1": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
+      "poolId": "0x3b3942b682bd59383474974127140a3f0b0c2dff946b8164341c4812985a4a8c",
+      "tickSpacing": 60
+    },
+    "addressStatus": "T4.2 working addresses — not final; T7.2 owns the authoritative list",
+    "roleSeparation": {
+      "assessor": "0x0990EAcecFe00f1709A748D37cCd52C45B95aC72",
+      "poster": "0x8BCC23b3352e9c450160676803AC5cfe1e2329e1",
+      "relayer": "0x4e7691FA710D488F1D2CD6d22619eb325bf99eBd",
+      "guardian": "0x8BCC23b3352e9c450160676803AC5cfe1e2329e1",
+      "_note": "Testnet arrangement. The assessor key is derived from the poster key and holds 0 OKB by design; guardian and poster are the same wallet because pausing costs gas. Production requires an independently generated assessor key. No key material appears in this artifact."
+    },
+    "feePathActuallyCharged": [
+      {
+        "label": "protection applied",
+        "txHash": "0x2e313c44bae3112cbb3c2430cf0e5e745327c197b54697f9f1e1ccca7df3f787",
+        "blockNumber": 38825446,
+        "atUnixSeconds": 1787284279,
+        "appliedFeePips": {
+          "value": 20000,
+          "unit": "pips",
+          "basis": "OBSERVED",
+          "note": "Bounded action at the envelope ceiling."
+        },
+        "previewedFeePips": {
+          "value": 20000,
+          "unit": "pips",
+          "basis": "OBSERVED"
+        },
+        "poolManagerSwapEvent": {
+          "amount0": {
+            "value": "-1000000000000000",
+            "unit": "token0 base units",
+            "basis": "OBSERVED"
+          },
+          "amount1": {
+            "value": "979999985382898",
+            "unit": "token1 base units",
+            "basis": "OBSERVED"
+          },
+          "tick": {
+            "value": -1,
+            "unit": "tick",
+            "basis": "OBSERVED"
+          }
+        }
+      },
+      {
+        "label": "mid-decay",
+        "txHash": "0x93ae1e2470eec2e0d42cf4a252d8ab5363636387f963e7770b132adfe7e17bab",
+        "blockNumber": 38825663,
+        "atUnixSeconds": 1787284497,
+        "appliedFeePips": {
+          "value": 9470,
+          "unit": "pips",
+          "basis": "OBSERVED",
+          "note": "Advanced 210 s (widen plus half the decay window). No transaction changed the record."
+        },
+        "previewedFeePips": {
+          "value": 9730,
+          "unit": "pips",
+          "basis": "OBSERVED",
+          "note": "A quoted fee is an upper bound during decay: the fee is continuous in time and seconds elapse between the quote and inclusion. Both values are recorded rather than reconciled away."
+        },
+        "poolManagerSwapEvent": {
+          "amount0": {
+            "value": "-1000000000000000",
+            "unit": "token0 base units",
+            "basis": "OBSERVED"
+          },
+          "amount1": {
+            "value": "990529983273970",
+            "unit": "token1 base units",
+            "basis": "OBSERVED"
+          },
+          "tick": {
+            "value": -1,
+            "unit": "tick",
+            "basis": "OBSERVED"
+          }
+        }
+      },
+      {
+        "label": "recovered to base",
+        "txHash": "0xcf229e22b8af4b4841437d57bee33af31edb5fbebbb79178cd9d36ac8546b7c0",
+        "blockNumber": 38825820,
+        "atUnixSeconds": 1787284653,
+        "appliedFeePips": {
+          "value": 500,
+          "unit": "pips",
+          "basis": "OBSERVED",
+          "note": "Deterministic recovery: no LLM, no keeper, no transaction ended this. Only time passed."
+        },
+        "previewedFeePips": {
+          "value": 500,
+          "unit": "pips",
+          "basis": "OBSERVED"
+        },
+        "poolManagerSwapEvent": {
+          "amount0": {
+            "value": "-1000000000000000",
+            "unit": "token0 base units",
+            "basis": "OBSERVED"
+          },
+          "amount1": {
+            "value": "999499981133468",
+            "unit": "token1 base units",
+            "basis": "OBSERVED"
+          },
+          "tick": {
+            "value": -1,
+            "unit": "tick",
+            "basis": "OBSERVED"
+          }
+        }
+      },
+      {
+        "label": "after stand-down",
+        "txHash": "0xfdb242cb08801ef6cd2ffc7ab16e3d18da7953debcfc74d2e4a9c0e676eb7ab0",
+        "blockNumber": 38825826,
+        "atUnixSeconds": 1787284660,
+        "appliedFeePips": {
+          "value": 500,
+          "unit": "pips",
+          "basis": "OBSERVED",
+          "note": "Base fee, unchanged."
+        },
+        "previewedFeePips": {
+          "value": 500,
+          "unit": "pips",
+          "basis": "OBSERVED"
+        },
+        "poolManagerSwapEvent": {
+          "amount0": {
+            "value": "-1000000000000000",
+            "unit": "token0 base units",
+            "basis": "OBSERVED"
+          },
+          "amount1": {
+            "value": "999499979135467",
+            "unit": "token1 base units",
+            "basis": "OBSERVED"
+          },
+          "tick": {
+            "value": -1,
+            "unit": "tick",
+            "basis": "OBSERVED"
+          }
+        }
+      }
+    ],
+    "deterministicRecovery": {
+      "storedStateAtRecovery": {
+        "value": "PROTECT",
+        "unit": "risk state",
+        "basis": "OBSERVED",
+        "note": "The stored record still reads PROTECT. Expiry is applied at read time, not by erasing history — a consumer that reads storage without applying expiry will misread this."
+      },
+      "effectiveStateAtRecovery": {
+        "value": "NORMAL",
+        "unit": "risk state",
+        "basis": "OBSERVED"
+      },
+      "effectiveFeeAtRecoveryPips": {
+        "value": 500,
+        "unit": "pips",
+        "basis": "OBSERVED"
+      },
+      "endedByTransaction": {
+        "value": false,
+        "unit": "boolean",
+        "basis": "OBSERVED",
+        "note": "No keeper and no transaction ended protection."
+      }
+    },
+    "standDownAndCooldown": {
+      "standDownTxHash": "0x85e854b34937b7857c8f32a0e1e2e19b445b41460c75b7c867a0bb448f2cfa46",
+      "standDownState": {
+        "value": "WATCH",
+        "unit": "risk state",
+        "basis": "OBSERVED"
+      },
+      "protectionEndedAtUnixSeconds": {
+        "value": 1787284659,
+        "unit": "unix seconds",
+        "basis": "OBSERVED"
+      },
+      "immediateRearmRefused": {
+        "value": "CooldownActive",
+        "unit": "contract error",
+        "basis": "OBSERVED",
+        "note": "Refused on chain by the contract, not by the off-chain engine."
+      },
+      "cooldownSeconds": {
+        "value": 60,
+        "unit": "seconds",
+        "basis": "OBSERVED"
+      }
+    },
+    "failedActionRecordedWithoutBenefit": {
+      "_scope": "§0.11 requires an action failure to be recorded without claiming a protection benefit. Scene F induces one with a real guardian pause.",
+      "pauseTxHash": "0xcde601502330cd606c15395910c1c7ea9951ca88ff3b5ab0586a4eb579686d47",
+      "refusalError": {
+        "value": "ProtectionPaused",
+        "unit": "contract error",
+        "basis": "OBSERVED"
+      },
+      "action": {
+        "authorized": true,
+        "status": "FAILED",
+        "baseFee": "500",
+        "maxFee": "20000",
+        "requestedFee": "20000",
+        "appliedFee": null,
+        "maximumDurationSec": 21600,
+        "txHash": null,
+        "failureReason": "ProtectionPaused"
+      },
+      "feeChargedAfterFailurePips": {
+        "value": 500,
+        "unit": "pips",
+        "basis": "OBSERVED",
+        "note": "Measured proof that the failed action produced no fee change. No protection benefit is claimed for this interval."
+      },
+      "unpauseTxHash": "0x8065953c7c57f86b5f6709415d228c23e66fdd848019976e7ff97ccb5ed41f70"
+    },
+    "readConsistency": {
+      "maxWaitedMs": 2746,
+      "totalWaitedMs": 13126,
+      "observations": [
+        {
+          "label": "postAssessment assessedAt=1787284258",
+          "waitedMs": 2519,
+          "attempts": 3,
+          "converged": true
+        },
+        {
+          "label": "postAssessment assessedAt=1787284275",
+          "waitedMs": 2566,
+          "attempts": 3,
+          "converged": true
+        },
+        {
+          "label": "postAssessment assessedAt=1787284655",
+          "waitedMs": 2589,
+          "attempts": 3,
+          "converged": true
+        },
+        {
+          "label": "setPaused(true)",
+          "waitedMs": 2706,
+          "attempts": 3,
+          "converged": true
+        },
+        {
+          "label": "setPaused(false)",
+          "waitedMs": 2746,
+          "attempts": 3,
+          "converged": true
+        }
+      ],
+      "_consumerWarning": "X Layer's public RPC is load-balanced and serves stale reads. A confirmed postAssessment whose own event decoded to PROTECT was immediately followed by currentRecord() returning the previous WATCH record. Measured convergence lag 2519-2746 ms per write. A naive consumer can read NORMAL while a PROTECT is live — for a risk registry that is the dangerous direction. Pin reads to a block or follow AssessmentPosted; do not poll currentRecord."
+    },
+    "allScenesPassed": true
+  },
+  "replayedCounterfactualBaselines": {
+    "_basis": "MIXED_PER_LEAF — every leaf carries its own `basis` marker, copied verbatim from three-policy-benchmark.json",
+    "_scope": "A different chain (196), a different pool (third-party wNVDAx/USDG), and a different question. These figures re-price the SAME observed swap sequence under different fee schedules. They are not outcomes of the protection above and must never be added to it.",
+    "chainId": 196,
+    "poolIdOrAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+    "poolClass": "THIRD_PARTY_MAINNET",
+    "replayWindow": {
+      "from": "2026-08-17T11:41:33Z",
+      "to": "2026-08-17T18:41:33Z",
+      "fromBlock": "68197857",
+      "toBlock": "68223057",
+      "rule": "anchor minus 60 minutes .. anchor plus 6 hours"
+    },
+    "primaryHorizonSec": 3600,
+    "preRegistration": {
+      "schemaVersion": "tinjau.benchmark-preregistration/0.1.0",
+      "frozenAt": "2026-08-20",
+      "document": "docs/buildx-orion-2026/outputs/04-planning/t0-4-benchmark-preregistration.md"
+    },
+    "counterfactualLimitation": "T0.4 §5: every row re-prices the SAME observed swap sequence under different fee schedules, which embeds the false assumption that a higher fee would not have deterred any trade. Fee revenue is overstated for any fee-raising policy and the adverse-selection benefit is understated. The two biases oppose each other and the NET SIGN IS UNDETERMINED — these results may not be described as conservative.",
+    "policies": {
+      "STATIC": {
+        "policyId": "STATIC",
+        "parameters": {},
+        "methodVersion": "tinjau.benchmark-static/1.0.0",
+        "replayInputFingerprint": "d7b1f557076ce5f407ceea21bfdb5fa12acab6c84e924a4f238015d0704025be",
+        "status": "CONSTANT_BASE_FEE",
+        "swapCount": 4145,
+        "totalNotionalUsd": {
+          "value": 678283.620977001,
+          "unit": "USD",
+          "basis": "OBSERVED"
+        },
+        "feeRevenueGrossUsd": {
+          "value": 339.0950125141571,
+          "unit": "USD",
+          "basis": "OBSERVED",
+          "note": "STATIC charges the pool's actual live fee, so this reconciles with what the pool really charged."
+        },
+        "feeRevenueToLpUsd": {
+          "value": 254.32125938561842,
+          "unit": "USD",
+          "basis": "OBSERVED"
+        },
+        "markoutM0Usd": {
+          "value": -48.72247555326424,
+          "unit": "USD",
+          "basis": "COUNTERFACTUAL",
+          "note": "Identical across policies: only the haircut differs (T0.4 §4)."
+        },
+        "markoutPrimaryUsd": {
+          "value": 229.7785308714,
+          "unit": "USD",
+          "basis": "COUNTERFACTUAL"
+        },
+        "markoutPrimaryPostHocAmd002Usd": {
+          "value": 229.7785308714,
+          "unit": "USD",
+          "basis": "COUNTERFACTUAL",
+          "note": "AMD-002, POST-HOC. Never describe this as pre-registered. It flatters every fee-raising policy and is structurally excluded from the claim gate."
+        },
+        "adverseSelectionPrimaryUsd": {
+          "value": 363.2747595532038,
+          "unit": "USD",
+          "basis": "COUNTERFACTUAL"
+        },
+        "maxFeeReachedPips": {
+          "value": 500,
+          "unit": "pips",
+          "basis": "OBSERVED"
+        },
+        "actionLatencySec": {
+          "value": null,
+          "unit": "seconds",
+          "basis": "COUNTERFACTUAL",
+          "note": "No fee change occurred in this window."
+        },
+        "protectionDurationSec": {
+          "value": 0,
+          "unit": "seconds",
+          "basis": "COUNTERFACTUAL",
+          "note": "No protection ran in this window."
+        },
+        "timeToDecaySec": {
+          "value": null,
+          "unit": "seconds",
+          "basis": "COUNTERFACTUAL",
+          "note": "No protection ran."
+        },
+        "triggerCount": 0
+      },
+      "VOLATILITY_ONLY": [
+        {
+          "policyId": "VOLATILITY_ONLY",
+          "parameters": {
+            "k": 2
+          },
+          "methodVersion": "tinjau.benchmark-volatility-only/1.0.0",
+          "replayInputFingerprint": "d7b1f557076ce5f407ceea21bfdb5fa12acab6c84e924a4f238015d0704025be",
+          "status": "TRIGGERED",
+          "swapCount": 4145,
+          "totalNotionalUsd": {
+            "value": 678283.620977001,
+            "unit": "USD",
+            "basis": "OBSERVED"
+          },
+          "feeRevenueGrossUsd": {
+            "value": 10071.690619578385,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "Overstated: T0.4 §5 — trades that a higher fee would have deterred still pay it in this replay."
+          },
+          "feeRevenueToLpUsd": {
+            "value": 7553.7679646837605,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "markoutM0Usd": {
+            "value": -48.72247555326424,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "Identical across policies: only the haircut differs (T0.4 §4)."
+          },
+          "markoutPrimaryUsd": {
+            "value": -2203.3703708946473,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "markoutPrimaryPostHocAmd002Usd": {
+            "value": 7529.225236169549,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "AMD-002, POST-HOC. Never describe this as pre-registered. It flatters every fee-raising policy and is structurally excluded from the claim gate."
+          },
+          "adverseSelectionPrimaryUsd": {
+            "value": 363.2747595532038,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "maxFeeReachedPips": {
+            "value": 20000,
+            "unit": "pips",
+            "basis": "COUNTERFACTUAL"
+          },
+          "actionLatencySec": {
+            "value": -2520,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "Measured from the evidence anchor to the fee change. Negative means the policy fired before the event, on pre-anchor price behaviour. The anchor is supplied by the scoring layer after the policy returned; the policy itself never sees it."
+          },
+          "protectionDurationSec": {
+            "value": 21600,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "Clipped to the replay window."
+          },
+          "timeToDecaySec": {
+            "value": 21600,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "Trigger to full recovery at the base fee, per the deployed widen-and-decay curve."
+          },
+          "triggerCount": 1
+        },
+        {
+          "policyId": "VOLATILITY_ONLY",
+          "parameters": {
+            "k": 3
+          },
+          "methodVersion": "tinjau.benchmark-volatility-only/1.0.0",
+          "replayInputFingerprint": "d7b1f557076ce5f407ceea21bfdb5fa12acab6c84e924a4f238015d0704025be",
+          "status": "TRIGGERED",
+          "swapCount": 4145,
+          "totalNotionalUsd": {
+            "value": 678283.620977001,
+            "unit": "USD",
+            "basis": "OBSERVED"
+          },
+          "feeRevenueGrossUsd": {
+            "value": 10071.690619578385,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "Overstated: T0.4 §5 — trades that a higher fee would have deterred still pay it in this replay."
+          },
+          "feeRevenueToLpUsd": {
+            "value": 7553.7679646837605,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "markoutM0Usd": {
+            "value": -48.72247555326424,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "Identical across policies: only the haircut differs (T0.4 §4)."
+          },
+          "markoutPrimaryUsd": {
+            "value": -2203.3703708946473,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "markoutPrimaryPostHocAmd002Usd": {
+            "value": 7529.225236169549,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "AMD-002, POST-HOC. Never describe this as pre-registered. It flatters every fee-raising policy and is structurally excluded from the claim gate."
+          },
+          "adverseSelectionPrimaryUsd": {
+            "value": 363.2747595532038,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "maxFeeReachedPips": {
+            "value": 20000,
+            "unit": "pips",
+            "basis": "COUNTERFACTUAL"
+          },
+          "actionLatencySec": {
+            "value": -2520,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "Measured from the evidence anchor to the fee change. Negative means the policy fired before the event, on pre-anchor price behaviour. The anchor is supplied by the scoring layer after the policy returned; the policy itself never sees it."
+          },
+          "protectionDurationSec": {
+            "value": 21600,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "Clipped to the replay window."
+          },
+          "timeToDecaySec": {
+            "value": 21600,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "Trigger to full recovery at the base fee, per the deployed widen-and-decay curve."
+          },
+          "triggerCount": 1
+        },
+        {
+          "policyId": "VOLATILITY_ONLY",
+          "parameters": {
+            "k": 5
+          },
+          "methodVersion": "tinjau.benchmark-volatility-only/1.0.0",
+          "replayInputFingerprint": "d7b1f557076ce5f407ceea21bfdb5fa12acab6c84e924a4f238015d0704025be",
+          "status": "TRIGGERED",
+          "swapCount": 4145,
+          "totalNotionalUsd": {
+            "value": 678283.620977001,
+            "unit": "USD",
+            "basis": "OBSERVED"
+          },
+          "feeRevenueGrossUsd": {
+            "value": 10071.690619578385,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "Overstated: T0.4 §5 — trades that a higher fee would have deterred still pay it in this replay."
+          },
+          "feeRevenueToLpUsd": {
+            "value": 7553.7679646837605,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "markoutM0Usd": {
+            "value": -48.72247555326424,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "Identical across policies: only the haircut differs (T0.4 §4)."
+          },
+          "markoutPrimaryUsd": {
+            "value": -2203.3703708946473,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "markoutPrimaryPostHocAmd002Usd": {
+            "value": 7529.225236169549,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "AMD-002, POST-HOC. Never describe this as pre-registered. It flatters every fee-raising policy and is structurally excluded from the claim gate."
+          },
+          "adverseSelectionPrimaryUsd": {
+            "value": 363.2747595532038,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "maxFeeReachedPips": {
+            "value": 20000,
+            "unit": "pips",
+            "basis": "COUNTERFACTUAL"
+          },
+          "actionLatencySec": {
+            "value": -2520,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "Measured from the evidence anchor to the fee change. Negative means the policy fired before the event, on pre-anchor price behaviour. The anchor is supplied by the scoring layer after the policy returned; the policy itself never sees it."
+          },
+          "protectionDurationSec": {
+            "value": 21600,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "Clipped to the replay window."
+          },
+          "timeToDecaySec": {
+            "value": 21600,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "Trigger to full recovery at the base fee, per the deployed widen-and-decay curve."
+          },
+          "triggerCount": 1
+        }
+      ],
+      "TINJAU": [
+        {
+          "policyId": "TINJAU",
+          "parameters": {
+            "minDrawdownBps": 150
+          },
+          "methodVersion": "tinjau.benchmark-tinjau/1.0.0",
+          "replayInputFingerprint": "d7b1f557076ce5f407ceea21bfdb5fa12acab6c84e924a4f238015d0704025be",
+          "status": "WATCH",
+          "swapCount": 4145,
+          "totalNotionalUsd": {
+            "value": 678283.620977001,
+            "unit": "USD",
+            "basis": "OBSERVED"
+          },
+          "feeRevenueGrossUsd": {
+            "value": 339.0950125141571,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "Overstated: T0.4 §5 — trades that a higher fee would have deterred still pay it in this replay."
+          },
+          "feeRevenueToLpUsd": {
+            "value": 254.32125938561842,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "markoutM0Usd": {
+            "value": -48.72247555326424,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "Identical across policies: only the haircut differs (T0.4 §4)."
+          },
+          "markoutPrimaryUsd": {
+            "value": 229.7785308714,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "markoutPrimaryPostHocAmd002Usd": {
+            "value": 229.7785308714,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "AMD-002, POST-HOC. Never describe this as pre-registered. It flatters every fee-raising policy and is structurally excluded from the claim gate."
+          },
+          "adverseSelectionPrimaryUsd": {
+            "value": 363.2747595532038,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "maxFeeReachedPips": {
+            "value": 500,
+            "unit": "pips",
+            "basis": "OBSERVED"
+          },
+          "actionLatencySec": {
+            "value": null,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "No fee change occurred in this window."
+          },
+          "protectionDurationSec": {
+            "value": 0,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "No protection ran in this window."
+          },
+          "timeToDecaySec": {
+            "value": null,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "No protection ran."
+          },
+          "triggerCount": 0
+        },
+        {
+          "policyId": "TINJAU",
+          "parameters": {
+            "minDrawdownBps": 200
+          },
+          "methodVersion": "tinjau.benchmark-tinjau/1.0.0",
+          "replayInputFingerprint": "d7b1f557076ce5f407ceea21bfdb5fa12acab6c84e924a4f238015d0704025be",
+          "status": "WATCH",
+          "swapCount": 4145,
+          "totalNotionalUsd": {
+            "value": 678283.620977001,
+            "unit": "USD",
+            "basis": "OBSERVED"
+          },
+          "feeRevenueGrossUsd": {
+            "value": 339.0950125141571,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "Overstated: T0.4 §5 — trades that a higher fee would have deterred still pay it in this replay."
+          },
+          "feeRevenueToLpUsd": {
+            "value": 254.32125938561842,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "markoutM0Usd": {
+            "value": -48.72247555326424,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "Identical across policies: only the haircut differs (T0.4 §4)."
+          },
+          "markoutPrimaryUsd": {
+            "value": 229.7785308714,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "markoutPrimaryPostHocAmd002Usd": {
+            "value": 229.7785308714,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "AMD-002, POST-HOC. Never describe this as pre-registered. It flatters every fee-raising policy and is structurally excluded from the claim gate."
+          },
+          "adverseSelectionPrimaryUsd": {
+            "value": 363.2747595532038,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "maxFeeReachedPips": {
+            "value": 500,
+            "unit": "pips",
+            "basis": "OBSERVED"
+          },
+          "actionLatencySec": {
+            "value": null,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "No fee change occurred in this window."
+          },
+          "protectionDurationSec": {
+            "value": 0,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "No protection ran in this window."
+          },
+          "timeToDecaySec": {
+            "value": null,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "No protection ran."
+          },
+          "triggerCount": 0
+        },
+        {
+          "policyId": "TINJAU",
+          "parameters": {
+            "minDrawdownBps": 300
+          },
+          "methodVersion": "tinjau.benchmark-tinjau/1.0.0",
+          "replayInputFingerprint": "d7b1f557076ce5f407ceea21bfdb5fa12acab6c84e924a4f238015d0704025be",
+          "status": "WATCH",
+          "swapCount": 4145,
+          "totalNotionalUsd": {
+            "value": 678283.620977001,
+            "unit": "USD",
+            "basis": "OBSERVED"
+          },
+          "feeRevenueGrossUsd": {
+            "value": 339.0950125141571,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "Overstated: T0.4 §5 — trades that a higher fee would have deterred still pay it in this replay."
+          },
+          "feeRevenueToLpUsd": {
+            "value": 254.32125938561842,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "markoutM0Usd": {
+            "value": -48.72247555326424,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "Identical across policies: only the haircut differs (T0.4 §4)."
+          },
+          "markoutPrimaryUsd": {
+            "value": 229.7785308714,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "markoutPrimaryPostHocAmd002Usd": {
+            "value": 229.7785308714,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL",
+            "note": "AMD-002, POST-HOC. Never describe this as pre-registered. It flatters every fee-raising policy and is structurally excluded from the claim gate."
+          },
+          "adverseSelectionPrimaryUsd": {
+            "value": 363.2747595532038,
+            "unit": "USD",
+            "basis": "COUNTERFACTUAL"
+          },
+          "maxFeeReachedPips": {
+            "value": 500,
+            "unit": "pips",
+            "basis": "OBSERVED"
+          },
+          "actionLatencySec": {
+            "value": null,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "No fee change occurred in this window."
+          },
+          "protectionDurationSec": {
+            "value": 0,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "No protection ran in this window."
+          },
+          "timeToDecaySec": {
+            "value": null,
+            "unit": "seconds",
+            "basis": "COUNTERFACTUAL",
+            "note": "No protection ran."
+          },
+          "triggerCount": 0
+        }
+      ]
+    },
+    "_tinjauResult": "TINJAU's rows are identical to STATIC's in every column, at every threshold in the AMD-001 grid, because Tinjau never left the base fee on this window. That equality is the result, not a rounding artefact, and it is asserted by test in the benchmark suite.",
+    "_signIsUndetermined": "All 27 comparable cells flip from TINJAU_BEATS to TINJAU_LOSES between the pre-registered basis and AMD-002's post-hoc basis, on identical trades. Neither basis is clean. ON MARKOUT, THIS BENCHMARK CANNOT DETERMINE WHICH POLICY DID BETTER: it brackets the answer and the bracket spans the sign."
+  },
+  "canonicalReplayOfThisEvent": {
+    "_basis": "OBSERVED",
+    "state": "WATCH",
+    "confirmationStatus": "NOT_CONFIRMED",
+    "why": "The 235 bps drawdown clears the confirmation floor but retains only 13% after five minutes (net change -45 bps): the pool dipped and bounced. Anti-wick is a necessary condition under rule tinjau.confirm/2.0.0, so the market leg does not confirm.",
+    "robustness": "The method was tested against the correction that would have favoured this scenario: measuring drawdown post-anchor only gives 101 bps, half the floor. Scenario B gets weaker, not stronger, so the verdict is robust to the method choice. Published as-is; the rules were not loosened to escape it.",
+    "consequence": "The demo's confirmed-protection scene cannot be a mainnet replay. It is re-scoped onto the builder-controlled testnet pool and labelled constructed, which is exactly what this record does.",
+    "source": "t3-3-confirmation-method.md; three-policy-benchmark.md §4.3"
+  },
+  "claimGate": {
+    "canClaimLossAvoided": false,
+    "metricBasis": "PRE_REGISTERED",
+    "reason": "Tinjau never promoted to PROTECT on any of the four frozen scenarios, at any threshold in the AMD-001 grid. Its replayed economics are IDENTICAL to the do-nothing STATIC policy, not better. `Beats` means strictly greater and a tie is not a win, so condition 2 fails. Separately, the only observed PROTECT interval has a CONSTRUCTED market leg on a builder-controlled pool, so it could not support a loss-avoided claim even if the benchmark had produced one.",
+    "conditions": [
+      {
+        "id": "non-null-economic-row",
+        "text": "the scenario has a non-null economic row",
+        "passed": true,
+        "detail": "3 of 4 scenarios carry an economic row (B-confirmed-protect, C-two-origins-hard-case, D-neutral-normal). Scenario A's frozen window contains zero swaps."
+      },
+      {
+        "id": "beats-both-at-every-k-and-threshold",
+        "text": "TINJAU beats both STATIC and VOLATILITY_ONLY at every k on the primary metric M_3600_LP, and (AMD-001) at every minDrawdownBps in the grid",
+        "passed": false,
+        "detail": "27 of 27 comparable cells are not a win on both comparators. Against STATIC: 27 TINJAU_TIES. Against VOLATILITY_ONLY: 27 TINJAU_BEATS. \"Beats\" is strictly greater; a tie is not a win."
+      },
+      {
+        "id": "margin-exceeds-k-spread",
+        "text": "the margin exceeds the spread between the best and worst k for VOLATILITY_ONLY, so the win is not smaller than the noise from an arbitrary threshold choice",
+        "passed": null,
+        "detail": "Not evaluable: condition 2 failed, so there is no margin to measure. The per-scenario k spread for VOLATILITY_ONLY is A-rumor-watch: n/a; B-confirmed-protect: $0.0000; C-two-origins-hard-case: $53.5754; D-neutral-normal: $87.3856, recorded for disclosure."
+      },
+      {
+        "id": "thresholds-unmodified-after-results",
+        "text": "the frozen threshold configuration was not modified after any result was seen",
+        "passed": null,
+        "detail": "PROCESS FACT, NOT A COMPUTATION — reported as unverifiable by code rather than dressed up as a machine check. What can be stated: the promotion and confirmation configs are the frozen T1.2/T3.3 versions recorded in every TINJAU row's `ruleVersions`; the only value varied is `minDrawdownBps`, and that grid (150/200/300) was recorded as amendment AMD-001 before any T5 result existed. AMD-002 added a metric, not a threshold, and is excluded from this gate."
+      }
+    ],
+    "failedConditionIds": [
+      "beats-both-at-every-k-and-threshold"
+    ],
+    "_sourceOfTruth": "Copied from three-policy-benchmark.json `claimGate`. This record does not compute its own gate and cannot open one the benchmark closed. AMD-002's post-hoc metric is structurally excluded from the gate."
+  },
+  "whatThisProves": [
+    "ENFORCEMENT. A signed assessment reached a deployed registry, a v4 hook read it, and the pool actually charged 20000 pips — decoded from PoolManager's own Swap event, not from a view function.",
+    "BOUNDEDNESS. The applied fee sat at the envelope ceiling the contract computes for itself. The assessor cannot express a higher one: `requestedFee` is signed and bound into the EIP-712 hash but is never written into RiskRecord, which has no fee field.",
+    "DETERMINISTIC RECOVERY. The fee returned to 500 with only time passing — no LLM, no keeper, no transaction.",
+    "COOLDOWN. Immediate re-arming was refused on chain by the contract.",
+    "FAILURE VISIBILITY. A guardian pause refused an authorised action, the refusal is recorded, and the measured fee afterwards was unchanged at 500. No benefit is claimed for that interval.",
+    "RESTRAINT, from the replay side: Tinjau declined to act on two large price moves because neither had a qualifying cause, and one of them a volatility-only policy would have traded on."
+  ],
+  "whatThisDoesNotProve": [
+    "That the intervention helped. No measured event warranted one, so no benefit was measured. canClaimLossAvoided is false.",
+    "That Tinjau reduces LP loss. It ties the do-nothing policy on every comparable cell of the pre-registered basis and loses on every cell of the post-hoc basis.",
+    "That this event confirms in the real market. The canonical replay of the same 8-K resolves to WATCH.",
+    "Anything about a market. The pool is builder-controlled, the tokens are freely-mintable mocks, and the liquidity is ours.",
+    "Dual OKX/X Layer confirmation. The OKX leg is UNAVAILABLE for all four frozen scenarios.",
+    "Live discovery, coverage, or latency. SVC-007/SVC-008 use immutable replay fixtures.",
+    "Production readiness. These are T4.2 working addresses on a testnet, not final ones; T7.2 owns the authoritative list."
+  ],
+  "limitations": [
+    "The market leg of the observed PROTECT is CONSTRUCTED. The evidence leg is real and source-linked; the price path is not.",
+    "The observed run used the DEMO envelope (60/300/360 s), not the production envelope (3600/18000/21600 s), because X Layer Testnet exposes no evm_increaseTime.",
+    "Executable exit depth is a LOWER BOUND on every result, and the mainnet pool is extraordinarily thin: only 0.53-2.29 wNVDAx (~$120-$517) is provably quotable within one tick range across the four windows. Exit-depth figures are not representative of a liquid market.",
+    "The benchmark re-prices identical observed trades under different fee schedules. Fee revenue is overstated for any fee-raising policy and the adverse-selection benefit is understated; the two biases oppose each other and THE NET SIGN IS UNDETERMINED. These results may not be called conservative.",
+    "Three economic scenarios, one asset, one pool, a market weeks old. No sentence built on these rows may imply a general result about tokenized equities.",
+    "The assessment instant is the window end. If Tinjau ever did promote on one of these windows, protection would begin at the window end and almost no swaps would be re-priced, so the economic comparison for a PROMOTING Tinjau is not measurable on these windows.",
+    "TVL_event is unavailable for this scenario, so every 'bps of TVL' figure is null rather than imputed.",
+    "X Layer's public RPC serves stale reads (2519-2746 ms measured convergence lag). A naive consumer can read NORMAL while a PROTECT is live."
+  ],
+  "reproduction": {
+    "onChainRun": [
+      "cd apps/server && npx tsx src/chain/tinjauDemoRun.ts --local   # boots its own Anvil, production envelope",
+      "npx tsx src/chain/tinjauPreflight.ts                            # before touching a public chain",
+      "# the chain-1952 demo-envelope run is documented in full in ../04-planning/t4-2-t4-5-harness-and-testnet-run.md §9"
+    ],
+    "benchmark": [
+      "cd apps/server && npx tsx src/benchmark/emit.ts   # rewrites three-policy-benchmark.json byte-identically",
+      "npx tsx --test 'test/benchmark*.test.ts'"
+    ],
+    "thisRecord": [
+      "node docs/buildx-orion-2026/outputs/05-build/tools/build-proof-of-protection.mjs",
+      "node docs/buildx-orion-2026/outputs/05-build/tools/verify-proof-of-protection.mjs"
+    ]
+  },
+  "companionDocument": "t5-5-proof-of-protection.md"
+}

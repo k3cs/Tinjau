@@ -1,0 +1,497 @@
+{
+  "schemaVersion": "tinjau.demo-manifest/1.0.0",
+  "_purpose": "The single factual manifest for the tracker §0.14 three-scene demo. The non-frontend lane owns these facts and the commands that regenerate them; the frontend lane presents them. Neither may fabricate missing state for the other.",
+  "_noClock": "This file carries no generation timestamp on purpose: `node demo/tinjau-demo.mjs check` re-derives it and diffs byte-for-byte, which a clock would make impossible.",
+  "producedBy": "node demo/tinjau-demo.mjs manifest",
+  "producedByTasks": [
+    "T6.5 (non-frontend half)"
+  ],
+  "requiredTruth": [
+    "Tinjau reaches PROTECT on NONE of the four frozen replay scenarios: A WATCH, B WATCH (the evidence qualified; the MARKET leg was NOT_CONFIRMED), C WATCH, D NORMAL.",
+    "Scene 2's PROTECT is CONSTRUCTED — real replayed 8-K evidence paired with a constructed price path on a builder-controlled testnet pool. The canonical replay of that same event resolves to WATCH. It must never be presented as a replayed result.",
+    "canClaimLossAvoided is false. Tinjau TIES the static policy. No surface may claim Tinjau reduces LP loss.",
+    "The OKX leg is UNAVAILABLE for all four scenarios. There is no dual OKX/X Layer confirmation.",
+    "The rumour fixture is SIMULATED, not a real post. The news chain beside it is real and source-linked.",
+    "X Layer's public RPC serves stale reads (measured 2,519–2,746 ms convergence lag). A naive live read can show the wrong state. Pin reads to a block or follow AssessmentPosted."
+  ],
+  "addressPolicy": {
+    "addressList": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/deployed-addresses.json",
+    "status": "T4.2_WORKING_ADDRESSES_NOT_FINAL",
+    "note": "Addresses are resolved from the address list by stackId at run time and are NOT copied into this manifest as independent values. T7.2 owns the authoritative list; anything hardcoded elsewhere would have to be chased when it changes."
+  },
+  "sourceArtifacts": [
+    {
+      "key": "addresses",
+      "path": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/deployed-addresses.json",
+      "sha256": "3c7cf3ce7fd8ac00e6aa2870ff2887c177472dc145cc184d66b11fdab688d0d1"
+    },
+    {
+      "key": "chainManifest",
+      "path": "docs/buildx-orion-2026/outputs/05-build/t4-demo-manifest-xlayer-testnet.json",
+      "sha256": "a7d7413475079fcc062bf8535b3c76dd251dcc08094ffe0f854dd49918f6b943"
+    },
+    {
+      "key": "comparison",
+      "path": "docs/buildx-orion-2026/outputs/05-build/three-policy-benchmark.json",
+      "sha256": "da9dff24e64fbed4eebd15018863981e0a1c63680bc05de122a40cce4ba3a910"
+    },
+    {
+      "key": "proofOfProtection",
+      "path": "docs/buildx-orion-2026/outputs/05-build/proof-of-protection.json",
+      "sha256": "0f2657addd47fc7b5f60f804b8dd1fdf44914b1799278fa68915d3d21b667f19"
+    },
+    {
+      "key": "protectScenario",
+      "path": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/scenario-confirmed-protect.json",
+      "sha256": "3c1d2534dee0f2c43270ef582821b17306335cce9e6fc6b8aad089c5e8239c7e"
+    },
+    {
+      "key": "rumourScenario",
+      "path": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/scenario-rumor-watch.json",
+      "sha256": "3b1abefa5d48e546e89b3f730da96c14595f5984de988b29163d8c1aa9c1b03a"
+    }
+  ],
+  "fixtureFallback": {
+    "cmd": "node demo/tinjau-demo.mjs all",
+    "whatItProves": "The full three-scene narrative runs with no live third-party service, no credentials, no RPC and no npm install. Every outbound network primitive is replaced with a thrower before scene code runs, so a successful run is evidence rather than assurance.",
+    "whatItDoesNotProve": "It replays recorded facts. It does not re-execute the on-chain transactions, and it cannot detect that a chain has since changed state."
+  },
+  "scenes": [
+    {
+      "scene": 1,
+      "id": "rumour-containment",
+      "title": "A rumour raises attention. It cannot raise the fee.",
+      "requiredTruth": "This outcome is a CANONICAL REPLAY and matches its pre-registration. Nothing about it is constructed.",
+      "facts": {
+        "scenarioId": "A-rumor-watch",
+        "state": "WATCH",
+        "confidenceBand": "LOW",
+        "reasonCodes": [
+          "DUPLICATE_SYNDICATION",
+          "INSUFFICIENT_SAMPLE",
+          "MARKET_DATA_UNAVAILABLE",
+          "NO_OFFICIAL_CONFIRMATION",
+          "REFERENCE_MARKET_CLOSED",
+          "SINGLE_SOURCE"
+        ],
+        "actionAuthorized": false,
+        "actionStatus": "NONE",
+        "feeChargedByThePool": 500,
+        "feeSource": "PoolManager Swap event",
+        "baseFee": 500,
+        "maxFee": 20000,
+        "claimCount": 5,
+        "apparentOrigins": 1,
+        "usableOrigins": 1,
+        "marketConfirmation": "UNAVAILABLE",
+        "okxLeg": "UNAVAILABLE"
+      },
+      "provenance": {
+        "evidence": "REPLAYED_SOURCE_LINKED",
+        "marketLeg": "REPLAYED",
+        "marketVenue": "X_LAYER_MAINNET_CHAIN_196_THIRD_PARTY_POOL",
+        "outcomeOrigin": "CANONICAL_REPLAY",
+        "preRegistered": true,
+        "preRegisteredOutcome": "WATCH",
+        "matchesPreRegistration": true
+      },
+      "onChain": {
+        "stack": {
+          "addressList": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/deployed-addresses.json",
+          "stackId": "production-envelope",
+          "label": "Production envelope — T7.2 publishes this one",
+          "isDemoEnvelope": false,
+          "envelope": {
+            "baseFee": 500,
+            "maxFee": 20000,
+            "widenDuration": 3600,
+            "decayDuration": 18000,
+            "maxProtectDuration": 21600,
+            "cooldown": 3600,
+            "demoEnvelope": false
+          },
+          "poolId": "0x5e9eff19074225e9132eb73dc25cf0e3ff55c3fb31c9b28ab633851d2b54f730",
+          "registry": "0x60062389a7AB08F0030FC06Adf9CE0C180537317",
+          "hook": "0x1092C9fe2dB084F26aa415A0fda14B001A786080",
+          "riskAsset": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
+          "addressStatus": "T4.2_WORKING_ADDRESSES_NOT_FINAL",
+          "resolvedAtRunTime": true
+        },
+        "chainId": 1952,
+        "postAssessmentTx": "0x025ca92d8d477af734d3e7ce0e7465bf3afc0b1d511acf4fc184c5add1178671",
+        "swapTx": "0xb801240c05b3477f6e2505ba51ee9b14e71fbc5527fbc6b0b15e142a8409cf4e",
+        "swapBlockNumber": 38825930,
+        "assetRemap": {
+          "canonicalAsset": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "deployedStandIn": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
+          "chainId": 1952,
+          "note": "The decision resolved the canonical asset on X Layer mainnet (chain 196). This chain carries a freely-mintable mock standing in for it in a BUILDER-CONTROLLED pool. Only the `asset` field was remapped; the decision itself is unmodified."
+        }
+      },
+      "mustNotSay": [
+        "Do not call the rumour claim a real post. It is SIMULATED (dataMode SIMULATED, sourceUrl null).",
+        "Do not present four outlets as four sources. They collapse to one origin.",
+        "Do not describe the unavailable OKX leg as a second confirmation."
+      ],
+      "sourceArtifact": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/scenario-rumor-watch.json",
+      "commands": {
+        "fixtureOnly": {
+          "cmd": "node demo/tinjau-demo.mjs scene1",
+          "needs": "Node 18+",
+          "network": "SEALED — fetch/net/tls/dgram/dns/http/https all throw before scene code runs",
+          "credentials": "none"
+        },
+        "judgeVerifiable": {
+          "cmd": "node tools/risk-reader/tinjau-risk-read.mjs --rpc-url https://testrpc.xlayer.tech --chain-id 1952 --registry 0x60062389a7AB08F0030FC06Adf9CE0C180537317 --asset 0xf07A9D89848bc694c7154Fda4cce707Eb409F903 --pool-id 0x5e9eff19074225e9132eb73dc25cf0e3ff55c3fb31c9b28ab633851d2b54f730",
+          "needs": "Node 18+ and internet. Values resolved from deployed-addresses.json at run time.",
+          "network": "public X Layer Testnet RPC, read-only",
+          "credentials": "none",
+          "proves": "The risk record is readable and decodable by a stranger holding only the chain and the ABI. Prints stored and effective state separately.",
+          "staleReadWarning": "The public RPC serves stale reads. Read twice and compare, or pin to a block number."
+        },
+        "builderRegeneration": {
+          "cmd": "cd apps/server && npx tsx src/chain/tinjauDemoRun.ts --remote --scenes A",
+          "needs": "funded X Layer Testnet keys (POSTER_PRIVATE_KEY, DEMO_RELAYER_PRIVATE_KEY) plus the TINJAU_* address environment listed in t4-2-t4-5-harness-and-testnet-run.md §9",
+          "network": "public X Layer Testnet RPC, writes transactions",
+          "credentials": "REQUIRED — a judge cannot run this; it is how the recorded evidence was made",
+          "staleReadHandling": "After every confirmed write the harness waits until a read reflects it and throws if it never converges. Measured lag 2,519–2,746 ms per write."
+        }
+      }
+    },
+    {
+      "scene": 2,
+      "id": "confirmed-protection-CONSTRUCTED",
+      "title": "Confirmed evidence buys a bounded fee, and the clock takes it back.",
+      "requiredTruth": "THIS PROTECT IS NOT A REPLAY RESULT.",
+      "constructed": {
+        "what": "the market leg only",
+        "canonicalReplayState": "WATCH",
+        "canonicalReplayConfirmation": "NOT_CONFIRMED",
+        "reasonCodeDiffVsCanonical": {
+          "onlyInCanonical": [
+            "ANTI_WICK_FAILED",
+            "MARKET_NOT_CONFIRMED"
+          ],
+          "onlyInConstructed": [
+            "MARKET_CONFIRMED"
+          ]
+        },
+        "whyItIsStillMeaningful": "The constructed price path was scored by the real confirmation engine under its own unmodified thresholds, and the reason-code diff against the canonical run touches only market-leg codes. What is constructed is the market, not the judgement about it.",
+        "uiRequirement": "Any surface showing this PROTECT must label it constructed, in the same visual weight as the state itself. Presenting it as a replayed outcome would be the single most misleading thing this project could publish."
+      },
+      "facts": {
+        "scenarioId": "B-confirmed-protect-CONSTRUCTED",
+        "state": "PROTECT",
+        "confidenceBand": "HIGH",
+        "reasonCodes": [
+          "BONDED_EVIDENCE_PASSED",
+          "DUPLICATE_SYNDICATION",
+          "MARKET_CONFIRMED",
+          "OFFICIAL_FILING",
+          "REFERENCE_MARKET_CLOSED",
+          "STALE_EVIDENCE"
+        ],
+        "actionAuthorized": true,
+        "requestedFee": 20000,
+        "feeCurveChargedByThePool": [
+          20000,
+          9470,
+          500,
+          500
+        ],
+        "envelope": {
+          "baseFee": 500,
+          "maxFee": 20000,
+          "widenDuration": 60,
+          "decayDuration": 300,
+          "maxProtectDuration": 360,
+          "cooldown": 60,
+          "demoEnvelope": true
+        },
+        "envelopeNote": "This is the 60x-COMPRESSED DEMO envelope (widen 60 s, decay 300 s, cap 360 s, cooldown 60 s). X Layer Testnet exposes no evm_increaseTime, so the production envelope's 21,600 s recovery cannot be watched live. The compression preserves the invariants cap == widen + decay and cooldown == widen. The production-envelope stack is deployed too and is the one deployed-addresses.json marks as the production envelope.",
+        "recoveryHadNoTransaction": true,
+        "cooldownRefusedReArming": "CooldownActive",
+        "failedActionCase": {
+          "induced": "guardian pause",
+          "error": "ProtectionPaused",
+          "feeAfterFailure": 500,
+          "claimsNoBenefit": true
+        },
+        "previewVsChargedDivergence": "previewFee returned 9,730 where the pool charged 9,470 mid-decay. The fee is continuous in time and seconds pass between quote and inclusion, so a quoted Tinjau fee is an upper bound during decay, not a promise."
+      },
+      "provenance": {
+        "evidence": "REPLAYED_SOURCE_LINKED",
+        "marketLeg": "CONSTRUCTED",
+        "marketVenue": "X_LAYER_TESTNET_CHAIN_1952_BUILDER_CONTROLLED_POOL",
+        "outcomeOrigin": "CONSTRUCTED_MARKET_INPUTS",
+        "preRegistered": true,
+        "preRegisteredOutcome": "PROTECT conditional on fresh market confirmation; WATCH otherwise",
+        "matchesPreRegistration": true
+      },
+      "onChain": {
+        "stack": {
+          "addressList": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/deployed-addresses.json",
+          "stackId": "demo-envelope",
+          "label": "Demo envelope — 60x compressed, so recovery can be watched live",
+          "isDemoEnvelope": true,
+          "envelope": {
+            "baseFee": 500,
+            "maxFee": 20000,
+            "widenDuration": 60,
+            "decayDuration": 300,
+            "maxProtectDuration": 360,
+            "cooldown": 60,
+            "demoEnvelope": true
+          },
+          "poolId": "0x3b3942b682bd59383474974127140a3f0b0c2dff946b8164341c4812985a4a8c",
+          "registry": "0x1a1e17306f789f5Ec7012B1E2CB866DeDB61E2b1",
+          "hook": "0xAb448f70fE44fbbF5f41225F7797fcC7e56c2080",
+          "riskAsset": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
+          "addressStatus": "T4.2_WORKING_ADDRESSES_NOT_FINAL",
+          "resolvedAtRunTime": true
+        },
+        "chainId": 1952,
+        "steps": [
+          {
+            "step": "compare:canonical-vs-constructed",
+            "txHash": null
+          },
+          {
+            "step": "decide",
+            "txHash": null
+          },
+          {
+            "step": "postAssessment",
+            "txHash": "0x659cb5553e2f53364445bdc4521dee3e87843b59d31f5861c0e196d471b3be7b"
+          },
+          {
+            "step": "readback",
+            "txHash": null
+          },
+          {
+            "step": "swap:widened",
+            "txHash": "0x2e313c44bae3112cbb3c2430cf0e5e745327c197b54697f9f1e1ccca7df3f787"
+          },
+          {
+            "step": "swap:mid-decay",
+            "txHash": "0x93ae1e2470eec2e0d42cf4a252d8ab5363636387f963e7770b132adfe7e17bab"
+          },
+          {
+            "step": "swap:recovered",
+            "txHash": "0xcf229e22b8af4b4841437d57bee33af31edb5fbebbb79178cd9d36ac8546b7c0"
+          },
+          {
+            "step": "postAssessment:stand-down",
+            "txHash": "0x85e854b34937b7857c8f32a0e1e2e19b445b41460c75b7c867a0bb448f2cfa46"
+          },
+          {
+            "step": "postAssessment:blocked-by-cooldown",
+            "txHash": null
+          }
+        ],
+        "feeCurve": [
+          {
+            "txHash": "0x2e313c44bae3112cbb3c2430cf0e5e745327c197b54697f9f1e1ccca7df3f787",
+            "atUnixSeconds": 1787284279,
+            "appliedFee": 20000,
+            "previewedFee": 20000,
+            "blockNumber": 38825446
+          },
+          {
+            "txHash": "0x93ae1e2470eec2e0d42cf4a252d8ab5363636387f963e7770b132adfe7e17bab",
+            "atUnixSeconds": 1787284497,
+            "appliedFee": 9470,
+            "previewedFee": 9730,
+            "blockNumber": 38825663
+          },
+          {
+            "txHash": "0xcf229e22b8af4b4841437d57bee33af31edb5fbebbb79178cd9d36ac8546b7c0",
+            "atUnixSeconds": 1787284653,
+            "appliedFee": 500,
+            "previewedFee": 500,
+            "blockNumber": 38825820
+          },
+          {
+            "txHash": "0xfdb242cb08801ef6cd2ffc7ab16e3d18da7953debcfc74d2e4a9c0e676eb7ab0",
+            "atUnixSeconds": 1787284660,
+            "appliedFee": 500,
+            "previewedFee": 500,
+            "blockNumber": 38825826
+          }
+        ],
+        "readConsistency": {
+          "maxWaitedMs": 2746,
+          "totalWaitedMs": 13126,
+          "note": "Measured lag between a confirmed write and that write becoming visible to a read on the public X Layer RPC. The harness waits for convergence and throws if it never arrives; a live demo that reads naively will intermittently show the wrong state."
+        },
+        "assetRemap": {
+          "canonicalAsset": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "deployedStandIn": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
+          "chainId": 1952,
+          "note": "The decision resolved the canonical asset on X Layer mainnet (chain 196). This chain carries a freely-mintable mock standing in for it in a BUILDER-CONTROLLED pool. Only the `asset` field was remapped; the decision itself is unmodified."
+        }
+      },
+      "mustNotSay": [
+        "Do not present this PROTECT as a replayed outcome. The canonical replay is WATCH.",
+        "Do not call the pool a market. It is builder-controlled liquidity in valueless mock tokens.",
+        "Do not present the compressed demo envelope timings as the production envelope.",
+        "Do not claim the failed action in the paused case bought any protection."
+      ],
+      "sourceArtifact": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/scenario-confirmed-protect.json",
+      "commands": {
+        "fixtureOnly": {
+          "cmd": "node demo/tinjau-demo.mjs scene2",
+          "needs": "Node 18+",
+          "network": "SEALED — fetch/net/tls/dgram/dns/http/https all throw before scene code runs",
+          "credentials": "none"
+        },
+        "judgeVerifiable": {
+          "cmd": "node tools/risk-reader/tinjau-risk-read.mjs --rpc-url https://testrpc.xlayer.tech --chain-id 1952 --registry 0x1a1e17306f789f5Ec7012B1E2CB866DeDB61E2b1 --asset 0xf07A9D89848bc694c7154Fda4cce707Eb409F903 --pool-id 0x3b3942b682bd59383474974127140a3f0b0c2dff946b8164341c4812985a4a8c",
+          "needs": "Node 18+ and internet. Values resolved from deployed-addresses.json at run time.",
+          "network": "public X Layer Testnet RPC, read-only",
+          "credentials": "none",
+          "proves": "The risk record is readable and decodable by a stranger holding only the chain and the ABI. Prints stored and effective state separately.",
+          "staleReadWarning": "The public RPC serves stale reads. Read twice and compare, or pin to a block number."
+        },
+        "builderRegeneration": {
+          "cmd": "cd apps/server && npx tsx src/chain/tinjauDemoRun.ts --remote --scenes B",
+          "needs": "funded X Layer Testnet keys (POSTER_PRIVATE_KEY, DEMO_RELAYER_PRIVATE_KEY) plus the TINJAU_* address environment listed in t4-2-t4-5-harness-and-testnet-run.md §9",
+          "network": "public X Layer Testnet RPC, writes transactions",
+          "credentials": "REQUIRED — a judge cannot run this; it is how the recorded evidence was made",
+          "staleReadHandling": "After every confirmed write the harness waits until a read reflects it and throws if it never converges. Measured lag 2,519–2,746 ms per write."
+        }
+      }
+    },
+    {
+      "scene": 3,
+      "id": "simpler-alternatives",
+      "title": "The same replay under a static fee, a volatility-only fee, and Tinjau.",
+      "requiredTruth": "Lead with behaviour, not economics. On markout this benchmark cannot determine a winner: the sign flips with the metric basis. What it can determine is which policy fired, when, and on what.",
+      "facts": {
+        "policies": [
+          "STATIC",
+          "VOLATILITY_ONLY",
+          "TINJAU"
+        ],
+        "identicalInput": "All rows carry a sha256 fingerprint over the replay input; one distinct fingerprint per scenario covers all seven policy rows.",
+        "rows": 28,
+        "cells": 72,
+        "comparableCells": 27,
+        "claimGate": {
+          "field": "canClaimLossAvoided",
+          "value": false,
+          "proofOfProtectionAgrees": true,
+          "proofOfProtectionReason": "Tinjau never promoted to PROTECT on any of the four frozen scenarios, at any threshold in the AMD-001 grid. Its replayed economics are IDENTICAL to the do-nothing STATIC policy, not better. `Beats` means strictly greater and a tie is not a win, so condition 2 fails. Separately, the only observed PROTECT interval has a CONSTRUCTED market leg on a builder-controlled pool, so it could not support a loss-avoided claim even if the benchmark had produced one."
+        },
+        "signFlip": {
+          "preRegistered": {
+            "TINJAU_BEATS": 27
+          },
+          "amd002Consistent": {
+            "TINJAU_LOSES": 27
+          },
+          "vsStaticBothBases": {
+            "preRegistered": {
+              "TINJAU_TIES": 27
+            },
+            "amd002Consistent": {
+              "TINJAU_TIES": 27
+            }
+          },
+          "why": "Neither basis is clean. The pre-registered metric debits a counterfactual fee it never credits, mechanically penalising any fee-raising policy. AMD-002 credits counterfactual fee revenue assuming zero flow elasticity, mechanically rewarding one. AMD-002 is post-hoc and is structurally excluded from the claim gate."
+        },
+        "theDefensibleClaim": {
+          "sentence": "Tinjau declined to act on two large price moves because neither had a qualifying cause, and one of them a volatility-only policy would have traded on.",
+          "neutralControl": "D-neutral-normal — a routine insider Form 4, pre-registered NORMAL",
+          "volatilityOnly": [
+            {
+              "k": 2,
+              "status": "TRIGGERED",
+              "triggerCount": 2,
+              "falsePositive": "FALSE_POSITIVE"
+            },
+            {
+              "k": 3,
+              "status": "TRIGGERED",
+              "triggerCount": 1,
+              "falsePositive": "FALSE_POSITIVE"
+            },
+            {
+              "k": 5,
+              "status": "TRIGGERED",
+              "triggerCount": 1,
+              "falsePositive": "FALSE_POSITIVE"
+            }
+          ],
+          "tinjau": [
+            {
+              "minDrawdownBps": 150,
+              "status": "NORMAL",
+              "triggerCount": 0,
+              "falsePositive": "TRUE_NEGATIVE"
+            },
+            {
+              "minDrawdownBps": 200,
+              "status": "NORMAL",
+              "triggerCount": 0,
+              "falsePositive": "TRUE_NEGATIVE"
+            },
+            {
+              "minDrawdownBps": 300,
+              "status": "NORMAL",
+              "triggerCount": 0,
+              "falsePositive": "TRUE_NEGATIVE"
+            }
+          ],
+          "whyItIsCredible": "It arrives from the control rather than from the showcase, and the neutral control moved MORE (241 bps) than the material 8-K (235 bps): price data alone cannot separate a material event from a routine one.",
+          "whatItIsNot": "A finding about restraint. It is not a demonstration of protection."
+        },
+        "headlineFindings": [
+          "TINJAU does not promote to PROTECT on any of the four frozen scenarios, at any drawdown threshold in the AMD-001 grid. Its fee stays at the base fee throughout every window, so its economics are identical to STATIC rather than better than it.",
+          "VOLATILITY_ONLY fires on the neutral control (scenario D, a routine Form 4 pre-registered NORMAL) at every k in the grid. That is a false positive at 2, 3 and 5.",
+          "canClaimLossAvoided is FALSE. Tinjau ties STATIC rather than beating it, and 'beats' means strictly greater.",
+          "Under AMD-002's post-hoc consistent basis, VOLATILITY_ONLY beats TINJAU on every economic scenario, because it collects a counterfactual 2% fee on flow that is assumed not to have been deterred. Published in full, per T0.4 §8.5.",
+          "M_0 is not 'structurally >= 0' as T0.4 §4 states: false for 216 of 4,777 swaps, all of them larger than the median trade."
+        ]
+      },
+      "onChain": null,
+      "mustNotSay": [
+        "Do not declare a winner on markout. The bracket spans the sign.",
+        "Do not quote AMD-002's numbers without the label 'post-hoc' and its direction of effect.",
+        "Do not claim Tinjau reduces LP loss. canClaimLossAvoided is false; Tinjau ties STATIC.",
+        "Do not hide that under AMD-002's basis VOLATILITY_ONLY beats TINJAU on every comparable cell."
+      ],
+      "sourceArtifact": "docs/buildx-orion-2026/outputs/05-build/three-policy-benchmark.json",
+      "commands": {
+        "fixtureOnly": {
+          "cmd": "node demo/tinjau-demo.mjs scene3",
+          "needs": "Node 18+",
+          "network": "SEALED — fetch/net/tls/dgram/dns/http/https all throw before scene code runs",
+          "credentials": "none"
+        },
+        "judgeVerifiable": {
+          "cmd": "cd apps/server && npx tsx src/benchmark/emit.ts",
+          "needs": "pnpm install in apps/server",
+          "network": "none — every input is a committed fixture",
+          "credentials": "none",
+          "proves": "Rewrites three-policy-benchmark.json byte-identically. An empty diff after a rerun is the determinism evidence."
+        },
+        "builderRegeneration": null
+      }
+    }
+  ],
+  "claimBoundary": {
+    "forbidden": [
+      "first AI dynamic-fee hook",
+      "first multi-agent corporate-action oracle",
+      "first on-chain risk registry",
+      "first CEX/DEX risk agent",
+      "first self-protecting pool",
+      "production adoption, protected TVL, customers, or revenue",
+      "a live Exchange OS integration",
+      "dual OKX/X Layer confirmation",
+      "Tinjau reduces LP loss"
+    ],
+    "permitted": "No complete public product with the exact reviewed combination of source-grounded tokenized-equity evidence, rumour containment, OKX/X Layer confirmation, bounded LP action, deterministic recovery, and measured three-policy outcome was found."
+  }
+}

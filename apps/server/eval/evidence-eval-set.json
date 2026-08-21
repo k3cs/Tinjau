@@ -1,0 +1,572 @@
+{
+  "_purpose": "Labelled evaluation set for the Evidence Graph and the promotion engine (task T2.4). Every `expected` value is a GOLD LABEL written from tracker §0.7 and §0.8 — the intended behaviour — not a snapshot of what the code currently returns. A case that fails is a finding about the code, never a reason to edit the label.",
+  "_schemaVersion": "tinjau.eval/1.0.0",
+  "_frozenAt": "2026-08-20",
+  "_dimensions": [
+    "EXTRACTION — provenance is preserved and speculation is not recorded as fact",
+    "CLUSTERING — claims about one event group together, hallucinated ones are rejected",
+    "ENTITY_RESOLUTION — company to token to pool, with refusals where a pool is unverified",
+    "INDEPENDENCE — syndications collapse to their origin",
+    "CONTRADICTION — a self-revising source line cannot corroborate itself",
+    "RUMOR_CONTAINMENT — rumour-only evidence never authorises an action",
+    "MATERIALITY — official provenance does not make an event material"
+  ],
+  "_criticalMetric": "unsupportedProtectRate must be 0. Every case whose gold state is NORMAL or WATCH must not return PROTECT. Unlike the other metrics this is not a quality target — a single failure means the safety invariants are broken.",
+
+  "cases": [
+    {
+      "caseId": "official-material-event",
+      "dimension": "EXTRACTION",
+      "description": "A real SEC 8-K disclosing a $105bn contingent obligation, with a fresh confirmed market.",
+      "now": "2026-08-17T12:41:33Z",
+      "officialEvidencePassed": true,
+      "marketConfirmation": { "status": "CONFIRMED", "observedAt": "2026-08-17T12:40:33Z" },
+      "claims": [
+        {
+          "claimId": "official-1",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+          "sourceId": "edgar:0001045810-26-000069",
+          "publisherOrAuthor": "NVIDIA CORPORATION",
+          "publishedAt": "2026-08-17T12:41:33Z",
+          "sourceContentSha256": "1c480e3320f3171e6ac1979a50eecb123d4150637c7b769444d16faf97928133",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "MATERIAL_DEFINITIVE_AGREEMENT",
+          "claimTextOrPointer": "NVIDIA entered into multiple residual value guaranties with SB Energy. NVIDIA's aggregate payment obligation is cumulatively capped at $105 billion.",
+          "materiality": "MATERIAL",
+          "officialConfirmation": true
+        }
+      ],
+      "expected": {
+        "state": "PROTECT",
+        "usableOriginCount": 1,
+        "resolutionOutcome": "RESOLVED",
+        "allClaimsPromotable": true,
+        "assertionLevels": { "official-1": "ASSERTED" }
+      }
+    },
+
+    {
+      "caseId": "official-without-market-confirmation",
+      "dimension": "EXTRACTION",
+      "description": "The same filing, but the market could not be checked. A filing is a reason to look, not a licence to act.",
+      "now": "2026-08-17T12:41:33Z",
+      "officialEvidencePassed": true,
+      "marketConfirmation": { "status": "UNAVAILABLE", "observedAt": "2026-08-17T12:40:33Z" },
+      "claims": [
+        {
+          "claimId": "official-1",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+          "sourceId": "edgar:0001045810-26-000069",
+          "publisherOrAuthor": "NVIDIA CORPORATION",
+          "publishedAt": "2026-08-17T12:41:33Z",
+          "sourceContentSha256": "1c480e3320f3171e6ac1979a50eecb123d4150637c7b769444d16faf97928133",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "MATERIAL_DEFINITIVE_AGREEMENT",
+          "claimTextOrPointer": "NVIDIA entered into multiple residual value guaranties with SB Energy.",
+          "materiality": "MATERIAL",
+          "officialConfirmation": true
+        }
+      ],
+      "expected": {
+        "state": "WATCH",
+        "usableOriginCount": 1,
+        "resolutionOutcome": "RESOLVED",
+        "allClaimsPromotable": true
+      }
+    },
+
+    {
+      "caseId": "rumor-only-with-perfect-market",
+      "dimension": "RUMOR_CONTAINMENT",
+      "description": "A simulated social rumour with a fresh confirmed market and bonded evidence passed. Must still be capped.",
+      "now": "2026-07-27T20:33:00Z",
+      "officialEvidencePassed": true,
+      "marketConfirmation": { "status": "CONFIRMED", "observedAt": "2026-07-27T20:32:00Z" },
+      "claims": [
+        {
+          "claimId": "rumor-1",
+          "sourceClass": "RUMOR",
+          "dataMode": "SIMULATED",
+          "sourceUrl": null,
+          "sourceId": "simulated://tinjau/T0.2/social/nvda-openai-ohio-2026-07-27",
+          "publisherOrAuthor": null,
+          "publishedAt": "2026-07-27T19:11:05Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "hearing NVDA is on the hook for a quarter trillion of OpenAI datacenter debt guarantees. nothing signed, nobody confirming.",
+          "materiality": "MATERIAL"
+        }
+      ],
+      "expected": {
+        "state": "WATCH",
+        "usableOriginCount": 0,
+        "resolutionOutcome": "RESOLVED",
+        "allClaimsPromotable": true,
+        "assertionLevels": { "rumor-1": "REPORTED_UNVERIFIED" }
+      }
+    },
+
+    {
+      "caseId": "single-origin-four-outlets",
+      "dimension": "INDEPENDENCE",
+      "description": "Four outlets carrying one WSJ story. Must derive to one origin and stay at WATCH.",
+      "now": "2026-07-27T20:33:00Z",
+      "officialEvidencePassed": false,
+      "marketConfirmation": { "status": "CONFIRMED", "observedAt": "2026-07-27T20:32:00Z" },
+      "claims": [
+        {
+          "claimId": "wsj",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://example.com/wsj",
+          "sourceId": "wsj/2026-07-26",
+          "publisherOrAuthor": "The Wall Street Journal",
+          "publishedAt": "2026-07-26T12:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "Nvidia is in talks to provide roughly $250 billion in financing guarantees for OpenAI.",
+          "materiality": "MATERIAL"
+        },
+        {
+          "claimId": "reuters",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://example.com/reuters",
+          "sourceId": "reuters/2026-07-27",
+          "publisherOrAuthor": "Reuters",
+          "publishedAt": "2026-07-27T10:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "the Wall Street Journal reported on Sunday, citing people familiar with the matter.",
+          "materiality": "MATERIAL"
+        },
+        {
+          "claimId": "cnbc",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://example.com/cnbc",
+          "sourceId": "cnbc/2026-07-27",
+          "publisherOrAuthor": "CNBC, reporting a Wall Street Journal story",
+          "publishedAt": "2026-07-27T11:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "Nvidia and OpenAI in talks for up to $250 billion backstop.",
+          "materiality": "MATERIAL"
+        },
+        {
+          "claimId": "tnw",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://example.com/tnw",
+          "sourceId": "thenextweb.com/2026-07-27",
+          "publisherOrAuthor": "The Next Web",
+          "publishedAt": "2026-07-27T20:33:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "the Wall Street Journal reported on Sunday that Nvidia is in talks.",
+          "materiality": "MATERIAL"
+        }
+      ],
+      "expected": {
+        "state": "WATCH",
+        "usableOriginCount": 1,
+        "resolutionOutcome": "RESOLVED",
+        "allClaimsPromotable": true
+      }
+    },
+
+    {
+      "caseId": "two-independent-origins",
+      "dimension": "INDEPENDENCE",
+      "description": "Two genuinely independent outlets with a confirmed market. This is the one non-official case that may promote.",
+      "now": "2026-08-15T19:38:26Z",
+      "officialEvidencePassed": false,
+      "marketConfirmation": { "status": "CONFIRMED", "observedAt": "2026-08-15T19:37:26Z" },
+      "claims": [
+        {
+          "claimId": "wsj",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://example.com/wsj",
+          "sourceId": "wsj/2026-08-14",
+          "publisherOrAuthor": "The Wall Street Journal",
+          "publishedAt": "2026-08-14T12:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "Nvidia will initially guarantee less than $120 billion.",
+          "materiality": "MATERIAL"
+        },
+        {
+          "claimId": "ti",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://example.com/ti",
+          "sourceId": "theinformation.com/2026-08-15",
+          "publisherOrAuthor": "The Information",
+          "publishedAt": "2026-08-15T12:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "Nvidia will take a stake in SB Energy as part of the Ohio deal.",
+          "materiality": "MATERIAL"
+        }
+      ],
+      "expected": {
+        "state": "PROTECT",
+        "usableOriginCount": 2,
+        "resolutionOutcome": "RESOLVED",
+        "allClaimsPromotable": true
+      }
+    },
+
+    {
+      "caseId": "self-revising-source-line",
+      "dimension": "CONTRADICTION",
+      "description": "Two origins on their face, but one has revised its own figure. Only one origin can corroborate.",
+      "now": "2026-08-15T19:38:26Z",
+      "officialEvidencePassed": false,
+      "marketConfirmation": { "status": "CONFIRMED", "observedAt": "2026-08-15T19:37:26Z" },
+      "claims": [
+        {
+          "claimId": "wsj-old",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://example.com/wsj1",
+          "sourceId": "wsj/2026-08-13",
+          "publisherOrAuthor": "The Wall Street Journal",
+          "publishedAt": "2026-08-13T12:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "Nvidia will guarantee roughly $250 billion.",
+          "materiality": "MATERIAL"
+        },
+        {
+          "claimId": "wsj-new",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://example.com/wsj2",
+          "sourceId": "wsj/2026-08-14",
+          "publisherOrAuthor": "The Wall Street Journal",
+          "publishedAt": "2026-08-14T12:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "Nvidia will now guarantee less than $120 billion.",
+          "materiality": "MATERIAL"
+        },
+        {
+          "claimId": "ti",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://example.com/ti",
+          "sourceId": "theinformation.com/2026-08-15",
+          "publisherOrAuthor": "The Information",
+          "publishedAt": "2026-08-15T12:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "Nvidia will take a stake in SB Energy.",
+          "materiality": "MATERIAL"
+        }
+      ],
+      "expected": {
+        "state": "WATCH",
+        "usableOriginCount": 1,
+        "resolutionOutcome": "RESOLVED",
+        "allClaimsPromotable": true,
+        "revisedOriginKeys": ["wsj"]
+      }
+    },
+
+    {
+      "caseId": "unnamed-relay-headline",
+      "dimension": "INDEPENDENCE",
+      "description": "A headline ending '- report' disclaims being the origin without naming one. It cannot count as an independent source.",
+      "now": "2026-07-27T20:33:00Z",
+      "officialEvidencePassed": false,
+      "marketConfirmation": { "status": "CONFIRMED", "observedAt": "2026-07-27T20:32:00Z" },
+      "claims": [
+        {
+          "claimId": "dcd",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://example.com/dcd",
+          "sourceId": "datacenterdynamics.com/2026-07-27",
+          "publisherOrAuthor": "DataCenterDynamics",
+          "publishedAt": "2026-07-27T12:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "Nvidia considers $250bn backstop for OpenAI's planned 10GW Ohio data center - report",
+          "materiality": "MATERIAL"
+        },
+        {
+          "claimId": "ti",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://example.com/ti",
+          "sourceId": "theinformation.com/2026-07-27",
+          "publisherOrAuthor": "The Information",
+          "publishedAt": "2026-07-27T13:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "Nvidia will support the Ohio project.",
+          "materiality": "MATERIAL"
+        }
+      ],
+      "expected": {
+        "state": "WATCH",
+        "usableOriginCount": 1,
+        "resolutionOutcome": "RESOLVED",
+        "allClaimsPromotable": true
+      }
+    },
+
+    {
+      "caseId": "neutral-routine-form4",
+      "dimension": "MATERIALITY",
+      "description": "A routine Section 16 Form 4. Official provenance, no corporate action. Must not even reach WATCH.",
+      "now": "2026-08-12T21:13:10Z",
+      "officialEvidencePassed": true,
+      "marketConfirmation": { "status": "CONFIRMED", "observedAt": "2026-08-12T21:12:10Z" },
+      "claims": [
+        {
+          "claimId": "form4",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000131026426000008/wk-form4_1786569187.xml",
+          "sourceId": "edgar:0001310264-26-000008",
+          "publisherOrAuthor": "Reporting person under Section 16",
+          "publishedAt": "2026-08-12T21:13:10Z",
+          "sourceContentSha256": "d7ac69f01fba9daa4b686223afad6dbec0b89baa48e2c74ff1b9cc4694539526",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "INSIDER_TRANSACTION_ROUTINE",
+          "claimTextOrPointer": "Statement of changes in beneficial ownership.",
+          "materiality": "NON_MATERIAL",
+          "officialConfirmation": true
+        }
+      ],
+      "expected": {
+        "state": "NORMAL",
+        "usableOriginCount": 1,
+        "resolutionOutcome": "RESOLVED",
+        "allClaimsPromotable": true
+      }
+    },
+
+    {
+      "caseId": "unclassified-materiality",
+      "dimension": "MATERIALITY",
+      "description": "Nobody classified the event's materiality. It must fail closed rather than inherit its source's trust.",
+      "now": "2026-08-17T12:41:33Z",
+      "officialEvidencePassed": true,
+      "marketConfirmation": { "status": "CONFIRMED", "observedAt": "2026-08-17T12:40:33Z" },
+      "claims": [
+        {
+          "claimId": "unclassified",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+          "sourceId": "edgar:0001045810-26-000069",
+          "publisherOrAuthor": "NVIDIA CORPORATION",
+          "publishedAt": "2026-08-17T12:41:33Z",
+          "sourceContentSha256": "1c480e3320f3171e6ac1979a50eecb123d4150637c7b769444d16faf97928133",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "UNKNOWN",
+          "claimTextOrPointer": "The company filed a current report.",
+          "officialConfirmation": true
+        }
+      ],
+      "expected": {
+        "state": "NORMAL",
+        "usableOriginCount": 1,
+        "resolutionOutcome": "RESOLVED",
+        "allClaimsPromotable": true
+      }
+    },
+
+    {
+      "caseId": "unsupported-token-nvdax",
+      "dimension": "ENTITY_RESOLUTION",
+      "description": "A material claim about NVDAx, the unwrapped sibling with no verified pool. Must refuse rather than act on the wrong pool.",
+      "now": "2026-08-17T12:41:33Z",
+      "officialEvidencePassed": true,
+      "marketConfirmation": { "status": "CONFIRMED", "observedAt": "2026-08-17T12:40:33Z" },
+      "claims": [
+        {
+          "claimId": "unwrapped",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+          "sourceId": "edgar:0001045810-26-000069",
+          "publisherOrAuthor": "NVIDIA CORPORATION",
+          "publishedAt": "2026-08-17T12:41:33Z",
+          "sourceContentSha256": "1c480e3320f3171e6ac1979a50eecb123d4150637c7b769444d16faf97928133",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "NVDAx",
+          "tokenAddress": "0xc845b2894dbddd03858fd2d643b4ef725fe0849d",
+          "eventType": "MATERIAL_DEFINITIVE_AGREEMENT",
+          "claimTextOrPointer": "NVIDIA entered into multiple residual value guaranties with SB Energy.",
+          "materiality": "MATERIAL",
+          "officialConfirmation": true
+        }
+      ],
+      "expected": {
+        "state": "WATCH",
+        "usableOriginCount": 1,
+        "resolutionOutcome": "UNSUPPORTED_ASSET",
+        "allClaimsPromotable": true
+      }
+    },
+
+    {
+      "caseId": "unknown-company",
+      "dimension": "ENTITY_RESOLUTION",
+      "description": "A material claim about a company with no registered asset.",
+      "now": "2026-08-17T12:41:33Z",
+      "officialEvidencePassed": true,
+      "marketConfirmation": { "status": "CONFIRMED", "observedAt": "2026-08-17T12:40:33Z" },
+      "claims": [
+        {
+          "claimId": "acme",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/9999999/acme.htm",
+          "sourceId": "edgar:acme",
+          "publisherOrAuthor": "ACME CORP",
+          "publishedAt": "2026-08-17T12:41:33Z",
+          "sourceContentSha256": "aaaa000000000000000000000000000000000000000000000000000000000000",
+          "company": "ACME CORP",
+          "tokenSymbol": "ACMEx",
+          "eventType": "MATERIAL_DEFINITIVE_AGREEMENT",
+          "claimTextOrPointer": "ACME entered into a material agreement.",
+          "materiality": "MATERIAL",
+          "officialConfirmation": true
+        }
+      ],
+      "expected": {
+        "state": "WATCH",
+        "usableOriginCount": 1,
+        "resolutionOutcome": "UNKNOWN_COMPANY",
+        "allClaimsPromotable": true
+      }
+    },
+
+    {
+      "caseId": "missing-provenance",
+      "dimension": "EXTRACTION",
+      "description": "A claim with no publisher and no URL. It must be recorded but never promotable.",
+      "now": "2026-08-17T12:41:33Z",
+      "officialEvidencePassed": false,
+      "marketConfirmation": { "status": "CONFIRMED", "observedAt": "2026-08-17T12:40:33Z" },
+      "claims": [
+        {
+          "claimId": "anonymous",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": null,
+          "sourceId": "unknown/1",
+          "publisherOrAuthor": null,
+          "publishedAt": "2026-08-17T10:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "MATERIAL_DEFINITIVE_AGREEMENT",
+          "claimTextOrPointer": "NVIDIA signed a major deal.",
+          "materiality": "MATERIAL"
+        }
+      ],
+      "expected": {
+        "state": "WATCH",
+        "usableOriginCount": 1,
+        "resolutionOutcome": "RESOLVED",
+        "allClaimsPromotable": false,
+        "expectedViolations": {
+          "anonymous": ["MISSING_URL_FOR_NON_SIMULATED", "MISSING_PUBLISHER_FOR_NON_SIMULATED"]
+        }
+      }
+    },
+
+    {
+      "caseId": "simulated-claim-with-real-looking-url",
+      "dimension": "EXTRACTION",
+      "description": "Fabricated content wearing a checkable-looking address. The most dangerous shape in the system.",
+      "now": "2026-07-27T20:33:00Z",
+      "officialEvidencePassed": false,
+      "marketConfirmation": { "status": "CONFIRMED", "observedAt": "2026-07-27T20:32:00Z" },
+      "claims": [
+        {
+          "claimId": "disguised",
+          "sourceClass": "RUMOR",
+          "dataMode": "SIMULATED",
+          "sourceUrl": "https://x.com/someone/status/123",
+          "sourceId": "simulated://tinjau/T0.2/social/x",
+          "publisherOrAuthor": null,
+          "publishedAt": "2026-07-27T19:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "NVDA is guaranteeing a quarter trillion.",
+          "materiality": "MATERIAL"
+        }
+      ],
+      "expected": {
+        "state": "WATCH",
+        "usableOriginCount": 0,
+        "resolutionOutcome": "RESOLVED",
+        "allClaimsPromotable": false,
+        "expectedViolations": { "disguised": ["RESOLVABLE_URL_ON_SIMULATED_CLAIM"] }
+      }
+    },
+
+    {
+      "caseId": "stale-evidence-only",
+      "dimension": "EXTRACTION",
+      "description": "Every claim is older than the evidence window. Nothing live remains.",
+      "now": "2026-08-17T12:41:33Z",
+      "officialEvidencePassed": true,
+      "marketConfirmation": { "status": "CONFIRMED", "observedAt": "2026-08-17T12:40:33Z" },
+      "claims": [
+        {
+          "claimId": "ancient",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://example.com/old",
+          "sourceId": "example.com/2026-07-01",
+          "publisherOrAuthor": "The Information",
+          "publishedAt": "2026-07-01T00:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "eventType": "MATERIAL_DEFINITIVE_AGREEMENT",
+          "claimTextOrPointer": "NVIDIA signed a deal.",
+          "materiality": "MATERIAL"
+        }
+      ],
+      "expected": {
+        "state": "NORMAL",
+        "usableOriginCount": 0,
+        "resolutionOutcome": "RESOLVED",
+        "allClaimsPromotable": true
+      }
+    }
+  ]
+}

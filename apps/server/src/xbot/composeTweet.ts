@@ -156,7 +156,10 @@ export function composeTweetText(input: ComposeTweetEventInput, archived: Archiv
     summaryText = truncateToFit(archived.summary, budgetForSummary);
   } else if (!archived) {
     // Deterministic fallback template — never blocks on a missing/empty archive.
-    const fallback = `Event #${input.eventId} recorded on AFTERHOURS.`;
+    // Public-facing product name (T0.5). The historical AFTERHOURS name stays in deployed
+    // contract names, systemd units and on-chain source schemes, but never in new copy a
+    // reader sees.
+    const fallback = `Event #${input.eventId} recorded on Tinjau.`;
     if (budgetForSummary > 10) summaryText = truncateToFit(fallback, budgetForSummary);
   }
 

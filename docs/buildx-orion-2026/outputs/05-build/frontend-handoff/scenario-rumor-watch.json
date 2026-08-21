@@ -1,0 +1,621 @@
+{
+  "schemaVersion": "tinjau.scenario-result/1.0.0",
+  "scenarioId": "A-rumor-watch",
+  "role": "RUMOUR_NEGATIVE_CONTROL",
+  "title": "Rumour containment — a single origin behind four outlets cannot authorise a fee change",
+  "producedBy": {
+    "tasks": [
+      "T0.2",
+      "T2.1",
+      "T2.3",
+      "T3.3",
+      "T4.1",
+      "T4.4"
+    ],
+    "generator": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/tools/generate.ts",
+    "modules": [
+      "apps/server/src/evidence/normalize.ts",
+      "apps/server/src/evidence/graph.ts",
+      "apps/server/src/evidence/assets.ts",
+      "apps/server/src/market/confirm.ts",
+      "apps/server/src/risk/promote.ts",
+      "apps/server/src/decision/orchestrate.ts"
+    ]
+  },
+  "provenance": {
+    "evidence": "REPLAYED_SOURCE_LINKED",
+    "marketLeg": "REPLAYED",
+    "marketVenue": "X_LAYER_MAINNET_CHAIN_196_THIRD_PARTY_POOL",
+    "outcomeOrigin": "CANONICAL_REPLAY",
+    "preRegistered": true,
+    "preRegisteredOutcome": "WATCH",
+    "matchesPreRegistration": true
+  },
+  "window": {
+    "chainId": 196,
+    "pool": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+    "fromBlock": 66411744,
+    "toBlock": 66436944,
+    "fromIso": "2026-07-27T19:33:00Z",
+    "toIso": "2026-07-28T02:33:00Z",
+    "swapCount": 0,
+    "rpcRangeErrors": 0
+  },
+  "record": {
+    "schemaVersion": "tinjau.risk/1.0.0",
+    "assessmentId": "0xf1b07b4688927432fab6c0f07495b8c4ac1ae839a85cf294936931150b99a2f7",
+    "assetAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+    "tokenSymbol": "wNVDAx",
+    "poolIdOrAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+    "state": "WATCH",
+    "reasonCodes": [
+      "DUPLICATE_SYNDICATION",
+      "INSUFFICIENT_SAMPLE",
+      "MARKET_DATA_UNAVAILABLE",
+      "NO_OFFICIAL_CONFIRMATION",
+      "REFERENCE_MARKET_CLOSED",
+      "SINGLE_SOURCE"
+    ],
+    "humanExplanation": "Only one independent origin reported this. Additional outlets carrying the same story are syndications of that origin, not corroboration. Market leg: UNAVAILABLE. Only 0 swap(s) in the window, below the 30 required to form a verdict. A drawdown built from this few trades is an artifact of which trades happened to land, not a property of the market. The OKX reference leg was unavailable, so no artifact may describe this as dual-leg OKX/X Layer confirmation. No bounded action is authorised in state WATCH: the aggressive fee path stays closed and the pool keeps its baseline fee.",
+    "evidenceCommitment": "0x2db9d614a4ab7e1ff3f4276d76e361008a0e905a67065bafe46dc2bb450180e5",
+    "confidenceBand": "LOW",
+    "assessedAt": "2026-07-28T02:33:00.000Z",
+    "expiresAt": "2026-07-29T02:33:00.000Z",
+    "policyVersion": "tinjau.policy/1.0.0",
+    "dataMode": "SIMULATED",
+    "evidence": [
+      {
+        "claimId": "claim-a-001",
+        "sourceClass": "RUMOR",
+        "dataMode": "SIMULATED",
+        "sourceUrl": null,
+        "sourceId": "simulated://tinjau/T0.2/social/nvda-openai-ohio-2026-07-27",
+        "publisherOrAuthor": null,
+        "publishedAt": "2026-07-27T19:11:05Z",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "sources/simulated-rumor-2026-07-27-social.json#claimText",
+        "independenceGroup": "simulated:social/nvda-openai-ohio-2026-07-27",
+        "relation": "ORIGIN",
+        "officialConfirmation": false,
+        "expiresAt": "2026-07-28T19:11:05Z"
+      },
+      {
+        "claimId": "claim-a-002",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://www.cnbc.com/2026/07/27/nvidia-and-openai-in-talks-for-up-to-250-billion-dollar-ai-backstop.html",
+        "sourceId": "cnbc.com/2026-07-27/nvidia-openai-250bn-backstop",
+        "publisherOrAuthor": "CNBC, reporting a Wall Street Journal story",
+        "publishedAt": "2026-07-27T00:00:00Z",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "Headline (verbatim): \"Nvidia and OpenAI in talks for up to $250 billion backstop to fund AI infrastructure plans\"",
+        "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "relation": "DUPLICATE",
+        "officialConfirmation": false,
+        "expiresAt": "2026-07-30T00:00:00Z"
+      },
+      {
+        "claimId": "claim-a-003",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://thenextweb.com/news/nvidia-openai-250-billion-backstop-ohio-data-centre",
+        "sourceId": "thenextweb.com/2026-07-27T20:33:00Z/nvidia-openai-250-billion-backstop",
+        "publisherOrAuthor": "The Next Web — Ana Maria Constantin",
+        "publishedAt": "2026-07-27T20:33:00Z",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "Attribution (verbatim): \"Nvidia is in talks to provide roughly $250 billion in financing guarantees for OpenAI, the Wall Street Journal reported on Sunday, citing people familiar with the matter.\" Non-verification (verbatim): \"Reuters said it could not immediately verify the report, and Nvidia, OpenAI, and the US Commerce Department did not respond to requests for comment.\"",
+        "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "relation": "DUPLICATE",
+        "officialConfirmation": false,
+        "expiresAt": "2026-07-30T20:33:00Z"
+      },
+      {
+        "claimId": "claim-a-004",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": null,
+        "sourceId": "wsj/2026-07-26/nvidia-openai-financing-guarantees",
+        "publisherOrAuthor": "The Wall Street Journal",
+        "publishedAt": "2026-07-26T00:00:00Z",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "As reported by its syndications: Nvidia is in talks to provide roughly $250 billion in financing guarantees for OpenAI, citing people familiar with the matter.",
+        "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "relation": "ORIGIN",
+        "officialConfirmation": false,
+        "expiresAt": "2026-07-29T00:00:00Z"
+      },
+      {
+        "claimId": "claim-a-005",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://www.datacenterdynamics.com/en/news/nvidia-considers-250bn-backstop-for-openais-planned-10gw-ohio-data-center-report/",
+        "sourceId": "datacenterdynamics.com/2026-07/nvidia-considers-250bn-backstop",
+        "publisherOrAuthor": "DataCenterDynamics",
+        "publishedAt": "2026-07-27T00:00:00Z",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "Headline (verbatim): \"Nvidia considers $250bn backstop for OpenAI's planned 10GW Ohio data center - report\"",
+        "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "relation": "DUPLICATE",
+        "officialConfirmation": false,
+        "expiresAt": "2026-07-30T00:00:00Z"
+      }
+    ],
+    "marketConfirmation": {
+      "status": "UNAVAILABLE",
+      "observedAt": null,
+      "blockNumber": null,
+      "fresh": false,
+      "antiWickSatisfied": false,
+      "okxReferencePrice": null,
+      "xLayerPoolPrice": null,
+      "basisBps": null,
+      "drawdownBps": null,
+      "tradeVelocity": null,
+      "executableExitDepth": null,
+      "reasonCodes": [
+        "INSUFFICIENT_SAMPLE",
+        "MARKET_DATA_UNAVAILABLE",
+        "REFERENCE_MARKET_CLOSED"
+      ]
+    },
+    "action": {
+      "authorized": false,
+      "status": "NONE",
+      "baseFee": "500",
+      "maxFee": "20000",
+      "requestedFee": null,
+      "appliedFee": null,
+      "maximumDurationSec": 21600,
+      "txHash": null,
+      "failureReason": null
+    }
+  },
+  "evidenceGraph": {
+    "schemaVersion": "tinjau.evidence-graph/1.0.0",
+    "eventKey": "tinjau.scenario/A-rumor-watch",
+    "label": "Reported NVIDIA/OpenAI investment talks (single origin, four outlets)",
+    "assessedAt": "2026-07-28T02:33:00.000Z",
+    "evidenceWindowSeconds": 259200,
+    "resolution": {
+      "outcome": "RESOLVED",
+      "asset": {
+        "company": "NVIDIA CORPORATION",
+        "cik": "0001045810",
+        "ticker": "NVDA",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "tokenName": "Wrapped NVIDIA xStock",
+        "decimals": 18,
+        "chainId": 196,
+        "poolAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+        "quoteSymbol": "USDG",
+        "hasIndexFeed": true,
+        "supported": true,
+        "supportNote": "The token in the USDG reference pool and the one the OKX index poller samples. This is the only NVDA-linked asset on X Layer with both an observable market and a reference price."
+      },
+      "candidates": [
+        {
+          "company": "NVIDIA CORPORATION",
+          "cik": "0001045810",
+          "ticker": "NVDA",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "tokenName": "Wrapped NVIDIA xStock",
+          "decimals": 18,
+          "chainId": 196,
+          "poolAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+          "quoteSymbol": "USDG",
+          "hasIndexFeed": true,
+          "supported": true,
+          "supportNote": "The token in the USDG reference pool and the one the OKX index poller samples. This is the only NVDA-linked asset on X Layer with both an observable market and a reference price."
+        }
+      ],
+      "explanation": "NVIDIA CORPORATION resolves to wNVDAx (0xa8ddb5cd96b5222afe198316e9a57caa642850d5) in pool 0x2a2b11730c2b6d99a58034a869dd810d7300a7b2.",
+      "mayAuthorizeAction": true
+    },
+    "claims": [
+      {
+        "claimId": "claim-a-001",
+        "sourceClass": "RUMOR",
+        "dataMode": "SIMULATED",
+        "sourceUrl": null,
+        "sourceId": "simulated://tinjau/T0.2/social/nvda-openai-ohio-2026-07-27",
+        "publisherOrAuthor": null,
+        "publishedAt": "2026-07-27T19:11:05Z",
+        "publishedAtPrecision": "DAY",
+        "sourceContentSha256": null,
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "sources/simulated-rumor-2026-07-27-social.json#claimText",
+        "assertionLevel": "ASSERTED",
+        "describesCompletedEvent": true,
+        "speculationMarkers": [],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "simulated:social/nvda-openai-ohio-2026-07-27",
+        "relation": "ORIGIN",
+        "officialConfirmation": false,
+        "expiresAt": "2026-07-28T19:11:05Z",
+        "materiality": "MATERIAL",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      {
+        "claimId": "claim-a-002",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://www.cnbc.com/2026/07/27/nvidia-and-openai-in-talks-for-up-to-250-billion-dollar-ai-backstop.html",
+        "sourceId": "cnbc.com/2026-07-27/nvidia-openai-250bn-backstop",
+        "publisherOrAuthor": "CNBC, reporting a Wall Street Journal story",
+        "publishedAt": "2026-07-27T00:00:00Z",
+        "publishedAtPrecision": "DAY",
+        "sourceContentSha256": null,
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "Headline (verbatim): \"Nvidia and OpenAI in talks for up to $250 billion backstop to fund AI infrastructure plans\"",
+        "assertionLevel": "SPECULATIVE",
+        "describesCompletedEvent": false,
+        "speculationMarkers": [
+          "in talks"
+        ],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "relation": "DUPLICATE",
+        "officialConfirmation": false,
+        "expiresAt": "2026-07-30T00:00:00Z",
+        "materiality": "MATERIAL",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      {
+        "claimId": "claim-a-003",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://thenextweb.com/news/nvidia-openai-250-billion-backstop-ohio-data-centre",
+        "sourceId": "thenextweb.com/2026-07-27T20:33:00Z/nvidia-openai-250-billion-backstop",
+        "publisherOrAuthor": "The Next Web — Ana Maria Constantin",
+        "publishedAt": "2026-07-27T20:33:00Z",
+        "publishedAtPrecision": "MINUTE",
+        "sourceContentSha256": null,
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "Attribution (verbatim): \"Nvidia is in talks to provide roughly $250 billion in financing guarantees for OpenAI, the Wall Street Journal reported on Sunday, citing people familiar with the matter.\" Non-verification (verbatim): \"Reuters said it could not immediately verify the report, and Nvidia, OpenAI, and the US Commerce Department did not respond to requests for comment.\"",
+        "assertionLevel": "REPORTED_UNVERIFIED",
+        "describesCompletedEvent": false,
+        "speculationMarkers": [
+          "people familiar",
+          "citing people",
+          "could not immediately verify",
+          "did not respond to requests for comment",
+          "in talks",
+          "could "
+        ],
+        "publisherDisclaimedVerification": true,
+        "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "relation": "DUPLICATE",
+        "officialConfirmation": false,
+        "expiresAt": "2026-07-30T20:33:00Z",
+        "materiality": "MATERIAL",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      {
+        "claimId": "claim-a-004",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": null,
+        "sourceId": "wsj/2026-07-26/nvidia-openai-financing-guarantees",
+        "publisherOrAuthor": "The Wall Street Journal",
+        "publishedAt": "2026-07-26T00:00:00Z",
+        "publishedAtPrecision": "DAY",
+        "sourceContentSha256": null,
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "As reported by its syndications: Nvidia is in talks to provide roughly $250 billion in financing guarantees for OpenAI, citing people familiar with the matter.",
+        "assertionLevel": "REPORTED_UNVERIFIED",
+        "describesCompletedEvent": false,
+        "speculationMarkers": [
+          "people familiar",
+          "citing people",
+          "in talks"
+        ],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "relation": "ORIGIN",
+        "officialConfirmation": false,
+        "expiresAt": "2026-07-29T00:00:00Z",
+        "materiality": "MATERIAL",
+        "provenanceViolations": [
+          "MISSING_URL_FOR_NON_SIMULATED"
+        ],
+        "promotable": false
+      },
+      {
+        "claimId": "claim-a-005",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://www.datacenterdynamics.com/en/news/nvidia-considers-250bn-backstop-for-openais-planned-10gw-ohio-data-center-report/",
+        "sourceId": "datacenterdynamics.com/2026-07/nvidia-considers-250bn-backstop",
+        "publisherOrAuthor": "DataCenterDynamics",
+        "publishedAt": "2026-07-27T00:00:00Z",
+        "publishedAtPrecision": "DAY",
+        "sourceContentSha256": null,
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "Headline (verbatim): \"Nvidia considers $250bn backstop for OpenAI's planned 10GW Ohio data center - report\"",
+        "assertionLevel": "ASSERTED",
+        "describesCompletedEvent": true,
+        "speculationMarkers": [],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "relation": "DUPLICATE",
+        "officialConfirmation": false,
+        "expiresAt": "2026-07-30T00:00:00Z",
+        "materiality": "MATERIAL",
+        "provenanceViolations": [],
+        "promotable": true
+      }
+    ],
+    "independence": [
+      {
+        "claimId": "claim-a-001",
+        "derivedOriginKey": "unrecognised:simulated:",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "simulated:social/nvda-openai-ohio-2026-07-27",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "claim-a-002",
+        "derivedOriginKey": "wsj",
+        "isSyndication": true,
+        "attributedTo": "wsj",
+        "evidence": "reporting a Wall Street Journal story",
+        "relaysUnnamedReport": false,
+        "declaredGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "claim-a-003",
+        "derivedOriginKey": "wsj",
+        "isSyndication": true,
+        "attributedTo": "wsj",
+        "evidence": "the Wall Street Journal reported",
+        "relaysUnnamedReport": false,
+        "declaredGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "claim-a-004",
+        "derivedOriginKey": "wsj",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "claim-a-005",
+        "derivedOriginKey": "unrecognised:datacenterdynamics.com",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": " planned 10GW Ohio data center - report\"",
+        "relaysUnnamedReport": true,
+        "declaredGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "disagreesWithDeclared": false
+      }
+    ],
+    "selfRevision": [
+      {
+        "originKey": "wsj",
+        "revised": false,
+        "amounts": [
+          {
+            "claimId": "claim-a-002",
+            "amount": {
+              "value": 250000000000,
+              "text": "$250 billion"
+            }
+          },
+          {
+            "claimId": "claim-a-003",
+            "amount": {
+              "value": 250000000000,
+              "text": "$250 billion"
+            }
+          },
+          {
+            "claimId": "claim-a-004",
+            "amount": {
+              "value": 250000000000,
+              "text": "$250 billion"
+            }
+          }
+        ],
+        "explanation": "Source line \"wsj\" stated a consistent figure."
+      },
+      {
+        "originKey": "unrecognised:datacenterdynamics.com",
+        "revised": false,
+        "amounts": [
+          {
+            "claimId": "claim-a-005",
+            "amount": {
+              "value": 250,
+              "text": "$250"
+            }
+          }
+        ],
+        "explanation": "Source line \"unrecognised:datacenterdynamics.com\" stated a consistent figure."
+      }
+    ],
+    "recency": [
+      {
+        "claimId": "claim-a-001",
+        "ageSeconds": 26515,
+        "withinWindow": true,
+        "fromFuture": false
+      },
+      {
+        "claimId": "claim-a-002",
+        "ageSeconds": 95580,
+        "withinWindow": true,
+        "fromFuture": false
+      },
+      {
+        "claimId": "claim-a-003",
+        "ageSeconds": 21600,
+        "withinWindow": true,
+        "fromFuture": false
+      },
+      {
+        "claimId": "claim-a-004",
+        "ageSeconds": 181980,
+        "withinWindow": true,
+        "fromFuture": false
+      },
+      {
+        "claimId": "claim-a-005",
+        "ageSeconds": 95580,
+        "withinWindow": true,
+        "fromFuture": false
+      }
+    ],
+    "independentOriginCount": 1,
+    "usableOriginCount": 1,
+    "revisedOriginKeys": [],
+    "confidenceFactors": [
+      {
+        "code": "SYNDICATION_DETECTED",
+        "direction": "LOWERS",
+        "explanation": "2 claim(s) attribute their reporting to another outlet, so they were collapsed into that origin rather than counted separately.",
+        "claimIds": [
+          "claim-a-002",
+          "claim-a-003"
+        ]
+      },
+      {
+        "code": "SINGLE_ORIGIN",
+        "direction": "LOWERS",
+        "explanation": "Only 1 independent origin(s) can corroborate this event, below the two required for non-official promotion.",
+        "claimIds": [
+          "claim-a-001",
+          "claim-a-002",
+          "claim-a-003",
+          "claim-a-004",
+          "claim-a-005"
+        ]
+      },
+      {
+        "code": "UNVERIFIED_ATTRIBUTION",
+        "direction": "LOWERS",
+        "explanation": "2 claim(s) rest on unnamed sources or were explicitly not verified by the publisher.",
+        "claimIds": [
+          "claim-a-003",
+          "claim-a-004"
+        ]
+      }
+    ],
+    "rejectedProposals": []
+  },
+  "ruleVersions": {
+    "schema": "tinjau.risk/1.0.0",
+    "policy": "tinjau.policy/1.0.0",
+    "confirmation": "tinjau.confirm/2.0.0",
+    "evidenceCommitment": "tinjau.evidence-commitment/1.0.0",
+    "assessmentId": "tinjau.assessment-id/1.0.0"
+  },
+  "derived": {
+    "postable": true,
+    "policyTargetFee": 7000,
+    "effectiveConfirmation": "UNAVAILABLE",
+    "independentOriginCount": 1,
+    "usableOriginCount": 1
+  },
+  "onChain": {
+    "status": "POSTED_ON_X_LAYER_TESTNET",
+    "addressStatus": "T4.2 working addresses — not final; T7.2 owns the authoritative list",
+    "chainId": 1952,
+    "networkLabel": "x-layer-testnet-production-envelope",
+    "registry": "0x60062389a7AB08F0030FC06Adf9CE0C180537317",
+    "hook": "0x1092C9fe2dB084F26aa415A0fda14B001A786080",
+    "poolId": "0x5e9eff19074225e9132eb73dc25cf0e3ff55c3fb31c9b28ab633851d2b54f730",
+    "assetRemap": {
+      "canonicalAsset": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "deployedStandIn": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
+      "chainId": 1952,
+      "note": "The decision resolved the canonical asset on X Layer mainnet (chain 196). This chain carries a freely-mintable mock standing in for it in a BUILDER-CONTROLLED pool. Only the `asset` field was remapped; the decision itself is unmodified."
+    },
+    "steps": [
+      {
+        "step": "decide",
+        "atUnixSeconds": 1787284750,
+        "txHash": null,
+        "note": "Shifted the frozen scenario forward by 2078770s so its evidence is current relative to chain time."
+      },
+      {
+        "step": "postAssessment",
+        "atUnixSeconds": 1787284755,
+        "txHash": "0x025ca92d8d477af734d3e7ce0e7465bf3afc0b1d511acf4fc184c5add1178671",
+        "note": "Relayed by the poster; authorised only by the assessor's EIP-712 signature."
+      },
+      {
+        "step": "readback",
+        "atUnixSeconds": 1787284756,
+        "txHash": null,
+        "note": "Read from the registry and the hook directly; no dashboard involved."
+      },
+      {
+        "step": "swap",
+        "atUnixSeconds": 1787284763,
+        "txHash": "0xb801240c05b3477f6e2505ba51ee9b14e71fbc5527fbc6b0b15e142a8409cf4e",
+        "note": "Fee read from PoolManager's own Swap event — what the pool charged, not what the hook said."
+      }
+    ],
+    "chargedFees": [
+      {
+        "txHash": "0xb801240c05b3477f6e2505ba51ee9b14e71fbc5527fbc6b0b15e142a8409cf4e",
+        "blockNumber": 38825930,
+        "appliedFee": 500,
+        "previewedFee": 500,
+        "source": "PoolManager Swap event"
+      }
+    ],
+    "passed": true
+  },
+  "limitations": [
+    "The rumour claim is SIMULATED — fabricated by this project as a safety test. It carries sourceUrl: null and a simulated:// identifier. It supports no claim about live social monitoring, discovery, coverage, or latency.",
+    "Record-level dataMode is SIMULATED because the least-live claim in the set decides it. Four of the five claims are genuinely replayed and source-linked; evidence[].dataMode carries each claim's own mode.",
+    "The replay window contains ZERO swaps (measured, 0 RPC range errors), so the market leg is UNAVAILABLE and marketConfirmation.observedAt is null. Null means nothing was observed — it is not a missing value.",
+    "The OKX leg is UNAVAILABLE: no committed OKX index data covers this anchor. No 'dual OKX/X Layer confirmation' may be claimed for this scenario.",
+    "Two claims are paywalled WSJ originals with no retrievable URL. They are shown, not hidden — they are part of why the state is WATCH.",
+    "The on-chain steps ran against a BUILDER-CONTROLLED testnet pool with mock tokens, and every evidence timestamp was shifted forward so the assessment was current relative to chain time. State and reason codes were verified identical to the unshifted canonical run."
+  ]
+}

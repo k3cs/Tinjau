@@ -23,7 +23,7 @@ export function getEdgarUserAgent(): string {
   if (!ua || ua.trim().length === 0) {
     throw new Error(
       "EDGAR_USER_AGENT not set — SEC requires a descriptive User-Agent header on every " +
-        "request (e.g. \"AFTERHOURS research@example.com\"). Set EDGAR_USER_AGENT in your " +
+        "request (e.g. \"Tinjau research@example.com\"). Set EDGAR_USER_AGENT in your " +
         "environment before polling EDGAR. See docs/buildx-orion-2026/SERVICES.md SVC-001.",
     );
   }

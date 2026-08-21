@@ -1,0 +1,188 @@
+{
+  "schemaVersion": "tinjau.benchmark-preregistration/0.1.0",
+  "frozenAt": "2026-08-20",
+  "frozenByTask": "T0.4",
+  "document": "docs/buildx-orion-2026/outputs/04-planning/t0-4-benchmark-preregistration.md",
+  "_status": "Written before any policy was implemented and before any policy outcome was computed for any frozen scenario. The only market measurements taken were swap counts and RPC error counts.",
+  "venue": {
+    "chainId": 196,
+    "chainName": "X Layer mainnet",
+    "pool": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+    "token0": "0x4ae46a509f6b1d9056937ba4500cb143933d2dc8",
+    "token0Symbol": "USDG",
+    "token0Decimals": 6,
+    "token1": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+    "token1Symbol": "wNVDAx",
+    "token1Decimals": 18,
+    "usdgIsToken0": true,
+    "poolFee": 500,
+    "tickSpacing": 10,
+    "feeProtocol": "0x44",
+    "protocolShareOfPoolFee": 0.25,
+    "verifiedBy": "live eth_call fee()/tickSpacing()/slot0()/token0()/token1()/decimals() on 2026-08-20; matches markout-study.md \u00a72.1 verified independently on 2026-08-17"
+  },
+  "feeEnvelope": {
+    "baseFee": 500,
+    "maxFee": 20000,
+    "widenDurationSec": 3600,
+    "decayDurationSec": 18000,
+    "appliesTo": [
+      "VOLATILITY_ONLY",
+      "TINJAU"
+    ],
+    "_notFitted": "Inherited from the AfterhoursFeeHook already deployed at 0xbCb4B7310BA36eA01f2A435A5D64C9b7953d8080 before this task existed. Not chosen after seeing any result.",
+    "_sameForBothPolicies": "Comparing a policy that may reach 2% against one capped lower would measure the cap, not the signal."
+  },
+  "policies": [
+    {
+      "id": "STATIC",
+      "seesMarketData": false,
+      "seesEvidence": false,
+      "fee": 500,
+      "_sanityCheck": "This is the pool's actual live behaviour, so its replayed fee revenue must reconcile with what the pool really charged."
+    },
+    {
+      "id": "VOLATILITY_ONLY",
+      "seesMarketData": true,
+      "seesEvidence": false,
+      "_leakageRule": "Any filing, news, rumour, event-type, market-hours or corporate-action input reaching this policy invalidates the comparison and must fail a test.",
+      "trigger": {
+        "shortWindowSec": 900,
+        "referenceWindowSec": 86400,
+        "statistic": "realised volatility of pool mid-price",
+        "rule": "rv_short >= k * median(rv_short over referenceWindow)",
+        "kGrid": [
+          2,
+          3,
+          5
+        ],
+        "_kNotChosen": "k is a judgment call, so it is not chosen. Every event is reported at all three k values and the headline comparison uses all three. Reporting a single k would allow the strongest to be selected after the fact."
+      },
+      "response": "step to maxFee, hold for widenDurationSec, decay linearly to baseFee over decayDurationSec",
+      "indeterminateRule": "Where a window has too few trades to estimate the reference statistic, record INDETERMINATE \u2014 never 'did not trigger'. Silence and a decision not to act are different findings."
+    },
+    {
+      "id": "TINJAU",
+      "seesMarketData": true,
+      "seesEvidence": true,
+      "promotesVia": "the frozen evidence graph plus market confirmation, reaching PROTECT",
+      "thresholdOwnership": "T1.2 and T3.3, not this document",
+      "bindingRules": [
+        "thresholds must be frozen in versioned configuration before any scenario's market data is scored",
+        "the same frozen configuration applies to all four scenarios",
+        "the configuration version is recorded in every result row",
+        "if a threshold changes after any result is seen, every prior result is void and the benchmark is re-run and re-labelled"
+      ],
+      "drawdownGrid": [
+        150,
+        200,
+        300
+      ],
+      "_gridRationale": "See amendments AMD-001. Same discipline as VOLATILITY_ONLY's kGrid, and for the same reason."
+    }
+  ],
+  "eventSet": {
+    "scenarios": [
+      "A-rumor-watch",
+      "B-confirmed-protect",
+      "C-two-origins-hard-case",
+      "D-neutral-normal"
+    ],
+    "mutable": false,
+    "_rule": "No event may be added, dropped, or re-anchored after any result is seen.",
+    "nullEconomicRows": [
+      "A-rumor-watch"
+    ],
+    "_nullRowRule": "Scenario A is reported as an evidence-path row with null economics. Never silently dropped, never imputed.",
+    "dualBranchRows": [
+      "C-two-origins-hard-case"
+    ],
+    "_dualBranchRule": "Scenario C's TINJAU row is reported under both permitted branches (WATCH and PROTECT). Once T1.2 freezes the rule, the non-selected branch stays in the artifact as a disclosed sensitivity."
+  },
+  "markout": {
+    "priceFormula": "P = 1 / ((sqrtPriceX96 / 2**96)**2 * 10**(dec0 - dec1))",
+    "m0": "dU + dS * P_post",
+    "mh": "M_0 + dS * (P_h - P_post)",
+    "horizonsSec": [
+      60,
+      300,
+      900,
+      1800,
+      3600
+    ],
+    "primaryHorizonSec": 3600,
+    "horizonAnchor": "the trade's own timestamp t*, not the anchor block",
+    "haircut": "0.25 * feeRate * abs(inputUSD), where feeRate is the fee the policy under test would have charged on that swap",
+    "coverageReporting": "every horizon reports later_swap_count_by_h_* so a reader can see when it collapsed back to M_0",
+    "_reusedFrom": "docs/buildx-orion-2026/outputs/05-build/markout-study.md \u00a71.2\u2013\u00a71.3, so the two studies stay comparable"
+  },
+  "counterfactualLimitation": {
+    "method": "re-price the same observed swap sequence under different fee schedules",
+    "prescribedBy": "tracker \u00a70.13 ('identical trades, timestamps, initial liquidity, costs, and replay window')",
+    "falseAssumption": "Changing the fee would have changed the trades. A pool charging 2% deters swaps a pool charging 0.05% attracts.",
+    "biasDirections": {
+      "feeRevenue": "OVERSTATED for any policy that raises fees \u2014 trades that would not have happened still pay",
+      "adverseSelectionBenefit": "UNDERSTATED \u2014 informed flow the higher fee would have deterred is still present in the replay"
+    },
+    "netSign": "UNDETERMINED",
+    "_honesty": "The two biases push in opposite directions and the net sign cannot be determined from this data. Claiming the result is conservative, or that it is inflated, would be a guess. Flow elasticity to fee on this pool is unmeasured.",
+    "behaviouralModel": "OUT_OF_SCOPE",
+    "_notFutureWork": "Recorded as a known limitation, not as future work that softens the caveat.",
+    "bindingConsequences": [
+      "fee revenue is reported separately from markout, never netted into one headline number",
+      "the phrase 'loss avoided' is gated by claimGate below",
+      "every published number carries basis: OBSERVED or COUNTERFACTUAL",
+      "TINJAU's observed testnet action and this mainnet replay are different pools and are never combined into one figure"
+    ]
+  },
+  "reporting": {
+    "primaryOutput": "per-scenario, per-policy, per-k rows; aggregates come after, never instead",
+    "distribution": [
+      "min",
+      "p25",
+      "median",
+      "p75",
+      "max",
+      "two most extreme swaps per scenario"
+    ],
+    "meanAloneAcceptable": false,
+    "tailConcentration": "report the share of total markout from the single worst swap and from the worst 5%",
+    "completenessRule": "the artifact must contain a row for every (scenario, policy, k) triple that was run",
+    "_noHidingALoss": "If VOLATILITY_ONLY matches or beats TINJAU at any k on any metric, that comparison is published with the same prominence as any favourable one.",
+    "sampleSizeDisclosure": "The economic distribution rests on three scenarios, one asset, and windows in a market that is only weeks old. No sentence may imply a general result about tokenized equities."
+  },
+  "claimGate": {
+    "field": "canClaimLossAvoided",
+    "defaultValue": false,
+    "requiresAll": [
+      "the scenario has a non-null economic row",
+      "TINJAU beats both STATIC and VOLATILITY_ONLY at every k on the primary metric M_3600_LP",
+      "the margin exceeds the spread between the best and worst k for VOLATILITY_ONLY",
+      "the frozen threshold configuration was not modified after any result was seen"
+    ],
+    "onFalse": "the artifact records which condition failed"
+  },
+  "failureConditions": {
+    "_statedNowSoTheyCannotBeRedefinedLater": true,
+    "conditions": [
+      "TINJAU does not beat VOLATILITY_ONLY on M_3600_LP at one or more k",
+      "TINJAU promotes on scenario D, a routine Form 4, showing its materiality semantics are wrong",
+      "TINJAU reaches PROTECT on scenario A, violating the rumour invariant",
+      "TINJAU's advantage on scenario B disappears once the single largest swap is excluded",
+      "TINJAU's advantage exists only at one k for the volatility baseline"
+    ],
+    "response": "Any of these is reported as the finding. None is a reason to change the method."
+  },
+  "amendments": [
+    {
+      "id": "AMD-001",
+      "date": "2026-08-20",
+      "task": "T3.3",
+      "change": "Extend the k-grid discipline from the volatility baseline to Tinjau's own `minDrawdownBps`. T5 must report every event at 150, 200 and 300 bps rather than at 200 alone.",
+      "reason": "The T3.3 agent was briefed to freeze thresholds blind, but the brief failed: a forked agent inherits the orchestrator's context, which already contained T3.2's measured drawdowns. The agent disclosed this rather than claiming blindness. `minDrawdownBps` is the single threshold separating the scenarios, so a reviewer cannot otherwise tell whether the result depends on it.",
+      "directionOfEffect": "Adds disclosure only. A sensitivity grid cannot make a result look better than a single chosen value; it can only reveal fragility that a single value would have hidden.",
+      "effectOnClaimGate": "Tightens it. `canClaimLossAvoided` already requires TINJAU to beat both baselines at EVERY k; the same must now hold across every drawdown threshold in the grid.",
+      "anchorOfTheChosenValue": "200 bps is anchored to the deployed hook's maxFee of 2% \u2014 invoking a 2% fee against a smaller dislocation is incoherent, since the defence would cost more than the exposure. That anchor is external to the four windows and predates any measurement of them."
+    }
+  ]
+}

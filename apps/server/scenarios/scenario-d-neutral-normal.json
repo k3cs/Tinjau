@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "tinjau.scenario/0.2.1",
+  "scenarioId": "D-neutral-normal",
+  "title": "Neutral control \u2014 a routine NVDA insider Form 4",
+  "role": "neutral control; the \u00a70.13 requirement that the benchmark contain ordinary, non-dramatic events",
+  "frozenAt": "2026-08-20",
+  "frozenByTask": "T0.2",
+  "_pre_registration": "Selected because it is an ordinary, non-material filing on the frozen asset inside the pool's lifetime \u2014 not because of anything measured about it. The pool's price path inside the replay window was deliberately NOT inspected before this file was frozen.",
+  "_why_this_exists": "A benchmark built only from dramatic events cannot measure false-positive cost. If Tinjau raises fees on a routine insider filing, LPs lose revenue for nothing, and that has to be visible in the T5.4 distribution. This scenario is the input that makes that measurable.",
+  "asset": {
+    "company": "NVIDIA CORPORATION",
+    "cik": "0001045810",
+    "ticker": "NVDA",
+    "tokenSymbol": "wNVDAx",
+    "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+    "chainId": 196,
+    "chainName": "X Layer mainnet",
+    "poolIdOrAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2"
+  },
+  "decisionAnchor": {
+    "at": "2026-08-12T21:13:10Z",
+    "blockNumber": "67800154",
+    "why": "EDGAR acceptance timestamp of accession 0001310264-26-000008.",
+    "usReferenceMarketOpen": false,
+    "usReferenceMarketNote": "21:13:10Z is 17:13 US/Eastern \u2014 after the regular session close, the ordinary window for Form 4 filings.",
+    "_cross_check": "This exact anchor block, 67800154, already appears as `event_block` for the same ticker, form and acceptance timestamp in docs/buildx-orion-2026/outputs/05-build/data/p2_4_markout_raw.jsonl, which was produced by an independent earlier study. That is an independent confirmation of the block/timestamp arithmetic used across all four scenarios."
+  },
+  "evidenceWindow": {
+    "rule": "anchor minus 72 hours .. anchor",
+    "from": "2026-08-09T21:13:10Z",
+    "to": "2026-08-12T21:13:10Z"
+  },
+  "marketReplayWindow": {
+    "from": "2026-08-12T20:13:10Z",
+    "to": "2026-08-13T03:13:10Z",
+    "fromBlock": "67796554",
+    "toBlock": "67821754",
+    "rule": "anchor minus 60 minutes .. anchor plus 6 hours"
+  },
+  "claims": [
+    {
+      "claimId": "claim-d-001",
+      "sourceClass": "OFFICIAL",
+      "dataMode": "REPLAY",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000131026426000008/wk-form4_1786569187.xml",
+      "sourceId": "edgar:0001310264-26-000008/wk-form4_1786569187.xml",
+      "publisherOrAuthor": "Reporting person filing under Section 16 for NVIDIA CORPORATION (CIK 0001045810)",
+      "publishedAt": "2026-08-12T21:13:10Z",
+      "publishedAtPrecision": "SECOND",
+      "company": "NVIDIA CORPORATION",
+      "tokenSymbol": "wNVDAx",
+      "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "eventType": "INSIDER_TRANSACTION_ROUTINE",
+      "secForm": "4",
+      "secItems": [],
+      "accessionNumber": "0001310264-26-000008",
+      "reportDate": "2026-08-10",
+      "claimTextOrPointer": "Section 16 statement of changes in beneficial ownership. Carries no 8-K item code and reports no corporate action affecting the company's obligations, solvency, or listing status.",
+      "independenceGroup": "official:edgar/0001310264-26-000008",
+      "relation": "ORIGIN",
+      "officialConfirmation": true,
+      "expiresAt": "2026-08-15T21:13:10Z",
+      "materiality": "NON_MATERIAL",
+      "sourceContentSha256": "d7ac69f01fba9daa4b686223afad6dbec0b89baa48e2c74ff1b9cc4694539526",
+      "sourceLocalPath": "sources/nvda-20260812-form4.xml"
+    }
+  ],
+  "outOfWindowEvidence": [],
+  "preRegisteredExpectation": {
+    "state": "NORMAL",
+    "aggressiveFeeAuthorized": false,
+    "mustHoldRegardlessOfMarketData": true,
+    "reasoning": [
+      "A Form 4 is official, but official does not mean material. \u00a70.7 reserves promotion for material unresolved evidence.",
+      "No 8-K item code, no corporate action, no change to obligations or listing status.",
+      "This must not even reach WATCH. If the engine promotes a routine insider filing, its event-type semantics are wrong, not merely conservative.",
+      "Market data cannot rescue a promotion here: \u00a70.7 requires qualifying evidence first, and a non-material filing never qualifies. An unexplained price move during this window is a market observation, not a corporate event."
+    ],
+    "falsificationCondition": "If the implemented engine returns WATCH or PROTECT for this input, the event-type and materiality classification is wrong and must be fixed. This is the primary false-positive probe in the frozen set."
+  },
+  "_schemaChangeLog": "0.2.0 (T1.2): added `materiality` to every claim. T1.1 made materiality a separate axis from provenance, because an official filing is not automatically an LP-relevant corporate action. The engine treats a missing value as UNKNOWN and refuses to promote on it, so the field had to be stated rather than inferred. | 0.2.1 (T2.1): added `sourceContentSha256` and `sourceLocalPath` to claim-d-001, and pointed `sourceUrl` at the raw XML rather than EDGAR's XSL rendering wrapper. T2.1's normaliser requires every OFFICIAL claim to commit to its exact bytes; scenario D was the one official claim frozen without that commitment."
+}

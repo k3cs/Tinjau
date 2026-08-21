@@ -1,0 +1,319 @@
+{
+  "schemaVersion": "tinjau.deployed-addresses/1.0.0",
+  "status": "T4.2_WORKING_ADDRESSES_NOT_FINAL",
+  "statusText": "THESE ARE T4.2 WORKING ADDRESSES, NOT THE FINAL LIST. T7.2 re-verifies and owns the authoritative set. Do not hardcode them into anything a judge will see without checking with the non-frontend lane first.",
+  "network": {
+    "chainId": 1952,
+    "name": "X Layer Testnet",
+    "rpc": "https://testrpc.xlayer.tech",
+    "isTestnet": true,
+    "supportsTimeTravel": false,
+    "rpcWarning": "THE PUBLIC RPC SERVES STALE READS. Measured convergence lag 2,519-2,746 ms per write. A consumer polling currentRecord can read NORMAL while a PROTECT is live. Pin reads to a block number or follow the AssessmentPosted event. See api-contract.md §4."
+  },
+  "bytecodeVerification": {
+    "method": "eth_getCode(address, 'latest')",
+    "rpc": "https://testrpc.xlayer.tech",
+    "atBlockNumber": 38826716,
+    "atIso": "2026-08-21T04:30:00Z",
+    "note": "Re-verified independently of the demo manifests; both agree."
+  },
+  "whyTwoStacks": "X Layer Testnet exposes no evm_increaseTime, so the production envelope's 21,600 s recovery cannot be watched live. Two full stacks are therefore deployed: the PRODUCTION envelope (the one T7.2 will publish) and a 60x-compressed DEMO envelope that preserves the invariants cap == widen + decay and cooldown == widen. `advanceTime` REFUSES LOUDLY rather than faking a curve, verified against the production stack, so three swaps at one instant can never be presented as a decay curve.",
+  "stacks": [
+    {
+      "stackId": "production-envelope",
+      "label": "Production envelope — T7.2 publishes this one",
+      "isDemoEnvelope": false,
+      "envelope": {
+        "baseFee": 500,
+        "maxFee": 20000,
+        "widenDuration": 3600,
+        "decayDuration": 18000,
+        "maxProtectDuration": 21600,
+        "cooldown": 3600,
+        "demoEnvelope": false
+      },
+      "poolId": "0x5e9eff19074225e9132eb73dc25cf0e3ff55c3fb31c9b28ab633851d2b54f730",
+      "tickSpacing": 60,
+      "contracts": [
+        {
+          "role": "TinjauRiskRegistry",
+          "address": "0x60062389a7AB08F0030FC06Adf9CE0C180537317",
+          "hasBytecode": true,
+          "codeSize": 6337,
+          "isBuilderControlled": true,
+          "note": "The §0.12 X Layer risk record. Read it directly; no dashboard required."
+        },
+        {
+          "role": "TinjauFeeHook",
+          "address": "0x1092C9fe2dB084F26aa415A0fda14B001A786080",
+          "hasBytecode": true,
+          "codeSize": 6160,
+          "isBuilderControlled": true,
+          "note": "Uniswap v4 hook. Reads the registry, applies TinjauRiskPolicy, fails closed to baseFee."
+        },
+        {
+          "role": "PoolManager (Uniswap v4)",
+          "address": "0x8F862A8b6f00C99b0610dc764228C661c4909ae1",
+          "hasBytecode": true,
+          "codeSize": 17151,
+          "isBuilderControlled": true,
+          "note": "Builder-controlled testnet deployment, shared by both stacks."
+        },
+        {
+          "role": "swap router (test)",
+          "address": "0xe5823a180BFAcbC24Aa9a744B76f3Dfb8bbECDA9",
+          "hasBytecode": true,
+          "codeSize": 5035,
+          "isBuilderControlled": true,
+          "note": null
+        },
+        {
+          "role": "liquidity router (test)",
+          "address": "0x1324A9A175779D53c65F9A43493CEa302cd54587",
+          "hasBytecode": true,
+          "codeSize": 4533,
+          "isBuilderControlled": true,
+          "note": null
+        },
+        {
+          "role": "risk asset — MOCK wNVDAx",
+          "address": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
+          "hasBytecode": true,
+          "codeSize": 1737,
+          "isBuilderControlled": true,
+          "note": "A freely-mintable MOCK standing in for canonical wNVDAx (0xa8ddb5cd96b5222afe198316e9a57caa642850d5 on chain 196). Never present it as the real tokenized asset."
+        },
+        {
+          "role": "quote asset — MOCK USDG",
+          "address": "0x666e81CCb9D4d6c2e7A3ed9f317E3dFBa2410e99",
+          "hasBytecode": true,
+          "codeSize": 1737,
+          "isBuilderControlled": true,
+          "note": "Mock quote asset."
+        }
+      ],
+      "transactions": [
+        {
+          "label": "Scene A — postAssessment (WATCH, rumour containment)",
+          "txHash": "0x025ca92d8d477af734d3e7ce0e7465bf3afc0b1d511acf4fc184c5add1178671",
+          "scene": "A"
+        },
+        {
+          "label": "Scene A — swap, fee charged 500 (base)",
+          "txHash": "0xb801240c05b3477f6e2505ba51ee9b14e71fbc5527fbc6b0b15e142a8409cf4e",
+          "scene": "A"
+        },
+        {
+          "label": "Scene F — guardian pause",
+          "txHash": "0x1af5b5e7df9b3ffdc1ebcc1272e693b8f748eed97c434d30046ea6b3c793fff8",
+          "scene": "F"
+        },
+        {
+          "label": "Scene F — swap after the refused action, fee still 500",
+          "txHash": "0x123e3fbfd6ecbc44f35fa0778c3e7df30e2a5de71b8215f6421f03b315276346",
+          "scene": "F"
+        },
+        {
+          "label": "Scene F — guardian unpause",
+          "txHash": "0x0ff92944140fadd86123d7c8097e2e12a89e44bbdf148fccd5894dc4e3862d56",
+          "scene": "F"
+        }
+      ],
+      "manifest": "docs/buildx-orion-2026/outputs/05-build/t4-demo-manifest-xlayer-testnet-production-envelope.json"
+    },
+    {
+      "stackId": "demo-envelope",
+      "label": "Demo envelope — 60x compressed, so recovery can be watched live",
+      "isDemoEnvelope": true,
+      "envelope": {
+        "baseFee": 500,
+        "maxFee": 20000,
+        "widenDuration": 60,
+        "decayDuration": 300,
+        "maxProtectDuration": 360,
+        "cooldown": 60,
+        "demoEnvelope": true
+      },
+      "poolId": "0x3b3942b682bd59383474974127140a3f0b0c2dff946b8164341c4812985a4a8c",
+      "tickSpacing": 60,
+      "contracts": [
+        {
+          "role": "TinjauRiskRegistry",
+          "address": "0x1a1e17306f789f5Ec7012B1E2CB866DeDB61E2b1",
+          "hasBytecode": true,
+          "codeSize": 6337,
+          "isBuilderControlled": true,
+          "note": "Same bytecode size as the production-envelope registry; only constructor parameters differ."
+        },
+        {
+          "role": "TinjauFeeHook",
+          "address": "0xAb448f70fE44fbbF5f41225F7797fcC7e56c2080",
+          "hasBytecode": true,
+          "codeSize": 6160,
+          "isBuilderControlled": true,
+          "note": null
+        },
+        {
+          "role": "PoolManager (Uniswap v4)",
+          "address": "0x8F862A8b6f00C99b0610dc764228C661c4909ae1",
+          "hasBytecode": true,
+          "codeSize": 17151,
+          "isBuilderControlled": true,
+          "note": "Shared with the production-envelope stack."
+        },
+        {
+          "role": "swap router (test)",
+          "address": "0xE76D6fC0A5235155eEb60FbBA8623465520E19dC",
+          "hasBytecode": true,
+          "codeSize": 5035,
+          "isBuilderControlled": true,
+          "note": null
+        },
+        {
+          "role": "liquidity router (test)",
+          "address": "0xefEC4A304eeaA95581B2018b50472D762eE0833c",
+          "hasBytecode": true,
+          "codeSize": 4533,
+          "isBuilderControlled": true,
+          "note": null
+        },
+        {
+          "role": "risk asset — MOCK wNVDAx",
+          "address": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
+          "hasBytecode": true,
+          "codeSize": 1737,
+          "isBuilderControlled": true,
+          "note": "Shared mock. Not the real tokenized asset."
+        },
+        {
+          "role": "quote asset — MOCK USDG",
+          "address": "0x666e81CCb9D4d6c2e7A3ed9f317E3dFBa2410e99",
+          "hasBytecode": true,
+          "codeSize": 1737,
+          "isBuilderControlled": true,
+          "note": null
+        }
+      ],
+      "transactions": [
+        {
+          "label": "Scene A — postAssessment (WATCH)",
+          "txHash": "0x69c11cf4115037431bb1330cf7cd3bd32f3339b0aee2aa392a3b86ac0a96922c",
+          "scene": "A"
+        },
+        {
+          "label": "Scene A — swap, fee charged 500",
+          "txHash": "0xcdfd10400ee82305dd733b8a2c554f208e919adecc640409fcc197e6b4046b5f",
+          "scene": "A"
+        },
+        {
+          "label": "Scene B — postAssessment (PROTECT, CONSTRUCTED market leg)",
+          "txHash": "0x659cb5553e2f53364445bdc4521dee3e87843b59d31f5861c0e196d471b3be7b",
+          "scene": "B"
+        },
+        {
+          "label": "Scene B — swap at widened fee, charged 20000",
+          "txHash": "0x2e313c44bae3112cbb3c2430cf0e5e745327c197b54697f9f1e1ccca7df3f787",
+          "scene": "B"
+        },
+        {
+          "label": "Scene B — swap mid-decay, charged 9470",
+          "txHash": "0x93ae1e2470eec2e0d42cf4a252d8ab5363636387f963e7770b132adfe7e17bab",
+          "scene": "B"
+        },
+        {
+          "label": "Scene B — swap after deterministic recovery, charged 500 (no keeper tx)",
+          "txHash": "0xcf229e22b8af4b4841437d57bee33af31edb5fbebbb79178cd9d36ac8546b7c0",
+          "scene": "B"
+        },
+        {
+          "label": "Scene B — explicit stand-down, starts the cooldown clock",
+          "txHash": "0x85e854b34937b7857c8f32a0e1e2e19b445b41460c75b7c867a0bb448f2cfa46",
+          "scene": "B"
+        },
+        {
+          "label": "Scene F — guardian pause",
+          "txHash": "0xcde601502330cd606c15395910c1c7ea9951ca88ff3b5ab0586a4eb579686d47",
+          "scene": "F"
+        },
+        {
+          "label": "Scene F — swap after the refused action, fee still 500",
+          "txHash": "0x6932b3e722ea1ec213955a189656b23408c2b6e254c82949c03eedc79a99a095",
+          "scene": "F"
+        },
+        {
+          "label": "Scene F — guardian unpause",
+          "txHash": "0x8065953c7c57f86b5f6709415d228c23e66fdd848019976e7ff97ccb5ed41f70",
+          "scene": "F"
+        }
+      ],
+      "manifest": "docs/buildx-orion-2026/outputs/05-build/t4-demo-manifest-xlayer-testnet.json"
+    }
+  ],
+  "accounts": {
+    "assessor": {
+      "address": "0x0990EAcecFe00f1709A748D37cCd52C45B95aC72",
+      "role": "Signs EIP-712 assessments. Holds 0 OKB and is gas-less by design.",
+      "disclosure": "TESTNET ONLY. Derived as keccak256(posterKey || 'tinjau.rolekey/1.0.0:assessor') because no independent assessor key existed. A derived key shares the fate of its parent, so production requires an independently generated one. TINJAU_ASSESSOR_PRIVATE_KEY overrides it with no code change."
+    },
+    "poster": {
+      "address": "0x8BCC23b3352e9c450160676803AC5cfe1e2329e1",
+      "role": "Relays signed assessments and pays gas. Authority comes from the signature, not from this address.",
+      "disclosure": null
+    },
+    "relayer": {
+      "address": "0x4e7691FA710D488F1D2CD6d22619eb325bf99eBd",
+      "role": "Executes swaps in the demo scenes.",
+      "disclosure": null
+    },
+    "guardian": {
+      "address": "0x8BCC23b3352e9c450160676803AC5cfe1e2329e1",
+      "role": "Can pause new protections. Equal to the poster, because pausing needs gas.",
+      "disclosure": "Guardian and poster are the same key on testnet. Anvil uses four distinct keys, so role separation is genuinely demonstrated there."
+    }
+  },
+  "historical": {
+    "note": "The AFTERHOURS contracts below are genuinely deployed and genuinely named AfterhoursFeeHook etc. They are HISTORICAL EVIDENCE of the earlier prototype, NOT the final revised contracts, and must never be renamed in copy or presented as the current system (§0.18).",
+    "chainId": 1952,
+    "contracts": [
+      {
+        "role": "EventStateRegistry (historical)",
+        "address": "0x713f45f44e74616898FB366E11881196221933aA",
+        "hasBytecode": true,
+        "codeSize": 5940
+      },
+      {
+        "role": "AfterhoursFeeHook (historical)",
+        "address": "0xbCb4B7310BA36eA01f2A435A5D64C9b7953d8080",
+        "hasBytecode": true,
+        "codeSize": 4900
+      },
+      {
+        "role": "swap router (historical)",
+        "address": "0x6F554A0bEE654Ead7C7eACDD300A72170a674C62",
+        "hasBytecode": true,
+        "codeSize": 5035
+      },
+      {
+        "role": "mock USD₮0 bond asset (historical)",
+        "address": "0x95F998c232A2a0F127488fb9769C54aEe52a3eFe",
+        "hasBytecode": true,
+        "codeSize": 1737
+      }
+    ]
+  },
+  "canonicalMainnetReferences": {
+    "note": "NOT deployed by this project. These are the real chain-196 addresses the frozen replay windows were measured against. The testnet stack uses MOCKS standing in for them.",
+    "chainId": 196,
+    "wNVDAx": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+    "referencePoolFirstBlockWithBytecode": 65946484,
+    "referencePoolFirstBlockIso": "2026-07-22T10:18:40Z",
+    "liquiditySource": "THIRD_PARTY"
+  },
+  "notRecorded": [
+    {
+      "item": "contract creation transaction hashes",
+      "reason": "The Foundry broadcast directory was deleted after the dry run so nothing in the committed tree implied a deployment that had not happened, and the real deploy run's broadcast artifacts were not preserved. The addresses and their bytecode are verified directly by eth_getCode instead, which is the stronger check.",
+      "howToGet": "Look the address up on an X Layer Testnet explorer, or scan for the creation via an archive node. Not required for any frontend surface."
+    }
+  ]
+}

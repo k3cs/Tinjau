@@ -1,0 +1,112 @@
+{
+  "_purpose": "The specification of `mayReachProtect`, written once and verified by BOTH implementations: contracts/src/TinjauRiskTypes.sol and apps/server/src/risk/types.ts. Neither language generates this file; it is hand-written from tracker §0.7, so if either implementation drifts from the rules, its own test fails against this table.",
+  "_schemaVersion": "tinjau.risk/1.0.0",
+  "_fields": {
+    "highestClass": "0=Unknown 1=Rumor 2=News 3=Official",
+    "independentSources": "count of genuinely independent origins, syndications already collapsed",
+    "confirmation": "0=Unknown 1=NotConfirmed 2=Unavailable 3=Stale 4=Confirmed",
+    "officialEvidencePassed": "whether the bonded parse-agreement path passed",
+    "expected": "may this evidence reach PROTECT"
+  },
+  "rows": [
+    {
+      "name": "rumour with everything else perfect",
+      "highestClass": 1, "independentSources": 5, "confirmation": 4, "officialEvidencePassed": true,
+      "expected": false,
+      "why": "§0.7 invariant 1: rumour-only is capped unconditionally, and no market or bonded argument can lift it."
+    },
+    {
+      "name": "rumour, single source, confirmed",
+      "highestClass": 1, "independentSources": 1, "confirmation": 4, "officialEvidencePassed": false,
+      "expected": false, "why": "Same invariant."
+    },
+    {
+      "name": "unknown class is never trusted",
+      "highestClass": 0, "independentSources": 9, "confirmation": 4, "officialEvidencePassed": true,
+      "expected": false,
+      "why": "Ordinal 0 means the value was never written. An unwritten class must not inherit trust."
+    },
+    {
+      "name": "one news origin, confirmed",
+      "highestClass": 2, "independentSources": 1, "confirmation": 4, "officialEvidencePassed": false,
+      "expected": false,
+      "why": "§0.7 invariant 3: one news source alone never authorises the aggressive path, however many outlets reprinted it."
+    },
+    {
+      "name": "two news origins, confirmed",
+      "highestClass": 2, "independentSources": 2, "confirmation": 4, "officialEvidencePassed": false,
+      "expected": true,
+      "why": "The two-independent-source bar plus fresh confirmation is exactly what §0.7 permits."
+    },
+    {
+      "name": "three news origins, confirmed",
+      "highestClass": 2, "independentSources": 3, "confirmation": 4, "officialEvidencePassed": false,
+      "expected": true, "why": "Above the bar."
+    },
+    {
+      "name": "two news origins, not confirmed",
+      "highestClass": 2, "independentSources": 2, "confirmation": 1, "officialEvidencePassed": false,
+      "expected": false, "why": "The market looked and did not corroborate."
+    },
+    {
+      "name": "two news origins, market unavailable",
+      "highestClass": 2, "independentSources": 2, "confirmation": 2, "officialEvidencePassed": false,
+      "expected": false,
+      "why": "'Could not look' is not confirmation. Missing data must never CREATE a protection."
+    },
+    {
+      "name": "two news origins, market stale",
+      "highestClass": 2, "independentSources": 2, "confirmation": 3, "officialEvidencePassed": false,
+      "expected": false, "why": "A stale observation describes a different market."
+    },
+    {
+      "name": "two news origins, confirmation never written",
+      "highestClass": 2, "independentSources": 2, "confirmation": 0, "officialEvidencePassed": false,
+      "expected": false, "why": "Ordinal 0 fails closed like every other Unknown sentinel."
+    },
+    {
+      "name": "zero independent sources cannot promote",
+      "highestClass": 2, "independentSources": 0, "confirmation": 4, "officialEvidencePassed": false,
+      "expected": false, "why": "Below the bar."
+    },
+    {
+      "name": "official, bonded passed, confirmed",
+      "highestClass": 3, "independentSources": 1, "confirmation": 4, "officialEvidencePassed": true,
+      "expected": true,
+      "why": "The official path does not need two origins — the filing is the issuer speaking — but it still needs the market to corroborate."
+    },
+    {
+      "name": "official, bonded passed, not confirmed",
+      "highestClass": 3, "independentSources": 1, "confirmation": 1, "officialEvidencePassed": true,
+      "expected": false,
+      "why": "An official filing is a strong reason to look, not a licence to act without looking."
+    },
+    {
+      "name": "official, bonded passed, market unavailable",
+      "highestClass": 3, "independentSources": 3, "confirmation": 2, "officialEvidencePassed": true,
+      "expected": false, "why": "Same rule; missing data cannot start a protection."
+    },
+    {
+      "name": "official, bonded passed, market stale",
+      "highestClass": 3, "independentSources": 3, "confirmation": 3, "officialEvidencePassed": true,
+      "expected": false, "why": "Same rule."
+    },
+    {
+      "name": "official, bonded FAILED, confirmed",
+      "highestClass": 3, "independentSources": 3, "confirmation": 4, "officialEvidencePassed": false,
+      "expected": false,
+      "why": "The existing parse-agreement and bonded-publication requirements are a precondition, not a formality."
+    },
+    {
+      "name": "official with zero independent sources still promotes",
+      "highestClass": 3, "independentSources": 0, "confirmation": 4, "officialEvidencePassed": true,
+      "expected": true,
+      "why": "The two-source rule governs NON-official evidence only. Requiring a filing to be corroborated by news would make the issuer's own disclosure the weakest evidence class."
+    },
+    {
+      "name": "official with bonded passed but unknown confirmation",
+      "highestClass": 3, "independentSources": 1, "confirmation": 0, "officialEvidencePassed": true,
+      "expected": false, "why": "Unknown fails closed."
+    }
+  ]
+}

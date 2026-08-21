@@ -1,0 +1,372 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tinjau.xyz/schemas/proof-of-protection/1.0.0.json",
+  "title": "Tinjau Proof of Protection record",
+  "description": "One completed PROTECT interval, connecting triggering evidence, market observations, the selected state/reason/policy version, the bounded action requested and actually applied, the observed protected-pool outcome, and both replay baselines (tracker §0.13, §0.24). THE OBSERVED AND COUNTERFACTUAL HALVES ARE STRUCTURALLY SEPARATE: `observedOnChainProtection` holds only OBSERVED leaves from one chain and pool, `replayedCounterfactualBaselines` holds re-priced replay figures from a different chain and pool, and their key sets are disjoint. A validator must reject any document that mixes them. `claimGate.canClaimLossAvoided` is copied from the benchmark artifact and this schema does not permit this record to compute its own.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "producedByTask",
+    "recordId",
+    "_READ_THIS_FIRST",
+    "derivedFrom",
+    "trigger",
+    "selection",
+    "boundedAction",
+    "observedOnChainProtection",
+    "replayedCounterfactualBaselines",
+    "canonicalReplayOfThisEvent",
+    "claimGate",
+    "whatThisProves",
+    "whatThisDoesNotProve",
+    "limitations",
+    "reproduction"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": "tinjau.proof-of-protection/1.0.0" },
+    "producedByTask": { "type": "string", "minLength": 1 },
+    "recordId": { "type": "string", "minLength": 1 },
+
+    "_READ_THIS_FIRST": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Mandatory. A consumer that renders this record must render this block. It states that the record demonstrates enforcement rather than benefit."
+    },
+
+    "derivedFrom": {
+      "type": "object",
+      "description": "Input and replay identity plus method version (§0.24). Every figure in this record is derived from these artifacts rather than transcribed.",
+      "required": ["onChainRun", "benchmark", "frozenScenario"],
+      "properties": {
+        "onChainRun": { "type": "object" },
+        "benchmark": { "type": "object" },
+        "frozenScenario": { "type": "object" },
+        "_determinism": { "type": "string" }
+      }
+    },
+
+    "trigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["inputIdentity", "evidence", "marketObservations"],
+      "properties": {
+        "inputIdentity": { "type": "object" },
+        "evidence": {
+          "type": "object",
+          "required": ["dataMode", "claimCount", "claims"],
+          "properties": {
+            "dataMode": { "$ref": "#/$defs/dataMode" },
+            "claimCount": { "type": "integer" },
+            "claims": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "claimId",
+                  "sourceClass",
+                  "dataMode",
+                  "sourceUrl",
+                  "sourceId",
+                  "publishedAt",
+                  "eventType"
+                ],
+                "properties": {
+                  "claimId": { "type": "string", "minLength": 1 },
+                  "sourceClass": { "$ref": "#/$defs/sourceClass" },
+                  "dataMode": { "$ref": "#/$defs/dataMode" },
+                  "sourceUrl": { "type": ["string", "null"] },
+                  "sourceId": { "type": "string", "minLength": 1 },
+                  "publisherOrAuthor": { "type": ["string", "null"] },
+                  "publishedAt": { "type": "string", "minLength": 1 },
+                  "eventType": { "type": "string", "minLength": 1 },
+                  "materiality": { "type": ["string", "null"] },
+                  "sourceContentSha256": { "type": ["string", "null"] }
+                }
+              }
+            },
+            "_note": { "type": "string" }
+          }
+        },
+        "marketObservations": {
+          "type": "object",
+          "required": ["dataMode", "_WARNING", "whatWasConstructed", "confirmation", "okxLeg"],
+          "properties": {
+            "dataMode": {
+              "enum": ["LIVE", "OBSERVED", "REPLAY", "SIMULATED", "CONSTRUCTED"],
+              "description": "CONSTRUCTED is permitted here and ONLY here. A constructed market leg must carry the _WARNING string beside it."
+            },
+            "_WARNING": { "type": "string", "minLength": 1 },
+            "whatWasConstructed": { "type": "string", "minLength": 1 },
+            "measuredExtentOfConstruction": { "type": "object" },
+            "_measuredExtentNote": { "type": "string" },
+            "confirmation": { "type": "object" },
+            "okxLeg": {
+              "type": "object",
+              "required": ["status"],
+              "properties": {
+                "status": { "$ref": "#/$defs/confirmationStatus" },
+                "_note": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "selection": {
+      "type": "object",
+      "required": [
+        "state",
+        "reasonCodes",
+        "confidenceBand",
+        "policyVersion",
+        "schemaVersion",
+        "confirmationRuleVersion",
+        "evidenceCommitment",
+        "humanExplanation"
+      ],
+      "properties": {
+        "state": { "$ref": "#/$defs/riskState" },
+        "reasonCodes": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "confidenceBand": { "enum": ["LOW", "MEDIUM", "HIGH"] },
+        "policyVersion": { "type": "string", "minLength": 1 },
+        "schemaVersion": { "type": "string", "minLength": 1 },
+        "confirmationRuleVersion": { "type": "string", "minLength": 1 },
+        "evidenceCommitment": { "$ref": "#/$defs/hash32" },
+        "reasonBits": { "type": "integer" },
+        "dataModeOnChain": { "$ref": "#/$defs/dataMode" },
+        "_dataModeCaveat": { "type": "string" },
+        "humanExplanation": { "type": "string", "minLength": 1 },
+        "assetRemap": { "type": "object" }
+      }
+    },
+
+    "boundedAction": {
+      "type": "object",
+      "required": ["envelope", "requestedFeePips", "appliedFeePips", "status"],
+      "properties": {
+        "envelope": {
+          "type": "object",
+          "required": ["baseFee", "maxFee", "widenDuration", "decayDuration", "maxProtectDuration", "cooldown"],
+          "properties": {
+            "baseFee": { "type": "integer" },
+            "maxFee": { "type": "integer" },
+            "widenDuration": { "type": "integer" },
+            "decayDuration": { "type": "integer" },
+            "maxProtectDuration": { "type": "integer" },
+            "cooldown": { "type": "integer" },
+            "demoEnvelope": { "type": "boolean" },
+            "_envelopeCaveat": { "type": "string" }
+          }
+        },
+        "requestedFeePips": { "$ref": "#/$defs/observedMetric" },
+        "appliedFeePips": { "$ref": "#/$defs/observedMetric" },
+        "status": { "enum": ["NONE", "PENDING", "APPLIED", "FAILED", "EXPIRED", "DECAYED"] },
+        "postAssessmentTxHash": { "type": ["string", "null"] },
+        "protectStartedAtUnixSeconds": { "type": "integer" },
+        "protectEndsAtUnixSeconds": { "type": "integer" },
+        "recordExpiresAtUnixSeconds": { "type": "integer" }
+      }
+    },
+
+    "observedOnChainProtection": {
+      "type": "object",
+      "description": "THE OBSERVED HALF. Every metric leaf below must carry basis OBSERVED — a validator must reject a COUNTERFACTUAL leaf here. Nothing economic belongs here: the pool is builder-controlled and the tokens are valueless mocks, so there is no LP outcome to state.",
+      "required": [
+        "_basis",
+        "_scope",
+        "chainId",
+        "poolClass",
+        "addresses",
+        "addressStatus",
+        "feePathActuallyCharged",
+        "deterministicRecovery",
+        "standDownAndCooldown",
+        "failedActionRecordedWithoutBenefit",
+        "readConsistency"
+      ],
+      "properties": {
+        "_basis": { "const": "OBSERVED" },
+        "_scope": { "type": "string", "minLength": 1 },
+        "chainId": { "type": "integer" },
+        "networkLabel": { "type": "string" },
+        "poolClass": {
+          "const": "BUILDER_CONTROLLED",
+          "description": "The only value this MVP may publish. A pool this project created and seeded is not a market."
+        },
+        "addresses": { "type": "object" },
+        "addressStatus": { "type": "string", "minLength": 1 },
+        "roleSeparation": { "type": "object" },
+        "feePathActuallyCharged": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["label", "txHash", "appliedFeePips"],
+            "properties": {
+              "label": { "type": "string", "minLength": 1 },
+              "txHash": { "$ref": "#/$defs/hash32" },
+              "blockNumber": { "type": "integer" },
+              "atUnixSeconds": { "type": "integer" },
+              "appliedFeePips": { "$ref": "#/$defs/observedMetric" },
+              "previewedFeePips": { "$ref": "#/$defs/observedMetric" },
+              "poolManagerSwapEvent": { "type": "object" }
+            }
+          }
+        },
+        "deterministicRecovery": { "type": "object" },
+        "standDownAndCooldown": { "type": "object" },
+        "failedActionRecordedWithoutBenefit": { "type": "object" },
+        "readConsistency": { "type": "object" },
+        "allScenesPassed": { "type": "boolean" }
+      }
+    },
+
+    "replayedCounterfactualBaselines": {
+      "type": "object",
+      "description": "THE REPLAY HALF. A different chain, a different pool, and a different question. Every leaf carries its own basis marker copied verbatim from three-policy-benchmark.json. These figures may never be added to, netted against, or shown with the same visual treatment as the observed half.",
+      "required": ["_basis", "_scope", "chainId", "poolClass", "replayWindow", "policies"],
+      "properties": {
+        "_basis": { "type": "string", "minLength": 1 },
+        "_scope": { "type": "string", "minLength": 1 },
+        "chainId": { "type": "integer" },
+        "poolIdOrAddress": { "type": "string" },
+        "poolClass": { "const": "THIRD_PARTY_MAINNET" },
+        "replayWindow": { "type": "object" },
+        "primaryHorizonSec": { "type": "integer" },
+        "preRegistration": { "type": ["object", "string"] },
+        "counterfactualLimitation": { "type": ["object", "string"] },
+        "policies": {
+          "type": "object",
+          "required": ["STATIC", "VOLATILITY_ONLY", "TINJAU"],
+          "properties": {
+            "STATIC": { "$ref": "#/$defs/policyResult" },
+            "VOLATILITY_ONLY": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/policyResult" }
+            },
+            "TINJAU": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/policyResult" }
+            }
+          }
+        },
+        "_tinjauResult": { "type": "string" },
+        "_signIsUndetermined": { "type": "string" }
+      }
+    },
+
+    "canonicalReplayOfThisEvent": {
+      "type": "object",
+      "description": "Mandatory whenever the observed record's market leg is CONSTRUCTED. It states what the same event resolves to on real data, so the constructed record can never be read on its own.",
+      "required": ["_basis", "state", "confirmationStatus", "why", "consequence"],
+      "properties": {
+        "_basis": { "const": "OBSERVED" },
+        "state": { "$ref": "#/$defs/riskState" },
+        "confirmationStatus": { "$ref": "#/$defs/confirmationStatus" },
+        "why": { "type": "string", "minLength": 1 },
+        "robustness": { "type": "string" },
+        "consequence": { "type": "string", "minLength": 1 },
+        "source": { "type": "string" }
+      }
+    },
+
+    "claimGate": {
+      "type": "object",
+      "required": ["canClaimLossAvoided", "metricBasis", "reason", "conditions", "_sourceOfTruth"],
+      "properties": {
+        "canClaimLossAvoided": {
+          "type": "boolean",
+          "description": "Copied from three-policy-benchmark.json. This record does not compute its own gate."
+        },
+        "metricBasis": {
+          "const": "PRE_REGISTERED",
+          "description": "AMD-002's post-hoc basis is structurally excluded. A metric derived after seeing results cannot authorise a claim."
+        },
+        "reason": { "type": "string", "minLength": 1 },
+        "conditions": { "type": "array", "minItems": 1, "items": { "type": "object" } },
+        "failedConditionIds": { "type": "array", "items": { "type": "string" } },
+        "_sourceOfTruth": { "type": "string", "minLength": 1 }
+      }
+    },
+
+    "whatThisProves": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "whatThisDoesNotProve": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "limitations": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "reproduction": { "type": "object" },
+    "companionDocument": { "type": "string" }
+  },
+
+  "$defs": {
+    "riskState": { "enum": ["NORMAL", "WATCH", "PROTECT"] },
+    "sourceClass": { "enum": ["OFFICIAL", "NEWS", "RUMOR"] },
+    "dataMode": { "enum": ["LIVE", "OBSERVED", "REPLAY", "SIMULATED"] },
+    "confirmationStatus": { "enum": ["CONFIRMED", "NOT_CONFIRMED", "UNAVAILABLE", "STALE"] },
+    "basis": { "enum": ["OBSERVED", "COUNTERFACTUAL"] },
+    "hash32": { "type": "string", "pattern": "^0x[0-9a-fA-F]{64}$" },
+
+    "metric": {
+      "type": "object",
+      "description": "Every number in this record is a metric object. `unit` and `basis` are mandatory: a bare number cannot say whether it was measured or re-priced.",
+      "required": ["value", "unit", "basis"],
+      "properties": {
+        "value": { "type": ["number", "string", "boolean", "null"] },
+        "unit": { "type": "string", "minLength": 1 },
+        "basis": { "$ref": "#/$defs/basis" },
+        "note": { "type": "string" }
+      }
+    },
+
+    "observedMetric": {
+      "type": "object",
+      "required": ["value", "unit", "basis"],
+      "properties": {
+        "value": { "type": ["number", "string", "boolean", "null"] },
+        "unit": { "type": "string", "minLength": 1 },
+        "basis": { "const": "OBSERVED" },
+        "note": { "type": "string" }
+      }
+    },
+
+    "policyResult": {
+      "type": "object",
+      "required": [
+        "policyId",
+        "parameters",
+        "methodVersion",
+        "replayInputFingerprint",
+        "status",
+        "feeRevenueGrossUsd",
+        "markoutPrimaryUsd",
+        "markoutPrimaryPostHocAmd002Usd",
+        "maxFeeReachedPips"
+      ],
+      "properties": {
+        "policyId": { "enum": ["STATIC", "VOLATILITY_ONLY", "TINJAU"] },
+        "parameters": { "type": "object" },
+        "methodVersion": { "type": "string", "minLength": 1 },
+        "replayInputFingerprint": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "minLength": 1 },
+        "swapCount": { "type": "integer" },
+        "totalNotionalUsd": { "$ref": "#/$defs/metric" },
+        "feeRevenueGrossUsd": { "$ref": "#/$defs/metric" },
+        "feeRevenueToLpUsd": { "$ref": "#/$defs/metric" },
+        "markoutM0Usd": { "$ref": "#/$defs/metric" },
+        "markoutPrimaryUsd": { "$ref": "#/$defs/metric" },
+        "markoutPrimaryPostHocAmd002Usd": { "$ref": "#/$defs/metric" },
+        "adverseSelectionPrimaryUsd": { "$ref": "#/$defs/metric" },
+        "maxFeeReachedPips": { "$ref": "#/$defs/metric" },
+        "actionLatencySec": { "$ref": "#/$defs/metric" },
+        "protectionDurationSec": { "$ref": "#/$defs/metric" },
+        "timeToDecaySec": { "$ref": "#/$defs/metric" },
+        "triggerCount": { "type": "integer" }
+      }
+    }
+  }
+}

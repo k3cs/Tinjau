@@ -1,0 +1,872 @@
+{
+  "schemaVersion": "tinjau.scenario-result/1.0.0",
+  "scenarioId": "B-confirmed-protect-CONSTRUCTED",
+  "role": "CONFIRMED_EVENT_BOUNDED_ACTION_AND_RECOVERY",
+  "title": "Confirmed protection on a builder-controlled pool — CONSTRUCTED market leg, replayed evidence",
+  "producedBy": {
+    "tasks": [
+      "T0.2",
+      "T2.1",
+      "T2.3",
+      "T3.3",
+      "T4.1",
+      "T4.2",
+      "T4.3",
+      "T4.5"
+    ],
+    "generator": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/tools/generate.ts",
+    "modules": [
+      "apps/server/src/chain/tinjauScenes.ts (buildConstructedProtectWindow)",
+      "apps/server/src/market/confirm.ts",
+      "apps/server/src/risk/promote.ts",
+      "apps/server/src/decision/orchestrate.ts"
+    ]
+  },
+  "provenance": {
+    "evidence": "REPLAYED_SOURCE_LINKED",
+    "marketLeg": "CONSTRUCTED",
+    "marketVenue": "X_LAYER_TESTNET_CHAIN_1952_BUILDER_CONTROLLED_POOL",
+    "outcomeOrigin": "CONSTRUCTED_MARKET_INPUTS",
+    "preRegistered": true,
+    "preRegisteredOutcome": "PROTECT conditional on fresh market confirmation; WATCH otherwise",
+    "matchesPreRegistration": true
+  },
+  "criticalCaveat": {
+    "headline": "THIS PROTECT IS NOT A REPLAY RESULT.",
+    "text": "The canonical mainnet replay of this exact evidence resolves to WATCH, because its market leg is NOT_CONFIRMED (drawdown 235 bps clears the 200 bps floor but retains only ~10-13% over the hold interval — the pool dipped and bounced). Tinjau reaches PROTECT on NONE of the four frozen replay scenarios. To demonstrate the bounded action and its deterministic recovery at all, the real replayed 8-K evidence was paired with a CONSTRUCTED price path on the builder-controlled testnet pool. Only the market data is constructed: the CONFIRMED verdict is the real confirmation engine's, under its own unmodified thresholds.",
+    "canonicalReplayState": "WATCH",
+    "canonicalReplayConfirmation": "NOT_CONFIRMED",
+    "canonicalReplayReasonCodes": [
+      "ANTI_WICK_FAILED",
+      "BONDED_EVIDENCE_PASSED",
+      "DUPLICATE_SYNDICATION",
+      "MARKET_NOT_CONFIRMED",
+      "OFFICIAL_FILING",
+      "REFERENCE_MARKET_CLOSED",
+      "STALE_EVIDENCE"
+    ],
+    "reasonCodeDiff": {
+      "onlyInCanonical": [
+        "ANTI_WICK_FAILED",
+        "MARKET_NOT_CONFIRMED"
+      ],
+      "onlyInConstructed": [
+        "MARKET_CONFIRMED"
+      ]
+    },
+    "uiRequirement": "Any surface showing this PROTECT must label it constructed, in the same visual weight as the state itself. Presenting it as a replayed outcome would be the single most misleading thing this project could publish."
+  },
+  "window": {
+    "chainId": 1952,
+    "pool": "0x3b3942b682bd59383474974127140a3f0b0c2dff946b8164341c4812985a4a8c",
+    "fromIso": "2026-08-21T03:26:15Z",
+    "toIso": "2026-08-21T03:51:15Z",
+    "swapCount": 51,
+    "liquiditySource": "BUILDER_CONTROLLED",
+    "construction": {
+      "openPrice": 100,
+      "fallBps": 300,
+      "fallSeconds": 600,
+      "holdSeconds": 900,
+      "intervalSeconds": 30,
+      "note": "Price falls 300 bps over 600 s then holds flat for 900 s. Fed to the real confirmMarket."
+    }
+  },
+  "record": {
+    "schemaVersion": "tinjau.risk/1.0.0",
+    "assessmentId": "0xcfabb7a1f8babcb5ca25140ab630f0697a11c8d61a11751af4705a1da4028de4",
+    "assetAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+    "tokenSymbol": "wNVDAx",
+    "poolIdOrAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+    "state": "PROTECT",
+    "reasonCodes": [
+      "BONDED_EVIDENCE_PASSED",
+      "DUPLICATE_SYNDICATION",
+      "MARKET_CONFIRMED",
+      "OFFICIAL_FILING",
+      "REFERENCE_MARKET_CLOSED",
+      "STALE_EVIDENCE"
+    ],
+    "humanExplanation": "A qualifying official filing passed the bonded-evidence checks and the market independently corroborated the move within the freshness bound, so a bounded fee action is authorised. Market leg: CONFIRMED. Market confirmed on drawdown. The OKX reference leg was unavailable, so this is a single-leg (X Layer pool) confirmation and must not be described as dual-leg. The OKX reference leg was unavailable, so no artifact may describe this as dual-leg OKX/X Layer confirmation. Bounded action PROPOSED (not applied): fee 20000 pips, which is at or below the policy target 20000 for confidence HIGH. The contract recomputes its own target and may lower or reject this proposal; it can never raise it.",
+    "evidenceCommitment": "0xcad6db77aa45e876a560caa8d297d4e44b3a6b91075975b7205e079dca4e1f09",
+    "confidenceBand": "HIGH",
+    "assessedAt": "2026-08-21T03:51:15.000Z",
+    "expiresAt": "2026-08-21T09:51:15.000Z",
+    "policyVersion": "tinjau.policy/1.0.0",
+    "dataMode": "REPLAY",
+    "evidence": [
+      {
+        "claimId": "claim-b-001",
+        "sourceClass": "OFFICIAL",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+        "sourceId": "edgar:0001045810-26-000069/nvda-20260817.htm",
+        "publisherOrAuthor": "NVIDIA CORPORATION (SEC EDGAR filer, CIK 0001045810)",
+        "publishedAt": "2026-08-21T03:51:15Z",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "MATERIAL_DEFINITIVE_AGREEMENT_AND_DIRECT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "Item 1.01 (verbatim): \"On August 17, 2026, NVIDIA entered into multiple residual value guaranties (collectively, the “Agreements”) with SB Energy (the “Lessor”) relating to leases for approximately 4.25 gigawatts of IT load in the aggregate at the Portsmouth Site.\" and \"NVIDIA’s aggregate payment obligation is cumulatively capped at $105 billion for its initial commitment under the Agreements.\"",
+        "independenceGroup": "official:edgar/0001045810-26-000069",
+        "relation": "ORIGIN",
+        "officialConfirmation": true,
+        "expiresAt": "2026-08-24T03:51:15Z"
+      },
+      {
+        "claimId": "claim-b-002",
+        "sourceClass": "OFFICIAL",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/sbeoainvidia-portsrelease.htm",
+        "sourceId": "edgar:0001045810-26-000069/sbeoainvidia-portsrelease.htm",
+        "publisherOrAuthor": "NVIDIA CORPORATION (Exhibit 99.1, furnished under Item 7.01)",
+        "publishedAt": "2026-08-21T03:51:15Z",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "MATERIAL_DEFINITIVE_AGREEMENT_AND_DIRECT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "Exhibit 99.1 press release announcing the SB Energy partnership, furnished under Item 7.01 Regulation FD.",
+        "independenceGroup": "official:edgar/0001045810-26-000069",
+        "relation": "SUPPORTS",
+        "officialConfirmation": true,
+        "expiresAt": "2026-08-24T03:51:15Z"
+      },
+      {
+        "claimId": "claim-b-003",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": null,
+        "sourceId": "wsj/2026-08-14/nvidia-scales-back-ohio-guarantee",
+        "publisherOrAuthor": "The Wall Street Journal",
+        "publishedAt": "2026-08-17T15:09:42Z",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "As reported by Reuters: NVIDIA has revised its plans and is now expected to initially guarantee less than $120 billion, down from the $250 billion previously discussed.",
+        "independenceGroup": "origin:wsj/2026-08-14/nvda-ohio-guarantee-revision",
+        "relation": "SUPPORTS",
+        "officialConfirmation": true,
+        "expiresAt": "2026-08-20T15:09:42Z"
+      },
+      {
+        "claimId": "claim-b-004",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://finance.yahoo.com/technology/ai/articles/nvidia-scales-back-250-billion-234356524.html",
+        "sourceId": "reuters-via-yahoo/2026-08-14T23:43:56Z/nvidia-scales-back-guarantee",
+        "publisherOrAuthor": "Reuters — Mrinmay Dey (syndicated by Yahoo Finance)",
+        "publishedAt": "2026-08-18T14:53:38Z",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "Attribution (verbatim): \"Nvidia has revised its plans to support a proposed OpenAI data center project in Ohio and is now expected to initially guarantee less than $120 billion, down from the $250 billion previously discussed, the Wall Street Journal reported on Friday, citing people familiar with the matter.\"",
+        "independenceGroup": "origin:wsj/2026-08-14/nvda-ohio-guarantee-revision",
+        "relation": "DUPLICATE",
+        "officialConfirmation": true,
+        "expiresAt": "2026-08-21T14:53:38Z"
+      },
+      {
+        "claimId": "claim-b-005",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://www.theinformation.com/articles/nvidia-talks-invest-3-billion-sb-energy-part-openai-data-center-deal",
+        "sourceId": "theinformation.com/2026-08-15/nvidia-talks-invest-3-billion-sb-energy",
+        "publisherOrAuthor": "The Information — Valida Pau, Ann Davis Vaughan, Phoebe Liu",
+        "publishedAt": "2026-08-18T15:09:42Z",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "STRATEGIC_PARTNERSHIP_OR_INVESTMENT",
+        "claimTextOrPointer": "Headline (verbatim): \"Nvidia in Talks to Invest $3 Billion in SB Energy as Part of OpenAI Data Center Deal\"",
+        "independenceGroup": "origin:theinformation/2026-08-15/nvda-sbenergy-3b",
+        "relation": "SUPPORTS",
+        "officialConfirmation": true,
+        "expiresAt": "2026-08-21T15:09:42Z"
+      },
+      {
+        "claimId": "claim-b-006",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://finance.yahoo.com/technology/ai/articles/nvidia-talks-invest-3-billion-193826586.html",
+        "sourceId": "reuters-via-yahoo/2026-08-15T19:38:26Z/nvidia-talks-invest-3-billion",
+        "publisherOrAuthor": "Reuters (syndicated by Yahoo Finance)",
+        "publishedAt": "2026-08-19T10:48:08Z",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "STRATEGIC_PARTNERSHIP_OR_INVESTMENT",
+        "claimTextOrPointer": "Attribution (verbatim): \"... the Information reported on Saturday, citing people familiar with the discussions.\"",
+        "independenceGroup": "origin:theinformation/2026-08-15/nvda-sbenergy-3b",
+        "relation": "DUPLICATE",
+        "officialConfirmation": true,
+        "expiresAt": "2026-08-22T10:48:08Z"
+      }
+    ],
+    "marketConfirmation": {
+      "status": "CONFIRMED",
+      "observedAt": "2026-08-21T03:51:15.000Z",
+      "blockNumber": "68515239",
+      "fresh": true,
+      "antiWickSatisfied": true,
+      "okxReferencePrice": null,
+      "xLayerPoolPrice": "97",
+      "basisBps": null,
+      "drawdownBps": "300",
+      "tradeVelocity": "0",
+      "executableExitDepth": "14.93434387",
+      "reasonCodes": [
+        "MARKET_CONFIRMED",
+        "MARKET_DATA_UNAVAILABLE",
+        "REFERENCE_MARKET_CLOSED"
+      ]
+    },
+    "action": {
+      "authorized": true,
+      "status": "PENDING",
+      "baseFee": "500",
+      "maxFee": "20000",
+      "requestedFee": "20000",
+      "appliedFee": null,
+      "maximumDurationSec": 21600,
+      "txHash": null,
+      "failureReason": null
+    }
+  },
+  "evidenceGraph": {
+    "schemaVersion": "tinjau.evidence-graph/1.0.0",
+    "eventKey": "tinjau.demo/B-confirmed-protect-constructed",
+    "label": "NVIDIA 8-K — contingent financial obligation (constructed market leg)",
+    "assessedAt": "2026-08-21T03:51:15.000Z",
+    "evidenceWindowSeconds": 259200,
+    "resolution": {
+      "outcome": "RESOLVED",
+      "asset": {
+        "company": "NVIDIA CORPORATION",
+        "cik": "0001045810",
+        "ticker": "NVDA",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "tokenName": "Wrapped NVIDIA xStock",
+        "decimals": 18,
+        "chainId": 196,
+        "poolAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+        "quoteSymbol": "USDG",
+        "hasIndexFeed": true,
+        "supported": true,
+        "supportNote": "The token in the USDG reference pool and the one the OKX index poller samples. This is the only NVDA-linked asset on X Layer with both an observable market and a reference price."
+      },
+      "candidates": [
+        {
+          "company": "NVIDIA CORPORATION",
+          "cik": "0001045810",
+          "ticker": "NVDA",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "tokenName": "Wrapped NVIDIA xStock",
+          "decimals": 18,
+          "chainId": 196,
+          "poolAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+          "quoteSymbol": "USDG",
+          "hasIndexFeed": true,
+          "supported": true,
+          "supportNote": "The token in the USDG reference pool and the one the OKX index poller samples. This is the only NVDA-linked asset on X Layer with both an observable market and a reference price."
+        }
+      ],
+      "explanation": "NVIDIA CORPORATION resolves to wNVDAx (0xa8ddb5cd96b5222afe198316e9a57caa642850d5) in pool 0x2a2b11730c2b6d99a58034a869dd810d7300a7b2.",
+      "mayAuthorizeAction": true
+    },
+    "claims": [
+      {
+        "claimId": "claim-b-001",
+        "sourceClass": "OFFICIAL",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+        "sourceId": "edgar:0001045810-26-000069/nvda-20260817.htm",
+        "publisherOrAuthor": "NVIDIA CORPORATION (SEC EDGAR filer, CIK 0001045810)",
+        "publishedAt": "2026-08-21T03:51:15Z",
+        "publishedAtPrecision": "SECOND",
+        "sourceContentSha256": "1c480e3320f3171e6ac1979a50eecb123d4150637c7b769444d16faf97928133",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "MATERIAL_DEFINITIVE_AGREEMENT_AND_DIRECT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "Item 1.01 (verbatim): \"On August 17, 2026, NVIDIA entered into multiple residual value guaranties (collectively, the “Agreements”) with SB Energy (the “Lessor”) relating to leases for approximately 4.25 gigawatts of IT load in the aggregate at the Portsmouth Site.\" and \"NVIDIA’s aggregate payment obligation is cumulatively capped at $105 billion for its initial commitment under the Agreements.\"",
+        "assertionLevel": "ASSERTED",
+        "describesCompletedEvent": true,
+        "speculationMarkers": [],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "official:edgar/0001045810-26-000069",
+        "relation": "ORIGIN",
+        "officialConfirmation": true,
+        "expiresAt": "2026-08-24T03:51:15Z",
+        "materiality": "MATERIAL",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      {
+        "claimId": "claim-b-002",
+        "sourceClass": "OFFICIAL",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/sbeoainvidia-portsrelease.htm",
+        "sourceId": "edgar:0001045810-26-000069/sbeoainvidia-portsrelease.htm",
+        "publisherOrAuthor": "NVIDIA CORPORATION (Exhibit 99.1, furnished under Item 7.01)",
+        "publishedAt": "2026-08-21T03:51:15Z",
+        "publishedAtPrecision": "SECOND",
+        "sourceContentSha256": "e3c39df5be133417c6f3b097cf6f81a5f502443bc4203eba55275fe2ad96f096",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "MATERIAL_DEFINITIVE_AGREEMENT_AND_DIRECT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "Exhibit 99.1 press release announcing the SB Energy partnership, furnished under Item 7.01 Regulation FD.",
+        "assertionLevel": "ASSERTED",
+        "describesCompletedEvent": true,
+        "speculationMarkers": [],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "official:edgar/0001045810-26-000069",
+        "relation": "SUPPORTS",
+        "officialConfirmation": true,
+        "expiresAt": "2026-08-24T03:51:15Z",
+        "materiality": "MATERIAL",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      {
+        "claimId": "claim-b-003",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": null,
+        "sourceId": "wsj/2026-08-14/nvidia-scales-back-ohio-guarantee",
+        "publisherOrAuthor": "The Wall Street Journal",
+        "publishedAt": "2026-08-17T15:09:42Z",
+        "publishedAtPrecision": "DAY",
+        "sourceContentSha256": null,
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "As reported by Reuters: NVIDIA has revised its plans and is now expected to initially guarantee less than $120 billion, down from the $250 billion previously discussed.",
+        "assertionLevel": "SPECULATIVE",
+        "describesCompletedEvent": false,
+        "speculationMarkers": [
+          "expected to"
+        ],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "origin:wsj/2026-08-14/nvda-ohio-guarantee-revision",
+        "relation": "SUPPORTS",
+        "officialConfirmation": true,
+        "expiresAt": "2026-08-20T15:09:42Z",
+        "materiality": "MATERIAL",
+        "provenanceViolations": [
+          "MISSING_URL_FOR_NON_SIMULATED"
+        ],
+        "promotable": false
+      },
+      {
+        "claimId": "claim-b-004",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://finance.yahoo.com/technology/ai/articles/nvidia-scales-back-250-billion-234356524.html",
+        "sourceId": "reuters-via-yahoo/2026-08-14T23:43:56Z/nvidia-scales-back-guarantee",
+        "publisherOrAuthor": "Reuters — Mrinmay Dey (syndicated by Yahoo Finance)",
+        "publishedAt": "2026-08-18T14:53:38Z",
+        "publishedAtPrecision": "SECOND",
+        "sourceContentSha256": null,
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+        "claimTextOrPointer": "Attribution (verbatim): \"Nvidia has revised its plans to support a proposed OpenAI data center project in Ohio and is now expected to initially guarantee less than $120 billion, down from the $250 billion previously discussed, the Wall Street Journal reported on Friday, citing people familiar with the matter.\"",
+        "assertionLevel": "REPORTED_UNVERIFIED",
+        "describesCompletedEvent": false,
+        "speculationMarkers": [
+          "people familiar",
+          "citing people",
+          "expected to",
+          "plans to",
+          "proposed"
+        ],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "origin:wsj/2026-08-14/nvda-ohio-guarantee-revision",
+        "relation": "DUPLICATE",
+        "officialConfirmation": true,
+        "expiresAt": "2026-08-21T14:53:38Z",
+        "materiality": "MATERIAL",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      {
+        "claimId": "claim-b-005",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://www.theinformation.com/articles/nvidia-talks-invest-3-billion-sb-energy-part-openai-data-center-deal",
+        "sourceId": "theinformation.com/2026-08-15/nvidia-talks-invest-3-billion-sb-energy",
+        "publisherOrAuthor": "The Information — Valida Pau, Ann Davis Vaughan, Phoebe Liu",
+        "publishedAt": "2026-08-18T15:09:42Z",
+        "publishedAtPrecision": "DAY",
+        "sourceContentSha256": null,
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "STRATEGIC_PARTNERSHIP_OR_INVESTMENT",
+        "claimTextOrPointer": "Headline (verbatim): \"Nvidia in Talks to Invest $3 Billion in SB Energy as Part of OpenAI Data Center Deal\"",
+        "assertionLevel": "SPECULATIVE",
+        "describesCompletedEvent": false,
+        "speculationMarkers": [
+          "in talks"
+        ],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "origin:theinformation/2026-08-15/nvda-sbenergy-3b",
+        "relation": "SUPPORTS",
+        "officialConfirmation": true,
+        "expiresAt": "2026-08-21T15:09:42Z",
+        "materiality": "MATERIAL",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      {
+        "claimId": "claim-b-006",
+        "sourceClass": "NEWS",
+        "dataMode": "REPLAY",
+        "sourceUrl": "https://finance.yahoo.com/technology/ai/articles/nvidia-talks-invest-3-billion-193826586.html",
+        "sourceId": "reuters-via-yahoo/2026-08-15T19:38:26Z/nvidia-talks-invest-3-billion",
+        "publisherOrAuthor": "Reuters (syndicated by Yahoo Finance)",
+        "publishedAt": "2026-08-19T10:48:08Z",
+        "publishedAtPrecision": "SECOND",
+        "sourceContentSha256": null,
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "STRATEGIC_PARTNERSHIP_OR_INVESTMENT",
+        "claimTextOrPointer": "Attribution (verbatim): \"... the Information reported on Saturday, citing people familiar with the discussions.\"",
+        "assertionLevel": "REPORTED_UNVERIFIED",
+        "describesCompletedEvent": false,
+        "speculationMarkers": [
+          "people familiar",
+          "citing people"
+        ],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "origin:theinformation/2026-08-15/nvda-sbenergy-3b",
+        "relation": "DUPLICATE",
+        "officialConfirmation": true,
+        "expiresAt": "2026-08-22T10:48:08Z",
+        "materiality": "MATERIAL",
+        "provenanceViolations": [],
+        "promotable": true
+      }
+    ],
+    "independence": [
+      {
+        "claimId": "claim-b-001",
+        "derivedOriginKey": "unrecognised:edgar:0001045810-26-000069",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "official:edgar/0001045810-26-000069",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "claim-b-002",
+        "derivedOriginKey": "unrecognised:edgar:0001045810-26-000069",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "official:edgar/0001045810-26-000069",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "claim-b-003",
+        "derivedOriginKey": "wsj",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "origin:wsj/2026-08-14/nvda-ohio-guarantee-revision",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "claim-b-004",
+        "derivedOriginKey": "wsj",
+        "isSyndication": true,
+        "attributedTo": "wsj",
+        "evidence": "the Wall Street Journal reported",
+        "relaysUnnamedReport": false,
+        "declaredGroup": "origin:wsj/2026-08-14/nvda-ohio-guarantee-revision",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "claim-b-005",
+        "derivedOriginKey": "theinformation",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "origin:theinformation/2026-08-15/nvda-sbenergy-3b",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "claim-b-006",
+        "derivedOriginKey": "theinformation",
+        "isSyndication": true,
+        "attributedTo": "theinformation",
+        "evidence": "the Information reported",
+        "relaysUnnamedReport": false,
+        "declaredGroup": "origin:theinformation/2026-08-15/nvda-sbenergy-3b",
+        "disagreesWithDeclared": false
+      }
+    ],
+    "selfRevision": [
+      {
+        "originKey": "unrecognised:edgar:0001045810-26-000069",
+        "revised": false,
+        "amounts": [
+          {
+            "claimId": "claim-b-001",
+            "amount": {
+              "value": 105000000000,
+              "text": "$105 billion"
+            }
+          }
+        ],
+        "explanation": "Source line \"unrecognised:edgar:0001045810-26-000069\" stated a consistent figure."
+      },
+      {
+        "originKey": "wsj",
+        "revised": true,
+        "amounts": [
+          {
+            "claimId": "claim-b-003",
+            "amount": {
+              "value": 120000000000,
+              "text": "$120 billion"
+            }
+          },
+          {
+            "claimId": "claim-b-003",
+            "amount": {
+              "value": 250000000000,
+              "text": "$250 billion"
+            }
+          },
+          {
+            "claimId": "claim-b-004",
+            "amount": {
+              "value": 120000000000,
+              "text": "$120 billion"
+            }
+          },
+          {
+            "claimId": "claim-b-004",
+            "amount": {
+              "value": 250000000000,
+              "text": "$250 billion"
+            }
+          }
+        ],
+        "explanation": "Source line \"wsj\" stated 2 different figures for this event ($120,000,000,000, $250,000,000,000). It may support monitoring, but cannot count toward independent corroboration."
+      },
+      {
+        "originKey": "theinformation",
+        "revised": false,
+        "amounts": [
+          {
+            "claimId": "claim-b-005",
+            "amount": {
+              "value": 3000000000,
+              "text": "$3 Billion"
+            }
+          }
+        ],
+        "explanation": "Source line \"theinformation\" stated a consistent figure."
+      }
+    ],
+    "recency": [
+      {
+        "claimId": "claim-b-001",
+        "ageSeconds": 0,
+        "withinWindow": true,
+        "fromFuture": false
+      },
+      {
+        "claimId": "claim-b-002",
+        "ageSeconds": 0,
+        "withinWindow": true,
+        "fromFuture": false
+      },
+      {
+        "claimId": "claim-b-003",
+        "ageSeconds": 304893,
+        "withinWindow": false,
+        "fromFuture": false
+      },
+      {
+        "claimId": "claim-b-004",
+        "ageSeconds": 219457,
+        "withinWindow": true,
+        "fromFuture": false
+      },
+      {
+        "claimId": "claim-b-005",
+        "ageSeconds": 218493,
+        "withinWindow": true,
+        "fromFuture": false
+      },
+      {
+        "claimId": "claim-b-006",
+        "ageSeconds": 147787,
+        "withinWindow": true,
+        "fromFuture": false
+      }
+    ],
+    "independentOriginCount": 3,
+    "usableOriginCount": 2,
+    "revisedOriginKeys": [
+      "wsj"
+    ],
+    "confidenceFactors": [
+      {
+        "code": "SYNDICATION_DETECTED",
+        "direction": "LOWERS",
+        "explanation": "2 claim(s) attribute their reporting to another outlet, so they were collapsed into that origin rather than counted separately.",
+        "claimIds": [
+          "claim-b-004",
+          "claim-b-006"
+        ]
+      },
+      {
+        "code": "MULTIPLE_INDEPENDENT_ORIGINS",
+        "direction": "RAISES",
+        "explanation": "2 genuinely independent origins report this event.",
+        "claimIds": [
+          "claim-b-001",
+          "claim-b-002",
+          "claim-b-004",
+          "claim-b-005",
+          "claim-b-006"
+        ]
+      },
+      {
+        "code": "SELF_REVISED_SOURCE",
+        "direction": "LOWERS",
+        "explanation": "Source line \"wsj\" stated 2 different figures for this event ($120,000,000,000, $250,000,000,000). It may support monitoring, but cannot count toward independent corroboration.",
+        "claimIds": [
+          "claim-b-003",
+          "claim-b-003",
+          "claim-b-004",
+          "claim-b-004"
+        ]
+      },
+      {
+        "code": "STALE_EVIDENCE_PRESENT",
+        "direction": "LOWERS",
+        "explanation": "1 claim(s) fall outside the evidence window and do not count.",
+        "claimIds": [
+          "claim-b-003"
+        ]
+      },
+      {
+        "code": "OFFICIAL_CONFIRMATION_PRESENT",
+        "direction": "RAISES",
+        "explanation": "2 official filing(s) are present in the evidence window.",
+        "claimIds": [
+          "claim-b-001",
+          "claim-b-002"
+        ]
+      },
+      {
+        "code": "UNVERIFIED_ATTRIBUTION",
+        "direction": "LOWERS",
+        "explanation": "2 claim(s) rest on unnamed sources or were explicitly not verified by the publisher.",
+        "claimIds": [
+          "claim-b-004",
+          "claim-b-006"
+        ]
+      }
+    ],
+    "rejectedProposals": []
+  },
+  "ruleVersions": {
+    "schema": "tinjau.risk/1.0.0",
+    "policy": "tinjau.policy/1.0.0",
+    "confirmation": "tinjau.confirm/2.0.0",
+    "evidenceCommitment": "tinjau.evidence-commitment/1.0.0",
+    "assessmentId": "tinjau.assessment-id/1.0.0"
+  },
+  "derived": {
+    "postable": true,
+    "policyTargetFee": 20000,
+    "effectiveConfirmation": "CONFIRMED",
+    "protectStartedAt": 1787284275,
+    "remainingProtectSec": 21600
+  },
+  "onChain": {
+    "status": "POSTED_ON_X_LAYER_TESTNET",
+    "addressStatus": "T4.2 working addresses — not final; T7.2 owns the authoritative list",
+    "chainId": 1952,
+    "networkLabel": "x-layer-testnet",
+    "registry": "0x1a1e17306f789f5Ec7012B1E2CB866DeDB61E2b1",
+    "hook": "0xAb448f70fE44fbbF5f41225F7797fcC7e56c2080",
+    "poolId": "0x3b3942b682bd59383474974127140a3f0b0c2dff946b8164341c4812985a4a8c",
+    "envelope": {
+      "baseFee": 500,
+      "maxFee": 20000,
+      "widenDuration": 60,
+      "decayDuration": 300,
+      "maxProtectDuration": 360,
+      "cooldown": 60,
+      "demoEnvelope": true
+    },
+    "envelopeNote": "This is the 60x-COMPRESSED DEMO envelope (widen 60 s, decay 300 s, cap 360 s, cooldown 60 s). X Layer Testnet exposes no evm_increaseTime, so the production envelope's 21,600 s recovery cannot be watched live. The compression preserves the invariants cap == widen + decay and cooldown == widen. The production-envelope stack is deployed too and is the one deployed-addresses.json marks as the production envelope.",
+    "assetRemap": {
+      "canonicalAsset": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "deployedStandIn": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
+      "chainId": 1952,
+      "note": "The decision resolved the canonical asset on X Layer mainnet (chain 196). This chain carries a freely-mintable mock standing in for it in a BUILDER-CONTROLLED pool. Only the `asset` field was remapped; the decision itself is unmodified."
+    },
+    "steps": [
+      {
+        "step": "compare:canonical-vs-constructed",
+        "atUnixSeconds": 1787284275,
+        "txHash": null,
+        "note": "The real mainnet replay of this scenario resolves to WATCH (T3.3, published). This is precisely what the constructed market leg changed, and nothing else."
+      },
+      {
+        "step": "decide",
+        "atUnixSeconds": 1787284275,
+        "txHash": null,
+        "note": "CONSTRUCTED market leg on the builder-controlled pool, real replayed evidence. The price path was fed to the real confirmation engine; the CONFIRMED verdict is the engine's, not a hand-set value."
+      },
+      {
+        "step": "postAssessment",
+        "atUnixSeconds": 1787284279,
+        "txHash": "0x659cb5553e2f53364445bdc4521dee3e87843b59d31f5861c0e196d471b3be7b",
+        "note": "The registry re-checks confirmation, the rumour bit, pause and cooldown on chain."
+      },
+      {
+        "step": "readback",
+        "atUnixSeconds": 1787284279,
+        "txHash": null,
+        "note": "Registry state and pool fee must agree — checked, not assumed."
+      },
+      {
+        "step": "swap:widened",
+        "atUnixSeconds": 1787284279,
+        "txHash": "0x2e313c44bae3112cbb3c2430cf0e5e745327c197b54697f9f1e1ccca7df3f787",
+        "note": "The bounded action, actually charged."
+      },
+      {
+        "step": "swap:mid-decay",
+        "atUnixSeconds": 1787284497,
+        "txHash": "0x93ae1e2470eec2e0d42cf4a252d8ab5363636387f963e7770b132adfe7e17bab",
+        "note": "Advanced 210s (widen + half the decay window). No transaction changed the record."
+      },
+      {
+        "step": "swap:recovered",
+        "atUnixSeconds": 1787284653,
+        "txHash": "0xcf229e22b8af4b4841437d57bee33af31edb5fbebbb79178cd9d36ac8546b7c0",
+        "note": "Deterministic recovery: no LLM, no keeper, no transaction ended this. Only time passed. The stored record still reads PROTECT — expiry is applied at read time, not by erasing history."
+      },
+      {
+        "step": "postAssessment:stand-down",
+        "atUnixSeconds": 1787284655,
+        "txHash": "0x85e854b34937b7857c8f32a0e1e2e19b445b41460c75b7c867a0bb448f2cfa46",
+        "note": "Explicit stand-down. This is what starts the cooldown clock."
+      },
+      {
+        "step": "postAssessment:blocked-by-cooldown",
+        "atUnixSeconds": 1787284659,
+        "txHash": null,
+        "note": "Immediate re-arming is refused on chain, by the contract, not by the off-chain engine."
+      }
+    ],
+    "passed": true
+  },
+  "action": {
+    "authorizedByEvidence": true,
+    "requestedFeePips": "20000",
+    "appliedFeePips": "20000",
+    "appliedTxHash": "0x2e313c44bae3112cbb3c2430cf0e5e745327c197b54697f9f1e1ccca7df3f787",
+    "feeSource": "PoolManager Swap event — what the pool charged, not what the hook returned"
+  },
+  "recovery": {
+    "method": "DETERMINISTIC_TIME_DECAY",
+    "keeperTransactionRequired": false,
+    "llmInvolved": false,
+    "measured": [
+      {
+        "label": "widened",
+        "atUnixSeconds": 1787284279,
+        "appliedFee": 20000,
+        "previewedFee": 20000,
+        "txHash": "0x2e313c44bae3112cbb3c2430cf0e5e745327c197b54697f9f1e1ccca7df3f787"
+      },
+      {
+        "label": "mid-decay",
+        "atUnixSeconds": 1787284497,
+        "appliedFee": 9470,
+        "previewedFee": 9730,
+        "txHash": "0x93ae1e2470eec2e0d42cf4a252d8ab5363636387f963e7770b132adfe7e17bab"
+      },
+      {
+        "label": "recovered",
+        "atUnixSeconds": 1787284653,
+        "appliedFee": 500,
+        "previewedFee": 500,
+        "txHash": "0xcf229e22b8af4b4841437d57bee33af31edb5fbebbb79178cd9d36ac8546b7c0"
+      }
+    ],
+    "previewIsUpperBound": "previewedFee 9730 vs appliedFee 9470 mid-decay is NOT a discrepancy. The fee is continuous in time and seconds elapse between the quote and inclusion, so a quoted fee is an upper bound while decaying.",
+    "storedVsEffective": "After recovery the STORED record still reads PROTECT. Expiry is applied at read time rather than by erasing history, so a consumer must read effectiveState, not the raw record.",
+    "cooldown": {
+      "seconds": 60,
+      "provenOnChain": true,
+      "evidence": "postAssessment:blocked-by-cooldown reverted with CooldownActive — refused by the contract, not by the off-chain engine."
+    }
+  },
+  "failedActionCase": {
+    "scene": "F",
+    "purpose": "A failed action stays visible and claims no protection benefit (§0.11).",
+    "inducedBy": "A real guardian pause, refused on chain with ProtectionPaused.",
+    "actionStatus": "FAILED",
+    "feeAfterFailure": 500,
+    "feeAfterFailureTxHash": "0x6932b3e722ea1ec213955a189656b23408c2b6e254c82949c03eedc79a99a095",
+    "steps": [
+      {
+        "step": "guardian:pause",
+        "atUnixSeconds": 1787284670,
+        "txHash": "0xcde601502330cd606c15395910c1c7ea9951ca88ff3b5ab0586a4eb579686d47",
+        "note": "The guardian pauses new protections. This is the failure this scene induces."
+      },
+      {
+        "step": "postAssessment:failed",
+        "atUnixSeconds": 1787284670,
+        "txHash": null,
+        "note": "The action was authorised by the evidence and REFUSED on chain. Both facts are recorded. No protection benefit may be claimed for this interval."
+      },
+      {
+        "step": "swap:after-failure",
+        "atUnixSeconds": 1787284671,
+        "txHash": "0x6932b3e722ea1ec213955a189656b23408c2b6e254c82949c03eedc79a99a095",
+        "note": "Measured proof that the failed action produced no fee change."
+      },
+      {
+        "step": "guardian:unpause",
+        "atUnixSeconds": 1787284678,
+        "txHash": "0x8065953c7c57f86b5f6709415d228c23e66fdd848019976e7ff97ccb5ed41f70",
+        "note": "Restored, so this scene leaves no state behind for the next one."
+      }
+    ]
+  },
+  "limitations": [
+    "THE MARKET LEG IS CONSTRUCTED. The canonical replay of this same evidence is WATCH.",
+    "The pool is BUILDER-CONTROLLED test liquidity with mock tokens on chain 1952. It demonstrates enforcement; it is not a market.",
+    "The OKX leg is UNAVAILABLE here as well. No dual-confirmation claim is available.",
+    "The record's on-chain dataMode is derived from the EVIDENCE only (REPLAY), so it cannot express 'evidence replayed, market constructed'. That distinction lives in provenance.marketLeg and criticalCaveat, not in dataMode.",
+    "The asset field was remapped from the canonical mainnet wNVDAx to a freely-mintable mock on chain 1952. Only the asset field was remapped; the decision itself is unmodified.",
+    "The recovery was demonstrated under the compressed DEMO envelope. The production envelope is deployed but its 21,600 s recovery was not watched live, because X Layer Testnet has no evm_increaseTime.",
+    "No protection benefit is claimed for any interval here. See three-policy-comparison.json: canClaimLossAvoided is false."
+  ]
+}

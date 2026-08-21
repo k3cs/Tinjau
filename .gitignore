@@ -9,15 +9,22 @@ node_modules/
 # Local tool state (not part of the AFTERHOURS deliverable)
 .impeccable/
 .superstack/
+.superpowers/
 
-# contracts/ is its own independent git repo (Foundry's `forge install` sets up
-# lib/ dependencies as real git submodules of that repo, verified working —
-# see DECISIONS.md/deviations log). It gets its own GitHub repo when publishing
-# and is linked from this repo's README rather than nested here.
-contracts/
+# contracts/ was previously its own independent git repo, excluded from here and
+# intended for a separate GitHub repo linked from the README. That separation was
+# reversed on 2026-08-21: it meant a judge cloning this repository received zero
+# Solidity, no deployment receipts, and could not run `forge test`. The source is
+# ~340 KB; contracts/.gitignore already excludes lib/, out/ and cache/, so only
+# src/, test/, script/ and broadcast/ are committed here.
+contracts/lib/
+contracts/out/
+contracts/cache/
 
 # Build artifacts
 apps/*/dist/
 apps/*/.next/
 apps/*/out/
 *.tsbuildinfo
+.vercel
+.env*

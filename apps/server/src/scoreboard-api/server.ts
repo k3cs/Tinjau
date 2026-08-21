@@ -33,6 +33,7 @@ import { createServer as createHttpServer, type IncomingMessage, type ServerResp
 import { getPublicClient, getRegistryAddress, withRpcRetry } from "../chain/client.js";
 import { EVENT_STATE_REGISTRY_ABI } from "../chain/registryAbi.js";
 import { computeReactionForTicker, type ReactionResult } from "../studies/scoreboardReaction.js";
+import { classifyEventProvenance, type EventProvenance } from "./provenance.js";
 
 // ---------------------------------------------------------------------------
 // Token address -> tracked ticker (reverse of the mainnet/testnet tables in
@@ -62,6 +63,8 @@ interface RawRegistryEvent {
   token: string;
   eventTypeLabel: string;
   timestamp: bigint;
+  sourceUrl: string;
+  sourceContentHash: string;
 }
 
 async function fetchAllEventsReadOnly(): Promise<RawRegistryEvent[]> {
@@ -89,8 +92,21 @@ async function fetchAllEventsReadOnly(): Promise<RawRegistryEvent[]> {
           args: [id],
         }),
       );
-      const ev = event as unknown as { token: string; eventTypeLabel: string; timestamp: bigint };
-      return { id, token: ev.token, eventTypeLabel: ev.eventTypeLabel, timestamp: ev.timestamp };
+      const ev = event as unknown as {
+        token: string;
+        eventTypeLabel: string;
+        timestamp: bigint;
+        sourceUrl: string;
+        sourceContentHash: string;
+      };
+      return {
+        id,
+        token: ev.token,
+        eventTypeLabel: ev.eventTypeLabel,
+        timestamp: ev.timestamp,
+        sourceUrl: ev.sourceUrl,
+        sourceContentHash: ev.sourceContentHash,
+      };
     }),
   );
 }
@@ -103,6 +119,15 @@ export interface ScoreboardEntry {
   postTimeSec: number;
   postTimeIso: string;
   reaction: ReactionResult;
+  /**
+   * Where this event's underlying document came from, derived from the `sourceUrl` and
+   * `sourceContentHash` the registry already commits on chain (task T0.5).
+   *
+   * This field is additive — every pre-existing field above keeps its shape — but consumers
+   * MUST render it. Without it, a fabricated test filing is indistinguishable from a real
+   * SEC one, which is exactly the defect T0.1 found on the public API.
+   */
+  provenance: EventProvenance;
 }
 
 /** Reads every posted registry event and joins each against its index-reaction result. */
@@ -123,6 +148,7 @@ export async function buildScoreboard(
       postTimeSec,
       postTimeIso: new Date(postTimeSec * 1000).toISOString(),
       reaction,
+      provenance: classifyEventProvenance(ev.sourceUrl, ev.sourceContentHash),
     };
   });
 }

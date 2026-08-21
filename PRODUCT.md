@@ -30,6 +30,18 @@ Success for the MVP is a reproducible three-scene proof:
 2. a qualifying event with fresh market confirmation reaches `PROTECT`, applies a bounded fee, expires or decays, and returns to `NORMAL`;
 3. the same replay input is compared honestly under static, volatility-only, and Tinjau policies.
 
+### The measured result (T5.4 / T5.5, 2026-08-21)
+
+All three scenes ran, and the third one did not go Tinjau's way. This is the governing fact for every piece of copy in the product.
+
+- **Tinjau never promotes to `PROTECT` on any of the four frozen replay scenarios**, at any threshold in the sensitivity grid. Its fee stays at base throughout, so its replayed economics are **identical to the static do-nothing policy, not better**.
+- **`canClaimLossAvoided` is `false`.** "Beats" means strictly greater and a tie is not a win. No surface may claim "Tinjau reduces LP loss".
+- **On markout the benchmark cannot determine which policy did better.** All 27 comparable cells flip sign between the pre-registered metric and a post-hoc consistent-fee-basis metric. The benchmark brackets the answer and the bracket spans the sign; neither basis is clean.
+- **Scenario B, the confirmed-event showcase, resolves to `WATCH`** on canonical mainnet data. The only observed `PROTECT` interval exists on the builder-controlled X Layer Testnet stack with a **constructed** market leg, so it demonstrates enforcement rather than benefit.
+- **The claim that survives is behavioural:** Tinjau declined to act on two large price moves because neither had a qualifying cause, and one of them a volatility-only policy would have traded on at every `k` in the grid. That is restraint, not protection, and it arrives from the neutral control rather than from the showcase.
+
+Artifacts: `docs/buildx-orion-2026/outputs/05-build/three-policy-benchmark.{md,json}`, `proof-of-protection.json`, `t5-5-proof-of-protection.md`.
+
 ## Positioning
 
 Tinjau combines five observable mechanisms that neighboring products cannot copy by changing marketing copy alone:
@@ -40,7 +52,11 @@ Tinjau combines five observable mechanisms that neighboring products cannot copy
 4. tokenized-equity-aware mapping, market context, pool flow, basis, and exit depth;
 5. measured three-policy outcomes over identical inputs.
 
-The safe public claim is narrow: no complete public product with the exact reviewed combination of source-grounded tokenized-equity evidence, rumor containment, OKX/X Layer confirmation, bounded LP action, deterministic recovery, and measured three-policy outcome was found. Tinjau must not claim to be the first AI dynamic-fee hook, first corporate-action oracle, first on-chain risk registry, or first self-protecting pool.
+Every one of those five mechanisms has prior art, and the product narrative must say so before it says anything else. Corporate-action extraction is occupied by Chainlink and 24 institutions; news and event intelligence by RavenPack-class providers; AI or telemetry-driven Uniswap v4 fee control by RiskClaw, NeuralHook, Sentinel Agent, UniBrain and AnchorHookV4; automated on-chain risk response by Hypernative and Chaos Labs; adverse-selection AMM design by volatility, TWAP, flow-aware and cross-venue mechanisms including Arrakis HOT; RWA position protection by Argus on Mantle. Tinjau's ground is the combination and the domain, not any single layer.
+
+The safe public claim is narrow: no complete public product with the exact reviewed combination of source-grounded tokenized-equity evidence, rumor containment, OKX/X Layer confirmation, bounded LP action, deterministic recovery, and measured three-policy outcome was found. "Not found" means not found in the public documentation reviewed on 2026-08-20; it is not evidence that no such system exists privately. Tinjau must not claim to be the first AI dynamic-fee hook, first corporate-action oracle, first on-chain risk registry, first CEX/DEX risk agent, or first self-protecting pool, and must not present the Evidence Graph as a moat.
+
+The narrative order for every judge-facing surface is `problem → alternatives → Tinjau addition → proof → X Layer ecosystem value`. The claim-to-artifact map and the full competitor matrix live in `docs/buildx-orion-2026/outputs/05-build/t6-4-claims-and-competitive-position.md`; the repository `README.md` follows the same order.
 
 ## Operating Context
 
@@ -60,7 +76,9 @@ There are two trust domains. AI may parse ambiguous language, resolve entities, 
 
 The Hackathon MVP deliberately uses immutable source-linked replay fixtures for financial news and simulated social rumor input. This proves normalization and safety behavior; it does not prove live news discovery, live social monitoring, or real-time source coverage.
 
-The frontend depends on a versioned handoff under `docs/buildx-orion-2026/outputs/05-build/frontend-handoff/`. A draft `risk-record.schema.json` is present in the working tree, but the required handoff is not complete and T1.1 is not yet verified complete in the tracker. Until the remaining schemas and fixtures arrive, frontend design may use only clearly labeled structural placeholders derived from the tracker, never inferred backend claims.
+The frontend depends on a versioned handoff under `docs/buildx-orion-2026/outputs/05-build/frontend-handoff/`, whose contents and completeness status are stated in that directory's own `README.md`. Frontend design may build only against artifacts that directory marks as ready; anything it marks as pending must appear as a clearly labeled structural placeholder, never as an inferred backend claim.
+
+The Proof of Protection schema and record are published one level up, at `docs/buildx-orion-2026/outputs/05-build/proof-of-protection.schema.json` and `proof-of-protection.json`, with a readable companion in `t5-5-proof-of-protection.md`. Two rules bind any surface that renders that record: `observedOnChainProtection` and `replayedCounterfactualBaselines` must never share a visual treatment, a total, or an axis, because they are different chains, different pools, and different epistemic status; and the record's `_READ_THIS_FIRST` block must be rendered wherever the record is rendered, because it is the sentence that stops a constructed interval being read as a result.
 
 ## Capabilities and Constraints
 
@@ -97,13 +115,17 @@ The frontend depends on a versioned handoff under `docs/buildx-orion-2026/output
 - Frozen scenario evidence: `docs/buildx-orion-2026/outputs/04-planning/t0-2-frozen-scenarios.md` and `apps/server/scenarios/`.
 - Frozen benchmark method: `docs/buildx-orion-2026/outputs/04-planning/t0-4-benchmark-preregistration.md` and `apps/server/scenarios/benchmark-preregistration.json`.
 - Scenario A is a rumor-containment and false-rumor safety case. Its social rumor is `SIMULATED`, and its market window has no economic row.
-- Scenario B is a source-linked SEC 8-K replay that may reach `PROTECT` only when the final market-confirmation conditions pass.
-- Scenario C is a deliberately unresolved two-origin hard case whose rule must be frozen before market scoring.
-- Scenario D is a neutral Form 4 control and economic false-positive probe.
+- Scenario B is a source-linked SEC 8-K replay. **Measured outcome: it resolves to `WATCH`, not `PROTECT`** — its 235 bps drawdown retains only 13% after five minutes, so the market leg is `NOT_CONFIRMED`. The verdict was tested against the correction that would have favored it and got weaker, not stronger.
+- Scenario C is a two-origin hard case. Its rule was frozen before market scoring: a source line that materially revised its own quantitative claim inside the window may support `WATCH` but may not corroborate. It resolves to `WATCH`.
+- Scenario D is a neutral Form 4 control and economic false-positive probe. **It moved more (241 bps) than the material 8-K (235 bps)**, and the volatility-only baseline fires on it at every `k` while Tinjau declines it twice.
 - The frozen reference asset is wNVDAx on X Layer mainnet. A documented NVDAx/wNVDAx mapping defect must be resolved before asset mapping can authorize action.
+- The OKX leg of market confirmation is `UNAVAILABLE` for all four frozen scenarios. **No surface may describe any replayed scenario as dual OKX/X Layer confirmation.**
+- On-chain evidence exists on X Layer Testnet chain 1952 (`t4-demo-manifest-xlayer-testnet.json`): a bounded fee of 20,000 pips actually charged, decay to 9,470, deterministic recovery to 500 with no keeper transaction, cooldown refused on chain, and a guardian-paused action recorded as failed with no fee change. The pool is **builder-controlled** with valueless mock tokens, the run used a 60x-compressed demo envelope, and every address is a **T4.2 working address, not final**.
+- Executable exit depth is a lower bound, and the mainnet pool is extraordinarily thin: 0.53-2.29 wNVDAx (~$120-$517) provably quotable within one tick range. Do not present exit-depth figures as representative of a liquid market.
+- X Layer's public RPC serves stale reads, measured 2,519-2,746 ms convergence lag per write. A naive consumer can read `NORMAL` while a `PROTECT` is live.
 - Existing contracts, registry records, studies, and `Afterhours*` identifiers are historical implementation evidence. They are not proof that the final `NORMAL/WATCH/PROTECT` flow, final handoff, or final UI is already implemented.
-- The mandatory frontend handoff is incomplete: a draft risk-record schema is present, while the remaining schemas, final scenario payloads, deployment evidence, limitations record, and T4/T5 outcomes are still pending. The UI must not fabricate them.
-- No customer, protected-TVL, production-adoption, revenue, or loss-avoided evidence exists. Do not fabricate any of these.
+- Handoff completeness is stated in `docs/buildx-orion-2026/outputs/05-build/frontend-handoff/README.md`, which is the authority on what may be built against. The UI must not fabricate anything that directory marks as pending.
+- No customer, protected-TVL, production-adoption, revenue, or loss-avoided evidence exists. `canClaimLossAvoided` is `false` and was measured, not assumed. Do not fabricate any of these.
 
 ## Product Principles
 

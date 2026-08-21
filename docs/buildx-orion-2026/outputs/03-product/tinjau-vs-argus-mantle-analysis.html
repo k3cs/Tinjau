@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tinjau vs Argus — Mantle AI × RWA winner-gap analysis</title>
+  <style>
+    :root { color-scheme: dark; --bg:#11100d; --panel:#1b1813; --line:#3a3327; --ink:#eee7d8; --muted:#b4aa96; --gold:#d2a45f; --green:#66b38d; --red:#e27867; --blue:#7da2d8; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    main { width:min(1180px,calc(100% - 32px)); margin:40px auto 72px; }
+    h1,h2,h3 { line-height:1.15; }
+    h1 { font-size:clamp(32px,6vw,64px); margin:8px 0 16px; max-width:900px; }
+    h2 { margin-top:44px; font-size:26px; }
+    h3 { margin:0 0 8px; font-size:17px; }
+    a { color:var(--blue); }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.14em; font-size:12px; }
+    .lede { color:var(--muted); font-size:19px; max-width:920px; }
+    .callout { border-left:4px solid var(--gold); background:var(--panel); padding:20px 22px; margin:28px 0; font-size:18px; }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .card { border:1px solid var(--line); background:var(--panel); padding:18px; }
+    .card strong { color:var(--gold); font-size:22px; display:block; }
+    table { width:100%; border-collapse:collapse; margin-top:16px; background:var(--panel); }
+    th,td { border:1px solid var(--line); padding:12px; vertical-align:top; text-align:left; }
+    th { color:var(--gold); font-size:13px; }
+    .argus { color:var(--green); font-weight:700; }
+    .tinjau { color:var(--blue); font-weight:700; }
+    .gap { color:var(--red); font-weight:700; }
+    .flow { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:12px 0; }
+    .step { border:1px solid var(--line); padding:8px 10px; background:var(--panel); }
+    .arrow { color:var(--gold); }
+    ol li, ul li { margin:8px 0; }
+    .small { color:var(--muted); font-size:13px; }
+    @media (max-width:800px) { .grid { grid-template-columns:1fr; } table { display:block; overflow-x:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">Independent comparison · 20 August 2026</div>
+  <h1>Argus menang lewat loop yang terasa selesai, bukan karena codebase-nya lebih besar.</h1>
+  <p class="lede">Tinjau memiliki engineering dan evidence discipline yang sangat kuat. Argus lebih unggul pada contest fit: AI mengambil keputusan atas posisi, kontrak membatasi dan memverifikasi tindakan, outcome dieksekusi, lalu reputasi agent diperbarui on-chain. Bagi juri, seluruh nilai produk terlihat dalam satu demo.</p>
+
+  <div class="callout"><strong>Kesimpulan inti:</strong> gap utama Tinjau adalah <em>decision-to-outcome proof</em>. Tinjau membuktikan bahwa data corporate event dapat dibuat lebih tepercaya; Argus membuktikan bahwa agent dapat melindungi modal, menunjukkan transaksi hasilnya, dan mengakumulasikan reputasi dari hasil tersebut.</div>
+
+  <section class="grid">
+    <article class="card"><strong>209</strong>test lokal Tinjau lulus: 56 contract + 153 server.</article>
+    <article class="card"><strong>2</strong>real testnet rescue fires dipublikasikan Argus.</article>
+    <article class="card"><strong>1 loop</strong>yang dijual Argus: sense → defend → prove.</article>
+  </section>
+
+  <h2>Perbandingan yang menentukan</h2>
+  <table>
+    <thead><tr><th>Dimensi</th><th>Argus</th><th>Tinjau saat ini</th><th>Gap yang terlihat juri</th></tr></thead>
+    <tbody>
+      <tr><td>Fit terhadap brief</td><td class="argus">Literal “automated risk management” untuk xStocks, USDY, dan mETH di Mantle.</td><td class="tinjau">Corporate-event oracle untuk tokenised equities di X Layer; dibangun untuk event berbeda.</td><td class="gap">Argus mencerminkan kata-kata track dan “soul” event secara langsung.</td></tr>
+      <tr><td>Peran AI</td><td>AI menggabungkan basis, drawdown, liquidity, market hours, calendar, dan velocity untuk memilih tindakan.</td><td>AI melakukan triple parse dan severity grading; hook menerapkan policy deterministik yang dibatasi.</td><td>AI Tinjau substantif, tetapi lebih mudah dipersepsikan sebagai data extraction daripada autonomous portfolio decision.</td></tr>
+      <tr><td>Closed loop</td><td>Position → score → signed policy → execute EXIT/DE_RISK/REPAY/PRE_POSITION → reputation.</td><td>Filing → parse → diff → registry → fee hook / holder digest / calendar.</td><td>Argus berakhir pada outcome user; Tinjau berakhir pada record dan perubahan fee pool.</td></tr>
+      <tr><td>Safety model</td><td>EIP-712 policy, expiry, nonce, action/amount bounds, plus on-chain trigger re-derivation.</td><td>Source hash, per-field agreement, bond/challenge, hard fee clamp; poster dan resolver masih terpusat.</td><td>Argus memberi guardrail ex ante terhadap agent kompromi; Tinjau memberi accountability ex post terhadap data salah.</td></tr>
+      <tr><td>Agent identity</td><td class="argus">ERC-8004 identity + loss-avoided reputation live on Mantle Sepolia.</td><td class="gap">ERC-8004 masih deferred (P9.6).</td><td>Argus mengubah fitur sponsor/event menjadi inti product proof, bukan checkbox.</td></tr>
+      <tr><td>Benchmark</td><td>Replay versus static/human baseline dan hasil dipresentasikan sebagai agent performance.</td><td>n=46 reaction latency, n=32 markout, n=30 parse study; belum ada Tinjau-vs-baseline outcome benchmark.</td><td>Tinjau lebih kuat membuktikan masalah; Argus lebih kuat membuktikan agent-nya menangani masalah.</td></tr>
+      <tr><td>Demo</td><td>Risk cockpit, policy signing, “real fire”, transaction confirmation, reputation, benchmark.</td><td>Registry + hook deployed dan UI buildable, tetapi demo script, hosted synthetic page, narrative, X post, dan final checklist belum selesai.</td><td>Argus punya satu momen demo yang teatrikal dan dapat diverifikasi.</td></tr>
+      <tr><td>Production truth</td><td>Masih testnet/self-contained DEX; mainnet router dan authoritative addresses pending.</td><td>Masih testnet/mock pool; satu real filing event, synthetic injection untuk positive arm.</td><td>Tidak ada keunggulan produksi mutlak; keunggulan Argus terutama packaging dan proof loop.</td></tr>
+      <tr><td>Compliance</td><td>Belum menunjukkan KYC/AML/jurisdiction flow yang kuat.</td><td>Hati-hati dalam klaim, tetapi posture transfer restrictions/KYC juga belum menjadi fitur.</td><td>Keduanya lemah pada kriteria resmi AI × RWA bernilai 10 poin.</td></tr>
+      <tr><td>Adoption / business</td><td>Tidak ada customer, TVL protected, revenue, atau mainnet usage yang terverifikasi.</td><td>Tidak ada external consumer atau customer; holder tools berguna pada zero adoption.</td><td>Argus memiliki institutional “risk rail” story yang lebih mudah dijual, tetapi traction keduanya belum terbukti.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Dua product loop</h2>
+  <h3>Argus</h3>
+  <div class="flow"><span class="step">Observe position</span><span class="arrow">→</span><span class="step">AI risk verdict</span><span class="arrow">→</span><span class="step">Bounded user policy</span><span class="arrow">→</span><span class="step">On-chain re-check</span><span class="arrow">→</span><span class="step">Protective action</span><span class="arrow">→</span><span class="step">Outcome reputation</span></div>
+  <h3>Tinjau</h3>
+  <div class="flow"><span class="step">Observe SEC filing</span><span class="arrow">→</span><span class="step">3× AI parse</span><span class="arrow">→</span><span class="step">Agreement + hash</span><span class="arrow">→</span><span class="step">Bonded registry</span><span class="arrow">→</span><span class="step">Fee/read consumers</span></div>
+
+  <h2>Apa yang justru lebih kuat di Tinjau</h2>
+  <ul>
+    <li><strong>Evidence discipline:</strong> method pre-registration, raw datasets, caveats, and explicit non-fabrication rules.</li>
+    <li><strong>Data provenance:</strong> exact filing hash, per-field agreement, bounded interpretation, and challenge economics.</li>
+    <li><strong>Problem evidence:</strong> real X Layer measurements show median 4.6-minute post-filing trade gap over n=46 and a markout study over 32 events.</li>
+    <li><strong>Verified engineering:</strong> all 209 local tests, server typecheck, and production web build passed in this review.</li>
+  </ul>
+
+  <h2>Prioritas yang paling mungkin mengubah hasil judging</h2>
+  <ol>
+    <li><strong>Finish one judge-visible end-to-end fire.</strong> Synthetic filing → three parses → registry tx → actual swap through hook → before/after fee → explorer links, all in one hosted flow.</li>
+    <li><strong>Turn existing studies into a Tinjau-vs-baseline benchmark.</strong> Compare three-way pipeline against one-pass parsing, and dynamic fee against static fee on the same disclosed replay. Do not invent “loss avoided”; show the exact counterfactual and formula.</li>
+    <li><strong>Show an outcome, not only a record.</strong> The demo headline should be “the pool changed its protection before the first post-filing market reaction,” backed by timestamps and transactions.</li>
+    <li><strong>Make the trust boundary visual.</strong> Show which fields are bonded, which grade is unbonded, why the fee cannot escape its hard band, and where the current centralized resolver remains a limitation.</li>
+    <li><strong>Add agent identity/reputation only after the core demo works.</strong> If the target event rewards autonomous agents, record parse accuracy, reaction lead, and false-positive history under a portable identity.</li>
+    <li><strong>Add a short regulatory posture.</strong> Explain that Tinjau does not issue securities or custody assets, and that downstream token/pool integrations must preserve jurisdiction and transfer restrictions.</li>
+  </ol>
+
+  <h2>Competitive context</h2>
+  <table>
+    <thead><tr><th>Type</th><th>Project</th><th>Overlap</th><th>Lesson</th></tr></thead>
+    <tbody>
+      <tr><td>Direct/adjacent</td><td>Argus</td><td>AI risk for tokenized equities and RWA</td><td>Win on closed-loop action and on-chain proof.</td></tr>
+      <tr><td>Substitute</td><td>DeFi Saver / Gelato automations</td><td>Automated stop-loss and position defense</td><td>Generic automation is old; equity/event awareness must be explicit.</td></tr>
+      <tr><td>Adjacent</td><td>Pharos, Chaos Labs, Gauntlet, LlamaRisk</td><td>Liquidity/risk scoring and parameter advice</td><td>Tinjau's differentiated wedge is source-grounded corporate events for on-chain equities.</td></tr>
+      <tr><td>Non-crypto substitute</td><td>SEC alerts, investor-relations feeds, Bloomberg-style event feeds</td><td>Corporate event discovery</td><td>Tinjau must win on contract-readable provenance and automated response, not summarization.</td></tr>
+      <tr><td>Failed/offline signal</td><td>DefiLlama token-liquidity page</td><td>Free public liquidity data</td><td>Maintenance and reliable data coverage are genuine product risks.</td></tr>
+    </tbody>
+  </table>
+  <p class="small">Crowdedness: moderate. The broad categories—alerts, risk scoring, and automated protection—are crowded. The narrow intersection of source-grounded corporate events, tokenized equities, contract-readable confidence, and bounded pool response remains sparse. Local solana-new catalogs required by the analysis method were not installed, so fresh primary-source and existing workspace research were used instead.</p>
+
+  <h2>Sources and verification boundary</h2>
+  <ul>
+    <li><a href="https://mantle-black.vercel.app/">Mantle Turing Test 2026 site</a></li>
+    <li><a href="https://docs.google.com/spreadsheets/d/1TMWhQ8cKp_1NF1ZelxtBGIF6l3bQZTA0ipjSREiqRhM/edit?gid=1382913087">Official AI × RWA judging scorecard</a></li>
+    <li><a href="https://github.com/Madhav-Gupta-28/Argus">Argus repository</a></li>
+    <li><a href="https://projectargus.vercel.app">Argus live demo</a></li>
+    <li>Local source of truth: PRODUCT.md, contracts/, apps/, task-tracker, and the three measurement studies.</li>
+  </ul>
+  <p class="small">Caveat: Argus appears in the user-supplied winner corpus, but the exact official placement/prize label could not be independently extracted from the DoraHacks results UI. This report therefore identifies properties consistent with the rubric and winner context; it does not claim access to judges' private reasoning.</p>
+</main>
+</body>
+</html>

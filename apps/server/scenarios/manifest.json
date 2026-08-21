@@ -1,0 +1,217 @@
+{
+  "schemaVersion": "tinjau.scenario-manifest/0.1.0",
+  "frozenAt": "2026-08-20",
+  "frozenByTask": "T0.2",
+  "governingDesign": "docs/superpowers/specs/2026-08-20-tinjau-lp-risk-autopilot-design.md",
+  "governingTracker": "docs/buildx-orion-2026/outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md",
+  "freezeNote": "docs/buildx-orion-2026/outputs/04-planning/t0-2-frozen-scenarios.md",
+  "asset": {
+    "company": "NVIDIA CORPORATION",
+    "cik": "0001045810",
+    "ticker": "NVDA",
+    "secSubmissionsUrl": "https://data.sec.gov/submissions/CIK0001045810.json",
+    "xLayer": {
+      "chainId": 196,
+      "chainName": "X Layer mainnet",
+      "rpc": "https://rpc.xlayer.tech",
+      "tradedToken": {
+        "symbol": "wNVDAx",
+        "name": "Wrapped NVIDIA xStock",
+        "address": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "decimals": 18,
+        "verifiedBy": "eth_call symbol()/name()/decimals() on 2026-08-20"
+      },
+      "siblingToken": {
+        "symbol": "NVDAx",
+        "name": "NVIDIA xStock",
+        "address": "0xc845b2894dbddd03858fd2d643b4ef725fe0849d",
+        "decimals": 18,
+        "_note": "Unwrapped sibling. This is the address currently labelled `NVDAx.mainnet` in apps/server/src/chain/tokenAddresses.ts. It is NOT the token in the reference pool and NOT the token the OKX index poller samples. See the mapping defect recorded in the T0.2 freeze note."
+      },
+      "referencePool": {
+        "address": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+        "token0": "0x4ae46a509f6b1d9056937ba4500cb143933d2dc8",
+        "token0Symbol": "USDG",
+        "token0Decimals": 6,
+        "token1": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "token1Symbol": "wNVDAx",
+        "token1Decimals": 18,
+        "swapTopic0": "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67",
+        "firstBlockWithCode": "65946484",
+        "firstBlockWithCodeAt": "2026-07-22T10:18:40Z",
+        "verifiedBy": "eth_getCode binary search plus eth_call token0()/token1() on 2026-08-20",
+        "_constraint": "No X Layer market data for this asset exists before 2026-07-22T10:18:40Z, and the pool was still untraded days after deployment (scenario A's window is empty). Any candidate event earlier than that date cannot be market-confirmed and was excluded for that reason alone."
+      },
+      "okxIndexAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "okxIndexNote": "Matches INDEX_INSTRUMENTS[0] in apps/server/src/index-poller/config.ts (instrument wNVDAx, chainIndex 196)."
+    },
+    "xLayerTestnet": {
+      "chainId": 1952,
+      "demoPoolToken": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
+      "demoPoolTokenSymbol": "mock wNVDAx",
+      "_label": "builder-controlled test pool \u2014 not external liquidity"
+    },
+    "blockTimestampRelation": {
+      "formula": "blockNumber = unixSeconds - 1718769036",
+      "verifiedAt": [
+        "65946484",
+        "68201457",
+        "68462873"
+      ],
+      "independentCrossCheck": "Scenario D's anchor block 67800154 matches `event_block` for the same ticker, form and acceptance timestamp in docs/buildx-orion-2026/outputs/05-build/data/p2_4_markout_raw.jsonl, and its measured 222-second first-trade gap matches that file's `gap_seconds`. Both were produced by an independent earlier study.",
+      "_note": "X Layer produced exactly one block per second across the whole frozen range. Every block number in these scenarios was additionally confirmed by an eth_getBlockByNumber timestamp read."
+    }
+  },
+  "scenarios": [
+    {
+      "scenarioId": "A-rumor-watch",
+      "file": "scenario-a-rumor-watch.json",
+      "role": "negative control; false-rumour case on the evidence path; degraded-data case",
+      "anchorAt": "2026-07-27T20:33:00Z",
+      "anchorBlock": "66415344",
+      "anchorWeekday": "Monday",
+      "usReferenceMarketOpen": false,
+      "marketWindowBlocks": [
+        "66411744",
+        "66436944"
+      ],
+      "observedSwapsInWindow": 0,
+      "swapsBeforeAnchor": 0,
+      "swapsAtOrAfterAnchor": 0,
+      "firstSwapGapSecondsFromAnchor": null,
+      "rpcErrors": 0,
+      "preRegisteredState": "WATCH",
+      "carriesEconomicRow": false
+    },
+    {
+      "scenarioId": "B-confirmed-protect",
+      "file": "scenario-b-confirmed-protect.json",
+      "role": "confirmed-event protection path",
+      "anchorAt": "2026-08-17T12:41:33Z",
+      "anchorBlock": "68201457",
+      "anchorWeekday": "Monday",
+      "usReferenceMarketOpen": false,
+      "usReferenceMarketNote": "pre-market; regular session opens 13:30Z",
+      "marketWindowBlocks": [
+        "68197857",
+        "68223057"
+      ],
+      "observedSwapsInWindow": 4145,
+      "swapsBeforeAnchor": 1193,
+      "swapsAtOrAfterAnchor": 2952,
+      "firstSwapGapSecondsFromAnchor": 0,
+      "rpcErrors": 0,
+      "preRegisteredState": "PROTECT, conditional on fresh market confirmation",
+      "carriesEconomicRow": true
+    },
+    {
+      "scenarioId": "C-two-origins-hard-case",
+      "file": "scenario-c-two-origins-hard-case.json",
+      "role": "hard case; two independent non-official origins with a self-revising source line",
+      "anchorAt": "2026-08-15T19:38:26Z",
+      "anchorBlock": "68053670",
+      "anchorWeekday": "Saturday",
+      "usReferenceMarketOpen": false,
+      "marketWindowBlocks": [
+        "68050070",
+        "68075270"
+      ],
+      "observedSwapsInWindow": 265,
+      "swapsBeforeAnchor": 38,
+      "swapsAtOrAfterAnchor": 227,
+      "firstSwapGapSecondsFromAnchor": 370,
+      "rpcErrors": 0,
+      "preRegisteredState": "UNDETERMINED_PENDING_RULE_DECISION",
+      "carriesEconomicRow": true,
+      "_thinLiquidityWarning": "265 swaps over seven weekend hours. Velocity and exit-depth metrics here will be noisy and must be reported with that caveat."
+    },
+    {
+      "scenarioId": "D-neutral-normal",
+      "file": "scenario-d-neutral-normal.json",
+      "role": "neutral control; primary economic false-positive probe",
+      "anchorAt": "2026-08-12T21:13:10Z",
+      "anchorBlock": "67800154",
+      "anchorWeekday": "Wednesday",
+      "usReferenceMarketOpen": false,
+      "usReferenceMarketNote": "post-close; the ordinary window for Form 4 filings",
+      "marketWindowBlocks": [
+        "67796554",
+        "67821754"
+      ],
+      "observedSwapsInWindow": 367,
+      "swapsBeforeAnchor": 46,
+      "swapsAtOrAfterAnchor": 321,
+      "firstSwapGapSecondsFromAnchor": 222,
+      "rpcErrors": 0,
+      "preRegisteredState": "NORMAL",
+      "carriesEconomicRow": true
+    }
+  ],
+  "coverageAgainstTrackerSection0_13": {
+    "materialNegativeOrDiscontinuousEvent": "B-confirmed-protect",
+    "neutralOrdinaryEvent": "D-neutral-normal",
+    "falseOrOverstatedRumour": "A-rumor-watch",
+    "ambiguousBoundaryCase": "C-two-origins-hard-case",
+    "degradedOrMissingMarketData": "A-rumor-watch",
+    "_gap": "All four required categories are covered. The economic distribution rests on B, C and D only, because A's window contains no trades."
+  },
+  "immutableSources": [
+    {
+      "path": "sources/nvda-20260817-8k.htm",
+      "sha256": "1c480e3320f3171e6ac1979a50eecb123d4150637c7b769444d16faf97928133",
+      "bytes": 31418,
+      "sourceClass": "OFFICIAL",
+      "dataMode": "REPLAY",
+      "retrievedFrom": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+      "retrievedAt": "2026-08-20"
+    },
+    {
+      "path": "sources/nvda-20260817-ex99-1-press-release.htm",
+      "sha256": "e3c39df5be133417c6f3b097cf6f81a5f502443bc4203eba55275fe2ad96f096",
+      "bytes": 21769,
+      "sourceClass": "OFFICIAL",
+      "dataMode": "REPLAY",
+      "retrievedFrom": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/sbeoainvidia-portsrelease.htm",
+      "retrievedAt": "2026-08-20"
+    },
+    {
+      "path": "sources/nvda-20260817-8k-index.json",
+      "sha256": "dbd2d505a397ff9b79e2e4985326c77b8b8f9d65682ba63080830c56ec6786f7",
+      "bytes": 1683,
+      "sourceClass": "OFFICIAL",
+      "dataMode": "REPLAY",
+      "retrievedFrom": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/index.json",
+      "retrievedAt": "2026-08-20",
+      "_note": "Independently corroborates the acceptance timestamp: every item carries last-modified 2026-08-17 08:41:33 US/Eastern, and nvda-20260817.htm is listed at exactly 31418 bytes."
+    },
+    {
+      "path": "sources/simulated-rumor-2026-07-27-social.json",
+      "sha256": "d6ec48514fc50c252d6aebd3bc5b71e51b630c3c216470f99d3085e66079dbcd",
+      "bytes": 2110,
+      "sourceClass": "RUMOR",
+      "dataMode": "SIMULATED",
+      "retrievedFrom": null,
+      "_label": "SIMULATED \u2014 fabricated by the Tinjau team for the T0.2 safety test. Not an observed social post."
+    },
+    {
+      "path": "sources/nvda-20260812-form4.xml",
+      "sha256": "d7ac69f01fba9daa4b686223afad6dbec0b89baa48e2c74ff1b9cc4694539526",
+      "bytes": 6527,
+      "sourceClass": "OFFICIAL",
+      "dataMode": "REPLAY",
+      "retrievedFrom": "https://www.sec.gov/Archives/edgar/data/1045810/000131026426000008/wk-form4_1786569187.xml",
+      "retrievedAt": "2026-08-20",
+      "_note": "Scenario D's neutral control. Added in T2.1 once the normaliser made the byte commitment mandatory for every OFFICIAL claim."
+    },
+    {
+      "path": "sources/nvda-20260812-form4-index.json",
+      "sha256": "5de4b70dbb241ceebafa95d5a374d5ae7501e1212ea9c9970f80d3980aac4a15",
+      "bytes": 571,
+      "sourceClass": "OFFICIAL",
+      "dataMode": "REPLAY",
+      "retrievedFrom": "https://www.sec.gov/Archives/edgar/data/1045810/000131026426000008/index.json",
+      "retrievedAt": "2026-08-20",
+      "_note": "Independently corroborates the 2026-08-12 17:13:10 US/Eastern acceptance stamp and the 6527-byte size."
+    }
+  ]
+}

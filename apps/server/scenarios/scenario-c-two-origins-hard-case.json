@@ -1,0 +1,218 @@
+{
+  "schemaVersion": "tinjau.scenario/0.2.0",
+  "scenarioId": "C-two-origins-hard-case",
+  "title": "Two independent origins, one self-revising source line \u2014 the case the naive rule gets wrong",
+  "role": "hard case; forces the versioned contradiction and recency rules to be decided explicitly",
+  "frozenAt": "2026-08-20",
+  "frozenByTask": "T0.2",
+  "_pre_registration": "Selected on evidence quality only. The pool's price path inside the replay window was deliberately NOT inspected before this file was frozen.",
+  "_why_this_exists": "Scenario A is held at WATCH by the single-origin rule and scenario B is promoted by an official filing. Neither exercises the boundary where non-official evidence legitimately CAN promote. This scenario sits exactly on that boundary: two genuinely independent outlets, no official confirmation, and a source line that revised its own headline figure by more than 2x. Without it, T1.2 could ship a promotion rule that has never been tested against a real ambiguous input.",
+  "asset": {
+    "company": "NVIDIA CORPORATION",
+    "cik": "0001045810",
+    "ticker": "NVDA",
+    "tokenSymbol": "wNVDAx",
+    "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+    "chainId": 196,
+    "chainName": "X Layer mainnet",
+    "poolIdOrAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2"
+  },
+  "decisionAnchor": {
+    "at": "2026-08-15T19:38:26Z",
+    "blockNumber": "68053670",
+    "why": "Earliest second-precision timestamp in the later of the two clusters (Reuters' wire copy of The Information's report).",
+    "usReferenceMarketOpen": false,
+    "usReferenceMarketNote": "2026-08-15 is a Saturday. US equity markets closed; the X Layer wNVDAx/USDG pool traded continuously."
+  },
+  "evidenceWindow": {
+    "rule": "anchor minus 72 hours .. anchor",
+    "from": "2026-08-12T19:38:26Z",
+    "to": "2026-08-15T19:38:26Z",
+    "_completeness": "Both in-window clusters are listed. The 2026-07-26 WSJ $250bn origin falls outside and is disclosed under outOfWindowEvidence; it is the prior value that claim-c-002 revises."
+  },
+  "marketReplayWindow": {
+    "from": "2026-08-15T18:38:26Z",
+    "to": "2026-08-16T01:38:26Z",
+    "fromBlock": "68050070",
+    "toBlock": "68075270",
+    "rule": "anchor minus 60 minutes .. anchor plus 6 hours"
+  },
+  "claims": [
+    {
+      "claimId": "claim-c-001",
+      "sourceClass": "NEWS",
+      "dataMode": "REPLAY",
+      "sourceUrl": null,
+      "sourceUrlNote": "WSJ original is paywalled and was not retrieved; recorded as origin because Reuters names it explicitly.",
+      "sourceId": "wsj/2026-08-14/nvidia-scales-back-ohio-guarantee",
+      "publisherOrAuthor": "The Wall Street Journal",
+      "publishedAt": "2026-08-14T00:00:00Z",
+      "publishedAtPrecision": "DAY",
+      "company": "NVIDIA CORPORATION",
+      "tokenSymbol": "wNVDAx",
+      "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+      "claimTextOrPointer": "As reported by Reuters: NVIDIA has revised its plans and is now expected to initially guarantee less than $120 billion, down from the $250 billion previously discussed.",
+      "independenceGroup": "origin:wsj/2026-08-14/nvda-ohio-guarantee-revision",
+      "relation": "ORIGIN",
+      "officialConfirmation": false,
+      "expiresAt": "2026-08-17T00:00:00Z",
+      "unnamedSources": true,
+      "retrievedFromOrigin": false,
+      "revisesClaim": "excluded-c-101",
+      "revisionMagnitude": "from 250000000000 to below 120000000000 \u2014 a downward revision of more than 2x by the same source line",
+      "materiality": "MATERIAL"
+    },
+    {
+      "claimId": "claim-c-002",
+      "sourceClass": "NEWS",
+      "dataMode": "REPLAY",
+      "sourceUrl": "https://finance.yahoo.com/technology/ai/articles/nvidia-scales-back-250-billion-234356524.html",
+      "sourceId": "reuters-via-yahoo/2026-08-14T23:43:56Z/nvidia-scales-back-guarantee",
+      "publisherOrAuthor": "Reuters \u2014 Mrinmay Dey (syndicated by Yahoo Finance)",
+      "publishedAt": "2026-08-14T23:43:56Z",
+      "publishedAtPrecision": "SECOND",
+      "company": "NVIDIA CORPORATION",
+      "tokenSymbol": "wNVDAx",
+      "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+      "claimTextOrPointer": "Attribution (verbatim): \"Nvidia has revised its plans to support a proposed OpenAI data center project in Ohio and is now expected to initially guarantee less than $120 billion, down from the $250 billion previously discussed, the Wall Street Journal reported on Friday, citing people familiar with the matter.\"",
+      "independenceGroup": "origin:wsj/2026-08-14/nvda-ohio-guarantee-revision",
+      "relation": "DUPLICATE",
+      "duplicateOf": "claim-c-001",
+      "officialConfirmation": false,
+      "expiresAt": "2026-08-17T23:43:56Z",
+      "unnamedSources": true,
+      "materiality": "MATERIAL"
+    },
+    {
+      "claimId": "claim-c-003",
+      "sourceClass": "NEWS",
+      "dataMode": "REPLAY",
+      "sourceUrl": "https://www.theinformation.com/articles/nvidia-talks-invest-3-billion-sb-energy-part-openai-data-center-deal",
+      "sourceId": "theinformation.com/2026-08-15/nvidia-talks-invest-3-billion-sb-energy",
+      "publisherOrAuthor": "The Information \u2014 Valida Pau, Ann Davis Vaughan, Phoebe Liu",
+      "publishedAt": "2026-08-15T00:00:00Z",
+      "publishedAtPrecision": "DAY",
+      "publishedAtNote": "Article body and exact timestamp are paywalled. Reuters describes it as reported 'on Saturday' (2026-08-15); the verified upper bound is Reuters' own 2026-08-15T19:38:26Z.",
+      "company": "NVIDIA CORPORATION",
+      "tokenSymbol": "wNVDAx",
+      "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "eventType": "STRATEGIC_PARTNERSHIP_OR_INVESTMENT",
+      "claimTextOrPointer": "Headline (verbatim): \"Nvidia in Talks to Invest $3 Billion in SB Energy as Part of OpenAI Data Center Deal\"",
+      "independenceGroup": "origin:theinformation/2026-08-15/nvda-sbenergy-3b",
+      "relation": "ORIGIN",
+      "officialConfirmation": false,
+      "expiresAt": "2026-08-18T00:00:00Z",
+      "unnamedSources": true,
+      "materiality": "MATERIAL"
+    },
+    {
+      "claimId": "claim-c-004",
+      "sourceClass": "NEWS",
+      "dataMode": "REPLAY",
+      "sourceUrl": "https://finance.yahoo.com/technology/ai/articles/nvidia-talks-invest-3-billion-193826586.html",
+      "sourceId": "reuters-via-yahoo/2026-08-15T19:38:26Z/nvidia-talks-invest-3-billion",
+      "publisherOrAuthor": "Reuters (syndicated by Yahoo Finance)",
+      "publishedAt": "2026-08-15T19:38:26Z",
+      "publishedAtPrecision": "SECOND",
+      "company": "NVIDIA CORPORATION",
+      "tokenSymbol": "wNVDAx",
+      "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "eventType": "STRATEGIC_PARTNERSHIP_OR_INVESTMENT",
+      "claimTextOrPointer": "Attribution (verbatim): \"Nvidia is in talks to invest as much as $3 billion in SB Energy, a SoftBank Group subsidiary developing a massive planned Ohio data center project for OpenAI, the Information reported on Saturday, citing people familiar with the discussions.\" Non-verification (verbatim): \"Reuters could not immediately verify the report. Nvidia and SB Energy did not immediately respond to requests for comment outside regular business hours.\"",
+      "independenceGroup": "origin:theinformation/2026-08-15/nvda-sbenergy-3b",
+      "relation": "DUPLICATE",
+      "duplicateOf": "claim-c-003",
+      "officialConfirmation": false,
+      "expiresAt": "2026-08-18T19:38:26Z",
+      "unnamedSources": true,
+      "materiality": "MATERIAL"
+    },
+    {
+      "claimId": "claim-c-005",
+      "sourceClass": "NEWS",
+      "dataMode": "REPLAY",
+      "sourceUrl": "https://www.cnbc.com/2026/08/15/nvidia-mulls-3b-investment-in-sb-energy-in-openai-data-center-deal-report.html",
+      "sourceId": "cnbc.com/2026-08-15/nvidia-mulls-3b-investment-in-sb-energy",
+      "publisherOrAuthor": "CNBC",
+      "publishedAt": "2026-08-15T00:00:00Z",
+      "publishedAtPrecision": "DAY",
+      "publishedAtNote": "Date taken from the CNBC URL path; page returned HTTP 403 to automated fetch on 2026-08-20.",
+      "company": "NVIDIA CORPORATION",
+      "tokenSymbol": "wNVDAx",
+      "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "eventType": "STRATEGIC_PARTNERSHIP_OR_INVESTMENT",
+      "claimTextOrPointer": "Headline (verbatim): \"Nvidia eyes investing $3 billion in SB Energy under OpenAI data center deal, Information says\"",
+      "independenceGroup": "origin:theinformation/2026-08-15/nvda-sbenergy-3b",
+      "relation": "DUPLICATE",
+      "duplicateOf": "claim-c-003",
+      "officialConfirmation": false,
+      "expiresAt": "2026-08-18T00:00:00Z",
+      "unnamedSources": true,
+      "materiality": "MATERIAL"
+    }
+  ],
+  "outOfWindowEvidence": [
+    {
+      "claimId": "excluded-c-101",
+      "reasonExcluded": "Published 2026-07-26, 20 days before the anchor and outside the 72-hour evidence window. It is retained here because claim-c-001 explicitly revises it, so the revision cannot be understood without it.",
+      "sourceClass": "NEWS",
+      "sourceUrl": null,
+      "sourceId": "wsj/2026-07-26/nvidia-openai-financing-guarantees",
+      "publisherOrAuthor": "The Wall Street Journal",
+      "publishedAt": "2026-07-26T00:00:00Z",
+      "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+      "claimTextOrPointer": "Nvidia is in talks to provide roughly $250 billion in financing guarantees for OpenAI.",
+      "_note": "This is scenario A's anchor claim. Its presence here is what makes the WSJ line self-revising."
+    }
+  ],
+  "independenceSummary": {
+    "distinctOrigins": 2,
+    "origins": [
+      "origin:wsj/2026-08-14/nvda-ohio-guarantee-revision",
+      "origin:theinformation/2026-08-15/nvda-sbenergy-3b"
+    ],
+    "_significance": "This clears the 'at least two genuinely independent evidence sources' bar in \u00a70.7. If market confirmation is also fresh, the literal reading of the promotion rule permits PROTECT here with no official filing anywhere in sight."
+  },
+  "preRegisteredExpectation": {
+    "state": "UNDETERMINED_PENDING_RULE_DECISION",
+    "_honesty": "No outcome is asserted, because the correct answer depends on a rule that has not been written yet. Asserting WATCH now and then implementing whatever produces WATCH would be fitting the rule to the desired answer.",
+    "openRuleQuestion": "Does a source line that revised its own headline figure downward by more than 2x within 19 days count as self-contradicting for promotion purposes, and does that cap promotion at WATCH even when a second independent origin agrees on the direction of the story?",
+    "permittedOutcomes": [
+      {
+        "state": "WATCH",
+        "requires": "T1.2 decides that an unresolved self-revision of this magnitude, or the absence of any official confirmation, caps non-official promotion."
+      },
+      {
+        "state": "PROTECT",
+        "requires": "T1.2 decides two independent origins suffice, AND market confirmation is CONFIRMED and fresh at the anchor. In that case the bounded action must still respect the full fee ceiling, duration, cooldown and decay envelope."
+      }
+    ],
+    "hardConstraint": "Whichever branch T1.2 chooses, the rule must be frozen in versioned configuration BEFORE this scenario's market data is scored, and the same rule must apply unchanged to scenarios A, B and D.",
+    "notPermitted": "Choosing the rule after seeing which branch produces a better benchmark number."
+  },
+  "_schemaChangeLog": "0.2.0 (T1.2): added `materiality` to every claim. T1.1 made materiality a separate axis from provenance, because an official filing is not automatically an LP-relevant corporate action. The engine treats a missing value as UNKNOWN and refuses to promote on it, so the field had to be stated rather than inferred.",
+  "ruleResolution": {
+    "resolvedByTask": "T1.2",
+    "resolvedAt": "2026-08-20",
+    "resolvedBefore": "any market data for this scenario was scored",
+    "openQuestion": "Does a source line that revised its own headline figure downward by more than 2x within 19 days count as self-contradicting for promotion purposes, and does that cap promotion at WATCH even when a second independent origin agrees on the direction of the story?",
+    "decision": "A source line that has materially revised its own quantitative claim inside the evidence window may still support a WATCH, but may NOT be counted toward the two independent sources that non-official PROTECT requires. The disqualification applies to the whole independenceGroup, because a revision is a property of the source line, not of one article.",
+    "reasoning": "The two-source rule exists to establish that a fact is corroborated. A source that has demonstrably been wrong about the magnitude of that very fact within the window has not established the fact; it has established that the number is still moving. Acting on an unsettled number is exactly what bounded-action discipline is meant to prevent.",
+    "whyThisIsNotResultDriven": [
+      "The rule is threshold-free \u2014 there is no ratio to tune, so it cannot be fitted to this scenario.",
+      "It is strictly conservative: it can only block promotion, never enable it, so it cannot manufacture a favourable benchmark result.",
+      "It generalises to the common pattern in breaking financial news, where an early figure is corrected within days.",
+      "It was frozen in code and tested before any market data for this window was scored."
+    ],
+    "selectedOutcome": "WATCH",
+    "selectedBranchWasPermitted": true,
+    "nonSelectedBranch": {
+      "state": "PROTECT",
+      "retained": true,
+      "note": "Kept as a disclosed sensitivity per T0.4 \u00a73. Test `scenario C would have promoted without the self-revision rule` demonstrates that removing the rule flips this scenario to PROTECT with 2 independent sources \u2014 which is what makes the rule load-bearing rather than incidental."
+    },
+    "evidence": "apps/server/test/riskPromotionScenarios.test.ts"
+  }
+}

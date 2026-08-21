@@ -1,0 +1,25 @@
+{
+  "_WARNING": "SIMULATED DOCUMENT — NOT A REAL SOCIAL MEDIA POST. This file was written by the Tinjau team for task T0.2 as a labelled safety-test fixture. No account, person, or post described below exists. Do not present it as observed social monitoring.",
+  "_why_simulated": "SVC-008 (social rumour) was closed by DEC-010 with immutable replay fixtures because no live social provider is authorised for the Hackathon MVP. A public search on 2026-08-20 found no individually citable, durably addressable social post about the NVIDIA/OpenAI Ohio financing talks that could be byte-pinned offline. Rather than fabricate a real-looking URL, this fixture is explicitly SIMULATED and carries no sourceUrl.",
+  "_modelled_on": "The real, verifiable NEWS chain that ran the same weekend: the Wall Street Journal (origin, 2026-07-26) syndicated by CNBC, The Next Web, Quartz, DataCenterDynamics and WinBuzzer. See scenario-a-rumor-watch.json claims claim-a-002..claim-a-004 for the real sources.",
+  "_note_on_accuracy": "The figure echoed in this simulated post is the ~$250 billion the WSJ line reported. NVIDIA's own 8-K of 2026-08-17 caps the initial commitment at $105 billion, so this claim was materially overstated. That is deliberate: it is what makes scenario A a false-rumour case as well as a containment case.",
+  "schemaVersion": "tinjau.scenario-source/0.1.0",
+  "sourceClass": "RUMOR",
+  "dataMode": "SIMULATED",
+  "sourceId": "simulated://tinjau/T0.2/social/nvda-openai-ohio-2026-07-27",
+  "sourceUrl": null,
+  "publisherOrAuthor": null,
+  "platform": "generic-microblog (simulated)",
+  "publishedAt": "2026-07-27T19:11:05Z",
+  "company": "NVIDIA CORPORATION",
+  "tokenSymbol": "wNVDAx",
+  "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+  "claimText": "hearing NVDA is on the hook for a quarter trillion of OpenAI datacenter debt guarantees. quarter. trillion. nothing signed, nobody confirming, but that is the number going around.",
+  "claimQualifiers": [
+    "hearing",
+    "nothing signed",
+    "nobody confirming"
+  ],
+  "namedSources": [],
+  "officialConfirmationAtPublication": false
+}

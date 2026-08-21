@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tinjau.xyz/schemas/risk-record/1.0.1.json",
+  "title": "Tinjau RiskRecordView",
+  "description": "Frontend view model for one (asset, pool) risk assessment. Mirrors tracker §0.24 exactly. The on-chain source of truth for every enum ordinal and reason code is contracts/src/TinjauRiskTypes.sol, schema version tinjau.risk/1.0.0. CURRENT AS OF 2026-08-21: instantiated by the `.record` field of scenario-rumor-watch.json and scenario-confirmed-protect.json, both of which are checked against this file by frontend-handoff/tools/validate.mjs. Note the deliberate asymmetry between the two version numbers here: the file's $id is 1.0.1 because `marketConfirmation.observedAt` became nullable, while the `schemaVersion` FIELD stays tinjau.risk/1.0.0 because no on-chain vocabulary changed — no enum, ordinal or reason bit moved, and observedAt never goes on chain, so bumping the field would break parity with the Solidity constant over a value the contract does not carry. Widening keeps every previously-valid document valid.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "assessmentId",
+    "assetAddress",
+    "tokenSymbol",
+    "poolIdOrAddress",
+    "state",
+    "reasonCodes",
+    "humanExplanation",
+    "evidenceCommitment",
+    "confidenceBand",
+    "assessedAt",
+    "expiresAt",
+    "policyVersion",
+    "dataMode",
+    "evidence",
+    "marketConfirmation",
+    "action"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "tinjau.risk/1.0.0" },
+    "assessmentId": { "type": "string", "minLength": 1 },
+    "assetAddress": { "$ref": "#/$defs/address" },
+    "tokenSymbol": { "type": "string", "minLength": 1 },
+    "poolIdOrAddress": { "type": "string", "minLength": 1 },
+    "state": { "$ref": "#/$defs/riskState" },
+    "reasonCodes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/reasonCode" },
+      "uniqueItems": true,
+      "description": "Decoded from the on-chain uint32 bitmask. Bit positions are permanent; see TinjauRiskTypes.sol."
+    },
+    "humanExplanation": { "type": "string", "minLength": 1 },
+    "evidenceCommitment": { "$ref": "#/$defs/bytes32" },
+    "confidenceBand": { "enum": ["LOW", "MEDIUM", "HIGH"] },
+    "assessedAt": { "type": "string", "format": "date-time" },
+    "expiresAt": { "type": "string", "format": "date-time" },
+    "policyVersion": { "type": "string", "minLength": 1 },
+    "dataMode": { "$ref": "#/$defs/dataMode" },
+    "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidenceClaimView" } },
+    "marketConfirmation": { "$ref": "#/$defs/marketConfirmationView" },
+    "action": { "$ref": "#/$defs/action" }
+  },
+  "$defs": {
+    "address": { "type": "string", "pattern": "^0x[0-9a-fA-F]{40}$" },
+    "bytes32": { "type": "string", "pattern": "^0x[0-9a-fA-F]{64}$" },
+    "riskState": {
+      "enum": ["NORMAL", "WATCH", "PROTECT"],
+      "description": "NORMAL is on-chain ordinal 0, so an unwritten record grants no protection."
+    },
+    "sourceClass": {
+      "enum": ["OFFICIAL", "NEWS", "RUMOR"],
+      "description": "The on-chain enum also has an Unknown=0 sentinel. It is never writable, so a record carrying it was never written and must not reach this view model."
+    },
+    "dataMode": {
+      "enum": ["LIVE", "OBSERVED", "REPLAY", "SIMULATED"],
+      "description": "SIMULATED means fabricated for testing. A consumer MUST render it distinctly; it is not evidence of anything real."
+    },
+    "confirmationStatus": {
+      "enum": ["CONFIRMED", "NOT_CONFIRMED", "UNAVAILABLE", "STALE"],
+      "description": "UNAVAILABLE ('could not look') and NOT_CONFIRMED ('looked, saw nothing') are different findings. Only CONFIRMED may satisfy a promotion gate, by exact equality."
+    },
+    "reasonCode": {
+      "enum": [
+        "RUMOR_ONLY",
+        "SINGLE_SOURCE",
+        "DUPLICATE_SYNDICATION",
+        "CONTRADICTED",
+        "STALE_EVIDENCE",
+        "NO_OFFICIAL_CONFIRMATION",
+        "UNSUPPORTED_ASSET",
+        "AMBIGUOUS_ENTITY",
+        "UNKNOWN_COMPANY",
+        "MARKET_CONFIRMED",
+        "MARKET_NOT_CONFIRMED",
+        "MARKET_DATA_STALE",
+        "MARKET_DATA_UNAVAILABLE",
+        "ANTI_WICK_FAILED",
+        "THIN_EXIT_DEPTH",
+        "REFERENCE_MARKET_CLOSED",
+        "INSUFFICIENT_SAMPLE",
+        "PERSISTENCE_UNOBSERVED",
+        "OFFICIAL_FILING",
+        "TWO_INDEPENDENT_SOURCES",
+        "BONDED_EVIDENCE_PASSED",
+        "NON_MATERIAL_EVENT",
+        "EXPIRED",
+        "DECAYED_TO_BASELINE",
+        "COOLDOWN_ACTIVE",
+        "PAUSED",
+        "ACTION_FAILED"
+      ]
+    },
+    "evidenceClaimView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claimId",
+        "sourceClass",
+        "dataMode",
+        "sourceUrl",
+        "sourceId",
+        "publisherOrAuthor",
+        "publishedAt",
+        "company",
+        "tokenSymbol",
+        "tokenAddress",
+        "eventType",
+        "claimTextOrPointer",
+        "independenceGroup",
+        "relation",
+        "officialConfirmation",
+        "expiresAt"
+      ],
+      "properties": {
+        "claimId": { "type": "string", "minLength": 1 },
+        "sourceClass": { "$ref": "#/$defs/sourceClass" },
+        "dataMode": { "$ref": "#/$defs/dataMode" },
+        "sourceUrl": {
+          "type": ["string", "null"],
+          "description": "null is expected and correct for SIMULATED claims. A simulated claim MUST NOT carry a resolvable URL."
+        },
+        "sourceId": { "type": "string", "minLength": 1 },
+        "publisherOrAuthor": { "type": ["string", "null"] },
+        "publishedAt": { "type": "string", "format": "date-time" },
+        "company": { "type": "string", "minLength": 1 },
+        "tokenSymbol": { "type": "string", "minLength": 1 },
+        "tokenAddress": { "$ref": "#/$defs/address" },
+        "eventType": { "type": "string", "minLength": 1 },
+        "claimTextOrPointer": { "type": "string", "minLength": 1 },
+        "independenceGroup": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Syndicated copies of one origin share this value. Counting distinct values is how independent sources are counted; counting outlets would be wrong."
+        },
+        "relation": { "enum": ["ORIGIN", "SUPPORTS", "CONTRADICTS", "DUPLICATE"] },
+        "officialConfirmation": { "type": "boolean" },
+        "expiresAt": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "marketConfirmationView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "observedAt",
+        "blockNumber",
+        "fresh",
+        "antiWickSatisfied",
+        "okxReferencePrice",
+        "xLayerPoolPrice",
+        "basisBps",
+        "drawdownBps",
+        "tradeVelocity",
+        "executableExitDepth",
+        "reasonCodes"
+      ],
+      "properties": {
+        "status": { "$ref": "#/$defs/confirmationStatus" },
+        "observedAt": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "When the market was actually observed. NULL when there is no observation to stamp — an UNAVAILABLE leg, or a window containing no swaps. Deliberately nullable rather than defaulted to the assessment instant: a consumer computing age = now - observedAt from a substituted timestamp would read a leg that was never observed as perfectly fresh, which is the same failure T3.1 removed by measuring OKX freshness from source time rather than ingestion time. An absence must not be representable as a reading."
+        },
+        "blockNumber": { "type": ["string", "null"] },
+        "fresh": { "type": "boolean" },
+        "antiWickSatisfied": { "type": "boolean" },
+        "okxReferencePrice": { "type": ["string", "null"] },
+        "xLayerPoolPrice": { "type": ["string", "null"] },
+        "basisBps": { "type": ["string", "null"] },
+        "drawdownBps": { "type": ["string", "null"] },
+        "tradeVelocity": { "type": ["string", "null"] },
+        "executableExitDepth": { "type": ["string", "null"] },
+        "reasonCodes": { "type": "array", "items": { "$ref": "#/$defs/reasonCode" } }
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authorized",
+        "status",
+        "baseFee",
+        "maxFee",
+        "requestedFee",
+        "appliedFee",
+        "maximumDurationSec",
+        "txHash",
+        "failureReason"
+      ],
+      "properties": {
+        "authorized": {
+          "type": "boolean",
+          "description": "MUST be false whenever state is NORMAL or WATCH. A WATCH that authorises the aggressive fee is a bug, not a display choice."
+        },
+        "status": { "enum": ["NONE", "PENDING", "APPLIED", "FAILED", "EXPIRED", "DECAYED"] },
+        "baseFee": { "type": "string" },
+        "maxFee": { "type": "string" },
+        "requestedFee": { "type": ["string", "null"] },
+        "appliedFee": { "type": ["string", "null"] },
+        "maximumDurationSec": { "type": "integer", "minimum": 0 },
+        "txHash": { "type": ["string", "null"], "pattern": "^0x[0-9a-fA-F]{64}$" },
+        "failureReason": {
+          "type": ["string", "null"],
+          "description": "A FAILED action must carry a reason and must never be presented as having delivered protection."
+        }
+      }
+    }
+  }
+}

@@ -10,6 +10,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import type { AddressInfo } from "node:net";
 import { createServer, createScoreboardCache, FixedWindowRateLimiter, type ScoreboardEntry } from "../src/scoreboard-api/server.js";
+import { classifyEventProvenance } from "../src/scoreboard-api/provenance.js";
 
 function fakeScoreboardData(): ScoreboardEntry[] {
   return [
@@ -21,6 +22,10 @@ function fakeScoreboardData(): ScoreboardEntry[] {
       postTimeSec: 1_786_968_582,
       postTimeIso: "2026-08-17T12:09:42.000Z",
       reaction: { state: "no_poller_coverage" },
+      provenance: classifyEventProvenance(
+        "https://www.sec.gov/Archives/edgar/data/1050446/000119312526000264/d8k.htm",
+        "0x0000000000000000000000000000000000000000000000000000000000000001",
+      ),
     },
   ];
 }

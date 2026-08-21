@@ -1,0 +1,121 @@
+{
+  "$comment": [
+    "Minimal READ-ONLY ABI for TinjauRiskRegistry, transcribed by hand for the reference",
+    "consumer in this directory. It is deliberately NOT generated from, imported from, or",
+    "symlinked to Tinjau's Foundry build output (contracts/out/**) or to any TypeScript in",
+    "apps/server/**. A stranger who has only the chain and this file can read the record.",
+    "",
+    "Write functions (postAssessment, setPaused, rotateAssessor, setAssetSupported) are",
+    "omitted on purpose: a consumer of a risk record never needs them, and shipping them",
+    "would invite a reader to become a writer.",
+    "",
+    "Each entry carries an explicit 4-byte selector so the consumer needs no keccak256",
+    "implementation at runtime. Verify any of them yourself with Foundry, e.g.",
+    "  cast sig 'currentRecord(address,bytes32)'   -> 0x92a22538",
+    "tools/risk-reader/test/anvil-e2e.sh re-derives all twelve with `cast sig` and fails if",
+    "one drifts."
+  ],
+  "schemaVersion": "tinjau.risk/1.0.0",
+  "policyVersion": "tinjau.policy/1.0.0",
+  "functions": [
+    {
+      "signature": "currentRecord(address,bytes32)",
+      "selector": "0x92a22538",
+      "inputs": ["address asset", "bytes32 poolId"],
+      "outputs": [
+        "address asset",
+        "bytes32 poolId",
+        "uint8 state",
+        "uint8 confidence",
+        "uint8 dataMode",
+        "uint8 confirmation",
+        "uint32 reasonBits",
+        "uint64 assessedAt",
+        "uint64 expiresAt",
+        "uint64 protectStartedAt",
+        "bytes32 evidenceCommitment",
+        "bytes32 policyVersion"
+      ],
+      "note": "The record exactly as stored. RiskRecord is an all-static tuple, so it is ABI-encoded inline as 12 consecutive 32-byte words with no head offset. assessedAt == 0 means the record was never written."
+    },
+    {
+      "signature": "effectiveState(address,bytes32)",
+      "selector": "0x2a5915f3",
+      "inputs": ["address asset", "bytes32 poolId"],
+      "outputs": ["uint8 state", "uint24 fee", "uint64 endsAt"],
+      "note": "The state to act on now, with expiry and the duration cap applied. May differ from the stored state; that difference is the point."
+    },
+    {
+      "signature": "schemaVersion()",
+      "selector": "0x4e2ce6d3",
+      "inputs": [],
+      "outputs": ["bytes32 version"],
+      "note": "ASCII packed into bytes32, e.g. 'tinjau.risk/1.0.0'. Tells a consumer which decoder to apply."
+    },
+    {
+      "signature": "policyVersion()",
+      "selector": "0x58355ead",
+      "inputs": [],
+      "outputs": ["bytes32 version"]
+    },
+    {
+      "signature": "paused()",
+      "selector": "0x5c975abb",
+      "inputs": [],
+      "outputs": ["bool paused"],
+      "note": "Pause blocks NEW protections. It does not cancel a protection already running and does not erase history."
+    },
+    {
+      "signature": "envelope()",
+      "selector": "0x0ee8b522",
+      "inputs": [],
+      "outputs": [
+        "uint24 baseFee",
+        "uint24 maxFee",
+        "uint32 widenDuration",
+        "uint32 decayDuration",
+        "uint32 maxProtectDuration",
+        "uint32 cooldown"
+      ],
+      "note": "Public getter for the bounded-action envelope. Lets a consumer check the fee band and duration cap itself instead of trusting a claim about them."
+    },
+    {
+      "signature": "supportedAsset(address)",
+      "selector": "0xd82e66fa",
+      "inputs": ["address asset"],
+      "outputs": ["bool supported"]
+    },
+    {
+      "signature": "historyLength(address,bytes32)",
+      "selector": "0x58e14f53",
+      "inputs": ["address asset", "bytes32 poolId"],
+      "outputs": ["uint256 length"]
+    },
+    {
+      "signature": "assessor()",
+      "selector": "0x1821d696",
+      "inputs": [],
+      "outputs": ["address assessor"]
+    },
+    {
+      "signature": "guardian()",
+      "selector": "0x452a9320",
+      "inputs": [],
+      "outputs": ["address guardian"]
+    },
+    {
+      "signature": "key(address,bytes32)",
+      "selector": "0xbd6ca44b",
+      "inputs": ["address asset", "bytes32 poolId"],
+      "outputs": ["bytes32 key"],
+      "note": "keccak256(abi.encodePacked(asset, poolId)). The consumer recomputes nothing; it asks the chain."
+    },
+    {
+      "signature": "lastProtectEndedAt(bytes32)",
+      "selector": "0xad987042",
+      "inputs": ["bytes32 key"],
+      "outputs": ["uint64 endedAt"],
+      "note": "Takes the key, not (asset, poolId). Used with envelope().cooldown to see whether a new protection could re-arm right now."
+    }
+  ]
+}
