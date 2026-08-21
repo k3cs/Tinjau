@@ -162,7 +162,7 @@ export const REASON_MEANINGS: Record<ReasonCode, ReasonMeaning> = {
     title: "Bonded evidence passed",
     plain: "The parse-agreement and bond/challenge path is recorded as satisfied for the official filing.",
     caveat:
-      "On every published scenario this value was an assumed input, not a live parse result. The scenario runner sets it to true so that a refusal can never be an artefact of assuming the bond failed, which makes the assumption the most favourable one available to the system rather than the most flattering reading of a check. Read this bit as an assumption on these scenarios, not as a check that ran.",
+      "On the scenarios shown here this value was an assumed input, not a live parse result. The scenario runner sets it to true so that a refusal can never be an artefact of assuming the bond failed, which makes the assumption the most favourable one available to the system rather than the most flattering reading of a check. One published record does compute it, from three live parses of the origin filing, and it is not one of these: scenario B's canonical replay, parsed and posted on 2026-08-21. Read this bit as an assumption on this page.",
     leg: "EVIDENCE",
     effect: "SUPPORTS",
   },

@@ -633,8 +633,10 @@ function renderScene(s) {
   // scenario it was an input the scenario runner defaulted to true.
   if (s.facts?.reasonCodes?.includes?.("BONDED_EVIDENCE_PASSED")) {
     console.log(
-      "    - Do not read BONDED_EVIDENCE_PASSED as a parse that was verified here. On every\n" +
-        "      published scenario that value was an assumed input, not a live parse result.",
+      "    - Do not read BONDED_EVIDENCE_PASSED as a parse that was verified here. In this scene\n" +
+        "      that value was an assumed input, not a live parse result. One published record does\n" +
+        "      compute it from three live parses, and it is not this one: scenario B's canonical\n" +
+        "      replay, posted 2026-08-21.",
     );
   }
 

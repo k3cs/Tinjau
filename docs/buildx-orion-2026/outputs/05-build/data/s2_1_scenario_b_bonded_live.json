@@ -1,0 +1,602 @@
+{
+  "schemaVersion": "tinjau.scenario-b-bonded-live/1.0.0",
+  "producedBy": "apps/server/src/studies/scenarioBBondedLive.ts",
+  "runAtUtc": "2026-08-21T17:39:14.672Z",
+  "scenarioId": "B-confirmed-protect",
+  "accessionNumber": "0001045810-26-000069",
+  "documentSha256": "1c480e3320f3171e6ac1979a50eecb123d4150637c7b769444d16faf97928133",
+  "documentLocalPath": "apps/server/scenarios/sources/nvda-20260817-8k.htm",
+  "documentBytes": 31418,
+  "strippedTextLength": 9451,
+  "geminiModel": "gemini-3.6-flash",
+  "ambientGeminiModelEnv": "gemini-3.5-flash",
+  "ambientGeminiModelOverridden": true,
+  "attempts": [
+    {
+      "status": "ok",
+      "attempt": 1,
+      "data": {
+        "eventType": "material_agreement",
+        "effectiveDates": [
+          "2026-08-17"
+        ],
+        "declaredAmounts": [
+          {
+            "label": "aggregate payment obligation cap",
+            "value": 105000000000,
+            "unit": "USD"
+          },
+          {
+            "label": "aggregate lease IT load",
+            "value": 4.25,
+            "unit": "gigawatts"
+          },
+          {
+            "label": "additional IT load credit support capacity",
+            "value": 3.8,
+            "unit": "gigawatts"
+          }
+        ],
+        "affectedToken": "NVDAx",
+        "futureAnnouncedDates": [],
+        "summary": "NVIDIA entered into residual value guaranties with SB Energy capping aggregate payment obligations at $105 billion to secure IT load capacity at the Portsmouth Site AI data center campus for tenant OpenAI."
+      }
+    },
+    {
+      "status": "ok",
+      "attempt": 2,
+      "data": {
+        "eventType": "material_agreement",
+        "effectiveDates": [
+          "2026-08-17"
+        ],
+        "declaredAmounts": [
+          {
+            "label": "aggregate payment obligation cap",
+            "value": 105000000000,
+            "unit": "USD"
+          }
+        ],
+        "affectedToken": "NVDAx",
+        "futureAnnouncedDates": [],
+        "summary": "NVIDIA entered into residual value guaranties with SB Energy to secure AI data center capacity at the Portsmouth Site in Ohio, with NVIDIA's aggregate payment obligation capped at $105 billion."
+      }
+    },
+    {
+      "status": "ok",
+      "attempt": 3,
+      "data": {
+        "eventType": "material_agreement",
+        "effectiveDates": [
+          "2026-08-17"
+        ],
+        "declaredAmounts": [
+          {
+            "label": "aggregate payment obligation cap",
+            "value": 105000000000,
+            "unit": "USD"
+          },
+          {
+            "label": "aggregate IT load capacity",
+            "value": 4.25,
+            "unit": "gigawatts"
+          },
+          {
+            "label": "additional option IT load capacity",
+            "value": 3.8,
+            "unit": "gigawatts"
+          }
+        ],
+        "affectedToken": "NVDAx",
+        "futureAnnouncedDates": [],
+        "summary": "NVIDIA entered into residual value guaranties with SB Energy to secure IT load capacity at the Portsmouth Site AI data center campus in Ohio, with payment obligations capped at $105 billion. OpenAI will be the primary tenant deploying NVIDIA's DSX AI factory platform."
+      }
+    }
+  ],
+  "agreement": {
+    "fields": [
+      {
+        "field": "eventType",
+        "isKeyField": true,
+        "agreement": "agree",
+        "values": [
+          "material_agreement",
+          "material_agreement",
+          "material_agreement"
+        ],
+        "agreedValue": "material_agreement"
+      },
+      {
+        "field": "affectedToken",
+        "isKeyField": true,
+        "agreement": "agree",
+        "values": [
+          "NVDAx",
+          "NVDAx",
+          "NVDAx"
+        ],
+        "agreedValue": "NVDAx"
+      },
+      {
+        "field": "effectiveDates",
+        "isKeyField": false,
+        "agreement": "agree",
+        "values": [
+          [
+            "2026-08-17"
+          ],
+          [
+            "2026-08-17"
+          ],
+          [
+            "2026-08-17"
+          ]
+        ],
+        "agreedValue": [
+          "2026-08-17"
+        ]
+      },
+      {
+        "field": "declaredAmounts",
+        "isKeyField": false,
+        "agreement": "disagree",
+        "values": [
+          [
+            {
+              "label": "aggregate payment obligation cap",
+              "value": 105000000000,
+              "unit": "USD"
+            },
+            {
+              "label": "aggregate lease IT load",
+              "value": 4.25,
+              "unit": "gigawatts"
+            },
+            {
+              "label": "additional IT load credit support capacity",
+              "value": 3.8,
+              "unit": "gigawatts"
+            }
+          ],
+          [
+            {
+              "label": "aggregate payment obligation cap",
+              "value": 105000000000,
+              "unit": "USD"
+            }
+          ],
+          [
+            {
+              "label": "aggregate payment obligation cap",
+              "value": 105000000000,
+              "unit": "USD"
+            },
+            {
+              "label": "aggregate IT load capacity",
+              "value": 4.25,
+              "unit": "gigawatts"
+            },
+            {
+              "label": "additional option IT load capacity",
+              "value": 3.8,
+              "unit": "gigawatts"
+            }
+          ]
+        ]
+      },
+      {
+        "field": "futureAnnouncedDates",
+        "isKeyField": false,
+        "agreement": "agree",
+        "values": [
+          [],
+          [],
+          []
+        ],
+        "agreedValue": []
+      }
+    ],
+    "successfulParseCount": 3,
+    "totalAttempts": 3,
+    "readyToPost": true,
+    "flaggedForReview": false,
+    "flagReasons": [],
+    "summaries": [
+      "NVIDIA entered into residual value guaranties with SB Energy capping aggregate payment obligations at $105 billion to secure IT load capacity at the Portsmouth Site AI data center campus for tenant OpenAI.",
+      "NVIDIA entered into residual value guaranties with SB Energy to secure AI data center capacity at the Portsmouth Site in Ohio, with NVIDIA's aggregate payment obligation capped at $105 billion.",
+      "NVIDIA entered into residual value guaranties with SB Energy to secure IT load capacity at the Portsmouth Site AI data center campus in Ohio, with payment obligations capped at $105 billion. OpenAI will be the primary tenant deploying NVIDIA's DSX AI factory platform."
+    ]
+  },
+  "officialEvidencePassed": true,
+  "officialEvidencePassedSource": "computed",
+  "decision": {
+    "record": {
+      "schemaVersion": "tinjau.risk/1.0.0",
+      "assessmentId": "0x921717dc22da321b261f15297d184ccb4ab730e9433575243877d6b92980f14f",
+      "assetAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "tokenSymbol": "wNVDAx",
+      "poolIdOrAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+      "state": "WATCH",
+      "reasonCodes": [
+        "ANTI_WICK_FAILED",
+        "BONDED_EVIDENCE_PASSED",
+        "DUPLICATE_SYNDICATION",
+        "MARKET_NOT_CONFIRMED",
+        "OFFICIAL_FILING",
+        "REFERENCE_MARKET_CLOSED",
+        "STALE_EVIDENCE"
+      ],
+      "humanExplanation": "Evidence would otherwise qualify, but market confirmation is not confirmed, and a new protection is never started without a fresh, independent market observation. Market leg: NOT_CONFIRMED. The drawdown signal(s) cleared their own bar, but the price dislocation did not persist, so the market did not confirm. Only 9.7% of the fall remained at the median observation across the 300s after the trough (68 observations, lowest 4.4%), below the 50% required. This was a wick. A signal unaccompanied by a persistent price dislocation may corroborate a confirmation; it can never create one. The OKX reference leg was unavailable, so no artifact may describe this as dual-leg OKX/X Layer confirmation. No bounded action is authorised in state WATCH: the aggressive fee path stays closed and the pool keeps its baseline fee.",
+      "evidenceCommitment": "0x25fc54ba75f5b0b6eb659ec16d23f3a3e7dcda7a004220c996f046df2902010f",
+      "confidenceBand": "MEDIUM",
+      "assessedAt": "2026-08-17T18:41:33.000Z",
+      "expiresAt": "2026-08-18T18:41:33.000Z",
+      "policyVersion": "tinjau.policy/1.0.0",
+      "dataMode": "REPLAY",
+      "evidence": [
+        {
+          "claimId": "claim-b-001",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+          "sourceId": "edgar:0001045810-26-000069/nvda-20260817.htm",
+          "publisherOrAuthor": "NVIDIA CORPORATION (SEC EDGAR filer, CIK 0001045810)",
+          "publishedAt": "2026-08-17T12:41:33Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "MATERIAL_DEFINITIVE_AGREEMENT_AND_DIRECT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "Item 1.01 (verbatim): \"On August 17, 2026, NVIDIA entered into multiple residual value guaranties (collectively, the “Agreements”) with SB Energy (the “Lessor”) relating to leases for approximately 4.25 gigawatts of IT load in the aggregate at the Portsmouth Site.\" and \"NVIDIA’s aggregate payment obligation is cumulatively capped at $105 billion for its initial commitment under the Agreements.\"",
+          "independenceGroup": "official:edgar/0001045810-26-000069",
+          "relation": "ORIGIN",
+          "officialConfirmation": true,
+          "expiresAt": "2026-08-20T12:41:33Z"
+        },
+        {
+          "claimId": "claim-b-002",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/sbeoainvidia-portsrelease.htm",
+          "sourceId": "edgar:0001045810-26-000069/sbeoainvidia-portsrelease.htm",
+          "publisherOrAuthor": "NVIDIA CORPORATION (Exhibit 99.1, furnished under Item 7.01)",
+          "publishedAt": "2026-08-17T12:41:33Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "MATERIAL_DEFINITIVE_AGREEMENT_AND_DIRECT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "Exhibit 99.1 press release announcing the SB Energy partnership, furnished under Item 7.01 Regulation FD.",
+          "independenceGroup": "official:edgar/0001045810-26-000069",
+          "relation": "SUPPORTS",
+          "officialConfirmation": true,
+          "expiresAt": "2026-08-20T12:41:33Z"
+        },
+        {
+          "claimId": "claim-b-003",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": null,
+          "sourceId": "wsj/2026-08-14/nvidia-scales-back-ohio-guarantee",
+          "publisherOrAuthor": "The Wall Street Journal",
+          "publishedAt": "2026-08-14T00:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "As reported by Reuters: NVIDIA has revised its plans and is now expected to initially guarantee less than $120 billion, down from the $250 billion previously discussed.",
+          "independenceGroup": "origin:wsj/2026-08-14/nvda-ohio-guarantee-revision",
+          "relation": "SUPPORTS",
+          "officialConfirmation": true,
+          "expiresAt": "2026-08-17T00:00:00Z"
+        },
+        {
+          "claimId": "claim-b-004",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://finance.yahoo.com/technology/ai/articles/nvidia-scales-back-250-billion-234356524.html",
+          "sourceId": "reuters-via-yahoo/2026-08-14T23:43:56Z/nvidia-scales-back-guarantee",
+          "publisherOrAuthor": "Reuters — Mrinmay Dey (syndicated by Yahoo Finance)",
+          "publishedAt": "2026-08-14T23:43:56Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+          "claimTextOrPointer": "Attribution (verbatim): \"Nvidia has revised its plans to support a proposed OpenAI data center project in Ohio and is now expected to initially guarantee less than $120 billion, down from the $250 billion previously discussed, the Wall Street Journal reported on Friday, citing people familiar with the matter.\"",
+          "independenceGroup": "origin:wsj/2026-08-14/nvda-ohio-guarantee-revision",
+          "relation": "DUPLICATE",
+          "officialConfirmation": true,
+          "expiresAt": "2026-08-17T23:43:56Z"
+        },
+        {
+          "claimId": "claim-b-005",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://www.theinformation.com/articles/nvidia-talks-invest-3-billion-sb-energy-part-openai-data-center-deal",
+          "sourceId": "theinformation.com/2026-08-15/nvidia-talks-invest-3-billion-sb-energy",
+          "publisherOrAuthor": "The Information — Valida Pau, Ann Davis Vaughan, Phoebe Liu",
+          "publishedAt": "2026-08-15T00:00:00Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "STRATEGIC_PARTNERSHIP_OR_INVESTMENT",
+          "claimTextOrPointer": "Headline (verbatim): \"Nvidia in Talks to Invest $3 Billion in SB Energy as Part of OpenAI Data Center Deal\"",
+          "independenceGroup": "origin:theinformation/2026-08-15/nvda-sbenergy-3b",
+          "relation": "SUPPORTS",
+          "officialConfirmation": true,
+          "expiresAt": "2026-08-18T00:00:00Z"
+        },
+        {
+          "claimId": "claim-b-006",
+          "sourceClass": "NEWS",
+          "dataMode": "REPLAY",
+          "sourceUrl": "https://finance.yahoo.com/technology/ai/articles/nvidia-talks-invest-3-billion-193826586.html",
+          "sourceId": "reuters-via-yahoo/2026-08-15T19:38:26Z/nvidia-talks-invest-3-billion",
+          "publisherOrAuthor": "Reuters (syndicated by Yahoo Finance)",
+          "publishedAt": "2026-08-15T19:38:26Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "STRATEGIC_PARTNERSHIP_OR_INVESTMENT",
+          "claimTextOrPointer": "Attribution (verbatim): \"... the Information reported on Saturday, citing people familiar with the discussions.\"",
+          "independenceGroup": "origin:theinformation/2026-08-15/nvda-sbenergy-3b",
+          "relation": "DUPLICATE",
+          "officialConfirmation": true,
+          "expiresAt": "2026-08-18T19:38:26Z"
+        }
+      ],
+      "marketConfirmation": {
+        "status": "NOT_CONFIRMED",
+        "observedAt": "2026-08-17T18:41:11.000Z",
+        "blockNumber": "68223035",
+        "fresh": true,
+        "antiWickSatisfied": false,
+        "okxReferencePrice": null,
+        "xLayerPoolPrice": "225.613899",
+        "basisBps": null,
+        "drawdownBps": "234.86455467",
+        "tradeVelocity": "0.4124057",
+        "executableExitDepth": "2.29261841",
+        "reasonCodes": [
+          "ANTI_WICK_FAILED",
+          "MARKET_DATA_UNAVAILABLE",
+          "MARKET_NOT_CONFIRMED",
+          "REFERENCE_MARKET_CLOSED"
+        ]
+      },
+      "action": {
+        "authorized": false,
+        "status": "NONE",
+        "baseFee": "500",
+        "maxFee": "20000",
+        "requestedFee": null,
+        "appliedFee": null,
+        "maximumDurationSec": 21600,
+        "txHash": null,
+        "failureReason": null
+      }
+    },
+    "assessment": {
+      "asset": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "poolId": "0x0000000000000000000000002a2b11730c2b6d99a58034a869dd810d7300a7b2",
+      "state": 1,
+      "confidence": 2,
+      "dataMode": 3,
+      "confirmation": 1,
+      "reasonBits": 348692,
+      "assessedAt": "1786992093",
+      "expiresAt": "1787078493",
+      "evidenceCommitment": "0x25fc54ba75f5b0b6eb659ec16d23f3a3e7dcda7a004220c996f046df2902010f",
+      "requestedFee": 0,
+      "nonce": "194187194148746928387720946117753982155",
+      "deadline": "1787078493"
+    },
+    "domain": {
+      "name": "TinjauRiskRegistry",
+      "version": "1",
+      "chainId": 1952,
+      "verifyingContract": "0x60062389a7AB08F0030FC06Adf9CE0C180537317"
+    },
+    "digest": "0xf67406834e63c064f304b7e76bf6a7aed0c79fd3c58233f2f63b2bfe1115f77b",
+    "eventKey": "tinjau.scenario/B-confirmed-protect",
+    "assessmentId": "0x921717dc22da321b261f15297d184ccb4ab730e9433575243877d6b92980f14f",
+    "nonce": "194187194148746928387720946117753982155",
+    "postable": true,
+    "protectStartedAt": null,
+    "remainingProtectSec": null,
+    "policyTargetFee": 13500,
+    "promotion": {
+      "state": "WATCH",
+      "reasonCodes": [
+        "BONDED_EVIDENCE_PASSED",
+        "DUPLICATE_SYNDICATION",
+        "MARKET_NOT_CONFIRMED",
+        "OFFICIAL_FILING",
+        "STALE_EVIDENCE"
+      ],
+      "reasonBits": 328212,
+      "confidenceBand": "MEDIUM",
+      "expiresAt": 1787078493,
+      "policyVersion": "tinjau.policy/1.0.0",
+      "explanation": "Evidence would otherwise qualify, but market confirmation is not confirmed, and a new protection is never started without a fresh, independent market observation.",
+      "independentSourceCount": 2,
+      "highestSourceClass": "OFFICIAL",
+      "aggressiveFeeAuthorized": false
+    },
+    "wiredClaims": [
+      {
+        "claimId": "claim-b-001",
+        "sourceClass": "OFFICIAL",
+        "independenceGroup": "unrecognised:edgar:0001045810-26-000069",
+        "relation": "ORIGIN",
+        "publishedAt": 1786970493,
+        "officialConfirmation": true,
+        "materiality": "MATERIAL",
+        "selfRevised": false,
+        "contributesIndependentOrigin": true,
+        "disqualifications": []
+      },
+      {
+        "claimId": "claim-b-002",
+        "sourceClass": "OFFICIAL",
+        "independenceGroup": "unrecognised:edgar:0001045810-26-000069",
+        "relation": "SUPPORTS",
+        "publishedAt": 1786970493,
+        "officialConfirmation": true,
+        "materiality": "MATERIAL",
+        "selfRevised": false,
+        "contributesIndependentOrigin": true,
+        "disqualifications": []
+      },
+      {
+        "claimId": "claim-b-003",
+        "sourceClass": "NEWS",
+        "independenceGroup": "wsj",
+        "relation": "SUPPORTS",
+        "publishedAt": 1786665600,
+        "officialConfirmation": true,
+        "materiality": "MATERIAL",
+        "selfRevised": true,
+        "contributesIndependentOrigin": false,
+        "disqualifications": [
+          "SELF_REVISED_ORIGIN",
+          "PROVENANCE_INCOMPLETE"
+        ]
+      },
+      {
+        "claimId": "claim-b-004",
+        "sourceClass": "NEWS",
+        "independenceGroup": "wsj",
+        "relation": "DUPLICATE",
+        "publishedAt": 1786751036,
+        "officialConfirmation": true,
+        "materiality": "MATERIAL",
+        "selfRevised": true,
+        "contributesIndependentOrigin": true,
+        "disqualifications": [
+          "SELF_REVISED_ORIGIN"
+        ]
+      },
+      {
+        "claimId": "claim-b-005",
+        "sourceClass": "NEWS",
+        "independenceGroup": "theinformation",
+        "relation": "SUPPORTS",
+        "publishedAt": 1786752000,
+        "officialConfirmation": true,
+        "materiality": "MATERIAL",
+        "selfRevised": false,
+        "contributesIndependentOrigin": true,
+        "disqualifications": []
+      },
+      {
+        "claimId": "claim-b-006",
+        "sourceClass": "NEWS",
+        "independenceGroup": "theinformation",
+        "relation": "DUPLICATE",
+        "publishedAt": 1786822706,
+        "officialConfirmation": true,
+        "materiality": "MATERIAL",
+        "selfRevised": false,
+        "contributesIndependentOrigin": true,
+        "disqualifications": []
+      }
+    ],
+    "effectiveConfirmation": "NOT_CONFIRMED",
+    "ruleVersions": {
+      "schema": "tinjau.risk/1.0.0",
+      "policy": "tinjau.policy/1.0.0",
+      "confirmation": "tinjau.confirm/2.0.0",
+      "evidenceCommitment": "tinjau.evidence-commitment/1.0.0",
+      "assessmentId": "tinjau.assessment-id/1.0.0"
+    }
+  },
+  "comparison": {
+    "computed": {
+      "state": "WATCH",
+      "reasonCodes": [
+        "ANTI_WICK_FAILED",
+        "BONDED_EVIDENCE_PASSED",
+        "DUPLICATE_SYNDICATION",
+        "MARKET_NOT_CONFIRMED",
+        "OFFICIAL_FILING",
+        "REFERENCE_MARKET_CLOSED",
+        "STALE_EVIDENCE"
+      ],
+      "officialEvidencePassed": true
+    },
+    "assumedTrue": {
+      "state": "WATCH",
+      "reasonCodes": [
+        "ANTI_WICK_FAILED",
+        "BONDED_EVIDENCE_PASSED",
+        "DUPLICATE_SYNDICATION",
+        "MARKET_NOT_CONFIRMED",
+        "OFFICIAL_FILING",
+        "REFERENCE_MARKET_CLOSED",
+        "STALE_EVIDENCE"
+      ],
+      "officialEvidencePassed": true
+    },
+    "outcomeChanged": false
+  },
+  "chainPost": {
+    "chainId": 1952,
+    "networkLabel": "X Layer Testnet",
+    "registryAddress": "0x60062389a7AB08F0030FC06Adf9CE0C180537317",
+    "postedUnderPoolId": "0x0000000000000000000000002a2b11730c2b6d99a58034a869dd810d7300a7b2",
+    "deployedStackPoolId": "0x5e9eff19074225e9132eb73dc25cf0e3ff55c3fb31c9b28ab633851d2b54f730",
+    "assessorAddress": "0x0990EAcecFe00f1709A748D37cCd52C45B95aC72",
+    "posterAddress": "0x8BCC23b3352e9c450160676803AC5cfe1e2329e1",
+    "envelopeReadFromChain": {
+      "baseFee": 500,
+      "maxFee": 20000,
+      "widenDuration": 3600,
+      "decayDuration": 18000,
+      "maxProtectDuration": 21600,
+      "cooldown": 3600
+    },
+    "timeShiftSeconds": 341856,
+    "shiftPreservedOutcome": true,
+    "shiftedDecision": {
+      "state": "WATCH",
+      "reasonCodes": [
+        "ANTI_WICK_FAILED",
+        "BONDED_EVIDENCE_PASSED",
+        "DUPLICATE_SYNDICATION",
+        "MARKET_NOT_CONFIRMED",
+        "OFFICIAL_FILING",
+        "REFERENCE_MARKET_CLOSED",
+        "STALE_EVIDENCE"
+      ]
+    },
+    "post": {
+      "ok": true,
+      "txHash": "0x7edfb15d0ad5ff44da16253dfabe1191843ebbacf584c2daabc2ad07c4fdd507",
+      "blockNumber": 38875116,
+      "gasUsed": "308690",
+      "assessmentPosted": {
+        "key": "0x2c5f0b435a9dba8ebbc33eb441dc4c69c675dfa3df616a84d631b222b707e75a",
+        "asset": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
+        "poolId": "0x0000000000000000000000002a2b11730c2b6d99a58034a869dd810d7300a7b2",
+        "state": "WATCH",
+        "reasonBits": 348692,
+        "assessedAt": 1787333949,
+        "expiresAt": 1787420349,
+        "evidenceCommitment": "0x6f2bdac1165ea784d1d137f40fc823649a04db7f43f1083603f741d27a9d1438"
+      },
+      "protectionEnded": null,
+      "failure": null
+    },
+    "refusedReason": null
+  },
+  "limitations": [
+    "Three live LLM calls are not deterministic. Re-running this script can produce a different set of parses, therefore a different agreement report, therefore a different officialEvidencePassed value, therefore possibly a different state. This artifact records one run; it is not a claim about what the model always does.",
+    "This computes officialEvidencePassed for scenario B ONLY. Every other published scenario, and every published demo manifest, still takes that boolean as an assumed input defaulting to true. Nothing here retroactively changes those results.",
+    "The market leg in this run is the CANONICAL chain-196 replay from pool-scenario-b-swaps.json, not the constructed price path that Scene B uses to demonstrate a PROTECT. On the canonical replay the market leg is NOT_CONFIRMED, so WATCH is the pre-registered correct outcome (see the scenario file's preRegisteredExpectation.ifMarketConfirmationFails). WATCH here is the run working.",
+    "A single run measures nothing about parse accuracy and nothing about latency. Accuracy belongs to the p2.1 study and its 30-filing sample; this is one document, once.",
+    "Only the OFFICIAL claim's document (claim-b-001) is parsed. The scenario's other claims, including the Exhibit 99.1 press release in the same accession, are not re-parsed here, so this bit speaks to the origin filing rather than to the whole evidence set.",
+    "Computing the bit did not change scenario B's outcome in this run. That is a real finding and it is published as one, but it also means this run does not demonstrate that the bonded path can change a verdict — only that the engine was fed a computed value instead of an assumed one.",
+    "To be postable at all, the frozen scenario was shifted forward by one constant so its replay window ends at chain time; an assessment anchored in the past is rejected by the registry on AssessmentExpired. The shift was asserted to leave the state and the reason codes unchanged. The on-chain record therefore carries shifted timestamps and must never be read as evidence about when the filing landed.",
+    "The record was written under the CANONICAL chain-196 pool id, which is not the pool id the deployed TinjauFeeHook serves. The assessment is genuinely on chain and genuinely signed, but no swap on the builder-controlled testnet pool reads it. This run demonstrates the assessment path, not fee enforcement.",
+    "The testnet asset is a freely-mintable MOCK standing in for canonical wNVDAx, in a BUILDER-CONTROLLED pool that is not a market. The assessor key is derived from the poster key unless TINJAU_ASSESSOR_PRIVATE_KEY is set, which is a testnet arrangement and not a production one."
+  ]
+}
