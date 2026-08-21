@@ -33,8 +33,10 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     summary: "Treats social posts as potential evidence, never as automatic confirmation.",
     maturity: "PENDING",
     dataMode: "SIMULATED",
-    evidence: "Negative-control social fixture",
-    limitation: "No live X discovery provider is authorized for this MVP.",
+    evidence:
+      "Negative-control social fixture; a read-only live intake path wired to X API v2 and exercised on 2026-08-21",
+    limitation:
+      "The read path is connected and was run against the live API, which refused it with HTTP 402 credits-depleted on this project's X tier. No live post has entered the pipeline, so every social claim in the product is still the simulated fixture.",
     href: "/demo",
   },
   {

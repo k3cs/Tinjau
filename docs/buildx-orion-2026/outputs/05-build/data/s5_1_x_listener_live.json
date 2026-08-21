@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "tinjau.x-listener-live/1.0.0",
+  "producedBy": "apps/server/src/studies/xListenerLive.ts",
+  "runAtUtc": "2026-08-21T18:04:22.588Z",
+  "taskId": "S5.1",
+  "outcome": "BLOCKED_NO_READ_ACCESS",
+  "headline": "X read refused: HTTP 402 (Payment Required). No live claim was ingested, and none was manufactured.",
+  "assetUniverse": {
+    "source": "apps/server/src/evidence/assets.ts :: SUPPORTED_ASSETS (supported === true)",
+    "supported": [
+      {
+        "company": "NVIDIA CORPORATION",
+        "ticker": "NVDA",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "poolAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2"
+      }
+    ],
+    "unsupportedButKnown": [
+      {
+        "tokenSymbol": "NVDAx",
+        "reason": "The unwrapped sibling of wNVDAx. Listed deliberately rather than omitted: it is the address `tokenAddresses.ts` maps the symbol NVDAx to, so anything resolving a claim by ticker alone can land here. It has no verified pool and no index feed, so no action can be authorised against it. See the T0.2 §2.2 mapping defect."
+      }
+    ]
+  },
+  "intake": {
+    "provider": "x-api-v2",
+    "endpoint": "https://api.x.com/2/tweets/search/recent",
+    "httpMethod": "GET",
+    "authMode": "oauth1-user-context",
+    "outboundWritesAttempted": 0,
+    "query": "($NVDA) -is:retweet -is:reply lang:en",
+    "maxResultsRequested": 10,
+    "requestedFields": {
+      "tweet.fields": "created_at,author_id,lang,possibly_sensitive,referenced_tweets",
+      "expansions": "author_id",
+      "user.fields": "username,name,protected,verified"
+    },
+    "httpStatus": 402,
+    "ok": false,
+    "resultCount": null,
+    "rateLimitRemaining": null,
+    "failure": {
+      "kind": "no_read_access",
+      "apiTitle": "Payment Required",
+      "apiType": "https://api.x.com/2/problems/credits-depleted",
+      "detail": "{\"detail\":\"credits depleted\",\"status\":402,\"title\":\"Payment Required\",\"type\":\"https://api.x.com/2/problems/credits-depleted\"}"
+    }
+  },
+  "candidates": [],
+  "claim": null,
+  "decision": null,
+  "decisionSummary": null,
+  "containmentInvariant": {
+    "statement": "Rumour-only evidence can never exceed WATCH (risk/types.ts::mayReachProtect, invariant 1).",
+    "highestSourceClass": null,
+    "stateReached": null,
+    "held": null
+  },
+  "marketLeg": {
+    "fixturePath": "apps/server/src/market/fixtures/pool-scenario-a-swaps.json",
+    "why": "Not reached: no claim was ingested, so the decision engine was not run."
+  },
+  "stages": [
+    {
+      "stage": "run_started",
+      "atUtc": "2026-08-21T18:04:22.161Z"
+    },
+    {
+      "stage": "asset_universe_resolved",
+      "atUtc": "2026-08-21T18:04:22.162Z"
+    },
+    {
+      "stage": "x_read_requested",
+      "atUtc": "2026-08-21T18:04:22.162Z"
+    },
+    {
+      "stage": "x_read_completed",
+      "atUtc": "2026-08-21T18:04:22.588Z"
+    }
+  ],
+  "limitations": [
+    "This is ONE read of one endpoint at one moment. It measures nothing about latency and nothing about coverage, and it does not make the listener production monitoring. No process polls X, no window is guaranteed to be sampled, and nothing here supports a claim about how quickly a post would be seen.",
+    "Read-only. This run made zero outbound writes to X: no post, reply, like, follow or delete. The publisher (src/xbot/postToX.ts, src/xbot/main.ts) is not imported by this study and was not enabled; xbot/main.ts still defaults to dry-run.",
+    "No live claim was ingested in this run, so no decision record was produced from live data. Nothing in this artifact should be read as the listener having been exercised end to end. The intake record states exactly how far it got."
+  ]
+}
