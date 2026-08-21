@@ -22,3 +22,6 @@ playwright-report
 contracts/out
 contracts/cache
 contracts/broadcast
+# Vendored Foundry dependencies, committed since 2026-08-21 so `forge test` works
+# from a bare clone. 3.2 MB of Solidity the web build never reads.
+contracts/lib
