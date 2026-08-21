@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CapabilityBadge } from "@/components/capability-badge";
 import { DataModeLabel } from "@/components/data-mode-label";
 import { PRODUCT_CAPABILITIES } from "@/lib/product/capabilities";
+import { XLAYER_TESTNET_PROOF } from "@/lib/product/deployments";
 
 export function ProofLedger() {
   return (
@@ -13,6 +14,18 @@ export function ProofLedger() {
             <h2 id="proof-ledger-title" className="mt-4 font-display text-4xl font-bold tracking-display sm:text-5xl">What exists. What does not. One ledger.</h2>
           </div>
           <p className="max-w-xl text-sm leading-relaxed text-coal-muted">Maturity describes the capability. Data mode describes the material shown. Neither is inferred from animation.</p>
+        </div>
+
+        <div className="mt-10 grid border-y border-black bg-black text-white md:grid-cols-[1fr_1fr_auto]">
+          <div className="border-b border-edge px-5 py-4 md:border-b-0 md:border-r">
+            <p className="font-data text-[10px] uppercase tracking-[0.06em] text-ink-muted">Verified network</p>
+            <p className="mt-2 font-semibold">{XLAYER_TESTNET_PROOF.name} · chain {XLAYER_TESTNET_PROOF.chainId}</p>
+          </div>
+          <div className="border-b border-edge px-5 py-4 md:border-b-0 md:border-r">
+            <p className="font-data text-[10px] uppercase tracking-[0.06em] text-ink-muted">Truth boundary</p>
+            <p className="mt-2 text-sm text-ink-secondary">Historical prototype deployed. Final Tinjau integration pending.</p>
+          </div>
+          <Link href="/proof" className="inline-flex min-h-16 items-center justify-center bg-signal px-6 font-data text-[10px] font-semibold uppercase tracking-[0.06em] text-black transition-colors duration-150 ease-tinjau hover:bg-white">Open Proof ↗</Link>
         </div>
 
         <div className="mt-12 border-t border-black">
