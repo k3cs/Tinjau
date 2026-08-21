@@ -16,7 +16,7 @@ export const RUMOR_MISSION: MissionDefinition = {
   id: "rumor",
   label: "Scene A",
   title: "Contain a rumor",
-  objective: "Inspect an X-shaped claim without letting repetition become authority.",
+  objective: "Watch four outlets carrying one story collapse into one source, and the fee stay where it is.",
   duration: "4–5 min",
   dataMode: "REPLAY",
   firstStageId: "listen",

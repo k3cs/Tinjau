@@ -9,9 +9,14 @@ export function LandingCta() {
           <h2 className="mt-4 font-display text-section-sm lg:text-section-lg">
             Watch it refuse to act.
           </h2>
-          <p className="mt-4 max-w-[44ch] text-body-md text-ink-muted">
+          <p className="mt-4 max-w-[46ch] text-body-md text-ink-muted">
             One screen: the evidence, the market check, the rule that refused, and the fee the pool
-            kept charging anyway.
+            kept charging anyway. If you would rather start with the questions, including the ones
+            we would rather not be asked, they are{" "}
+            <Link href="/faq" className="text-signal underline underline-offset-4">
+              answered here
+            </Link>
+            .
           </p>
         </div>
         <div className="flex shrink-0 flex-col gap-3 sm:flex-row">

@@ -58,7 +58,7 @@ export function ComparisonGrid() {
   return (
     <LazyMotion features={domAnimation} strict>
       <section aria-labelledby="comparison-grid" className="scroll-mt-24" id="grid">
-        <h2 id="comparison-grid" className="font-display text-heading-lg text-ink">
+        <h2 id="comparison-grid" className="scroll-mt-28 font-display text-heading-lg text-ink">
           Every cell, both bases
         </h2>
         <p className="mt-2 max-w-[56ch] text-body-md text-ink-muted">

@@ -36,7 +36,7 @@ export function MeasuredResult() {
         </div>
 
         <div className="mt-10">
-          <RestraintDiagram scenarioId="D-neutral-normal" />
+          <RestraintDiagram scenarioIds={["D-neutral-normal", "C-two-origins-hard-case"]} />
         </div>
 
         <div className="mt-8 grid gap-px border border-edge bg-edge lg:grid-cols-3">

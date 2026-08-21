@@ -2,11 +2,19 @@ import Link from "next/link";
 
 import { TinjauMark } from "@/components/tinjau-mark";
 
+// Every route, because the header carries seven and drops to a scroller on a
+// phone. The footer is where a reader who missed one goes to find it.
+//
+// "Compare" used to sit here as its own entry. When that page merged into
+// `/proof` a bulk rewrite pointed it at the new URL and left two entries going
+// to the same place under different names, which reads as two destinations.
 const LINKS = [
+  { href: "/why-it-matters", label: "Why it matters" },
   { href: "/risk", label: "How it decides" },
-  { href: "/proof", label: "Compare" },
   { href: "/proof", label: "Proof" },
+  { href: "/x-layer", label: "Why X Layer" },
   { href: "/roadmap", label: "Roadmap" },
+  { href: "/faq", label: "FAQ" },
   { href: "/developers", label: "Developers" },
   { href: "/demo", label: "Demo" },
 ];

@@ -19,7 +19,7 @@ export function ClaimGate() {
 
   return (
     <section aria-labelledby="claim-gate">
-      <h2 id="claim-gate" className="font-display text-heading-lg text-ink">
+      <h2 id="claim-gate" className="scroll-mt-28 font-display text-heading-lg text-ink">
         The claim gate
       </h2>
       <p className="mt-2 max-w-3xl text-body-md text-ink-muted">

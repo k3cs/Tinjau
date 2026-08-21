@@ -47,7 +47,7 @@ export function Benchmark() {
             <p className="data-label text-ink-faint">The measured result</p>
             <h2
               id="benchmark-title"
-              className="mt-4 font-display text-section-sm text-ink lg:text-section-lg"
+              className="scroll-mt-28 mt-4 font-display text-section-sm text-ink lg:text-section-lg"
             >
               No winner. We are publishing that.
             </h2>
@@ -92,7 +92,7 @@ export function Benchmark() {
             </p>
           </div>
           <div className="mt-8">
-            <RestraintDiagram scenarioId="D-neutral-normal" />
+            <RestraintDiagram scenarioIds={["D-neutral-normal", "C-two-origins-hard-case"]} />
           </div>
         </div>
       </section>

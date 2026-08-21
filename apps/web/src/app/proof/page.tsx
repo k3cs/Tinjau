@@ -12,6 +12,7 @@ import { PROOF_SUMMARY, getBuildCommit } from "@/lib/product/proof";
 import { DefenseComparison } from "@/app/_components/landing/defense-comparison";
 
 import { Benchmark } from "./_components/benchmark";
+import { ProofContents } from "./_components/proof-contents";
 
 export const metadata: Metadata = {
   title: "Proof of work · Tinjau",
@@ -36,12 +37,16 @@ export default function ProofPage() {
             <div className="flex justify-between gap-6 border-b border-edge py-3"><dt>Verified baseline</dt><dd>{PROOF_SUMMARY.network.verifiedAt.slice(0, 10)}</dd></div>
           </dl>
         </div>
+
+        <div className="mx-auto mt-12 max-w-[1440px]">
+          <ProofContents />
+        </div>
       </section>
 
       <section className="mx-auto max-w-[1440px] px-4 py-20 sm:px-6 lg:px-8 lg:py-28" aria-labelledby="deployment-ledger-title">
         <div className="grid gap-8 lg:grid-cols-[0.45fr_1fr]">
           <div>
-            <h2 id="deployment-ledger-title" className="font-display text-section-sm text-ink">
+            <h2 id="deployment-ledger-title" className="scroll-mt-28 font-display text-section-sm text-ink">
               Deployment ledger
             </h2>
             <p className="mt-4 max-w-[44ch] text-body-sm text-ink-muted">
@@ -124,7 +129,7 @@ export default function ProofPage() {
 
       <section className="border-t border-edge bg-canvas-sunken px-4 py-20 sm:px-6 lg:px-8 lg:py-28" aria-labelledby="capability-proof-title">
         <div className="mx-auto grid max-w-[1440px] gap-8 lg:grid-cols-[0.45fr_1fr]">
-          <div><h2 id="capability-proof-title" className="font-display text-section-sm text-ink">Capability evidence</h2><p className="mt-4 max-w-[40ch] text-body-sm text-ink-muted">Maturity says whether the path exists. Data mode says what proves it. Neither substitutes for the other.</p></div>
+          <div><h2 id="capability-proof-title" className="scroll-mt-28 font-display text-section-sm text-ink">Capability evidence</h2><p className="mt-4 max-w-[40ch] text-body-sm text-ink-muted">Maturity says whether the path exists. Data mode says what proves it. Neither substitutes for the other.</p></div>
           <div className="border-t border-edge">
             {PROOF_SUMMARY.capabilities.map((capability) => (
               <article key={capability.id} id={`capability-${capability.id}`} className="scroll-mt-24 border-b border-edge py-5">
@@ -139,7 +144,7 @@ export default function ProofPage() {
 
       <section className="border-t border-edge bg-canvas-sunken px-4 py-16 text-ink sm:px-6 lg:px-8" aria-labelledby="build-evidence-title">
         <div className="mx-auto grid max-w-[1440px] gap-8 lg:grid-cols-[0.45fr_1fr]">
-          <h2 id="build-evidence-title" className="font-display text-heading-lg text-ink">Build evidence</h2>
+          <h2 id="build-evidence-title" className="scroll-mt-28 font-display text-heading-lg text-ink">Build evidence</h2>
           <div className="border-t border-edge font-data text-xs">
             <div className="flex flex-col gap-2 border-b border-edge py-4 sm:flex-row sm:justify-between"><span className="text-ink-muted">Commit</span><span className="break-all">{buildCommit ?? "Unavailable outside an identified Vercel build"}</span></div>
             {PROOF_SUMMARY.services.map((service) => <div key={service.id} className="grid gap-2 border-b border-edge py-4 sm:grid-cols-[0.4fr_0.6fr]"><span>{service.name}</span><span className="text-ink-muted">{service.evidence}. {service.limitation}</span></div>)}

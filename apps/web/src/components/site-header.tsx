@@ -24,7 +24,7 @@ const NAV = [
   { href: "/x-layer", label: "Why X Layer" },
   { href: "/roadmap", label: "Roadmap" },
   { href: "/faq", label: "FAQ" },
-  { href: "/developers", label: "Developer Support" },
+  { href: "/developers", label: "Developers" },
 ];
 
 export function SiteHeader() {
@@ -46,8 +46,17 @@ export function SiteHeader() {
             </span>
           </Link>
 
+          {/*
+            The inline row switches at `lg`, not `sm`. Measured, the seven items
+            need 729px and the header needs about 1,035px with the mark and the
+            call to action, so switching at 640px left every tablet and small
+            laptop with a nav squeezed into an internal scroller. Below `lg` it
+            takes its own full-width row, which has room, and the fade on the
+            right edge says there is more to scroll rather than leaving the last
+            item silently cut off.
+          */}
           <nav
-            className="order-3 flex w-full overflow-x-auto border-t border-edge sm:order-none sm:ml-4 sm:w-auto sm:border-0"
+            className="scroll-fade order-3 flex w-full overflow-x-auto border-t border-edge lg:order-none lg:ml-3 lg:w-auto lg:border-0 lg:[mask-image:none]"
             aria-label="Primary"
           >
             {NAV.map((item) => {
@@ -57,7 +66,7 @@ export function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`relative flex min-h-12 flex-1 items-center justify-center whitespace-nowrap px-3.5 font-body text-body-sm font-medium transition-colors duration-150 ease-tinjau sm:min-h-16 sm:flex-none ${
+                  className={`relative flex min-h-12 flex-1 items-center justify-center whitespace-nowrap px-3.5 font-body text-body-sm font-medium transition-colors duration-150 ease-tinjau lg:min-h-16 lg:flex-none lg:px-2.5 xl:px-3.5 ${
                     active ? "text-ink" : "text-ink-muted hover:text-ink"
                   }`}
                 >

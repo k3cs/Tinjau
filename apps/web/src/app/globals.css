@@ -90,6 +90,21 @@
 }
 
 @layer components {
+  /*
+    A right-edge fade on a horizontal scroller, so a cut-off item reads as
+    "there is more" instead of as a layout bug. Removed at `lg`, where the nav
+    is inline and nothing is scrolling.
+  */
+  .scroll-fade {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 2rem), transparent 100%);
+    mask-image: linear-gradient(to right, #000 calc(100% - 2rem), transparent 100%);
+    scrollbar-width: none;
+  }
+
+  .scroll-fade::-webkit-scrollbar {
+    display: none;
+  }
+
   .tabular {
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum" 1;

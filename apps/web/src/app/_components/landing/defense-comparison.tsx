@@ -15,7 +15,7 @@ export function DefenseComparison() {
           <p className="data-label text-ink-faint">One signal is not a defence</p>
           <h2
             id="defense-title"
-            className="mt-4 font-display text-section-sm text-ink lg:text-section-lg"
+            className="scroll-mt-28 mt-4 font-display text-section-sm text-ink lg:text-section-lg"
           >
             What the usual controls miss.
           </h2>

@@ -8,12 +8,12 @@ export function MissionSelect({ onSelect }: { onSelect: (missionId: MissionId) =
       <section className="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20" aria-labelledby="mission-select-title">
         <div className="grid gap-8 border-b border-edge pb-12 lg:grid-cols-[1fr_0.55fr] lg:items-end">
           <div>
-            <h1 id="mission-select-title" className="max-w-4xl text-balance font-display text-5xl font-bold tracking-display sm:text-7xl">Choose a field exercise.</h1>
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-secondary">Make bounded decisions. Watch evidence arrive one step at a time. Learn where Tinjau stops an unsafe instruction.</p>
+            <h1 id="mission-select-title" className="max-w-4xl text-balance font-display text-5xl font-bold tracking-display sm:text-7xl">Try it yourself.</h1>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-secondary">You make the calls. Evidence arrives one step at a time, and you decide what to do with it. Three short runs, each ending where the rules stop you.</p>
           </div>
           <div className="border-t border-edge pt-5 font-data text-[11px] leading-relaxed text-ink-muted">
-            <p>Each mission begins empty.</p>
-            <p className="mt-2">No result is revealed before you earn it.</p>
+            <p>Every run starts blank.</p>
+            <p className="mt-2">Nothing is shown until you ask for it.</p>
           </div>
         </div>
 
