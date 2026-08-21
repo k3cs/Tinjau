@@ -1,0 +1,73 @@
+[s3.2] mode: EXECUTED
+[s3.2] chain 1952 (X Layer Testnet) via https://testrpc.xlayer.tech
+[s3.2] addresses match the §2.1 table: true
+[s3.2] trade script: 120 steps from block 68201457 to 68201557, K = 7.104726316809, dropped 0
+[s3.2] envelope on chain: base 500 max 20000 widen 3600s — matches §2.1: true
+[s3.2] balances: LP 0.19932291550614578 OKB, swapper 0.19855091510754577 OKB
+[s3.2] canonical scenario B via runScenario: WATCH [ANTI_WICK_FAILED, BONDED_EVIDENCE_PASSED, DUPLICATE_SYNDICATION, MARKET_NOT_CONFIRMED, OFFICIAL_FILING, REFERENCE_MARKET_CLOSED, STALE_EVIDENCE] — local glue agrees
+
+[s3.2] ===== Run W — control, canonical scenario B, both arms charge baseFee =====
+[s3.2:W] deploying a fresh 18-decimal mock pair
+[s3.2:W] risk 0x4f08180d376120f2ca308a64c67efa7e7be253be  quote 0x2e67cedbdfd7ec70ee24acded72d06a035cf1dcd  quoteIsCurrency0=true
+[s3.2:W] pool H 0xfb1710dbccd5656eca8ec8a4cec9aff1c842cdbb403d835c124a8880418bd955
+[s3.2:W] pool C 0xd1cd46f373a0a84b68b486ea3b2386bed1d189d269a98493c0aaa4575820b4f7
+[s3.2:W] minted and approved (8 transactions)
+[s3.2:W] both pools initialised at sqrtPriceX96 79228162514264337593543950336
+[s3.2:W] one position [-6000, 6000] seeded in each arm
+[s3.2:W] posted WATCH at 0x5b18f83486a1e5788fc196f5be3b1e6f1e7ac5ef8bccdcf911c3a6392ec70297 (protectStartedAt n/a)
+[s3.2:W] replaying 120 steps, interleaved C then H
+[s3.2:W]   step 20/120  feeC=500 feeH=500
+[s3.2:W]   step 40/120  feeC=500 feeH=500
+[s3.2:W]   step 60/120  feeC=500 feeH=500
+[s3.2:W]   step 80/120  feeC=500 feeH=500
+[s3.2:W]   step 100/120  feeC=500 feeH=500
+[s3.2:W]   step 120/120  feeC=500 feeH=500
+[s3.2] run W threw: The run threw before it could complete: RPC Request failed.
+
+URL: https://testrpc.xlayer.tech
+Request body: {"method":"eth_call","params":[{"data":"0x35fd631a852151d13ae6e507d12e1a25a993591e7fb85c44833238c9d04ad5f179cfd19e0000000000000000000000000000000000000000000000000000000000000004","to":"0x8F862A8b6f00C99b0610dc764228C661c4909ae1"},"0x2514283"]}
+ 
+Raw Call Arguments:
+  to:    0x8F862A8b6f00C99b0610dc764228C661c4909ae1
+  data:  0x35fd631a852151d13ae6e507d12e1a25a993591e7fb85c44833238c9d04ad5f179cfd19e0000000000000000000000000000000000000000000000000000000000000004
+ 
+Contract Call:
+  address:   0x8F862A8b6f00C99b0610dc764228C661c4909ae1
+  function:  extsload(bytes32 startSlot, uint256 nSlots)
+  args:              (0x852151d13ae6e507d12e1a25a993591e7fb85c44833238c9d04ad5f179cfd19e, 4)
+
+Docs: https://viem.sh/docs/contract/readContract
+Details: block is out of range
+Version: viem@2.53.1. Published as an attempt and a failure, per §10. Nothing was simulated in its place.
+[s3.2] run W: VOID
+   ! The run threw before it could complete: RPC Request failed.
+
+URL: https://testrpc.xlayer.tech
+Request body: {"method":"eth_call","params":[{"data":"0x35fd631a852151d13ae6e507d12e1a25a993591e7fb85c44833238c9d04ad5f179cfd19e0000000000000000000000000000000000000000000000000000000000000004","to":"0x8F862A8b6f00C99b0610dc764228C661c4909ae1"},"0x2514283"]}
+ 
+Raw Call Arguments:
+  to:    0x8F862A8b6f00C99b0610dc764228C661c4909ae1
+  data:  0x35fd631a852151d13ae6e507d12e1a25a993591e7fb85c44833238c9d04ad5f179cfd19e0000000000000000000000000000000000000000000000000000000000000004
+ 
+Contract Call:
+  address:   0x8F862A8b6f00C99b0610dc764228C661c4909ae1
+  function:  extsload(bytes32 startSlot, uint256 nSlots)
+  args:              (0x852151d13ae6e507d12e1a25a993591e7fb85c44833238c9d04ad5f179cfd19e, 4)
+
+Docs: https://viem.sh/docs/contract/readContract
+Details: block is out of range
+Version: viem@2.53.1. Published as an attempt and a failure, per §10. Nothing was simulated in its place.
+
+[s3.2] ===== Run P — treatment, constructed PROTECT enforced on arm H =====
+[s3.2:P] deploying a fresh 18-decimal mock pair
+[s3.2:P] risk 0x56eb0e16b2c3fd57a792391ea2af1d03e7e06fc2  quote 0xeabc57deec4a1b1242c00b4ac54489ea665ec14e  quoteIsCurrency0=false
+[s3.2:P] pool H 0xea41a7ad379ad3ac9e8f3eafae2fc3a02bb02eb00c07ef307d352627d8c6ccda
+[s3.2:P] pool C 0x609d0e5922621f39076c700b0914a7ffff551186b8217cb9e51ac12b60426260
+[s3.2:P] minted and approved (8 transactions)
+[s3.2:P] both pools initialised at sqrtPriceX96 79228162514264337593543950336
+[s3.2:P] one position [-6000, 6000] seeded in each arm
+[s3.2:P] posted PROTECT at 0x72e4f4dbd2e0f12fae43b5db29cfce17608d128493f1800ac52560edede65f42 (protectStartedAt 1787338734)
+[s3.2:P] replaying 120 steps, interleaved C then H
+[s3.2:P]   step 20/120  feeC=500 feeH=20000
+[s3.2:P]   step 40/120  feeC=500 feeH=20000
+[s3.2:P]   step 60/120  feeC=500 feeH=20000

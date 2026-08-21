@@ -1,0 +1,53 @@
+[s3.2] mode: EXECUTED
+[s3.2] chain 1952 (X Layer Testnet) via https://testrpc.xlayer.tech
+[s3.2] addresses match the §2.1 table: true
+[s3.2] trade script: 120 steps from block 68201457 to 68201557, K = 7.104726316809, dropped 0
+[s3.2] envelope on chain: base 500 max 20000 widen 3600s — matches §2.1: true
+[s3.2] balances: LP 0.19942555909127796 OKB, swapper 0.19991239543561978 OKB
+[s3.2] canonical scenario B via runScenario: WATCH [ANTI_WICK_FAILED, BONDED_EVIDENCE_PASSED, DUPLICATE_SYNDICATION, MARKET_NOT_CONFIRMED, OFFICIAL_FILING, REFERENCE_MARKET_CLOSED, STALE_EVIDENCE] — local glue agrees
+
+[s3.2] ===== Run W — control, canonical scenario B, both arms charge baseFee =====
+[s3.2:W] deploying a fresh 18-decimal mock pair
+[s3.2:W] risk 0x74f23573396d7e9cdc3121eab5e0bf04ce477dd5  quote 0x58cd883c0e5faa529f4aba5f7f05b0afc39dbdd3  quoteIsCurrency0=true
+[s3.2:W] pool H 0xd413de6455f273393ed2d53fa7fa1276c74dbc94efa3ac4163fdd2cd4c4ce081
+[s3.2:W] pool C 0xb58bc403ff16d981d3232b130c347bd0f8a6196f958dbd179f77b974bb7114cb
+[s3.2:W] minted and approved (8 transactions)
+[s3.2:W] both pools initialised at sqrtPriceX96 79228162514264337593543950336
+[s3.2:W] one position [-6000, 6000] seeded in each arm
+[s3.2:W] posted WATCH at 0xe025901be466c424364a573527be135dbc6a0347a233a961dbbd2024a0ebf0fb (protectStartedAt n/a)
+[s3.2:W] replaying 120 steps, interleaved C then H
+[s3.2:W]   step 20/120  feeC=500 feeH=500
+[s3.2:W]   step 40/120  feeC=500 feeH=500
+[s3.2:W]   step 60/120  feeC=500 feeH=500
+[s3.2:W]   step 80/120  feeC=500 feeH=500
+[s3.2:W]   step 100/120  feeC=500 feeH=500
+[s3.2:W]   step 120/120  feeC=500 feeH=500
+[s3.2:W] arm C withdrawn: Wq=0 Wr=0
+[s3.2:W] arm H withdrawn: Wq=0 Wr=0
+[s3.2] run W: valid  D(primary) = 0.0000 bps
+
+[s3.2] ===== Run P — treatment, constructed PROTECT enforced on arm H =====
+[s3.2:P] deploying a fresh 18-decimal mock pair
+[s3.2:P] risk 0x5ba0b07bc312c76a592b4521e976f4ef1f6e2a5c  quote 0xd29d8c3e339295cebfe16d572b9fef1c31ebf14b  quoteIsCurrency0=false
+[s3.2:P] pool H 0xd46f78bc50b54a4da7344a0392b49b9933bc1695ddb7cf9fd25396e6b49a1e56
+[s3.2:P] pool C 0xc76138a1b89e1e8e88d28b0d53fa94a276c5b0562fe3664b9a898e32155b055d
+[s3.2:P] minted and approved (8 transactions)
+[s3.2:P] both pools initialised at sqrtPriceX96 79228162514264337593543950336
+[s3.2:P] one position [-6000, 6000] seeded in each arm
+[s3.2:P] posted PROTECT at 0xa4ea047b9ee253725fdfd05128a62cb36c0eba96870dd4d31f5c25e688b8faac (protectStartedAt 1787337533)
+[s3.2:P] replaying 120 steps, interleaved C then H
+[s3.2:P]   step 20/120  feeC=500 feeH=20000
+[s3.2:P]   step 40/120  feeC=500 feeH=20000
+[s3.2:P]   step 60/120  feeC=500 feeH=20000
+[s3.2:P]   step 80/120  feeC=500 feeH=20000
+[s3.2:P]   step 100/120  feeC=500 feeH=20000
+[s3.2:P]   step 120/120  feeC=500 feeH=20000
+[s3.2:P] arm C withdrawn: Wq=0 Wr=0
+[s3.2:P] arm H withdrawn: Wq=371849304347066139176754 Wr=157948771065150158984844
+[s3.2] run P: valid  D(primary) = 49804.7048 bps
+[s3.2] artifact: /Users/scientivan/Programming/New/docs/buildx-orion-2026/outputs/05-build/s3-2-paired-pool-raw.json
+[s3.2] artifact: /Users/scientivan/Programming/New/docs/buildx-orion-2026/outputs/05-build/data/s3_2_paired_pool_result.json
+
+[s3.2] OUTCOME BAND: CONFIRMS
+[s3.2] D = 49804.7048 bps under the primary mark; Δf̄ = 195.0000 bps; noise floor |D_watch| = 0.000000 bps; F = max(0.05 × Δf̄, 3 × |D_watch|) = 9.7500 bps; CONFIRMS threshold = 97.5000 bps.
+[s3.2] gas used: 72581425 units, 0.001451628572581425 OKB

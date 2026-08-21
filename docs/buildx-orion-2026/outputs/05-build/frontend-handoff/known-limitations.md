@@ -292,6 +292,60 @@ session.
   clock are untouched, so a pause can only ever shorten protection, never extend it. Settled by
   Dien on 2026-08-21 (DEC-012).
 
+## 17b. The paired-pool experiment (S3.2), and what its CONFIRMS does not mean
+
+Added 2026-08-21 UTC, per the S3.2 pre-registration's own publication requirement.
+
+Two builder-controlled testnet pools were replayed through the same 120 recorded swaps, one with
+`TinjauFeeHook` attached and one without. Pre-registered before any result existed
+(`../s3-1-paired-pool-preregistration.md`, committed at `7d1caa6`).
+
+**Result: band `CONFIRMS`.** `D = 195.3812 bps` under the primary mark against a realised fee
+differential of `195.0000 bps`, sign held across all three marks (195.38 / 158.22 / 194.62 bps).
+The control run W, replaying canonical scenario B where neither arm is protected, returned
+**bit-identical withdrawals and exactly zero** in base units, which was the pre-registered hard
+prediction and the falsifiable half of the design.
+
+**Read the ratio before the band.** `D` is **100.195%** of the fee differential's own arithmetic
+ceiling. That is the signature of a conformance test, not of a discovery: under a fixed trade
+list, a higher fee necessarily leaves the LP holding more of the quote asset for the same risk
+asset acquired. The experiment's own pre-registration said so in advance. The genuinely open
+questions were magnitude, harness symmetry and mark-robustness, and those are what came out
+clean.
+
+What it therefore does **not** establish, each of which is load-bearing:
+
+- **Nothing about whether Tinjau protects at the right times.** Run P's `PROTECT` trigger is
+  CONSTRUCTED. On canonical data scenario B does not promote, and S3.3 later established that the
+  frozen scenario set is close to a census, so there is no wider event population in which to look
+  for one that would.
+- **It assumes zero flow elasticity** under a 40x fee difference. In a real market a 2% fee deters
+  much of the flow a 0.05% fee attracts. This is the same assumption that sank the three-policy
+  benchmark, inherited knowingly.
+- **195 bps is an upper bound on a full episode**, not a typical figure. Only 364 s of the
+  3,600 s plateau was exercised, and the decay curve, which is most of a real episode, contributes
+  nothing here.
+- **Both pools hold builder-controlled mock tokens with no value.** Neither is a market.
+
+`canClaimLossAvoided` remains **false** and "Tinjau reduces LP loss" remains prohibited. This
+result licenses no new sentence about LP outcomes.
+
+**Three testnet executions, two of them void, all three published.** Run 1 printed
+`OUTCOME BAND: CONFIRMS` with `D = 49,804 bps`, a 498% figure produced by a broken withdrawal
+readback in which three of four arms returned zero. Its run W "passed" at exactly zero for the
+wrong reason: nothing had been withdrawn on either side. It was caught, voided, and is published
+in full rather than deleted, because a result of that shape published unchecked would have been
+indefensible. Root cause was not the position tuple or the settlement flags but the RPC read lag
+already recorded in §1 of this document: the "after" balance was served by a node that had not yet
+seen the burn. Attempt 2 turned the same staleness into a loud `block is out of range` and
+aborted rather than reporting a number. The successful run pins its readings to block numbers, and
+records that naive `"latest"` reads still returned `0/0` during it, so the fix is visible rather
+than asserted.
+
+A validity gate was **added** during the experiment (gate 8: a burn must read back as a burn) and
+recorded as a deviation rather than written into the frozen pre-registration. It is one-directional
+by construction: it can only ever void a run, never turn a null into a positive.
+
 ## 18. Prohibited claims
 
 Never say, in any artifact:
