@@ -1,7 +1,7 @@
 # Tinjau Guided Mission, Developers, and Proof of Work Design
 
 **Date:** 2026-08-21  
-**Status:** Approved design, awaiting written-spec review  
+**Status:** Approved  
 **Scope:** Replace the current demo dashboard behavior with a guided mission experience and add separate
 Developers and Proof routes.
 
