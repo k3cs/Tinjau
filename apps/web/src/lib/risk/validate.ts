@@ -197,7 +197,9 @@ function confirmationAt(value: unknown): MarketConfirmationView {
   );
   return {
     status: enumAt(raw.status, CONFIRMATION_STATUSES, `${path}.status`),
-    observedAt: dateAt(raw.observedAt, `${path}.observedAt`),
+    // Required but nullable since risk-record/1.0.1. An omitted key and an
+    // explicit null are different facts, so `exactKeys` above still demands it.
+    observedAt: nullableDateAt(raw.observedAt, `${path}.observedAt`),
     blockNumber: nullableStringAt(raw.blockNumber, `${path}.blockNumber`),
     fresh: booleanAt(raw.fresh, `${path}.fresh`),
     antiWickSatisfied: booleanAt(raw.antiWickSatisfied, `${path}.antiWickSatisfied`),

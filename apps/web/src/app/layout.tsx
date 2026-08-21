@@ -23,26 +23,25 @@ const data = JetBrains_Mono({
   display: "swap",
 });
 
+const TITLE = "Tinjau · bounded LP risk autopilot";
+const DESCRIPTION =
+  "Tinjau reads the filing behind a price move, checks the X Layer pool independently, and lets the contract decide what the pool may do. Hackathon MVP on testnet, built on replayed data.";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://tinjau.xyz"),
-  title: "Tinjau — Bounded LP Risk Autopilot",
-  description:
-    "Source-grounded evidence, independent market confirmation, and bounded protection for tokenized-stock liquidity on X Layer.",
+  title: { default: TITLE, template: "%s" },
+  description: DESCRIPTION,
   applicationName: "Tinjau",
   openGraph: {
-    title: "Tinjau — Bounded LP Risk Autopilot",
-    description:
-      "Tokenized-stock liquidity should not react blind. Inspect the evidence, policy boundary, and bounded action path.",
+    title: TITLE,
+    description: DESCRIPTION,
     siteName: "Tinjau",
     type: "website",
     url: "/",
   },
-  twitter: {
-    card: "summary",
-    title: "Tinjau — Bounded LP Risk Autopilot",
-    description:
-      "Source-grounded risk state and bounded protection for tokenized-stock liquidity on X Layer.",
-  },
+  // `summary_large_image` because `twitter-image.png` is a 1200x630 card. Left
+  // as `summary` it would be cropped to a square and lose the wordmark.
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -55,7 +54,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <div className="flex min-h-screen flex-col">
           <SiteHeader />
-          <div id="main-content" tabIndex={-1} className="flex-1">{children}</div>
+          <main id="main-content" tabIndex={-1} className="flex-1">
+            {children}
+          </main>
           <SiteFooter />
         </div>
       </body>

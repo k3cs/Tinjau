@@ -1,6 +1,6 @@
 /**
  * Impeccable direction contract (new-work.md section 5), emitted as a literal HTML
- * comment — an ordinary JSX comment compiles away and never reaches the DOM, so a
+ * comment. An ordinary JSX comment compiles away and never reaches the DOM, so a
  * build-audit grep for the seed key would find nothing. `dangerouslySetInnerHTML` on a
  * zero-footprint, aria-hidden wrapper is the only way React can put a real HTML comment
  * node in the markup. Rendered as the first child of <body> in the root layout.

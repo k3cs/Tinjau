@@ -4,10 +4,12 @@ import { InputIdentityRibbon } from "@/app/compare/_components/input-identity-ri
 import { PolicyColumn } from "@/app/compare/_components/policy-column";
 import { ResultClaimGate } from "@/app/compare/_components/result-claim-gate";
 import { COMPARISON_POLICIES, COMPARISON_SCENARIOS, getComparisonScenario } from "@/lib/comparison/preregistration";
+import { SLUG_TO_SCENARIO_ID } from "@/lib/handoff/results";
 import { EventTape } from "./event-tape";
 
 export function ComparisonScene({ caseId }: { caseId?: string }) {
   const scenario = getComparisonScenario(caseId);
+  const scenarioId = SLUG_TO_SCENARIO_ID[scenario.slug];
   return (
     <div className="space-y-5">
       <ComparisonScenarioSwitcher scenarios={COMPARISON_SCENARIOS} selected={scenario.slug} baseHref="/demo?scene=comparison" />
@@ -19,9 +21,9 @@ export function ComparisonScene({ caseId }: { caseId?: string }) {
         </section>
       )}
       <section className="grid gap-px overflow-hidden border border-edge bg-edge lg:grid-cols-3" aria-label="Equal policy comparison">
-        {COMPARISON_POLICIES.map((policy) => <PolicyColumn key={policy.id} policy={policy} noEconomics={!scenario.carriesEconomicRow} />)}
+        {COMPARISON_POLICIES.map((policy) => <PolicyColumn key={policy.id} policy={policy} scenarioId={scenarioId} />)}
       </section>
-      <ComparisonMatrix noEconomics={!scenario.carriesEconomicRow} />
+      <ComparisonMatrix scenarioId={scenarioId} />
       <ResultClaimGate />
       <EventTape scene="comparison" />
     </div>

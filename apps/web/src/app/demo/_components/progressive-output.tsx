@@ -51,7 +51,7 @@ function OutputRecord({ output, index }: { output: MissionOutput; index: number 
         <div className="flex flex-wrap gap-2">{capability && <CapabilityBadge maturity={capability.maturity} />}{output.dataMode && <DataModeLabel mode={output.dataMode} />}</div>
       </div>
       <p className="mt-4 max-w-[75ch] text-sm leading-relaxed text-ink-secondary">{output.summary}</p>
-      {output.detail && <ul className="mt-4 border-t border-edge pt-3 font-data text-[11px] text-ink-muted">{output.detail.map((item) => <li key={item} className="py-1">— {item}</li>)}</ul>}
+      {output.detail && <ul className="mt-4 border-t border-edge pt-3 font-data text-[11px] text-ink-muted">{output.detail.map((item) => <li key={item} className="py-1">· {item}</li>)}</ul>}
       {output.sourceUrl !== undefined && <div className="mt-4"><ExternalEvidenceLink href={output.sourceUrl} /></div>}
     </article>
   );

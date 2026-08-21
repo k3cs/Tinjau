@@ -5,9 +5,20 @@ export function DefenseComparison() {
     <section className="section-rule bg-paper-bright" aria-labelledby="defense-title">
       <div className="mx-auto max-w-[1440px] px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
         <div className="max-w-3xl">
-          <p className="font-data text-[10px] font-semibold uppercase tracking-[0.08em] text-coal-muted">Defense is not one signal</p>
-          <h2 id="defense-title" className="mt-4 font-display text-4xl font-bold tracking-display sm:text-5xl">What existing controls miss.</h2>
-          <p className="mt-5 max-w-[68ch] leading-7 text-coal-muted">This is an architecture comparison, not a benchmark result. Economic outcomes remain closed until the preregistered replay runs.</p>
+          <p className="data-label text-coal-faint">One signal is not a defence</p>
+          <h2
+            id="defense-title"
+            className="mt-4 font-display text-section-sm text-coal lg:text-section-lg"
+          >
+            What the usual controls miss.
+          </h2>
+          <p className="mt-5 max-w-[62ch] text-body-md text-coal-muted">
+            An architecture comparison, not a scoreboard. The measured economic comparison{" "}
+            <a href="/compare" className="underline">
+              came out indeterminate
+            </a>{" "}
+            and is reported separately.
+          </p>
         </div>
         <div className="mt-12 overflow-x-auto border-y border-black" tabIndex={0} aria-label="Architectural defense comparison; scroll horizontally on narrow screens">
           <table className="min-w-[760px] w-full border-collapse text-left">

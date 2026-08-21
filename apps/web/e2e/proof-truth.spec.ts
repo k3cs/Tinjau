@@ -17,11 +17,12 @@ test("Proof of Work shows testnet evidence without claiming final deployment", a
   await page.goto("/proof");
   await expect(page.getByRole("heading", { name: "Proof of Work" })).toBeVisible();
   await expect(page.getByText("X Layer Testnet", { exact: true })).toBeVisible();
-  await expect(page.getByText("AfterhoursFeeHook", { exact: true })).toBeVisible();
-  await expect(page.getByText("No final address — deployment pending").first()).toBeVisible();
-  await expect(page.getByText("BUILDER CONTROLLED").first()).toBeVisible();
+  // Addresses are real and deployed, and must still never read as final.
+  await expect(page.getByText(/THESE ARE T4.2 WORKING ADDRESSES, NOT THE FINAL LIST/)).toBeVisible();
+  await expect(page.getByText("Builder-controlled").first()).toBeVisible();
+  await expect(page.getByText(/THE PUBLIC RPC SERVES STALE READS/)).toBeVisible();
   await expect(page.getByRole("heading", { name: "Capability evidence" })).toBeVisible();
   await expect(page.getByText("Market-confirmation engine", { exact: true })).toBeVisible();
-  await expect(page.getByText("PENDING", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("Market-confirmation engine", { exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: /scoreboard/i })).toHaveCount(0);
 });

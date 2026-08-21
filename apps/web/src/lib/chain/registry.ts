@@ -1,8 +1,8 @@
 /**
- * Read-only helpers over `EventStateRegistry`, browser-side (no wallet, no gas — pure
+ * Read-only helpers over `EventStateRegistry`, browser-side (no wallet, no gas, pure
  * `eth_call`s through the public RPC). Grouping by token is done by walking every posted
  * event id (1..nextEventId()-1) rather than via a per-token index, because the contract
- * exposes no "all events for token" list beyond the single latest id — fine at today's
+ * exposes no "all events for token" list beyond the single latest id, which is fine at today's
  * scale (one posted event) and correct at whatever scale the registry grows to next,
  * since it never assumes a fixed count.
  */
@@ -16,7 +16,7 @@ const REGISTRY_DEPLOY_BLOCK = 38507039n;
 /**
  * Finds the exact posting transaction for an event by binary-searching for the block
  * whose timestamp matches `getEvent()`'s own `timestamp` field, then reading a narrow
- * `getLogs` window around it — bounded to ~15 RPC calls total, instead of chunk-scanning
+ * `getLogs` window around it, bounded to ~15 RPC calls total, instead of chunk-scanning
  * the whole deploy-to-head range in <=100-block windows (X Layer's `eth_getLogs` cap),
  * which would be hundreds of calls. Returns null (never throws) when the search can't
  * resolve, so a caller always has a safe "no tx link available" fallback.

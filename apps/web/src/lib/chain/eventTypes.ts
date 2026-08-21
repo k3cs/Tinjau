@@ -17,15 +17,15 @@ export const ON_CHAIN_EVENT_TYPE = {
 
 const LABELS: Record<number, string> = {
   0: "Unclassified",
-  1: "8-K — Material Event",
-  2: "8-K — Earnings",
-  3: "8-K — Restatement",
-  4: "8-K — Executive Change",
-  5: "8-K — Bankruptcy",
-  6: "8-K — M&A",
-  7: "8-K — Delisting",
-  8: "Form 4 — Insider Buy",
-  9: "Form 4 — Insider Sell",
+  1: "8-K: Material Event",
+  2: "8-K: Earnings",
+  3: "8-K: Restatement",
+  4: "8-K: Executive Change",
+  5: "8-K: Bankruptcy",
+  6: "8-K: M&A",
+  7: "8-K: Delisting",
+  8: "Form 4: Insider Buy",
+  9: "Form 4: Insider Sell",
 };
 
 export function eventTypeLabel(eventType: number): string {

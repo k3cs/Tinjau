@@ -1,6 +1,16 @@
-import { COMPARISON_METRICS, type PreregisteredPolicy } from "@/lib/comparison/preregistration";
+import { type PreregisteredPolicy } from "@/lib/comparison/preregistration";
+import { behaviourFor, orUnavailable } from "@/lib/handoff/results";
 
-export function PolicyColumn({ policy, noEconomics }: { policy: PreregisteredPolicy; noEconomics: boolean }) {
+export function PolicyColumn({
+  policy,
+  scenarioId,
+}: {
+  policy: PreregisteredPolicy;
+  scenarioId: string;
+}) {
+  // One row per grid point this policy was run at, so a reader cannot see a
+  // single threshold that happened to look good.
+  const rows = behaviourFor(scenarioId).filter((row) => row.policyId === policy.id);
   return (
     <article className="bg-canvas p-5 sm:p-6">
       <div className="min-h-44">
@@ -27,18 +37,28 @@ export function PolicyColumn({ policy, noEconomics }: { policy: PreregisteredPol
       </div>
 
       <dl className="mt-6 divide-y divide-edge border-y border-edge">
-        {COMPARISON_METRICS.map((metric) => (
-          <div key={metric.label} className="flex items-start justify-between gap-3 py-3">
-            <dt>
-              <span className="block font-data text-[11px] text-ink-muted">{metric.label}</span>
-              <span className="mt-1 block font-data text-[9px] text-ink-muted/80">{metric.unit}</span>
+        {rows.map((row) => (
+          <div key={`${row.policyId}-${row.variant}`} className="py-3">
+            <dt className="flex items-baseline justify-between gap-3">
+              <span className="font-data text-[11px] text-ink-muted">
+                {row.variant || "single configuration"}
+              </span>
+              <span
+                className={`font-data text-[11px] ${
+                  row.triggerCount > 0 ? "text-watch-soft" : "text-ink-secondary"
+                }`}
+              >
+                {row.triggerCount === 0 ? "did not fire" : `fired ${row.triggerCount}×`}
+              </span>
             </dt>
-            <dd className="text-right font-data text-[11px] text-ink-secondary">
-              {noEconomics ? "No economic row" : "Pending handoff"}
+            <dd className="mt-1 font-data text-[10px] text-ink-faint">
+              max fee {orUnavailable(row.maxFeePips, "pips")} · held for{" "}
+              {orUnavailable(row.protectionDurationSec, "s")}
             </dd>
           </div>
         ))}
       </dl>
+
     </article>
   );
 }

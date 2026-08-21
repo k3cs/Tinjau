@@ -13,6 +13,9 @@ export const CONFIDENCE_BANDS = ["LOW", "MEDIUM", "HIGH"] as const;
 export const EVIDENCE_RELATIONS = ["ORIGIN", "SUPPORTS", "CONTRADICTS", "DUPLICATE"] as const;
 export const ACTION_STATUSES = ["NONE", "PENDING", "APPLIED", "FAILED", "EXPIRED", "DECAYED"] as const;
 
+// Mirrors `$defs.reasonCode.enum` in the published
+// `frontend-handoff/risk-record.schema.json`, in the same order.
+// `apps/web/test/handoff-parity.test.ts` fails if the two ever drift.
 export const REASON_CODES = [
   "RUMOR_ONLY",
   "SINGLE_SOURCE",
@@ -22,6 +25,7 @@ export const REASON_CODES = [
   "NO_OFFICIAL_CONFIRMATION",
   "UNSUPPORTED_ASSET",
   "AMBIGUOUS_ENTITY",
+  "UNKNOWN_COMPANY",
   "MARKET_CONFIRMED",
   "MARKET_NOT_CONFIRMED",
   "MARKET_DATA_STALE",
@@ -29,6 +33,8 @@ export const REASON_CODES = [
   "ANTI_WICK_FAILED",
   "THIN_EXIT_DEPTH",
   "REFERENCE_MARKET_CLOSED",
+  "INSUFFICIENT_SAMPLE",
+  "PERSISTENCE_UNOBSERVED",
   "OFFICIAL_FILING",
   "TWO_INDEPENDENT_SOURCES",
   "BONDED_EVIDENCE_PASSED",
@@ -70,7 +76,15 @@ export interface EvidenceClaimView {
 
 export interface MarketConfirmationView {
   status: ConfirmationStatus;
-  observedAt: string;
+  /**
+   * Nullable since `risk-record/1.0.1.json`. `null` means nothing was observed
+   * at all (an UNAVAILABLE leg, or a window containing no swaps). It is NOT a
+   * synonym for the status: an UNAVAILABLE leg whose sample was merely too
+   * small still carries a real timestamp. Null-check before computing age,
+   * substituting the assessment instant would make an unobserved leg read as
+   * perfectly fresh.
+   */
+  observedAt: string | null;
   blockNumber: string | null;
   fresh: boolean;
   antiWickSatisfied: boolean;

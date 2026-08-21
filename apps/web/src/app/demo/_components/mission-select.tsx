@@ -4,7 +4,7 @@ import type { MissionId } from "@/lib/demo/mission-types";
 
 export function MissionSelect({ onSelect }: { onSelect: (missionId: MissionId) => void }) {
   return (
-    <main className="demo-shell">
+    <div className="demo-shell">
       <section className="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 lg:px-8 lg:py-20" aria-labelledby="mission-select-title">
         <div className="grid gap-8 border-b border-edge pb-12 lg:grid-cols-[1fr_0.55fr] lg:items-end">
           <div>
@@ -37,6 +37,6 @@ export function MissionSelect({ onSelect }: { onSelect: (missionId: MissionId) =
           ))}
         </div>
       </section>
-    </main>
+    </div>
   );
 }

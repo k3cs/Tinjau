@@ -1,5 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Tinjau">
+  <title>Tinjau</title>
   <rect width="64" height="64" rx="10" fill="#000000"/>
-  <path d="M9 10h46v14H38v30H24V24H9z" fill="#BCFF2F"/>
-  <path d="M46 34h10M51 29v10" fill="none" stroke="#BCFF2F" stroke-width="4" stroke-linecap="square"/>
+  <g transform="translate(31.97 31.9) scale(1.25) translate(-31.97 -31.9)"
+     fill="none" stroke="#BCFF2F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9.78 42.81H16.2C17.7 42.81 19.0 40.3 19.72 38L23.95 26C24.6 24.15 26.2 20.98 27.7 20.98H38.2"/>
+    <path d="M40.7 28.2L44.29 38.2C45.2 40.7 46.5 42.81 48.3 42.81H54.16"/>
+  </g>
 </svg>

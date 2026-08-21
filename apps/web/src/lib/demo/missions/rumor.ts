@@ -73,7 +73,7 @@ export const RUMOR_MISSION: MissionDefinition = {
       objective: "Choose a risk response that respects the evidence ceiling.",
       known: "The promotion ceiling is WATCH.",
       unknown: "Market consequence and whether an official filing will emerge.",
-      whyItMatters: "The deterministic policy—not the model—sets the maximum state.",
+      whyItMatters: "The deterministic policy sets the maximum state, not the model.",
       outputs: [{ id: "rumor-watch", kind: "RISK", title: "WATCH recorded", summary: "Rumor observed. Official support absent. Aggressive fee blocked.", detail: ["SINGLE_SOURCE", "DUPLICATE_SYNDICATION", "NO_OFFICIAL_CONFIRMATION"], dataMode: "REPLAY", capabilityId: "risk-policy", renderKey: "risk-state" }],
       choices: [
         { id: "force-protect", label: "Force PROTECT", description: "Override the evidence ceiling and widen the fee.", outcome: "REJECTED", reasonCode: "NO_OFFICIAL_CONFIRMATION", reveal: [], modal: blockedFeeModal },

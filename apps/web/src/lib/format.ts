@@ -12,7 +12,7 @@ export function truncateHash(hash: string): string {
 /** Unix seconds (bigint or number) -> "17 Aug 2026, 09:41 UTC". */
 export function formatUnixSeconds(seconds: bigint | number): string {
   const n = typeof seconds === "bigint" ? Number(seconds) : seconds;
-  if (!n) return "—";
+  if (!n) return "n/a";
   const d = new Date(n * 1000);
   return (
     d.toLocaleDateString("en-US", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" }) +
@@ -24,7 +24,7 @@ export function formatUnixSeconds(seconds: bigint | number): string {
 
 export function formatUnixDate(seconds: bigint | number): string {
   const n = typeof seconds === "bigint" ? Number(seconds) : seconds;
-  if (!n) return "—";
+  if (!n) return "n/a";
   const d = new Date(n * 1000);
   return d.toLocaleDateString("en-US", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" });
 }
@@ -52,7 +52,7 @@ export function formatTokenAmount(balance: bigint, decimals: number, maxFraction
 
 /** declaredAmount is fixed-point, scaled by 1_000_000 (6-decimal convention, USD₮0-style). */
 export function formatDeclaredAmount(value: bigint, currency: string): string {
-  if (value === 0n && !currency) return "—";
+  if (value === 0n && !currency) return "n/a";
   const abs = value < 0n ? -value : value;
   const sign = value < 0n ? "-" : "";
   const formatted = formatUnits(abs, 6);

@@ -1,6 +1,6 @@
 /**
  * Hand-written `as const` ABI mirror of `EventStateRegistry.sol`, copied from
- * `apps/server/src/chain/registryAbi.ts` (kept in sync manually — see that file's own
+ * `apps/server/src/chain/registryAbi.ts` (kept in sync manually, see that file's own
  * header comment for why it's hand-written rather than generated). Only the read
  * functions this frontend calls are included: `getEvent`, `getLatestEvent`,
  * `nextEventId`, `latestEventIdForToken`.
@@ -90,7 +90,7 @@ export const EVENT_STATE_REGISTRY_ABI = [
   },
 ] as const;
 
-/** Minimal ERC-20 ABI — only the reads a balance/holdings lookup needs. */
+/** Minimal ERC-20 ABI, only the reads a balance/holdings lookup needs. */
 export const ERC20_ABI = [
   {
     type: "function",

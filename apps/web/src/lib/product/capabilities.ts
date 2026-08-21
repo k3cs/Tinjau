@@ -86,9 +86,12 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     stage: "06 · Confirm",
     name: "Market-confirmation engine",
     summary: "Target gate for basis, drawdown, velocity, exit depth, freshness, and anti-wick checks.",
-    maturity: "PENDING",
-    evidence: "T3.3 / T3.4 tracker tasks",
-    limitation: "No current frontend state may label this engine complete or live.",
+    maturity: "IMPLEMENTED",
+    dataMode: "REPLAY",
+    evidence: "Confirmation rules tinjau.confirm/2.0.0, exercised by both published scenarios",
+    limitation:
+      "Anti-wick uses the median retention over the hold interval, so a price held down for more than half of it still passes. Not manipulation-proof.",
+    href: "/risk",
   },
   {
     id: "risk-registry",
@@ -97,9 +100,10 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     summary: "Stores a versioned, expiring, reusable risk record without requiring dashboard trust.",
     maturity: "IMPLEMENTED",
     dataMode: "REPLAY",
-    evidence: "Local contracts + 93 contract tests",
-    limitation: "Final contracts are not yet deployed; no final address exists.",
-    href: "/demo",
+    evidence: "Deployed on X Layer Testnet chain 1952; bytecode verified by eth_getCode",
+    limitation:
+      "Working addresses, not final. T7.2 owns the authoritative list, and the pool behind them is builder-controlled.",
+    href: "/risk",
   },
   {
     id: "fee-hook",
@@ -128,11 +132,12 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     stage: "Proof",
     name: "Three-policy benchmark",
     summary: "Compares static, volatility-only, and Tinjau using preregistered matched inputs.",
-    maturity: "PENDING",
+    maturity: "IMPLEMENTED",
     dataMode: "REPLAY",
-    evidence: "Frozen benchmark method and scenario manifest",
-    limitation: "T5 has not produced validated outcomes; the claim gate remains closed.",
-    href: "/demo",
+    evidence: "three-policy-comparison.json (72 cells over four frozen scenarios)",
+    limitation:
+      "It ran and the claim gate stayed closed: canClaimLossAvoided is false, and the sign flips between the two metric bases. No economic advantage is claimed.",
+    href: "/compare",
   },
   {
     id: "exchange-os",

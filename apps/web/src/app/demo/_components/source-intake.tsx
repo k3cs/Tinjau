@@ -16,7 +16,7 @@ export function SourceIntake({ scenario, focus }: { scenario: DemoScenario; focu
       </div>
       <dl className="divide-y divide-edge bg-canvas font-data text-xs">
         {[
-          ["Source", first.publisherOrAuthor ?? "No public author — simulated fixture"],
+          ["Source", first.publisherOrAuthor ?? "No public author (simulated fixture)"],
           ["Canonical identity", first.sourceId],
           ["Source time", formatUtc(first.publishedAt)],
           ["Asset resolution", `${first.company} → ${first.tokenSymbol}`],

@@ -1,11 +1,11 @@
 /**
  * Off-chain ticker -> on-chain address mapping, mirrored from
  * `apps/server/src/chain/tokenAddresses.ts` (see that file for the full mainnet/testnet
- * rationale — reproduced in short form here).
+ * rationale, reproduced in short form here).
  *
  * Only NVDAx and MSTRx are live-polled tickers today. NVDAx has a real testnet mock
  * contract deployed (`mockWNVDAx`); MSTRx's testnet slot falls back to its mainnet LABEL
- * address, which has zero bytecode on chain 1952 — a balance read against it will not
+ * address, which has zero bytecode on chain 1952, so a balance read against it will not
  * decode, and the UI must disclose that plainly rather than silently showing "0".
  */
 
@@ -34,7 +34,7 @@ export const TRACKED_TOKENS: TrackedToken[] = [
   },
 ];
 
-/** Configured but not yet polled — a lookup involving these degrades to "not yet tracked". */
+/** Configured but not yet polled, so a lookup involving these degrades to "not yet tracked". */
 export const NOT_YET_TRACKED_TICKERS = [
   "AAPL",
   "GOOGL",

@@ -1,7 +1,7 @@
 /**
  * X Layer Testnet (chain 1952) client wiring for the browser.
  *
- * Mirrors `apps/server/src/chain/client.ts` (not imported directly — apps/server is a
+ * Mirrors `apps/server/src/chain/client.ts` (not imported directly, because apps/server is a
  * separate package with no workspace link into apps/web, so the small pieces this app
  * needs are duplicated here rather than reaching across the package boundary).
  *
@@ -13,7 +13,7 @@ import { createPublicClient, http, type Chain } from "viem";
 export const XLAYER_TESTNET_RPC_URL = "https://testrpc.xlayer.tech";
 // Canonical form, verified 2026-08-17: the old "www.okx.com/web3/explorer/xlayer-test"
 // path 301-redirects here. Both work in a browser, but this is the URL that actually
-// resolves without an intermediate hop — use it directly rather than relying on the redirect.
+// resolves without an intermediate hop, so use it directly rather than relying on the redirect.
 export const XLAYER_TESTNET_EXPLORER = "https://web3.okx.com/explorer/x-layer-testnet";
 
 export const EVENT_STATE_REGISTRY_ADDRESS = "0x713f45f44e74616898FB366E11881196221933aA" as const;
@@ -41,7 +41,7 @@ export function getPublicClient() {
   return cachedClient;
 }
 
-/** X Layer Testnet has an observed ~10% RPC failure rate — retry every read through this. */
+/** X Layer Testnet has an observed ~10% RPC failure rate, so retry every read through this. */
 export async function withRpcRetry<T>(fn: () => Promise<T>, retries = 3, delayMs = 800): Promise<T> {
   let lastError: unknown;
   for (let i = 0; i <= retries; i++) {

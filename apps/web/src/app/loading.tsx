@@ -1,6 +1,13 @@
 export default function Loading() {
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-paper" aria-busy="true" aria-label="Loading Tinjau product page">
+    <div
+      // role="status" rather than a bare div: a generic element prohibits
+      // aria-label, so the name was being dropped and nothing was announced.
+      role="status"
+      className="min-h-[calc(100vh-4rem)] bg-paper"
+      aria-busy="true"
+      aria-label="Loading Tinjau product page"
+    >
       <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-[1440px] gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
         <div>
           <div className="h-5 w-52 animate-pulse bg-black/10 motion-reduce:animate-none" />

@@ -2,28 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Base layer values mirror the OKX Design System tokens read from
+ * web3.okx.com/xlayer on 2026-08-21. Token names are in the comments so a
+ * reader can check any value against that stylesheet. See DESIGN.md.
+ */
 @layer base {
   html {
     color-scheme: light dark;
     scroll-behavior: smooth;
-    scrollbar-color: #5b5b57 #f5f5f0;
+    /* --okd-color-content-tertiary / --okd-color-background-base-secondary */
+    scrollbar-color: #5b5b5b #fafafa;
     scrollbar-width: thin;
   }
 
   body {
     min-width: 320px;
-    background-color: #f5f5f0;
-    color: #000000;
-    font-size: 16px;
-    line-height: 1.5;
-  }
-
-  * {
-    border-color: currentColor;
+    background-color: #fafafa; /* --okd-color-background-base-secondary */
+    color: #000000; /* --okd-color-content-primary */
+    font-size: 16px; /* --okd-text-body-md-regular-font-size */
+    line-height: 24px; /* --okd-text-body-md-regular-line-height */
+    -webkit-font-smoothing: antialiased;
   }
 
   ::selection {
-    background-color: #bcff2f;
+    background-color: #bcff2f; /* --okd-color-background-surface-brand */
     color: #000000;
   }
 
@@ -33,27 +36,34 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #f5f5f0;
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #5b5b57;
-    border: 2px solid #f5f5f0;
-    border-radius: 8px;
+    background-color: #b3b3b3;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    border-radius: 8px; /* --global-scrollbar-border-radius */
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background-color: #b3b3b3;
+    background-color: #5b5b5b;
   }
 
+  /*
+   * Two rings so the indicator survives on paper, on carbon and on the brand
+   * lime itself. OKX's own focus treatment layers a contrast ring under the
+   * colour ring for the same reason.
+   */
   :focus-visible {
     outline: 2px solid #bcff2f;
-    outline-offset: 3px;
-    box-shadow: 0 0 0 1px #000000;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.65);
+    border-radius: 2px;
   }
 
   ::placeholder {
-    color: #5b5b57;
+    color: #5b5b5b;
     opacity: 1;
   }
 
@@ -71,39 +81,66 @@
   button:disabled {
     cursor: not-allowed;
   }
+}
 
+@layer components {
   .tabular {
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum" 1;
   }
-}
 
-@layer components {
-  .section-rule {
-    @apply border-t border-black/20;
-  }
-
+  /* Short operational label. Uppercase is reserved for exactly this. */
   .data-label {
     @apply font-data text-[11px] font-medium uppercase tracking-[0.08em];
   }
 
-  .control-surface {
-    @apply rounded-md border border-edge bg-canvas-soft;
+  .section-rule {
+    @apply border-t border-edge-light;
   }
 
   .demo-shell {
     color-scheme: dark;
     @apply min-h-[calc(100vh-4rem)] bg-canvas text-ink;
   }
+
+  /* Primary control: OKX pill, brand fill, black label. */
+  .btn-primary {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-pill bg-signal px-5
+      font-body text-body-sm font-medium text-black transition-colors duration-150 ease-tinjau
+      hover:bg-signal-soft active:translate-y-px;
+  }
+
+  .btn-secondary {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-pill border
+      border-current px-5 font-body text-body-sm font-medium transition-colors duration-150
+      ease-tinjau hover:bg-black/[0.06] active:translate-y-px;
+  }
+
+  /* A panel is a flat field bounded by a hairline, never a shadowed card. */
+  .panel {
+    @apply rounded-xl border border-edge-light bg-paper-bright;
+  }
+
+  .panel-dark {
+    @apply rounded-xl border border-edge bg-surface;
+  }
 }
 
+/*
+ * Motion is explanatory only, so removing all of it costs no information.
+ * Nothing in this app depends on an animation completing.
+ */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
-    scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

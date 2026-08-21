@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Tinjau">
+  <title>Tinjau</title>
+  <rect width="64" height="64" rx="10" fill="#000000"/>
+  <g fill="none" stroke="#BCFF2F" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Baseline, rise, and the plateau where the curve is stopped by its ceiling. -->
+    <path d="M9 43H16.4C20.4 43 21.4 41.4 22.7 36.4L25.4 25.6C26.5 21.1 27.5 20.5 30.4 20.5H40.4"/>
+    <!-- The return: it descends and lands back on the same baseline it left. -->
+    <path d="M40 24.6L43.7 37.4C45.1 42 46.4 43 49.9 43H55"/>
+  </g>
+</svg>

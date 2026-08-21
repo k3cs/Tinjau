@@ -29,9 +29,9 @@ export function DemoExperience() {
 
   if (!hydrated) {
     return (
-      <main className="demo-shell flex items-center justify-center px-4" aria-busy="true">
+      <div className="demo-shell flex items-center justify-center px-4" aria-busy="true">
         <p className="font-data text-xs uppercase tracking-[0.06em] text-ink-muted">Restoring mission session…</p>
-      </main>
+      </div>
     );
   }
 
