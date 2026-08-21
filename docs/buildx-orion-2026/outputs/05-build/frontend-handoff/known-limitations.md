@@ -42,6 +42,26 @@ The agent checked whether its own method was unfairly harsh: measuring drawdown 
 — the correction that would favour B — gives 101 bps, half the floor. B gets **weaker**, so the
 verdict is robust to the method choice.
 
+**S3.3 update (2026-08-21 UTC) — the count did not grow, and the reason matters.** S3.3 asked whether
+the `PROTECT`-free record is a property of the *events chosen* rather than of the thresholds. It
+pre-registered a deterministic selection rule (`../s3-3-scenario-expansion-selection-rule.md`,
+committed before any market data was read) and applied it. The rule selects **one** 8-K in the
+only window where this pool's market leg is physically measurable, and it is scenario B's own
+filing. **The expansion set is empty: 0 of 0 additional events reached `PROTECT`, because there
+were no additional events.** NVIDIA filed four documents with the SEC in those thirty days and
+T0.2 already used two of them; scenario B carries the only MATERIAL 8-K NVIDIA filed in twelve
+months. The frozen set is close to a **census**, not a curated sample — so "no canonical replay
+reaches `PROTECT`" cannot be explained by event selection. It equally does **not** show the
+thresholds are right: with no ground truth about which events should have dislocated the price,
+S3.3 cannot separate "the events were quiet" from "anti-wick is too strict for a pool this thin".
+That stays open. See `../s3-3-scenario-expansion-result.md`.
+
+Two figures above are sharpened by that run, both in the direction of a **stronger** refusal:
+retention is exactly **9.66% median / 4.38% minimum over 68 observations** (not ~10–13%), and the
+234.86 bps drawdown **troughs at 11:58:36Z, 43 minutes before the 12:41:33Z filing** — so the
+move predates the event and could not have been caused by it. Velocity on that window is
+**0.41×**, i.e. trade intensity *fell* after the filing; there was no volume burst on this event.
+
 **Consequence:** the demo's confirmed-protection scene cannot be a mainnet replay. It is
 `scenario-confirmed-protect.json`, built from real replayed 8-K evidence paired with a
 **constructed** price path on the builder-controlled testnet pool. Only the market data is

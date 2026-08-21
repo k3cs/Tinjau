@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "tinjau.scenario/0.2.0",
+  "scenarioId": "X-0001045810-26-000069",
+  "title": "S3.3 reconstruction — NVIDIA CORPORATION 8-K 0001045810-26-000069 (items 1.01, 2.03, 7.01)",
+  "role": "reproduction check — this accession is already frozen as scenario B; NOT an expansion row",
+  "builtByTask": "S3.3 Phase 2",
+  "builtAt": "2026-08-21",
+  "_pre_registration": "Every field below is DERIVED by docs/buildx-orion-2026/outputs/05-build/s3-3-scenario-expansion-selection-rule.md §4.4 (committed b408ca0) from SEC filing metadata and the frozen venue constants. No field was chosen. No price path, pool state, or market datum was consulted to build this file.",
+  "_not_a_frozen_scenario": "This file lives outside apps/server/scenarios/*.json deliberately. The four T0.2 scenarios are historical evidence and are not modified, re-scored, or re-anchored by S3.3.",
+  "asset": {
+    "company": "NVIDIA CORPORATION",
+    "cik": "0001045810",
+    "ticker": "NVDA",
+    "tokenSymbol": "wNVDAx",
+    "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+    "chainId": 196,
+    "chainName": "X Layer mainnet",
+    "poolIdOrAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2"
+  },
+  "decisionAnchor": {
+    "at": "2026-08-17T12:41:33Z",
+    "blockNumber": "68201457",
+    "why": "EDGAR acceptance timestamp of accession 0001045810-26-000069. Block from the manifest's verified relation blockNumber = unixSeconds - 1718769036.",
+    "usReferenceMarketOpen": false,
+    "usReferenceMarketNote": "Recorded as false and used only as context; `confirmMarket` never gates on it."
+  },
+  "evidenceWindow": {
+    "rule": "anchor minus 72 hours .. anchor",
+    "from": "2026-08-14T12:41:33Z",
+    "to": "2026-08-17T12:41:33Z",
+    "_completeness": "DELIBERATELY INCOMPLETE, and disclosed as such. §4.4 admits exactly one claim — the 8-K primary document. No NEWS claim is searched for or admitted, because choosing which outlets count is the judgement the selection rule exists to keep out of the sampling frame. The consequence (§8): this exercises the OFFICIAL path only and says nothing about the two-independent-origin non-official path."
+  },
+  "marketReplayWindow": {
+    "from": "2026-08-17T11:41:33Z",
+    "to": "2026-08-17T18:41:33Z",
+    "fromBlock": "68197857",
+    "toBlock": "68223057",
+    "rule": "anchor minus 60 minutes .. anchor plus 6 hours"
+  },
+  "claims": [
+    {
+      "claimId": "claim-x-0001045810-26-000069-001",
+      "sourceClass": "OFFICIAL",
+      "dataMode": "REPLAY",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+      "sourceId": "edgar:0001045810-26-000069/nvda-20260817.htm",
+      "publisherOrAuthor": "NVIDIA CORPORATION (SEC EDGAR filer, CIK 0001045810)",
+      "publishedAt": "2026-08-17T12:41:33Z",
+      "publishedAtPrecision": "SECOND",
+      "company": "NVIDIA CORPORATION",
+      "tokenSymbol": "wNVDAx",
+      "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "eventType": "SEC_8K_ITEMS_101_203_701",
+      "secItems": [
+        "1.01",
+        "2.03",
+        "7.01"
+      ],
+      "sourceContentSha256": "1c480e3320f3171e6ac1979a50eecb123d4150637c7b769444d16faf97928133",
+      "sourceLocalPath": "apps/server/scenarios/expansion/sources/0001045810-26-000069-nvda-20260817.htm",
+      "claimTextOrPointer": "SEC Form 8-K, accession 0001045810-26-000069, items 1.01, 2.03, 7.01. Byte-pinned local copy at apps/server/scenarios/expansion/sources/0001045810-26-000069-nvda-20260817.htm (sha256 1c480e3320f3171e6ac1979a50eecb123d4150637c7b769444d16faf97928133). No verbatim span is hand-selected: choosing which sentence to quote is a judgement, and the S3.3 selection rule has no place to put one.",
+      "independenceGroup": "official:edgar/0001045810-26-000069",
+      "relation": "ORIGIN",
+      "officialConfirmation": true,
+      "expiresAt": "2026-08-20T12:41:33Z",
+      "materiality": "MATERIAL"
+    }
+  ],
+  "preRegisteredExpectation": {
+    "state": "WATCH_CONDITIONAL",
+    "aggressiveFeeAuthorized": null,
+    "mustHoldRegardlessOfMarketData": false,
+    "reasoning": [
+      "Item codes 1.01, 2.03, 7.01 map to MATERIAL under the §4.3 map, which was frozen before the EDGAR universe was enumerated.",
+      "OFFICIAL evidence with officialEvidencePassed=true reduces mayReachProtect to a single condition: confirmation === CONFIRMED. So WATCH, with PROTECT if and only if the market leg confirms."
+    ]
+  }
+}

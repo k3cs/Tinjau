@@ -1,0 +1,35 @@
+{
+  "_schemaVersion": "tinjau.s3-3-availability/1.0.0",
+  "_purpose": "Pass 1 of the S3.3 two-pass rule (§6.1). Written to disk BEFORE `confirmMarket` was invoked for anything. Every field here is derived from log PRESENCE and BLOCK HEIGHT only; `log.data` — which carries sqrtPriceX96, tick, liquidity and both amounts — was never decoded in this pass. That is what makes 'market data was available for event N' a statement made without having seen what the prices did.",
+  "_availabilityNeverExcludes": "§6.3: availability is a LABEL on a published row, never a filter. Every selected event is scored and published whatever this file says about it, and the denominator of every published rate is the frozen set size.",
+  "preRegistration": "docs/buildx-orion-2026/outputs/05-build/s3-3-scenario-expansion-selection-rule.md",
+  "preRegistrationCommit": "b408ca0",
+  "writtenAt": "2026-08-21T18:36:44.169Z",
+  "chainId": 196,
+  "pool": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+  "rpcUrl": "https://rpc.xlayer.tech",
+  "predicate": {
+    "rule": "AVAILABLE iff rpcRangeErrors == 0 && swapCount >= minSwapsForVerdict",
+    "minSwapsForVerdict": 30,
+    "_inherited": "minSwapsForVerdict is FROZEN_CONFIRMATION_CONFIG's, verbatim. Not a new threshold."
+  },
+  "frozenSetSize": 1,
+  "expansionSetSize": 0,
+  "controlSetSize": 1,
+  "events": [
+    {
+      "accession": "0001045810-26-000069",
+      "role": "CONTROL_REPRODUCTION",
+      "anchorAt": "2026-08-17T12:41:33Z",
+      "anchorBlock": 68201457,
+      "fromBlock": 68197857,
+      "toBlock": 68223057,
+      "swapCount": 4145,
+      "swapsBeforeAnchor": 1193,
+      "swapsAtOrAfterAnchor": 2952,
+      "rpcRangeErrors": 0,
+      "rpcCalls": 268,
+      "availability": "AVAILABLE"
+    }
+  ]
+}

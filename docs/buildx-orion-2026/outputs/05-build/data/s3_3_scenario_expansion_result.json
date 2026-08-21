@@ -1,0 +1,412 @@
+{
+  "_schemaVersion": "tinjau.s3-3-result/1.0.0",
+  "_headline": "The S3.3 expansion set is EMPTY. Applying the frozen selection rule to live EDGAR selects 1 8-K, and it is scenario B's own filing, which §4.1 step 5 labels CONTROL_REPRODUCTION. Expansion rows: 0. This run is therefore a REPRODUCTION CHECK of the harness, not an expansion, and must not be described as one.",
+  "_whatThisDoesNotShow": "Nothing here demonstrates the frozen thresholds are correct, and nothing demonstrates they are wrong. The evaluation read 'no canonical replay reaches PROTECT' as possibly a property of curated event choice; on this universe that branch is closed, because the frozen set is close to a census of what NVIDIA filed inside the measurable window. That is a fact about the event population, not a vindication of the thresholds.",
+  "status": "COMPLETE",
+  "preRegistration": "docs/buildx-orion-2026/outputs/05-build/s3-3-scenario-expansion-selection-rule.md",
+  "preRegistrationCommit": "b408ca0",
+  "startedAt": "2026-08-21T18:35:34.344Z",
+  "finishedAt": "2026-08-21T18:37:57.709Z",
+  "selection": {
+    "rule": "§4.1, applied verbatim",
+    "windowStart": "2026-07-22T11:18:40Z",
+    "windowEnd": "2026-08-20T18:00:00Z",
+    "capK": 12,
+    "capBound": false,
+    "nEightKInWindow": 1,
+    "sha256OfSelection": "a100bacb196058b91bb8586dcb8addf9fde9ef70ef1f76f9d459c4f44f45386d",
+    "expectedSha256": "a100bacb196058b91bb8586dcb8addf9fde9ef70ef1f76f9d459c4f44f45386d",
+    "pinMatches": true,
+    "frozenSetSize": 1,
+    "expansionSetSize": 0,
+    "controlSetSize": 1,
+    "selected": [
+      {
+        "accession": "0001045810-26-000069",
+        "acceptanceUtc": "2026-08-17T12:41:33Z",
+        "acceptanceUnix": 1786970493,
+        "weekday": "Mon",
+        "filingDate": "2026-08-17",
+        "reportDate": "2026-08-17",
+        "items": [
+          "1.01",
+          "2.03",
+          "7.01"
+        ],
+        "unknownItems": [],
+        "materiality": "MATERIAL",
+        "primaryDocument": "nvda-20260817.htm",
+        "anchorBlock": 68201457,
+        "fromBlock": 68197857,
+        "toBlock": 68223057,
+        "role": "CONTROL_REPRODUCTION",
+        "expectedState": "WATCH_CONDITIONAL"
+      }
+    ],
+    "allFormsInWindow": [
+      {
+        "acceptanceUtc": "2026-08-07T20:47:24Z",
+        "form": "4",
+        "accession": "0001197647-26-000007",
+        "items": ""
+      },
+      {
+        "acceptanceUtc": "2026-08-12T21:13:10Z",
+        "form": "4",
+        "accession": "0001310264-26-000008",
+        "items": ""
+      },
+      {
+        "acceptanceUtc": "2026-08-14T20:19:53Z",
+        "form": "13F-HR",
+        "accession": "0001045810-26-000065",
+        "items": ""
+      },
+      {
+        "acceptanceUtc": "2026-08-17T12:41:33Z",
+        "form": "8-K",
+        "accession": "0001045810-26-000069",
+        "items": "1.01,2.03,7.01"
+      }
+    ],
+    "_allFormsNote": "Reported for context (§5.2 D1), never used as a filter. Every document NVIDIA filed with the SEC inside the measurable window, all form types."
+  },
+  "evidenceReconstruction": {
+    "accession": "0001045810-26-000069",
+    "primaryDocument": "nvda-20260817.htm",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+    "fetchedSha256": "1c480e3320f3171e6ac1979a50eecb123d4150637c7b769444d16faf97928133",
+    "bytes": 31418,
+    "localPath": "apps/server/scenarios/expansion/sources/0001045810-26-000069-nvda-20260817.htm",
+    "indexSha256": "dbd2d505a397ff9b79e2e4985326c77b8b8f9d65682ba63080830c56ec6786f7",
+    "frozenScenarioBPinnedSha256": "1c480e3320f3171e6ac1979a50eecb123d4150637c7b769444d16faf97928133",
+    "documentBytesReproduced": true,
+    "_note": "An independent EDGAR fetch, byte-pinned and compared against the sha256 frozen scenario B has carried since T0.2. Agreement means EDGAR still serves the same bytes and the frozen artifact is not stale.",
+    "reconstructedScenarioPath": "apps/server/scenarios/expansion/scenario-x00-0001045810-26-000069.json",
+    "claimCount": 1,
+    "_claimGraphIsDeliberatelyThinner": "§4.4 admits exactly one OFFICIAL claim. Frozen scenario B carries several claims including NEWS. The two evidence graphs therefore differ BY CONSTRUCTION and some reason codes must legitimately differ with them. That is why run R3 exists."
+  },
+  "pass1Availability": {
+    "_schemaVersion": "tinjau.s3-3-availability/1.0.0",
+    "_purpose": "Pass 1 of the S3.3 two-pass rule (§6.1). Written to disk BEFORE `confirmMarket` was invoked for anything. Every field here is derived from log PRESENCE and BLOCK HEIGHT only; `log.data` — which carries sqrtPriceX96, tick, liquidity and both amounts — was never decoded in this pass. That is what makes 'market data was available for event N' a statement made without having seen what the prices did.",
+    "_availabilityNeverExcludes": "§6.3: availability is a LABEL on a published row, never a filter. Every selected event is scored and published whatever this file says about it, and the denominator of every published rate is the frozen set size.",
+    "preRegistration": "docs/buildx-orion-2026/outputs/05-build/s3-3-scenario-expansion-selection-rule.md",
+    "preRegistrationCommit": "b408ca0",
+    "writtenAt": "2026-08-21T18:36:44.169Z",
+    "chainId": 196,
+    "pool": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+    "rpcUrl": "https://rpc.xlayer.tech",
+    "predicate": {
+      "rule": "AVAILABLE iff rpcRangeErrors == 0 && swapCount >= minSwapsForVerdict",
+      "minSwapsForVerdict": 30,
+      "_inherited": "minSwapsForVerdict is FROZEN_CONFIRMATION_CONFIG's, verbatim. Not a new threshold."
+    },
+    "frozenSetSize": 1,
+    "expansionSetSize": 0,
+    "controlSetSize": 1,
+    "events": [
+      {
+        "accession": "0001045810-26-000069",
+        "role": "CONTROL_REPRODUCTION",
+        "anchorAt": "2026-08-17T12:41:33Z",
+        "anchorBlock": 68201457,
+        "fromBlock": 68197857,
+        "toBlock": 68223057,
+        "swapCount": 4145,
+        "swapsBeforeAnchor": 1193,
+        "swapsAtOrAfterAnchor": 2952,
+        "rpcRangeErrors": 0,
+        "rpcCalls": 268,
+        "availability": "AVAILABLE"
+      }
+    ]
+  },
+  "pass1ArtifactPath": "docs/buildx-orion-2026/outputs/05-build/data/s3-3-market-availability.json",
+  "_passOrdering": "The pass-1 artifact above was written to disk before `confirmMarket` was invoked for anything, and its existence was asserted at run time before pass 2 began.",
+  "pass2Capture": {
+    "fixturePath": "apps/server/src/market/fixtures/expansion/pool-x00-0001045810-26-000069-swaps.json",
+    "captureReused": false,
+    "swapCount": 4145,
+    "rpcRangeErrors": 0,
+    "fromBlock": 68197857,
+    "toBlock": 68223057,
+    "frozenFixtureSwapCount": 4145,
+    "pass1VsPass2Agree": true,
+    "freshVsFrozenSwapCountAgree": true
+  },
+  "runs": {
+    "_design": "R2 = frozen scenario + frozen fixture (baseline). R3 = frozen scenario + FRESH fixture (identical claims, only the capture differs, so this isolates the market leg). R1 = reconstruction + fresh fixture (the full §4.4 path).",
+    "R2_baseline": {
+      "state": "WATCH",
+      "actionAuthorized": false,
+      "requestedFee": 0,
+      "reasonCodes": [
+        "ANTI_WICK_FAILED",
+        "BONDED_EVIDENCE_PASSED",
+        "DUPLICATE_SYNDICATION",
+        "MARKET_NOT_CONFIRMED",
+        "OFFICIAL_FILING",
+        "REFERENCE_MARKET_CLOSED",
+        "STALE_EVIDENCE"
+      ],
+      "promotionReasonCodes": [
+        "BONDED_EVIDENCE_PASSED",
+        "DUPLICATE_SYNDICATION",
+        "MARKET_NOT_CONFIRMED",
+        "OFFICIAL_FILING",
+        "STALE_EVIDENCE"
+      ],
+      "effectiveConfirmation": "NOT_CONFIRMED",
+      "marketConfirmationStatus": "NOT_CONFIRMED",
+      "confidenceBand": "MEDIUM",
+      "independentSourceCount": 2,
+      "highestSourceClass": "OFFICIAL",
+      "claimCount": 6,
+      "humanExplanation": "Evidence would otherwise qualify, but market confirmation is not confirmed, and a new protection is never started without a fresh, independent market observation. Market leg: NOT_CONFIRMED. The drawdown signal(s) cleared their own bar, but the price dislocation did not persist, so the market did not confirm. Only 9.7% of the fall remained at the median observation across the 300s after the trough (68 observations, lowest 4.4%), below the 50% required. This was a wick. A signal unaccompanied by a persistent price dislocation may corroborate a confirmation; it can never create one. The OKX reference leg was unavailable, so no artifact may describe this as dual-leg OKX/X Layer confirmation. No bounded action is authorised in state WATCH: the aggressive fee path stays closed and the pool keeps its baseline fee."
+    },
+    "R3_captureCheck": {
+      "state": "WATCH",
+      "actionAuthorized": false,
+      "requestedFee": 0,
+      "reasonCodes": [
+        "ANTI_WICK_FAILED",
+        "BONDED_EVIDENCE_PASSED",
+        "DUPLICATE_SYNDICATION",
+        "MARKET_NOT_CONFIRMED",
+        "OFFICIAL_FILING",
+        "REFERENCE_MARKET_CLOSED",
+        "STALE_EVIDENCE"
+      ],
+      "promotionReasonCodes": [
+        "BONDED_EVIDENCE_PASSED",
+        "DUPLICATE_SYNDICATION",
+        "MARKET_NOT_CONFIRMED",
+        "OFFICIAL_FILING",
+        "STALE_EVIDENCE"
+      ],
+      "effectiveConfirmation": "NOT_CONFIRMED",
+      "marketConfirmationStatus": "NOT_CONFIRMED",
+      "confidenceBand": "MEDIUM",
+      "independentSourceCount": 2,
+      "highestSourceClass": "OFFICIAL",
+      "claimCount": 6,
+      "humanExplanation": "Evidence would otherwise qualify, but market confirmation is not confirmed, and a new protection is never started without a fresh, independent market observation. Market leg: NOT_CONFIRMED. The drawdown signal(s) cleared their own bar, but the price dislocation did not persist, so the market did not confirm. Only 9.7% of the fall remained at the median observation across the 300s after the trough (68 observations, lowest 4.4%), below the 50% required. This was a wick. A signal unaccompanied by a persistent price dislocation may corroborate a confirmation; it can never create one. The OKX reference leg was unavailable, so no artifact may describe this as dual-leg OKX/X Layer confirmation. No bounded action is authorised in state WATCH: the aggressive fee path stays closed and the pool keeps its baseline fee."
+    },
+    "R1_reconstruction": {
+      "state": "WATCH",
+      "actionAuthorized": false,
+      "requestedFee": 0,
+      "reasonCodes": [
+        "ANTI_WICK_FAILED",
+        "BONDED_EVIDENCE_PASSED",
+        "MARKET_NOT_CONFIRMED",
+        "OFFICIAL_FILING",
+        "REFERENCE_MARKET_CLOSED",
+        "SINGLE_SOURCE"
+      ],
+      "promotionReasonCodes": [
+        "BONDED_EVIDENCE_PASSED",
+        "MARKET_NOT_CONFIRMED",
+        "OFFICIAL_FILING",
+        "SINGLE_SOURCE"
+      ],
+      "effectiveConfirmation": "NOT_CONFIRMED",
+      "marketConfirmationStatus": "NOT_CONFIRMED",
+      "confidenceBand": "MEDIUM",
+      "independentSourceCount": 1,
+      "highestSourceClass": "OFFICIAL",
+      "claimCount": 1,
+      "humanExplanation": "Only one independent origin reported this. Additional outlets carrying the same story are syndications of that origin, not corroboration. Market leg: NOT_CONFIRMED. The drawdown signal(s) cleared their own bar, but the price dislocation did not persist, so the market did not confirm. Only 9.7% of the fall remained at the median observation across the 300s after the trough (68 observations, lowest 4.4%), below the 50% required. This was a wick. A signal unaccompanied by a persistent price dislocation may corroborate a confirmation; it can never create one. The OKX reference leg was unavailable, so no artifact may describe this as dual-leg OKX/X Layer confirmation. No bounded action is authorised in state WATCH: the aggressive fee path stays closed and the pool keeps its baseline fee."
+    }
+  },
+  "confirmationDetail": {
+    "_note": "The market leg in full, for both captures of the same block range. Identical claims are irrelevant here — `confirmMarket` sees only the swap window — so these two blocks differing would mean the capture path does not reproduce.",
+    "frozenFixture": {
+      "status": "NOT_CONFIRMED",
+      "ruleVersion": "tinjau.confirm/2.0.0",
+      "reasonCodes": [
+        "ANTI_WICK_FAILED",
+        "MARKET_DATA_UNAVAILABLE",
+        "MARKET_NOT_CONFIRMED",
+        "REFERENCE_MARKET_CLOSED"
+      ],
+      "observedAtIso": "2026-08-17T18:41:11Z",
+      "fresh": true,
+      "signals": {
+        "drawdown": {
+          "fired": false,
+          "evaluated": true,
+          "value": 234.86455466650375,
+          "unit": "bps",
+          "threshold": 200,
+          "explanation": "Drawdown of 235bps met the floor but did not persist. Only 9.7% of the fall remained at the median observation across the 300s after the trough (68 observations, lowest 4.4%), below the 50% required. This was a wick."
+        },
+        "velocity": {
+          "fired": false,
+          "evaluated": true,
+          "value": 0.4124056999161777,
+          "unit": "ratio",
+          "threshold": 2,
+          "explanation": "Post-anchor trade rate is 0.41x the pre-anchor rate (8.20 vs 19.88 swaps/min)."
+        },
+        "basis": {
+          "fired": false,
+          "evaluated": false,
+          "value": null,
+          "unit": "bps",
+          "threshold": 300,
+          "explanation": "Not evaluated: the OKX reference leg is unavailable, so no basis can be computed."
+        }
+      },
+      "antiWick": {
+        "evaluated": true,
+        "held": false,
+        "retention": 0.096649259761711,
+        "retentionMethod": "MEDIAN_OVER_HOLD_INTERVAL",
+        "minRetention": 0.04381018490990854,
+        "samplesInHold": 68,
+        "minSamplesRequired": 2,
+        "peakPrice": 227.3083958955719,
+        "troughPrice": 221.9697273781748,
+        "priceAfterHold": 226.57630736090633,
+        "troughAt": "2026-08-17T11:58:36Z",
+        "checkedAt": "2026-08-17T12:03:33Z",
+        "holdSeconds": 300,
+        "explanation": "Only 9.7% of the fall remained at the median observation across the 300s after the trough (68 observations, lowest 4.4%), below the 50% required. This was a wick."
+      }
+    },
+    "freshFixture": {
+      "status": "NOT_CONFIRMED",
+      "ruleVersion": "tinjau.confirm/2.0.0",
+      "reasonCodes": [
+        "ANTI_WICK_FAILED",
+        "MARKET_DATA_UNAVAILABLE",
+        "MARKET_NOT_CONFIRMED",
+        "REFERENCE_MARKET_CLOSED"
+      ],
+      "observedAtIso": "2026-08-17T18:41:11Z",
+      "fresh": true,
+      "signals": {
+        "drawdown": {
+          "fired": false,
+          "evaluated": true,
+          "value": 234.86455466650375,
+          "unit": "bps",
+          "threshold": 200,
+          "explanation": "Drawdown of 235bps met the floor but did not persist. Only 9.7% of the fall remained at the median observation across the 300s after the trough (68 observations, lowest 4.4%), below the 50% required. This was a wick."
+        },
+        "velocity": {
+          "fired": false,
+          "evaluated": true,
+          "value": 0.4124056999161777,
+          "unit": "ratio",
+          "threshold": 2,
+          "explanation": "Post-anchor trade rate is 0.41x the pre-anchor rate (8.20 vs 19.88 swaps/min)."
+        },
+        "basis": {
+          "fired": false,
+          "evaluated": false,
+          "value": null,
+          "unit": "bps",
+          "threshold": 300,
+          "explanation": "Not evaluated: the OKX reference leg is unavailable, so no basis can be computed."
+        }
+      },
+      "antiWick": {
+        "evaluated": true,
+        "held": false,
+        "retention": 0.096649259761711,
+        "retentionMethod": "MEDIAN_OVER_HOLD_INTERVAL",
+        "minRetention": 0.04381018490990854,
+        "samplesInHold": 68,
+        "minSamplesRequired": 2,
+        "peakPrice": 227.3083958955719,
+        "troughPrice": 221.9697273781748,
+        "priceAfterHold": 226.57630736090633,
+        "troughAt": "2026-08-17T11:58:36Z",
+        "checkedAt": "2026-08-17T12:03:33Z",
+        "holdSeconds": 300,
+        "explanation": "Only 9.7% of the fall remained at the median observation across the 300s after the trough (68 observations, lowest 4.4%), below the 50% required. This was a wick."
+      }
+    },
+    "identical": true
+  },
+  "comparison": {
+    "R3_vs_R2_diff": {},
+    "captureReproducesExactly": true,
+    "_captureMeaning": "R3 and R2 share every claim and differ only in which capture of the same block range was fed to the engine. An empty diff means the capture path reproduces the frozen fixture's verdict field for field.",
+    "R1_vs_R2_diff": {
+      "reasonCodes": {
+        "baseline": [
+          "ANTI_WICK_FAILED",
+          "BONDED_EVIDENCE_PASSED",
+          "DUPLICATE_SYNDICATION",
+          "MARKET_NOT_CONFIRMED",
+          "OFFICIAL_FILING",
+          "REFERENCE_MARKET_CLOSED",
+          "STALE_EVIDENCE"
+        ],
+        "other": [
+          "ANTI_WICK_FAILED",
+          "BONDED_EVIDENCE_PASSED",
+          "MARKET_NOT_CONFIRMED",
+          "OFFICIAL_FILING",
+          "REFERENCE_MARKET_CLOSED",
+          "SINGLE_SOURCE"
+        ]
+      },
+      "promotionReasonCodes": {
+        "baseline": [
+          "BONDED_EVIDENCE_PASSED",
+          "DUPLICATE_SYNDICATION",
+          "MARKET_NOT_CONFIRMED",
+          "OFFICIAL_FILING",
+          "STALE_EVIDENCE"
+        ],
+        "other": [
+          "BONDED_EVIDENCE_PASSED",
+          "MARKET_NOT_CONFIRMED",
+          "OFFICIAL_FILING",
+          "SINGLE_SOURCE"
+        ]
+      },
+      "independentSourceCount": {
+        "baseline": 2,
+        "other": 1
+      },
+      "claimCount": {
+        "baseline": 6,
+        "other": 1
+      },
+      "humanExplanation": {
+        "baseline": "Evidence would otherwise qualify, but market confirmation is not confirmed, and a new protection is never started without a fresh, independent market observation. Market leg: NOT_CONFIRMED. The drawdown signal(s) cleared their own bar, but the price dislocation did not persist, so the market did not confirm. Only 9.7% of the fall remained at the median observation across the 300s after the trough (68 observations, lowest 4.4%), below the 50% required. This was a wick. A signal unaccompanied by a persistent price dislocation may corroborate a confirmation; it can never create one. The OKX reference leg was unavailable, so no artifact may describe this as dual-leg OKX/X Layer confirmation. No bounded action is authorised in state WATCH: the aggressive fee path stays closed and the pool keeps its baseline fee.",
+        "other": "Only one independent origin reported this. Additional outlets carrying the same story are syndications of that origin, not corroboration. Market leg: NOT_CONFIRMED. The drawdown signal(s) cleared their own bar, but the price dislocation did not persist, so the market did not confirm. Only 9.7% of the fall remained at the median observation across the 300s after the trough (68 observations, lowest 4.4%), below the 50% required. This was a wick. A signal unaccompanied by a persistent price dislocation may corroborate a confirmation; it can never create one. The OKX reference leg was unavailable, so no artifact may describe this as dual-leg OKX/X Layer confirmation. No bounded action is authorised in state WATCH: the aggressive fee path stays closed and the pool keeps its baseline fee."
+      }
+    },
+    "_reconstructionMeaning": "R1 differs from R2 in BOTH the capture and the claim set. Any field that differs here but not in R3_vs_R2_diff is attributable to §4.4's deliberate one-claim graph.",
+    "preRegisteredExpectationMet": true,
+    "_preRegisteredExpectation": "§5.1: state WATCH, aggressiveFeeAuthorized false, market leg NOT_CONFIRMED."
+  },
+  "thresholds": {
+    "_statement": "No threshold was changed by this task, and none may be changed as a result of it (§9).",
+    "policyVersion": "tinjau.policy/1.0.0",
+    "confirmationRuleVersion": "tinjau.confirm/2.0.0",
+    "minSwapsForVerdict": 30,
+    "minDrawdownBps": 200,
+    "antiWickHoldSeconds": 300,
+    "antiWickRetentionFraction": 0.5,
+    "minVelocityRatio": 2,
+    "minBasisBps": 300
+  },
+  "deviations": [],
+  "limitations": [
+    "THE EXPANSION SET IS EMPTY. This run adds zero new events and therefore zero new evidence about threshold calibration. It is a reproduction check of the harness.",
+    "It cannot show the thresholds are correct, and it cannot show they are wrong. It has no independent ground truth about which events SHOULD have dislocated the price, so it cannot separate 'the events were genuinely quiet' from 'the anti-wick gate is too strict for a pool this thin'.",
+    "ONE ASSET, ONE POOL, ~30 DAYS, ONE CHAIN. SUPPORTED_ASSETS contains only NVDA/wNVDAx as supported and no MSTR-linked asset at all. No sentence may generalise from this to tokenized equities as a class or to any other ticker.",
+    "THE OFFICIAL PATH ONLY. §4.4 builds one OFFICIAL claim and no NEWS claims, so this says nothing about the two-independent-origin non-official path, syndication collapsing, or the self-revision rule.",
+    "`officialEvidencePassed` is assumed true, not computed (tracker §8). The bonded parse-agreement path is not exercised here.",
+    "The OKX index leg is UNAVAILABLE for this anchor as it is for all four frozen scenarios (SVC-003). No result here may be described as dual-leg confirmed.",
+    "The §5.1 expectation and the §7.3 VOID condition are in tension in the committed pre-registration: §5.1 asks for state/authorisation/market-leg agreement, while §7.3 says 'the same reason codes'. §4.4's one-claim graph makes exact reason-code equality structurally unreachable for R1. This is a drafting defect in the Phase 1 rule, not a result-driven reinterpretation; run R3 exists precisely so the strict reason-code test is still performed somewhere, on the comparison where it is meaningful. The Phase 1 document was NOT edited to resolve this.",
+    "This does not open `canClaimLossAvoided`. Its conditions are in t0-4 §8.6, untouched here, and known-limitations.md §18 stands unchanged."
+  ]
+}
