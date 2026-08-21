@@ -5,7 +5,7 @@ import { openCleanMission } from "./helpers/mission";
 // Reduced motion is emulated for two reasons: it is the path that must be
 // clean for the users who need it, and it stops axe sampling a colour
 // mid-fade and reporting a contrast failure the settled page does not have.
-for (const path of ["/", "/risk", "/compare", "/roadmap", "/demo", "/developers", "/proof"]) {
+for (const path of ["/", "/why-it-matters", "/risk", "/proof", "/x-layer", "/roadmap", "/demo", "/developers"]) {
   test(`has no serious accessibility violations: ${path}`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto(path);

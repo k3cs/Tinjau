@@ -42,7 +42,7 @@ export function LandingHero() {
             See a decision
             <span aria-hidden>&rarr;</span>
           </Link>
-          <Link href="/compare" className="btn-secondary">
+          <Link href="/proof" className="btn-secondary">
             Read the comparison
           </Link>
         </div>

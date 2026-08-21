@@ -77,7 +77,7 @@ export function GET() {
       generatedFrom: `${HANDOFF_DIR} (regenerated ${HANDOFF_GENERATED})`,
       canClaimLossAvoided: false,
       canClaimLossAvoidedReason:
-        "Tinjau ties the static do-nothing policy rather than beating it. See /compare.",
+        "Tinjau ties the static do-nothing policy rather than beating it. See /proof.",
       entries,
     },
     {

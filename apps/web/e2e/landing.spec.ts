@@ -36,7 +36,7 @@ test("global navigation exposes every judge-facing route", async ({ page }) => {
   const nav = page.getByRole("navigation", { name: "Primary" });
   for (const [label, href] of [
     ["Risk state", "/risk"],
-    ["Compare", "/compare"],
+    ["Compare", "/proof"],
     ["Proof", "/proof"],
     ["Roadmap", "/roadmap"],
     ["Developers", "/developers"],

@@ -1,25 +1,28 @@
 import { BlindWindow } from "@/app/_components/landing/blind-window";
-import { BoundedResponse } from "@/app/_components/landing/bounded-response";
-import { DefenseComparison } from "@/app/_components/landing/defense-comparison";
 import { LandingCta } from "@/app/_components/landing/landing-cta";
 import { LandingHero } from "@/app/_components/landing/landing-hero";
 import { MeasuredResult } from "@/app/_components/landing/measured-result";
 import { PlainTerms } from "@/app/_components/landing/plain-terms";
-import { ProofLedger } from "@/app/_components/landing/proof-ledger";
-import { SafetyBoundary } from "@/app/_components/landing/safety-boundary";
+import { WhyItMattersTeaser } from "@/app/_components/landing/why-it-matters-teaser";
 import { WhyXLayer } from "@/app/_components/landing/why-x-layer";
 
 /**
- * Problem, response, boundary, result, then the ledger.
+ * Problem, vocabulary, evidence that the problem is real, the honest result,
+ * the chain, and out.
  *
- * `SystemStory` was removed rather than trimmed: it restated the pipeline that
- * now sits in the hero as a drawing, and a second telling of the same six steps
- * was the largest block of redundant prose on the site.
+ * This page used to run ten sections and carried the whole product argument by
+ * itself, including three that were really engineering explanations: the
+ * containment rule and the fee lifecycle, the authority boundary, and the
+ * architecture comparison. They are not weaker material, they are simply
+ * answering "how does it work", which is a question a reader only asks after
+ * deciding they care. They moved to `/risk` and `/proof` where that reader
+ * arrives already asking it.
  *
- * `PlainTerms` sits second because every section after it assumes the reader
- * knows what a pool is and who loses money when one misprices. That assumption
- * was never stated anywhere, so a first-time reader met the argument before the
- * vocabulary it is made of.
+ * What is left is the argument a first-time visitor needs in order: something
+ * costs money (`WhyItMattersTeaser`, the only measured claim here about a market
+ * we do not own), here is the vocabulary to follow it (`PlainTerms`), here is
+ * the shape of it (`BlindWindow`), and here is the result we got, including the
+ * part that went against us (`MeasuredResult`).
  */
 export default function HomePage() {
   return (
@@ -27,12 +30,9 @@ export default function HomePage() {
       <LandingHero />
       <PlainTerms />
       <BlindWindow />
-      <BoundedResponse />
-      <SafetyBoundary />
+      <WhyItMattersTeaser />
       <MeasuredResult />
-      <DefenseComparison />
       <WhyXLayer />
-      <ProofLedger />
       <LandingCta />
     </div>
   );

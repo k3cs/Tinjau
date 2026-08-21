@@ -9,10 +9,14 @@ import {
   explorerUrl,
 } from "@/lib/handoff/deployments";
 import { PROOF_SUMMARY, getBuildCommit } from "@/lib/product/proof";
+import { DefenseComparison } from "@/app/_components/landing/defense-comparison";
+
+import { Benchmark } from "./_components/benchmark";
 
 export const metadata: Metadata = {
   title: "Proof of work · Tinjau",
-  description: "Verify Tinjau testnet deployments, implementation maturity, and build evidence.",
+  description:
+    "Every deployed address, the three-policy benchmark including the result that went against us, what each capability is backed by, and what is not finished.",
 };
 
 export default function ProofPage() {
@@ -113,6 +117,10 @@ export default function ProofPage() {
           </div>
         </div>
       </section>
+
+      <Benchmark />
+
+      <DefenseComparison />
 
       <section className="border-t border-edge bg-canvas-sunken px-4 py-20 sm:px-6 lg:px-8 lg:py-28" aria-labelledby="capability-proof-title">
         <div className="mx-auto grid max-w-[1440px] gap-8 lg:grid-cols-[0.45fr_1fr]">

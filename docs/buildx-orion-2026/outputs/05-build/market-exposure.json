@@ -1,0 +1,268 @@
+{
+  "schemaVersion": "tinjau.market-exposure/1.0.0",
+  "_READ_THIS_FIRST": "This measures THIRD-PARTY pools with no Tinjau hook attached. It says what the first post-filing trade cost liquidity providers on real X Layer pools. It says NOTHING about what Tinjau prevented, and it may never be presented as a benefit of this product.",
+  "generatedBy": "docs/buildx-orion-2026/outputs/05-build/tools/generate-market-exposure.mjs",
+  "source": "docs/buildx-orion-2026/outputs/05-build/data/p2_4_markout_raw.jsonl",
+  "method": "docs/buildx-orion-2026/outputs/05-build/markout-study.md",
+  "measuredOn": "2026-08-17",
+  "horizon": "60 minutes, net of the protocol fee (M_h_LP_3600)",
+  "scope": {
+    "events": 32,
+    "pools": 10,
+    "chain": "X Layer mainnet, chain 196",
+    "poolsAreThirdParty": true,
+    "hookAttached": false,
+    "note": "Ten real tokenised-equity pools against USDG. These are not the builder-controlled testnet pools used everywhere else in this project."
+  },
+  "headline": {
+    "eventCount": 32,
+    "lossCount": 25,
+    "gainCount": 7,
+    "lossShare": 0.7813,
+    "medianUsd": -0.0614,
+    "medianBpsOfNotional": -9.5,
+    "totalUsd": -82.8,
+    "worstUsd": -39
+  },
+  "byForm": [
+    {
+      "form": "8-K",
+      "plain": "Material events: earnings, deals, restructurings",
+      "n": 9,
+      "medianUsd": -1.0973
+    },
+    {
+      "form": "Form 4",
+      "plain": "Routine insider share transactions",
+      "n": 23,
+      "medianUsd": -0.059
+    }
+  ],
+  "concentration": {
+    "events": [
+      {
+        "ticker": "AMZN",
+        "form": "8-K",
+        "lpUsd": -39.0009,
+        "notionalUsd": 998.9
+      },
+      {
+        "ticker": "AAPL",
+        "form": "8-K",
+        "lpUsd": -23.7054,
+        "notionalUsd": 1023.43
+      }
+    ],
+    "shareOfTotal": 0.7573,
+    "note": "Both are driven by unusually large first-trade notionals (roughly ten times the typical first trade), not by an unusually large price move."
+  },
+  "events": [
+    {
+      "ticker": "NVDA",
+      "form": "Form 4",
+      "lpUsd": -0.1306,
+      "notionalUsd": 105.01
+    },
+    {
+      "ticker": "CRCL",
+      "form": "Form 4",
+      "lpUsd": -0.1281,
+      "notionalUsd": 104.89
+    },
+    {
+      "ticker": "NVDA",
+      "form": "Form 4",
+      "lpUsd": 0.0112,
+      "notionalUsd": 8.94
+    },
+    {
+      "ticker": "GOOGL",
+      "form": "8-K",
+      "lpUsd": -0.0073,
+      "notionalUsd": 104.8
+    },
+    {
+      "ticker": "SNDK",
+      "form": "8-K",
+      "lpUsd": 0.9667,
+      "notionalUsd": 78.95
+    },
+    {
+      "ticker": "MSTR",
+      "form": "Form 4",
+      "lpUsd": -0.0832,
+      "notionalUsd": 105.01
+    },
+    {
+      "ticker": "CRCL",
+      "form": "Form 4",
+      "lpUsd": -0.2393,
+      "notionalUsd": 159.65
+    },
+    {
+      "ticker": "SNDK",
+      "form": "Form 4",
+      "lpUsd": -4.8476,
+      "notionalUsd": 314.48
+    },
+    {
+      "ticker": "MSTR",
+      "form": "8-K",
+      "lpUsd": -1.0973,
+      "notionalUsd": 104.56
+    },
+    {
+      "ticker": "CRCL",
+      "form": "Form 4",
+      "lpUsd": -0.1404,
+      "notionalUsd": 104.89
+    },
+    {
+      "ticker": "CRCL",
+      "form": "Form 4",
+      "lpUsd": -0.059,
+      "notionalUsd": 35.6
+    },
+    {
+      "ticker": "MSTR",
+      "form": "8-K",
+      "lpUsd": 0.4284,
+      "notionalUsd": 76.39
+    },
+    {
+      "ticker": "COIN",
+      "form": "Form 4",
+      "lpUsd": -0.0869,
+      "notionalUsd": 104.87
+    },
+    {
+      "ticker": "CRCL",
+      "form": "Form 4",
+      "lpUsd": -0.0637,
+      "notionalUsd": 133.12
+    },
+    {
+      "ticker": "MSTR",
+      "form": "8-K",
+      "lpUsd": -0.0409,
+      "notionalUsd": 80.77
+    },
+    {
+      "ticker": "CRCL",
+      "form": "Form 4",
+      "lpUsd": -0.0229,
+      "notionalUsd": 21.5
+    },
+    {
+      "ticker": "COIN",
+      "form": "8-K",
+      "lpUsd": -7.4206,
+      "notionalUsd": 1047.45
+    },
+    {
+      "ticker": "CRCL",
+      "form": "Form 4",
+      "lpUsd": -0.0229,
+      "notionalUsd": 21.5
+    },
+    {
+      "ticker": "META",
+      "form": "Form 4",
+      "lpUsd": 0.0057,
+      "notionalUsd": 14.27
+    },
+    {
+      "ticker": "CRCL",
+      "form": "8-K",
+      "lpUsd": -6.9948,
+      "notionalUsd": 133.76
+    },
+    {
+      "ticker": "META",
+      "form": "Form 4",
+      "lpUsd": 0.1519,
+      "notionalUsd": 49.96
+    },
+    {
+      "ticker": "AMZN",
+      "form": "Form 4",
+      "lpUsd": -0.0267,
+      "notionalUsd": 105.01
+    },
+    {
+      "ticker": "CRCL",
+      "form": "Form 4",
+      "lpUsd": 0.2054,
+      "notionalUsd": 151.99
+    },
+    {
+      "ticker": "AMZN",
+      "form": "Form 4",
+      "lpUsd": -0.0167,
+      "notionalUsd": 104.77
+    },
+    {
+      "ticker": "AAPL",
+      "form": "Form 4",
+      "lpUsd": 0.0026,
+      "notionalUsd": 6.98
+    },
+    {
+      "ticker": "CRCL",
+      "form": "Form 4",
+      "lpUsd": -0.1281,
+      "notionalUsd": 104.89
+    },
+    {
+      "ticker": "AMZN",
+      "form": "8-K",
+      "lpUsd": -39.0009,
+      "notionalUsd": 998.9
+    },
+    {
+      "ticker": "META",
+      "form": "Form 4",
+      "lpUsd": -0.0253,
+      "notionalUsd": 106.15
+    },
+    {
+      "ticker": "AAPL",
+      "form": "8-K",
+      "lpUsd": -23.7054,
+      "notionalUsd": 1023.43
+    },
+    {
+      "ticker": "CRCL",
+      "form": "Form 4",
+      "lpUsd": -0.1281,
+      "notionalUsd": 104.89
+    },
+    {
+      "ticker": "META",
+      "form": "Form 4",
+      "lpUsd": -0.0253,
+      "notionalUsd": 106.15
+    },
+    {
+      "ticker": "CRCL",
+      "form": "Form 4",
+      "lpUsd": -0.1281,
+      "notionalUsd": 104.89
+    }
+  ],
+  "limitations": [
+    "The reference price is the pool's own later quote, not a fair-value oracle. Measured markout is a LOWER BOUND on adverse selection, not a total.",
+    "At the median event this is two ten-thousandths of a basis point of pool TVL, which is immaterial at the pool-TVL scale. The dollar total is carried by a handful of large first trades, not by a systematic per-event effect.",
+    "Aggregate only, never per-LP. An in-range LP's actual percentage loss is strictly larger than reported.",
+    "First trade does not mean informed trade. Timing and cost are measured; the trader's information set is not.",
+    "n is 32, lumpy, and one ticker supplies twelve of them. No significance testing, no confidence intervals, no per-ticker claims.",
+    "A single-pool scan undercounts: the reference asset trades across five pools on three protocols.",
+    "These are third-party pools with no hook attached. This does not measure what a Tinjau-protected pool would have prevented."
+  ],
+  "prohibited": [
+    "Tinjau would have prevented this loss",
+    "Tinjau saves LPs $X",
+    "this annualises to X",
+    "tokenised equity LPs lose X% a year"
+  ]
+}

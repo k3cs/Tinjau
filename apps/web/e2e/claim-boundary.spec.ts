@@ -8,7 +8,7 @@ import { expect, test } from "@playwright/test";
  * a sentence. These tests read what a judge would actually see.
  */
 
-const PUBLIC_ROUTES = ["/", "/risk", "/compare", "/roadmap", "/proof", "/developers", "/demo"];
+const PUBLIC_ROUTES = ["/", "/why-it-matters", "/risk", "/proof", "/x-layer", "/roadmap", "/developers", "/demo"];
 
 // §0.19 and known-limitations.md §18. Each of these is a sentence the evidence
 // does not support, phrased the way it would most plausibly slip back in.
@@ -38,7 +38,7 @@ function assertedClaims(text: string, pattern: RegExp): string[] {
     const index = match.index ?? 0;
     const before = text.slice(Math.max(0, index - 80), index);
     if (NEGATION.test(before)) continue;
-    // Inside an open quotation: /compare prints the prohibited sentences
+    // Inside an open quotation: /proof prints the prohibited sentences
     // verbatim, in quotes, under a heading saying the result does not support
     // them. Quoting a claim in order to rule it out is not asserting it.
     if (before.lastIndexOf("“") > before.lastIndexOf("”")) continue;
@@ -118,7 +118,7 @@ test("the OKX leg is never shown as available", async ({ page }) => {
 });
 
 test("the comparison shows both metric bases and picks no winner", async ({ page }) => {
-  await page.goto("/compare");
+  await page.goto("/proof");
   await expect(page.getByText("Pre-registered basis").first()).toBeVisible();
   await expect(page.getByText("AMD-002 basis (post-hoc)").first()).toBeVisible();
   await expect(page.getByText(/canClaimLossAvoided/).first()).toBeVisible();

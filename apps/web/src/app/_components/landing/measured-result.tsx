@@ -75,7 +75,7 @@ export function MeasuredResult() {
               draw is not a win.
             </p>
             <Link
-              href="/compare"
+              href="/proof"
               className="mt-4 inline-flex min-h-10 items-center font-body text-body-sm text-signal underline underline-offset-4"
             >
               See all 72 cells

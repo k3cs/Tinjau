@@ -4,7 +4,7 @@ import { TinjauMark } from "@/components/tinjau-mark";
 
 const LINKS = [
   { href: "/risk", label: "How it decides" },
-  { href: "/compare", label: "Compare" },
+  { href: "/proof", label: "Compare" },
   { href: "/proof", label: "Proof" },
   { href: "/roadmap", label: "Roadmap" },
   { href: "/developers", label: "Developers" },

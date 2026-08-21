@@ -142,7 +142,7 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     evidence: "three-policy-comparison.json (72 cells over four frozen scenarios)",
     limitation:
       "It ran and the claim gate stayed closed: canClaimLossAvoided is false, and the sign flips between the two metric bases. No economic advantage is claimed.",
-    href: "/compare",
+    href: "/proof",
   },
   {
     id: "exchange-os",

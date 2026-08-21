@@ -18,9 +18,10 @@ import { TinjauMark } from "@/components/tinjau-mark";
  * than the explanation. The URL is unchanged.
  */
 const NAV = [
+  { href: "/why-it-matters", label: "Why it matters" },
   { href: "/risk", label: "How it decides" },
-  { href: "/compare", label: "Compare" },
   { href: "/proof", label: "Proof" },
+  { href: "/x-layer", label: "Why X Layer" },
   { href: "/roadmap", label: "Roadmap" },
   { href: "/developers", label: "Developers" },
 ];

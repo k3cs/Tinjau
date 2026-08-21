@@ -1,8 +1,8 @@
-import { ComparisonMatrix } from "@/app/compare/_components/comparison-matrix";
-import { ComparisonScenarioSwitcher } from "@/app/compare/_components/comparison-scenario-switcher";
-import { InputIdentityRibbon } from "@/app/compare/_components/input-identity-ribbon";
-import { PolicyColumn } from "@/app/compare/_components/policy-column";
-import { ResultClaimGate } from "@/app/compare/_components/result-claim-gate";
+import { ComparisonMatrix } from "./comparison-matrix";
+import { ComparisonScenarioSwitcher } from "./comparison-scenario-switcher";
+import { InputIdentityRibbon } from "./input-identity-ribbon";
+import { PolicyColumn } from "./policy-column";
+import { ResultClaimGate } from "./result-claim-gate";
 import { COMPARISON_POLICIES, COMPARISON_SCENARIOS, getComparisonScenario } from "@/lib/comparison/preregistration";
 import { SLUG_TO_SCENARIO_ID } from "@/lib/handoff/results";
 import { EventTape } from "./event-tape";

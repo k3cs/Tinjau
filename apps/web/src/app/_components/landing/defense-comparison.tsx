@@ -21,7 +21,7 @@ export function DefenseComparison() {
           </h2>
           <p className="mt-5 max-w-[48ch] text-body-md text-ink-muted">
             Shapes of design, not a scoreboard. The measured economics{" "}
-            <a href="/compare" className="text-signal underline underline-offset-4">
+            <a href="/proof" className="text-signal underline underline-offset-4">
               came out indeterminate
             </a>
             .

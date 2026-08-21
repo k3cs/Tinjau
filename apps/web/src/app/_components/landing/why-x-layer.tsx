@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 /**
  * Why this chain, in four lines instead of four paragraphs.
  *
@@ -26,6 +28,13 @@ export function WhyXLayer() {
             >
               The market and the pool, on one chain.
             </h2>
+            <Link
+              href="/x-layer"
+              className="mt-6 inline-flex min-h-10 items-center gap-2 text-body-md text-signal underline underline-offset-4"
+            >
+              What we deployed, and what we measured back
+              <span aria-hidden>&rarr;</span>
+            </Link>
           </div>
           <ol className="border-t border-edge">
             {reasons.map(([term, detail], index) => (

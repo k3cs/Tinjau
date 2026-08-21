@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 
 import { PolicySightDiagram } from "@/components/diagrams/policy-sight-diagram";
@@ -7,14 +6,8 @@ import { SignFlipDiagram } from "@/components/diagrams/sign-flip-diagram";
 import { HANDOFF_DIR, HANDOFF_GENERATED } from "@/lib/handoff/artifacts";
 import { COMPARISON_DOC, signFlipCount } from "@/lib/handoff/comparison";
 
-import { ClaimGate } from "./_components/claim-gate";
-import { ComparisonGrid } from "./_components/comparison-grid";
-
-export const metadata: Metadata = {
-  title: "Three-policy comparison · Tinjau",
-  description:
-    "Static, volatility-only and Tinjau over identical replayed trades. The economic result is indeterminate; the behavioural one is not.",
-};
+import { ClaimGate } from "./claim-gate";
+import { ComparisonGrid } from "./comparison-grid";
 
 const POLICY_ORDER = ["STATIC", "VOLATILITY_ONLY", "TINJAU"] as const;
 
@@ -25,60 +18,70 @@ const POLICY_NAME: Record<string, string> = {
 };
 
 /**
- * The benchmark page, led by the two drawings that carry its two findings.
+ * The benchmark, moved onto the page that owns "what is finished and what does
+ * it do for me".
  *
- * The finding that does not survive is drawn first, and it is drawn rather than
- * argued: 27 lines, all of them crossing the middle. A reader who looks at that
- * picture cannot come away thinking a winner was found, which is more than three
+ * It had its own tab, which split the completeness argument in half: a judge
+ * reading /proof saw deployments and capabilities and had to go elsewhere to
+ * find out whether any of it worked. Worse, a result this unflattering sitting
+ * on a separate page reads as something to be sought out. Here it is in the
+ * middle of the evidence, which is where a failed pre-registered claim belongs.
+ *
+ * The finding that does not survive is drawn first and drawn rather than argued:
+ * 27 lines, all of them crossing the middle. A reader who looks at that picture
+ * cannot come away thinking a winner was found, which is more than three
  * paragraphs of hedging ever achieved.
  */
-export default function ComparePage() {
+export function Benchmark() {
   const { flipped, comparable } = signFlipCount();
   const interpretation = COMPARISON_DOC.interpretation;
 
   return (
-    <div className="bg-canvas text-ink">
-      <section className="mx-auto max-w-[1440px] px-4 pb-12 pt-14 sm:px-6 lg:px-8">
-        <div className="max-w-2xl">
-          <p className="data-label text-ink-faint">Three-policy comparison</p>
-          <h1 className="mt-4 font-display text-section-sm text-ink lg:text-section-lg">
-            No winner. We are publishing that.
-          </h1>
-          <p className="mt-5 max-w-[54ch] text-body-md text-ink-secondary">
-            We ran three fee policies over the same replayed trades to see which left the pool
-            better off. Change nothing but the way the fee is counted, and the winner swaps.
-          </p>
-        </div>
+    <>
+      <section
+        className="border-t border-edge px-4 py-16 sm:px-6 lg:px-8 lg:py-20"
+        aria-labelledby="benchmark-title"
+      >
+        <div className="mx-auto max-w-[1440px]">
+          <div className="max-w-2xl">
+            <p className="data-label text-ink-faint">The measured result</p>
+            <h2
+              id="benchmark-title"
+              className="mt-4 font-display text-section-sm text-ink lg:text-section-lg"
+            >
+              No winner. We are publishing that.
+            </h2>
+            <p className="mt-5 max-w-[54ch] text-body-md text-ink-secondary">
+              We ran three fee policies over the same replayed trades to see which left the pool
+              better off. Change nothing but the way the fee is counted, and the winner swaps.
+            </p>
+          </div>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-start">
-          <SignFlipDiagram />
-          <div className="rounded-xl border border-edge bg-canvas-sunken p-6">
-            <p className="data-label text-watch-soft">What it cannot determine</p>
-            <p className="mt-3 font-display text-heading-md text-ink">
-              Which policy earned the LP more.
-            </p>
-            <p className="mt-3 text-body-sm text-ink-muted">
-              Every one of the {comparable} comparisons flips sides, all {flipped} of them. Quoting
-              one of the two numbers would be choosing a winner by choosing how to add up, so both
-              are published and neither is chosen.
-            </p>
-            {/* The benchmark's own wording is precise and full of its internal
-                vocabulary (TINJAU_BEATS, AMD-002, "basis"). It is the record, so
-                it is not paraphrased away, but it is no longer the first thing a
-                new reader hits: the plain reading is above, and this sits under
-                a disclosure for anyone checking the exact claim. */}
-            <details className="group mt-6 border-t border-edge pt-5">
-              <summary className="cursor-pointer list-none text-body-sm text-signal underline underline-offset-4">
-                The benchmark&rsquo;s exact wording
-              </summary>
-              <p className="mt-3 text-body-sm text-ink-secondary">{interpretation.text}</p>
-            </details>
+          <div className="mt-10 grid gap-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-start">
+            <SignFlipDiagram />
+            <div className="rounded-xl border border-edge bg-canvas-sunken p-6">
+              <p className="data-label text-watch-soft">What it cannot determine</p>
+              <p className="mt-3 font-display text-heading-md text-ink">
+                Which policy earned the LP more.
+              </p>
+              <p className="mt-3 text-body-sm text-ink-muted">
+                Every one of the {comparable} comparisons flips sides, all {flipped} of them.
+                Quoting one of the two numbers would be choosing a winner by choosing how to add
+                up, so both are published and neither is chosen.
+              </p>
+              <details className="group mt-6 border-t border-edge pt-5">
+                <summary className="cursor-pointer list-none text-body-sm text-signal underline underline-offset-4">
+                  The benchmark&rsquo;s exact wording
+                </summary>
+                <p className="mt-3 text-body-sm text-ink-secondary">{interpretation.text}</p>
+              </details>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section-rule">
-        <div className="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 lg:px-8">
+      <section className="border-t border-edge px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[1440px]">
           <div className="max-w-2xl">
             <p className="data-label text-signal">What it can determine</p>
             <h2 className="mt-4 font-display text-heading-lg text-ink">
@@ -94,8 +97,8 @@ export default function ComparePage() {
         </div>
       </section>
 
-      <section className="section-rule">
-        <div className="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 lg:px-8">
+      <section className="border-t border-edge px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[1440px]">
           <h2 className="font-display text-heading-lg text-ink">Identical input, by construction</h2>
           <p className="mt-2 max-w-[58ch] text-body-md text-ink-muted">
             All three policies replay the same trades at the same timestamps. The only thing that
@@ -136,20 +139,20 @@ export default function ComparePage() {
         </div>
       </section>
 
-      <section className="section-rule">
-        <div className="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 lg:px-8">
+      <section className="border-t border-edge px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[1440px]">
           <ComparisonGrid />
         </div>
       </section>
 
-      <section className="section-rule">
-        <div className="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 lg:px-8">
+      <section className="border-t border-edge px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[1440px]">
           <ClaimGate />
         </div>
       </section>
 
-      <section className="section-rule">
-        <div className="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 lg:px-8">
+      <section className="border-t border-edge px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[1440px]">
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
               <h2 className="font-display text-heading-lg text-ink">
@@ -219,6 +222,6 @@ export default function ComparePage() {
           </p>
         </div>
       </section>
-    </div>
+    </>
   );
 }

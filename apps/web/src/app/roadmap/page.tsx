@@ -102,7 +102,7 @@ export default function RoadmapPage() {
               Proof
             </Link>
             , and the measured comparison, including the part that did not go our way, is on{" "}
-            <Link href="/compare" className="text-signal underline">
+            <Link href="/proof" className="text-signal underline">
               Compare
             </Link>
             .

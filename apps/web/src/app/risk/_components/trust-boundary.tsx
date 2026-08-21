@@ -1,4 +1,3 @@
-import { AuthorityDiagram } from "@/components/diagrams/authority-diagram";
 import { formatFee } from "@/lib/risk/format";
 import type { ScenarioView } from "@/lib/handoff/scenarios";
 
@@ -48,12 +47,13 @@ export function TrustBoundary({ scenario }: { scenario: ScenarioView }) {
         <h2 id="trust-boundary" className="font-display text-heading-sm text-ink">
           AI proposes. The contract decides.
         </h2>
+        {/* The drawing of this boundary lives once, in `DecisionMethod` above,
+            where it is the claim. What belongs here is the exhaustive version of
+            it, checked against the record actually on screen. */}
         <p className="mt-1 max-w-[56ch] text-body-sm text-ink-muted">
-          Nothing the model returns can widen a limit.
+          Nothing the model returns can widen a limit. Named in full, and checked against this
+          record.
         </p>
-        <div className="mt-6">
-          <AuthorityDiagram />
-        </div>
       </div>
 
       <div className="grid gap-px bg-edge md:grid-cols-2">
