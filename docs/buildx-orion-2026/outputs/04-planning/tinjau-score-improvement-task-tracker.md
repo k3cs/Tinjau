@@ -284,7 +284,7 @@ gate wins.
 
 ### Phase S0 — Timeline and submission-state bookkeeping (P0, but never ahead of the sprint)
 
-- [~] **S0.1 — Establish whether post-deadline work can influence judging**
+- [x] **S0.1 — Establish whether post-deadline work can influence judging**
   Depends on: none, but runs AFTER the §0.3 pre-deadline sprint (S1.1–S1.3), never instead of it.
   Owner: agent research + Dien confirms interpretation.
   Work: from the event's published terms and announcements (the terms text used at submission is
@@ -295,7 +295,26 @@ gate wins.
   Dien the ranking decision of §0.3 rule 4.
   Acceptance: a dated note exists stating what is known, what is assumed, and how the
   post-deadline priorities were re-ranked as a result; Dien has approved the ranking.
-  Evidence: —
+  Evidence: **done 2026-08-21, commit `f9284a3`, pre-deadline.** Note at
+  `../05-build/s0-1-judging-timeline-note.md`, sourced only from the organizer's own published
+  pages; the organizer was NOT contacted (§0.8 respected). Findings: **(a)** the Hackathon window
+  is 2026-08-07 to 2026-08-21 23:59 UTC (Terms cl. 2), and **no judging date, no announcement
+  date and no rounds are published anywhere**. **(b) Not determinable.** The submission is a
+  Google Form of eight free-text fields with **no upload, no commit hash, no tag and no version
+  field**, so nothing pins a point in time; the Disclaimer's own cl. 4 names "onchain data" and
+  "code quality", which are properties of live systems; and two participation requirements
+  extend past the deadline. That leans toward live evaluation without establishing it, and the
+  note refuses to resolve it. **(c)** the Liquidity Grant quotes "overall performance during the
+  Hackathon" with **no snapshot or cutoff date published**, unlike the Launch Grant on the same
+  page which has an explicit one. Ranking proposed per branch rather than as a bet, with the
+  branch-independent overlap (S3.1 -> S3.2, S6.1, S6.2) identified so the ambiguity blocks
+  nothing. **Dien has not yet approved a ranking**; the acceptance line's approval step is
+  therefore still open, and the work proceeded on the overlap, which is safe in both branches.
+  Side effect: the run caught a false "Correction" in `../../HACKATHON.md` claiming "code
+  quality", "onchain data" and "market potential" were not official criteria. The orchestrator
+  re-fetched the raw page and confirmed the page carries **two** separately numbered clause-4s;
+  only the first had been read. Corrected in the same commit, as a dated correction that quotes
+  the original error rather than erasing it.
 
 - [ ] **S0.2 — At the deadline, tag the submitted state; afterwards, keep a post-submission changelog**
   Depends on: the deadline instant (2026-08-21 23:59 UTC); do not tag earlier.
@@ -561,7 +580,7 @@ submission itself.
   the computed one is. Web tests still 32/32; demo manifest still
   `be884920d860b0f4c92180670f52ae54400f4e5d77e25d95ae111b7221ee7196`.
 
-- [~] **S2.2 — Run the LLM evidence-graph derivations live for one scenario, cross-checked**
+- [x] **S2.2 — Run the LLM evidence-graph derivations live for one scenario, cross-checked**
   Depends on: S2.1
   Owner: agent.
   Work: the replay scenarios currently use heuristic derivations for entity resolution,
@@ -574,11 +593,32 @@ submission itself.
   derivation with a per-edge agreement table; any disagreement is surfaced, not patched; the
   /proof capability label for the evidence graph is updated from "IMPLEMENTED REPLAY" to
   reflect exactly what is now live, no more.
-  Evidence: —
+  Evidence: **done 2026-08-21, commit `c8925ad`, pre-deadline.** Runner
+  `apps/server/src/studies/scenarioAGraphLive.ts`; artifact
+  `../05-build/data/s2_2_scenario_a_graph_live.json`; write-up `../05-build/s2-2-evidence-graph-live.md`.
+  Model pinned `gemini-3.6-flash`, ambient `gemini-3.5-flash` overridden and both recorded.
+  Per-edge agreement over scenario A's five claims: **entity 10/10 agree, contradiction 10/10
+  agree, syndication 7/10**. All three disagreements are one question: whether `claim-a-005`,
+  whose headline ends "- report" and names no outlet, belongs to the WSJ origin. The heuristic
+  says no because the claim does not name its origin, which `graph.ts` documents as a deliberate
+  refusal to guess; the model says yes and matches the scenario's own hand label, which was
+  withheld from it. **Neither was changed.** The disagreement also costs nothing arithmetically:
+  `countDerivedIndependentOrigins` already excludes claims relaying an unnamed report, so
+  `usableOriginCount` is 1 either way and scenario A stays `WATCH`; the two sides differ on graph
+  shape, not on what the promotion engine reads. Three refusals of an easier answer are recorded:
+  scenario A pins **no** document hashes, so rather than fake a passing check the run hashes the
+  scenario file as a drift alarm and marks the referenced document `UNPINNED`; the model was
+  scored against `resolveAsset` rather than `proposeClustersDeterministically`, whose own doc
+  calls it a crude fallback; and the 10/10 contradiction agreement is flagged as weaker than it
+  looks, because the heuristic half reads a hand label that is empty by construction here.
+  `/proof` capability label: `maturity: IMPLEMENTED` and `dataMode: REPLAY` **kept** (one
+  non-deterministic run on one of four scenarios upgrades nothing, and the enum has no "LIVE");
+  only `evidence` and `limitation` changed, which also fixed an existing overstatement implying
+  the derivations were model-derived when they were purely heuristic until this run.
 
 ### Phase S3 — User value: a real economic demonstration, honestly bounded (P1; target 3→5)
 
-- [~] **S3.1 — Pre-register a paired-pool protection experiment**
+- [x] **S3.1 — Pre-register a paired-pool protection experiment**
   Depends on: S0.1 (ranking), S2.1 (so the demonstrated path is the computed one)
   Owner: agent designs; Dien approves the pre-registration before any run.
   Work: design the experiment the evaluation asked for: two identical builder-controlled testnet
@@ -592,7 +632,27 @@ submission itself.
   `canClaimLossAvoided` conditions pass on canonical data.
   Acceptance: pre-registration committed and approved before any result exists; both outcomes
   (including "no measurable difference") have a designated publication surface.
-  Evidence: —
+  Evidence: **done 2026-08-21, commit `7d1caa6`, pre-deadline, committed ALONE and
+  BEFORE any result existed** so the freeze-first ordering is visible in git history rather than
+  asserted. Document `../05-build/s3-1-paired-pool-preregistration.md` (571 lines). Dien
+  pre-approved the run (§6 Q5) on condition the pre-registration was committed first and the
+  outcome published either way. Freezes pools, trade script (120 recorded swaps from scenario B's
+  fixture, one global scale constant), risk state and how it is set, metric, reference mark and
+  two sensitivity marks, and a five-band decision rule (CONFIRMS / WEAK / NULL / ADVERSE /
+  SIGN-INDETERMINATE) whose noise floor is derived from a control run rather than asserted.
+  **Its most valuable section is the one admitting what it could not solve.** §17's timing
+  problem is real and applies exactly: the confirmation leg consumes scenario B's whole window,
+  so an assess-then-replay run re-prices zero swaps. Two escapes were considered and **rejected on
+  the record**: cutting the window at anchor + delta would mean choosing a delta, and any delta
+  that makes B confirm is a threshold picked to manufacture a `PROTECT`; it also does not work,
+  because B fails the market leg on anti-wick and is weaker post-anchor. The problem is therefore
+  **sidestepped, not solved**, and the cost is stated as a cost: the trades no longer cause the
+  assessment, so the experiment measures a conditional quantity and says nothing about how often
+  Tinjau is right to be in `PROTECT`. It also states plainly that the mechanism is
+  **arithmetically favoured by construction**, making this closer to a conformance test than a
+  discovery, and that it inherits the zero-flow-elasticity assumption that sank the three-policy
+  benchmark. Two runs: control **W** (canonical B unchanged, both arms must charge 500, difference
+  must be exactly 0 in base units) is the falsifiable one and is on canonical data.
 
 - [ ] **S3.2 — Run the paired-pool experiment and publish whatever it shows**
   Depends on: S3.1; requires testnet gas (Dien confirms).
@@ -604,7 +664,7 @@ submission itself.
   published with the same prominence a positive one would have received.
   Evidence: —
 
-- [ ] **S3.3 — Widen the canonical scenario set hunting for a real PROTECT, pre-registered**
+- [x] **S3.3 — Widen the canonical scenario set hunting for a real PROTECT, pre-registered**
   Depends on: S0.1
   Owner: agent.
   Work: the evaluation noted no canonical replay reaches PROTECT. Extend the frozen-scenario
@@ -617,11 +677,44 @@ submission itself.
   Acceptance: selection rule committed before market data is touched; every new scenario carries
   the full provenance schema; outcomes published regardless of direction; no threshold is
   changed to manufacture a PROTECT.
-  Evidence: —
+  Evidence: **done 2026-08-21, two commits, pre-deadline. Phase 1 `b408ca0`
+  (selection rule, committed before any market data was read), Phase 2 `5e20b30`.** Split into two
+  strictly ordered phases on purpose: this is the task most exposed to post-hoc selection.
+  **Result: the expansion set is EMPTY. 0 of 0 additional events reached `PROTECT`, because there
+  were no additional events.** The rule selects exactly one 8-K and it is scenario B's own filing;
+  the selection pin matched live EDGAR exactly, so the abort path was not taken.
+  **Why that is the real finding.** Inside the only window where this pool's market leg is
+  physically measurable, NVIDIA filed **four documents in total** (two Form 4s, one 13F-HR, one
+  8-K) and T0.2 already used two of them. Scenario B carries the **only MATERIAL 8-K NVIDIA filed
+  in twelve months**. The frozen scenario set is close to a **census, not a curated sample**, so
+  the evaluation's "no canonical replay reaches `PROTECT`" cannot be explained by event selection.
+  The write-up refuses the flattering read: it equally does **not** show the thresholds are right,
+  because with no ground truth about which events should have moved the price it cannot separate
+  "the events were quiet" from "anti-wick is too strict for a pool this thin". That stays open.
+  **The rule was NOT widened after seeing n = 1**; three amendments were written down as rejected.
+  Reproduction check passed on every axis: an independent EDGAR fetch is byte-identical to T0.2's
+  pinned sha256 (`1c480e33…8133`, 31 418 bytes); pass-1 counts match the manifest exactly (4 145
+  swaps, 1 193/2 952 split, 0 RPC errors); the **R3 vs R2 diff is empty field for field**,
+  including every confirmation and anti-wick field. Availability was measured without inspecting
+  price paths: pass 1 records only counts from `logs.length` and `log.blockNumber`, never decodes
+  the log `data` word, and its artifact is written to disk before `confirmMarket` is invoked.
+  Three findings sharpen `known-limitations.md` §2, all toward a **stronger** refusal: the
+  234.86 bps drawdown **troughs 43 minutes BEFORE the filing** so the move cannot have been caused
+  by the event; trade intensity **fell** after the filing (velocity 0.41x, no volume burst at all);
+  retention is **9.66% median / 4.38% minimum over 68 observations** against a 50% requirement, not
+  the vaguer "~10-13%". Two defects found and deliberately not fixed: `explainWatch()` in
+  `promote.ts` tests `independentSources < 2` before the confirmation status without regard to
+  source class, so an OFFICIAL record's prose names a gate that is not operative on that path
+  (state, authorisation and reason codes are all correct, only the explanation is wrong, and a fix
+  would change scenarios A and C's prose too); and the Phase 1 rule has a drafting ambiguity
+  between §5.1 and §7.3 that, read strictly, would void a run behaving exactly as designed. **The
+  frozen document was not edited to repair it** — R3 exists so the strict test still runs where it
+  is meaningful, its diff is empty, and the run passes under both readings, so the ambiguity never
+  had to be resolved in the run's favour.
 
 ### Phase S4 — Innovation: substantiate or correct the novelty claim (P1; target: defend 7)
 
-- [~] **S4.1 — Run and publish the competitor survey the novelty claim assumes**
+- [x] **S4.1 — Run and publish the competitor survey the novelty claim assumes**
   Depends on: the §0.3 sprint being finished; otherwise unblocked
   Owner: agent.
   Work: the site claims the combination (source-grounded tokenized-equity evidence, rumor
@@ -636,11 +729,30 @@ submission itself.
   Acceptance: a dated survey document with reproducible method; the site's novelty sentence
   either survives with a footnote pointing at the survey or is corrected; §0.19's prohibited
   "first X" claims remain prohibited regardless of outcome.
-  Evidence: —
+  Evidence: **done 2026-08-21, commit `7cf8a91`, pre-deadline.** Survey at
+  `../05-build/s4-1-competitor-survey.md`: **40 queries, 22 page fetches, 21 candidates scored**
+  (11 required by name, 10 found beyond the list), with the searches that returned **nothing**
+  recorded as first-class evidence rather than dropped. **The claim survives.** No public system
+  was found implementing all six elements together, and the gaps are structural: **rumor
+  containment (E2) was found in exactly zero candidates**, and a published policy-vs-baseline
+  outcome comparison (E6) in essentially none. README §2's positioning sentence is unchanged; the
+  sentence after it now cites the method and date instead of leaving "reviewed" to do unearned
+  work. **The survey found a candidate nobody had listed, and it went into the README prior-art
+  table rather than a footnote**: Ondo Global Markets already takes bounded,
+  deterministically-expiring on-chain action on corporate events for tokenized equities today
+  (trading paused around dividend ex-dates, a reduced-size state around earnings that lifts by
+  rule). It lacks rumor containment, lacks independent market confirmation (waiting for an
+  issuer's own number to firm up is data completeness, not corroboration), has no published
+  baseline comparison, and its action is a venue and oracle control rather than a fee inside an
+  LP's pool. Recorded honestly: **four of the previously named candidates could not be fully
+  re-verified**, Argus could not be re-located at all, and the "Sentinel Agent" reachable today is
+  a different project from the one the 2026-08-20 review described. The survey states explicitly
+  that a null result licenses **no** "first", "only" or "unique" phrasing, which §0.19 prohibits
+  permanently regardless of outcome.
 
 ### Phase S5 — Product completeness: live intake (P1; target 7→8)
 
-- [~] **S5.1 — Wire the built-but-unwired X listener into the loop, clearly labeled LIVE**
+- [!] **S5.1 — Wire the built-but-unwired X listener into the loop, clearly labeled LIVE**
   Depends on: S0.1; Dien confirms the X account/API access status before work starts.
   Owner: agent.
   Work: the roadmap lists "X Listener" and "X Publisher" as built but not connected. Connect the
@@ -653,9 +765,31 @@ submission itself.
   mode, captured with timestamps; the roadmap page moves the listener from "built, not
   connected" to "connected" with the date; latency/coverage claims remain prohibited until
   measured (a single run measures neither).
-  Evidence: —
+  Evidence: **BLOCKED 2026-08-21, commit `a7cfaf6`, pre-deadline. Blocked by X's
+  plan, not by code, and published as a result rather than left as a gap.** Dien confirmed the
+  credentials and authorised **the listener only** (§6 Q4); the Publisher was not touched and
+  `xbot/main.ts` is untouched and still defaults to dry-run. The credentials are valid:
+  `GET /2/users/me` returns 200 as `tinjauAI`. **Every content-read endpoint returns HTTP 402
+  "credits depleted"** — `search/recent`, `users/by/username`, `users/:id/tweets`, `mentions`,
+  `timelines/reverse_chronological`, `tweets?ids=` — under both OAuth 1.0a and an app-only bearer,
+  so it is a project/plan limit rather than an auth failure, and the client classifies 402
+  separately from auth for that reason. **No live post entered the pipeline. Nothing was scraped
+  and no fixture was manufactured to stand in for one.** Artifact
+  `../05-build/data/s5_1_x_listener_live.json` records `outcome: "BLOCKED_NO_READ_ACCESS"` and
+  `containmentInvariant.held: null` — **not `true`**. The success path was exercised with a
+  stubbed fetch into the scratchpad only (a rumour landed at `NORMAL` carrying `RUMOR_ONLY`), and
+  that is recorded as a code-path check, not as evidence about the invariant, which scenario A's
+  pre-registration already proves. Capability label therefore keeps `maturity: PENDING` and
+  `dataMode: SIMULATED` and does **not** say "connected"; all that is claimed is that the read
+  path exists and was exercised. **Fallback / unblock:** if Dien buys X read credits, re-running
+  `npx tsx src/studies/xListenerLive.ts` completes the task with zero code changes, and only then
+  does "one live claim traversed the pipeline" become sayable. Two findings recorded on the way:
+  `SUPPORTED_ASSETS` contains **only NVDA/wNVDAx as supported and no MSTR-linked asset at all**,
+  so the covered universe is narrower than other docs imply (independently confirmed by S3.3); and
+  `sourceClass` defaults to `RUMOR` unless a handle is on an allow-list, which fails safe but
+  would undercount a genuine wire service that is not listed.
 
-- [ ] **S5.2 — Live news intake for one feed, provenance-first**
+- [x] **S5.2 — Live news intake for one feed, provenance-first**
   Depends on: S5.1
   Owner: agent; any paid API or new account requires Dien per §0.8.
   Work: replace one frozen news fixture path with a live feed (narrowest viable source; an RSS
@@ -664,11 +798,43 @@ submission itself.
   Acceptance: a live news item traverses the full pipeline with provenance intact; SVC-007's
   "does not prove live discovery" limitation is updated to state exactly what is now live and
   what still is not.
-  Evidence: —
+  Evidence: **done 2026-08-21, commit `1036caf`, pre-deadline.** Reader
+  `apps/server/src/news/readFeed.ts` (zero npm dependencies, GET-only), runner
+  `apps/server/src/studies/newsIntakeLive.ts`, artifact
+  `../05-build/data/s5_2_news_intake_live.json`, write-up `../05-build/s5-2-live-news-intake.md`.
+  Feed: **SEC EDGAR company-filings Atom**, credential-free, read through the existing
+  `getEdgarUserAgent()`, so no new service, dependency, account or contact detail was introduced.
+  **10 live 8-K entries returned; all 10 normalised into the full provenance schema with zero
+  provenance violations** — real URLs, second-precision acceptance timestamps, sha256 over the
+  fetched bytes (reproducible: re-fetched twice, identical digest). **Syndication dedup ran on
+  live data and collapsed 10 filings to 1 independent origin**, which is §0.7's one-origin
+  invariant working on data nobody hand-labelled. Decision record produced: `NORMAL`, and
+  recomputed with `officialEvidencePassed: true` as a control it is `NORMAL` either way, so the
+  refusal is on the merits. Unasked-for cross-check: the live feed's acceptance timestamp for
+  accession `0001045810-26-000069` matched T0.2's hand-verified anchor **to the second**.
+  **The distinction that must not be blurred: an 8-K is `OFFICIAL`, not `NEWS`.** This is live
+  corporate-disclosure intake; it is **not** live third-party press intake, and every `NEWS`-class
+  claim in the product is still a frozen fixture. Three credential-free alternatives were probed
+  and rejected on the record: a Yahoo headline feed carries **no publisher element**, so the
+  outlet would have had to be guessed, which is the fabrication the schema exists to prevent;
+  NVIDIA's own newsroom feed is an interested party publishing marketing alongside disclosure; and
+  **Reuters' RSS no longer resolves at all**. `dataMode` on the capability card was deliberately
+  **kept at `REPLAY`** rather than flipped to `LIVE`: a live claim genuinely entered the pipeline,
+  which would make `LIVE` defensible, but the card links to a demo that still replays and one read
+  is not a live data mode. SVC-007 updated (selected service, limits and status together, since
+  changing the limitation alone would have contradicted the service line).
+  **A genuine fragility was found and reported, not patched**: `graph.ts` derives an unrecognised
+  publisher's origin from `sourceId.split("/")[0]`, so the independent-origin count depends on a
+  string shape the **intake adapter** chooses. Had this adapter used EDGAR's own per-entry URN as
+  `sourceId`, one registrant filing ten times would have counted as **ten independent sources** —
+  the dangerous direction for the invariant the whole promotion path leans on. `graph.ts` is
+  untouched; the finding is in the artifact under `dedup.observedFragility`. Also recorded:
+  `INV-SINGLE-NEWS-CANNOT-PROTECT` is `held: null`, not `true`, because this run carried no
+  `NEWS`-class claim and never entered that branch.
 
 ### Phase S6 — Growth and ecosystem: make consumption real (P1 prep, P2 execution)
 
-- [~] **S6.1 — Package the registry consumer path so a third party can adopt it in minutes**
+- [x] **S6.1 — Package the registry consumer path so a third party can adopt it in minutes**
   Depends on: S1.1
   Owner: agent prepares; publishing to npm (if desired) is a §0.8 action for Dien.
   Work: turn the zero-dependency reader into an adoptable integration kit: a documented
@@ -679,9 +845,29 @@ submission itself.
   adoption, it is not adoption.
   Acceptance: a stranger following only `INTEGRATION.md` on a clean machine reaches a correct
   read of the live record; the example contract compiles in the fixed S1.1 environment.
-  Evidence: —
+  Evidence: **done 2026-08-21, commit `7cf8a91`, pre-deadline.** `INTEGRATION.md` at
+  the repository root, plus `contracts/src/examples/ExampleRiskConsumer.sol` and
+  `contracts/test/examples/ExampleRiskConsumer.t.sol`. **contracts 137 -> 145 passed, 0 failed**
+  (8 new tests, including `test_anUndefinedReasonBitIsRefusedNotMaskedOff` and
+  `test_theConsumerActsOnTheEffectiveStateNotTheStoredOne`). The kit leads with the semantic that
+  actually bites: `currentRecord()` returns stored history and can still say `PROTECT` after
+  `expiresAt`, while `effectiveState()` applies expiry at read time, so a consumer acting on the
+  stored state applies protection the registry no longer authorises. Signatures verified against
+  source: `currentRecord(address,bytes32)` selector `0x92a22538`, `effectiveState(address,bytes32)`
+  returning `(RiskState,uint24,uint64)` selector `0x2a5915f3`, and the `AssessmentPosted` topic0
+  `0x86a1931c…7936` verified against two real logs on chain rather than only via `cast sig-event`.
+  **Both copy-paste snippets were executed against the live registry before being written down**
+  (zero-dependency Node, and viem), each reproducing stored `PROTECT` / effective `NORMAL` /
+  `diverges: true`; a snippet in a document that was never run is exactly the unverified claim
+  this project does not ship. The existing honesty is preserved verbatim in spirit: the kit lowers
+  the cost of adoption and **is not adoption**. Publishing to npm is a §0.8 action and was **not**
+  taken. Found and not changed: `eth_getLogs` on the public RPC caps the block range at **100**
+  (verified: 100 and 101 pass, 102 fails), which constrains the event-following mitigation and is
+  documented; and `forge fmt --check` fails on the new files and equally on existing
+  `TinjauRiskRegistry.sol`, because the repo wraps at ~100 chars and `forge fmt` defaults to 120,
+  which is a project-wide decision rather than something to change here.
 
-- [~] **S6.2 — Write the X Layer RPC read-consistency note as a standalone contribution**
+- [x] **S6.2 — Write the X Layer RPC read-consistency note as a standalone contribution**
   Depends on: the §0.3 sprint being finished; otherwise unblocked
   Owner: agent writes; any submission to X Layer's repo/forum/team is Dien's action (§0.8).
   Work: extract the measured finding (public RPC serves reads from nodes at differing heights;
@@ -693,7 +879,33 @@ submission itself.
   Acceptance: the note stands alone (no Tinjau context required to act on it), includes a
   reproduction script an outsider can run against the public RPC, and is ready for Dien to file
   wherever X Layer takes such reports.
-  Evidence: —
+  Evidence: **done 2026-08-21, commit `4d73df4`, pre-deadline.** Note
+  `../05-build/s6-2-xlayer-rpc-read-consistency.md` (self-contained: an X Layer developer can act
+  on it without cloning Tinjau) plus a zero-dependency reproduction script
+  `tools/xlayer-rpc-consistency/check-read-consistency.mjs` with `--help` and meaningful exit
+  codes. **Filing it with X Layer is a §0.8 action and was NOT taken**; it is ready for Dien.
+  Writing it up properly corrected four things in the existing record. **(1) There are eight
+  observations, not five** — three more sit in the production-envelope manifest at 2 530-2 594 ms,
+  inside the quoted range, so the range survives. **(2) The millisecond figures are upper bounds,
+  not lags.** The harness polls on a fixed 1 000 ms interval, so 2 519 ms establishes only "still
+  stale at ~1.35 s, converged by 2.52 s"; three surfaces called this a "measured convergence lag",
+  which overstates the precision. All eight converged on **exactly the third attempt**, meaning
+  every write was stale on both the first and second read. **(3) The "13 seconds older" figure in
+  `api-contract.md` was unsupported** — the two consecutive assessments are `assessedAt`
+  1787284258 and 1787284275, **17 s** apart, and the only 13 in the data is `totalWaitedMs: 13126`,
+  the sum of all five waits; two quantities had been conflated. The age is now left **unstated**
+  rather than replaced with a second unverified number. **(4) It did not reproduce on demand
+  today**: 1 410 rounds of the shipped probe found nothing, while a separate receipt probe hit it
+  once in 246 rounds, so it reads as episodic rather than continuous — labelled inference, and the
+  note says the property was observed on the measurement date and may not be observable at any
+  given moment. All observations are **testnet only**; no mainnet measurement exists anywhere in
+  the repo. `deployed-addresses.json` and `proof-of-protection.json` keep their original wording
+  because both feed the published manifest sha256, and editing evidence to improve its phrasing is
+  what the disclosure discipline exists to prevent; the corrections went into the live documents
+  instead, and the manifest is byte-identical after the change, which is the check that proves it.
+  Two live-verified details are baked into the mitigations: `eth_getLogs` caps the range at 100 so
+  the log-following snippet chunks unconditionally, and a pinned call to a missing block returns
+  `-32019 "block is out of range"`, which the retry snippet now matches.
 
 - [ ] **S6.3 — Demand-evidence outreach kit** (P2)
   Depends on: S6.1, S3.2
@@ -710,7 +922,7 @@ submission itself.
 
 ### Phase S7 — X Layer integration: beyond testnet (P2; target 8→9, human-gated)
 
-- [~] **S7.1 — Mainnet readiness memo, not a mainnet deployment**
+- [x] **S7.1 — Mainnet readiness memo, not a mainnet deployment**
   Depends on: S3.2, S5.1
   Owner: agent writes; deployment itself is far outside this tracker (§0.8: mainnet, real money).
   Work: the last evaluation point ("mainnet deployment, or a hook attached to real X Layer
@@ -720,7 +932,40 @@ submission itself.
   would and would not license, and the do-nothing alternative. Recommend, don't decide.
   Acceptance: the memo lets Dien make the call in one sitting; it contains no instruction to
   deploy; the un-audited status of the contracts is stated in the first paragraph.
-  Evidence: —
+  Evidence: **done 2026-08-21, commit `967d56e`, pre-deadline.** Memo
+  `../05-build/s7-1-mainnet-readiness-memo.md`. It contains **no instruction to deploy**, and no
+  transaction was sent. Audit status verified rather than assumed: a repo-wide grep returns only
+  **claim** audits, **branding** audits and the **bytecode** comparator — no auditor, no report, no
+  scope, no engagement — so the unaudited assertion stands and leads the memo.
+  **Recommendation: do not launch this week**, and the binding reason is not money. The assessor
+  key is derived as `keccak256(posterKey ‖ role)` and that module's own header already says a
+  derived key shares the fate of its parent and is not acceptable for production; on mainnet the
+  poster must be online to relay, so one hot-wallet compromise hands over signing authority, and
+  with `guardian == poster` it hands over the kill switch in the same breach. That is **hours of
+  work to clear, not dollars**, which is what makes shipping without it indefensible rather than
+  merely risky.
+  **The memo corrects the premise of the evaluation's own stated score-mover.** "A hook attached to
+  real X Layer liquidity" is not expensive, it is **structurally impossible**: the ten real
+  tokenized-equity pools on X Layer are Uniswap **v3**, and v4 binds a hook at pool
+  initialization. The orchestrator verified this independently rather than accepting the report —
+  pool `0x2a2b1173…` answers `slot0()` and `fee()` = 500, and v4 has no per-pool contracts at all
+  because pools live inside the singleton PoolManager, which does exist on chain 196 at 24 009
+  bytes. So the infrastructure is there and the liquidity to join is not; attaching to real
+  liquidity can only mean funding a competing pool.
+  Also corrected in the same commit: `HACKATHON.md:50` read the mainnet clause more favourably
+  than the source supports while marked `[confirmed]`, concluding testnet-only is "sufficient to
+  submit and be judged". Verbatim from the raw page: *"During the Hackathon, the project must be
+  deployed on the X Layer Testnet and subsequently launched on the X Layer Mainnet"*, inside the
+  block whose preamble mentions ineligibility, and carrying **no date**. The honest statement is
+  that mainnet is an obligation with an **unpublished deadline** and the eligibility question is
+  **not determinable**; the correction quotes the previous reading rather than deleting it.
+  **Open for Dien (§0.8):** the memo recommends asking the organizer in writing what "subsequently"
+  means. That is organizer contact, it costs nothing, and it is the single input that could reverse
+  the recommendation. It is surfaced, not taken. Also unverified and flagged: whether the OKX DEX
+  aggregator routes v4 pools on X Layer, which determines whether a pilot pool would see any flow.
+  Also noted: `known-limitations.md` §7's "$120-$517 quotable" is a deliberately conservative
+  lower bound on executable depth, not a statement about reserves — the NVDA pool holds roughly
+  $259k live, and ~$5 500 moves the price 1%.
 
 ## 3. Dependency spine
 
