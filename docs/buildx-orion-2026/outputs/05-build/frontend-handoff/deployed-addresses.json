@@ -1,7 +1,7 @@
 {
   "schemaVersion": "tinjau.deployed-addresses/1.0.0",
-  "status": "T4.2_WORKING_ADDRESSES_NOT_FINAL",
-  "statusText": "THESE ARE T4.2 WORKING ADDRESSES, NOT THE FINAL LIST. T7.2 re-verifies and owns the authoritative set. Do not hardcode them into anything a judge will see without checking with the non-frontend lane first.",
+  "status": "T7_2_AUTHORITATIVE",
+  "statusText": "T7.2 AUTHORITATIVE LIST, verified 2026-08-21. Every address here was re-read on X Layer Testnet and matches t7-2-authoritative-addresses.json exactly. Both pools remain BUILDER-CONTROLLED test liquidity seeded with freely-mintable mock tokens that have no value: these addresses prove enforcement, not a market.",
   "network": {
     "chainId": 1952,
     "name": "X Layer Testnet",

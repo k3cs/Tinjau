@@ -591,8 +591,8 @@ const factChecks = [
       ),
   ],
   [
-    "addresses are still labelled non-final",
-    () => addresses.status === "T4.2_WORKING_ADDRESSES_NOT_FINAL",
+    "addresses carry the T7.2 authoritative label",
+    () => addresses.status === "T7_2_AUTHORITATIVE",
   ],
   ["everything is on a testnet", () => addresses.network.isTestnet === true],
   [

@@ -143,9 +143,9 @@ test("the defensible behavioural claim is present and is about restraint, not pr
   );
 });
 
-test("deployed addresses are labelled non-final and carry the stale-read warning", () => {
+test("deployed addresses carry the T7.2 authoritative label and the stale-read warning", () => {
   const addresses = readJson("deployed-addresses.json");
-  assert.equal(addresses.status, "T4.2_WORKING_ADDRESSES_NOT_FINAL");
+  assert.equal(addresses.status, "T7_2_AUTHORITATIVE");
   assert.equal(addresses.network.chainId, 1952);
   assert.equal(addresses.network.isTestnet, true);
   assert.match(addresses.network.rpcWarning, /stale reads/i);

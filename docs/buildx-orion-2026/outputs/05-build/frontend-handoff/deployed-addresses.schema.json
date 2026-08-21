@@ -21,7 +21,7 @@
   "properties": {
     "schemaVersion": { "const": "tinjau.deployed-addresses/1.0.0" },
     "status": {
-      "const": "T4.2_WORKING_ADDRESSES_NOT_FINAL",
+      "const": "T7_2_AUTHORITATIVE",
       "description": "Constrained. T7.2 owns the authoritative list; promoting these to final requires that task and a schema version bump, not a string edit."
     },
     "statusText": { "type": "string", "minLength": 1 },

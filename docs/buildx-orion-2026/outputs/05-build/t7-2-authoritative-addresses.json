@@ -1,7 +1,7 @@
 {
   "_purpose": "T7.2 authoritative deployed-address list for the Tinjau enforcement stack on X Layer Testnet. Addresses are re-read and codeSize measured at emit time; only transaction hashes are transcribed.",
   "_warning": "BOTH POOLS ARE BUILDER-CONTROLLED TEST LIQUIDITY seeded with freely-mintable mock tokens that have no value. They demonstrate enforcement. They are not markets, and no figure measured on them is a market result.",
-  "_readStaleness": "X Layer's public RPC is load-balanced and serves reads from nodes at differing heights. A read issued right after a confirmed write can return the PREVIOUS record — for this registry that means reading NORMAL while a PROTECT is live. Measured lag 2519-2746 ms per write. Consumers should pin reads to a block number or follow the AssessmentPosted event rather than polling currentRecord.",
+  "_readStaleness": "X Layer's public RPC is load-balanced and serves reads from nodes at differing heights. A read issued right after a confirmed write can return the PREVIOUS record \u2014 for this registry that means reading NORMAL while a PROTECT is live. Measured lag 2519-2746 ms per write. Consumers should pin reads to a block number or follow the AssessmentPosted event rather than polling currentRecord.",
   "generatedAt": "2026-08-21T04:50:26.754Z",
   "chainId": 1952,
   "rpc": "https://testrpc.xlayer.tech",
@@ -33,8 +33,23 @@
       },
       "poolId": "0x5e9eff19074225e9132eb73dc25cf0e3ff55c3fb31c9b28ab633851d2b54f730",
       "demoTransactions": {
-        "sceneA_post": "0x69c11cf4115037431bb1330cf7cd3bd32f3339b0aee2aa392a3b86ac0a96922c",
-        "note": "Scenes A and F only. Scene B cannot run here: its 21600s recovery window exceeds any acceptable wall-clock wait on a chain without evm_increaseTime."
+        "sceneA_post": "0x025ca92d8d477af734d3e7ce0e7465bf3afc0b1d511acf4fc184c5add1178671",
+        "note": "Scenes A and F only. Scene B cannot run here: its 21600s recovery window exceeds any acceptable wall-clock wait on a chain without evm_increaseTime.",
+    "_undocumentedProtectWrite": {
+      "txHash": "0xba5a7b99f807e5c5d60fdaedbd8c90657fdde22d3a4641f765225479f01b2b5b",
+      "block": 38825964,
+      "state": "PROTECT",
+      "assessedAt": 1787284797,
+      "assessedAtIso": "2026-08-21T03:59:57Z",
+      "expiresAt": 1787306397,
+      "expiresAtIso": "2026-08-21T09:59:57Z",
+      "ttlSeconds": 21600,
+      "evidenceCommitment": "0x32f397d9fdcb23d252cd7a5aa300e58c16aa6d35ae0c4f49c49e68a286a78cbe",
+      "why": "Recorded 2026-08-21. This write landed on the production-envelope registry about 17 seconds after the manifest for this stack was generated, so neither the hash nor its commitment appeared in any committed artifact. It is documented here rather than left unexplained.",
+      "whatItProves": "Deterministic recovery on the FULL production envelope, on a public chain. Its TTL is exactly the 21600s cap, and re-read at 2026-08-21T12:07Z the registry returns stored PROTECT / effective NORMAL with the fee back at 500. No keeper ran and no transaction ended it; only time passed.",
+      "whatItDoesNotProve": "READ THE RECORD CAREFULLY. On chain it says state PROTECT, dataMode REPLAY, marketConfirmation CONFIRMED. The on-chain schema has no field for 'evidence replayed, market leg constructed', so read alone this looks like a confirmed replay result. IT IS NOT. The canonical replay of that event resolves to WATCH. Do not present this record as a replayed confirmation."
+    },
+        "_sceneA_post_correction": "Corrected 2026-08-21. This field previously held 0x69c11cf411..., which eth_getTransactionByHash shows was sent to 0x1a1e1730... (the DEMO-envelope registry), not to this stack's registry 0x60062389.... The value now here is verified to target 0x60062389... and matches what frontend-handoff/deployed-addresses.json and demo/tinjau-demo.mjs already used."
       },
       "roles": {
         "registry": {

@@ -139,8 +139,10 @@ Expect 3–60 s each: the public X Layer RPC is slow and its latency varies wide
 `chain-verify` reads every address from
 [`deployed-addresses.json`](./docs/buildx-orion-2026/outputs/05-build/frontend-handoff/deployed-addresses.json)
 at run time, so it stays correct when that list changes; the three values written out above are
-copied from it for convenience and **must be re-copied after T7.2 finalises the list**. They are
-**T4.2 working addresses, not final**.
+copied from it for convenience. T7.2 has since finalised that list: the addresses in it were
+re-read on chain on 2026-08-21 and match
+[`t7-2-authoritative-addresses.json`](./docs/buildx-orion-2026/outputs/05-build/t7-2-authoritative-addresses.json)
+exactly, so they are **authoritative, not provisional**.
 
 Both commands answer the stale-read problem in §6 rather than ignoring it: `chain-verify` reads
 the height twice, reports it if it goes backwards, and pins every call to one block.
@@ -161,8 +163,8 @@ Protection ended with no keeper and no transaction; only time passed. Immediate 
 refused on chain by the contract (`CooldownActive`). The failed action in scene F is recorded as
 failed and claims no benefit.
 
-**Scene B's market leg is CONSTRUCTED** — see §5. Addresses are **T4.2 working addresses, not
-final**; T7.2 owns the authoritative list. Transaction hashes and decoded events:
+**Scene B's market leg is CONSTRUCTED** — see §5. Addresses are the **T7.2 authoritative list**,
+re-read on chain 2026-08-21. Transaction hashes and decoded events:
 [`docs/.../05-build/t4-demo-manifest-xlayer-testnet.json`](./docs/buildx-orion-2026/outputs/05-build/t4-demo-manifest-xlayer-testnet.json).
 
 ### 4.3 A risk record any stranger can read
@@ -347,7 +349,7 @@ boundary. Everything else is reproduction of work already recorded.
 ## 9. Limitations — read before quoting anything above
 
 1. **Nothing here is production.** The testnet pool is builder-controlled with valueless mock
-   tokens. Published addresses are T4.2 working addresses, not final.
+   tokens. The addresses are final and verified, but what they run on is not a market.
 2. **The observed `PROTECT` has a constructed market leg.** The evidence is real; the price path
    is not. The canonical replay of the same event resolves to `WATCH`.
 3. **No dual OKX/X Layer confirmation for any replayed scenario.** No committed OKX index data
@@ -364,9 +366,11 @@ boundary. Everything else is reproduction of work already recorded.
    undetermined. These results may not be described as conservative.
 8. **Three economic scenarios, one asset, one pool, a market weeks old.** Nothing here generalises
    to tokenized equities as a class.
-9. **The public `tinjau.xyz/api/scoreboard` is stale** and serves an unlabelled synthetic test
-   filing. The provenance fix exists in code and is tested but is not deployed. Do not cite or
-   screenshot that endpoint.
+9. **Fixed 2026-08-21.** This item previously warned that `tinjau.xyz/api/scoreboard` served an
+   unlabelled synthetic test filing and must not be cited. The provenance fix has since been
+   deployed: every entry now carries a `provenance` object with `sourceClass`, `dataMode` and
+   `isSimulated`, the payload opens with a `_READ_THIS_FIRST` banner, and the fabricated entry is
+   gone. The endpoint is safe to cite. It serves replayed fixture data, not a live feed.
 10. **Speculation detection and independence derivation are curated heuristics**, not models. Both
     are deployed only in the direction where being wrong is conservative.
 

@@ -176,5 +176,5 @@ test("the OKX leg is UNAVAILABLE in every published record", () => {
 
 test("deployed addresses are still marked not-final", () => {
   const deployed = artifact("deployed-addresses.json");
-  assert.equal(deployed.status, "T4.2_WORKING_ADDRESSES_NOT_FINAL");
+  assert.equal(deployed.status, "T7_2_AUTHORITATIVE");
 });

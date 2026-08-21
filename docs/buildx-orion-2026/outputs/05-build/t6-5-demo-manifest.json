@@ -16,14 +16,14 @@
   ],
   "addressPolicy": {
     "addressList": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/deployed-addresses.json",
-    "status": "T4.2_WORKING_ADDRESSES_NOT_FINAL",
+    "status": "T7_2_AUTHORITATIVE",
     "note": "Addresses are resolved from the address list by stackId at run time and are NOT copied into this manifest as independent values. T7.2 owns the authoritative list; anything hardcoded elsewhere would have to be chased when it changes."
   },
   "sourceArtifacts": [
     {
       "key": "addresses",
       "path": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/deployed-addresses.json",
-      "sha256": "3c7cf3ce7fd8ac00e6aa2870ff2887c177472dc145cc184d66b11fdab688d0d1"
+      "sha256": "9a632bf3e579e5557f3f5405920cb83341bf56d33dc6116e5d8ae610f821a555"
     },
     {
       "key": "chainManifest",
@@ -114,7 +114,7 @@
           "registry": "0x60062389a7AB08F0030FC06Adf9CE0C180537317",
           "hook": "0x1092C9fe2dB084F26aa415A0fda14B001A786080",
           "riskAsset": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
-          "addressStatus": "T4.2_WORKING_ADDRESSES_NOT_FINAL",
+          "addressStatus": "T7_2_AUTHORITATIVE",
           "resolvedAtRunTime": true
         },
         "chainId": 1952,
@@ -247,7 +247,7 @@
           "registry": "0x1a1e17306f789f5Ec7012B1E2CB866DeDB61E2b1",
           "hook": "0xAb448f70fE44fbbF5f41225F7797fcC7e56c2080",
           "riskAsset": "0xf07A9D89848bc694c7154Fda4cce707Eb409F903",
-          "addressStatus": "T4.2_WORKING_ADDRESSES_NOT_FINAL",
+          "addressStatus": "T7_2_AUTHORITATIVE",
           "resolvedAtRunTime": true
         },
         "chainId": 1952,
