@@ -10,6 +10,11 @@
  *
  * It is skipped, loudly, if `anvil` or `forge` is not on PATH — a silently-skipped end-to-end
  * test is worse than none, because the suite would report green while proving nothing.
+ *
+ * "Loudly" was aspirational until 2026-08-21. A skipped `describe` is never registered, so
+ * node's summary printed `skipped 0` and the run simply reported 8 fewer tests than the 594
+ * this project publishes, with nothing on screen to say why. The notice registered below fixes
+ * that: it appears only on the no-Foundry path, so the full run still reports exactly 594.
  * ---------------------------------------------------------------------------------------
  */
 
@@ -194,6 +199,26 @@ describe("harness helpers", () => {
 // ---------------------------------------------------------------------------
 // End to end against a real chain
 // ---------------------------------------------------------------------------
+
+// Registered only when Foundry is absent, for the reason given in the file header: it names the
+// omission so the reduced test count explains itself. It always passes, because a missing tool is
+// a missing input, not a failing assertion.
+if (!HAVE_TOOLS) {
+  test("local-chain harness needs Foundry: install anvil and forge, or this run reports 8 fewer than 594 tests", () => {
+    console.log(
+      [
+        "",
+        "  SKIPPED: the 8 end-to-end local-chain tests did not run.",
+        "  They boot a real Anvil and need `anvil` and `forge` on PATH.",
+        "  Everything they prove is about what a pool actually did, so there is no unit-test",
+        "  substitute: a mocked version would test the mock.",
+        "  Fix: install Foundry (https://getfoundry.sh), then re-run `npm test` here.",
+        "  Nothing is broken: this is a missing tool, not a failing assertion.",
+        "",
+      ].join("\n"),
+    );
+  });
+}
 
 describe("T4.2-T4.5 end to end on a local chain", { skip: !HAVE_TOOLS && "anvil/forge not on PATH" }, () => {
   let stack: LocalStack;

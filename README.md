@@ -289,7 +289,7 @@ consumer can read `NORMAL` while a `PROTECT` is live. Consumers must pin reads t
 | Step | Needs | Time |
 |---|---|---|
 | the three-scene demo, the risk reader, the handoff validator | **Node 18+**, nothing else | seconds |
-| server tests, typecheck, benchmark | Node 18+ and **pnpm**, plus one `pnpm install` | ~35 s total |
+| server tests, typecheck, benchmark | Node 18+ and **pnpm** or **npm**, plus one install | ~35 s total |
 | contract tests, the reference-consumer end-to-end run | **Foundry** (`forge`, `anvil`, `cast`) | ~40 s first build, then seconds |
 | the live read-only checks | internet, no credentials | 3–60 s each, RPC-dependent |
 | regenerating the on-chain evidence | funded X Layer Testnet keys — **builder only** | minutes |
@@ -303,6 +303,7 @@ Nothing in the first three rows touches the network or needs a credential.
 node demo/tinjau-demo.mjs all
 
 # 2. server: pipeline, evidence, market, risk, decision, benchmark, chain harness
+#    npm works too: `npm install && npm test && npm run typecheck` — both lockfiles are committed
 cd apps/server && pnpm install && pnpm test && pnpm typecheck
 
 # 3. the benchmark, rewritten byte-identically from committed fixtures
@@ -320,6 +321,27 @@ bash tools/risk-reader/test/anvil-e2e.sh
 
 Steps 1–4 need no network access, no credentials and no deploy. Every input to the benchmark and
 to the Proof of Protection record is a committed fixture.
+
+**On the server test count, and why your number may be lower than 594.** The full suite is
+**594 tests**. Two groups need something the repository cannot commit, so on some machines they do
+not run — and rather than let the total quietly shrink, each group leaves a named, passing notice
+in its place that says what is missing and how to get it back:
+
+| What you have | Step 2 reports | Which notice appears |
+|---|---|---|
+| Foundry, and `contracts/out/` built | **594** | none, everything ran |
+| Foundry, fresh clone before any build | **590** | `bytecode comparator needs contracts/out` |
+| no Foundry at all | **583** | both of them |
+
+The five bytecode-comparator tests read `contracts/out/`, which is rebuildable build output and so
+is not committed. The eight local-chain tests boot a real Anvil and need `anvil` and `forge` on
+PATH; everything they prove is about what a pool actually did, so there is no unit-test substitute.
+Run step 5 (`cd contracts && forge test`) before step 2, or `cd contracts && forge build`, and you
+get all 594.
+
+Nothing fails in any of these cases, and nothing is dropped silently. Before 2026-08-21 it was
+dropped silently: a skipped `describe` is never registered, so Node printed `skipped 0` and the
+total simply came up short with nothing on screen to explain it.
 
 ### 8.3 The contracts need no setup step
 

@@ -25,6 +25,36 @@ import { ARTIFACTS, compareBytecode } from "../src/chain/tinjauBytecodeAudit.js"
 const HAVE_ARTIFACTS = existsSync(ARTIFACTS.TinjauRiskRegistry) && existsSync(ARTIFACTS.TinjauFeeHook);
 const ADDRESS = `0x${"11".repeat(20)}` as const;
 
+/**
+ * WHY THE SKIP ANNOUNCES ITSELF.
+ *
+ * The suite below skips when `contracts/out` is absent, which is the honest thing to do: with no
+ * artifact there is nothing to compare against. But a silent skip makes a published test count
+ * look inflated. `contracts/out` is rebuildable output and is not committed, so on a fresh clone
+ * these five tests vanish — and node's summary reports `skipped 0`, because a skipped `describe`
+ * is never registered at all. A reader who runs the server tests before `forge build` sees 589
+ * where the docs say 594, with nothing on screen to explain the difference.
+ *
+ * So the omission gets a name. This notice is registered ONLY when the artifacts are missing:
+ * adding a test to the passing path would push the full run to 595 and break the 594 the docs
+ * publish. It always passes — a missing rebuildable artifact is an omission, not a failure.
+ */
+if (!HAVE_ARTIFACTS) {
+  test("bytecode comparator needs contracts/out: run `forge build` first, or this run reports 589 of 594 tests", () => {
+    console.log(
+      [
+        "",
+        "  SKIPPED: the 5 bytecode-comparator tests did not run.",
+        "  They read contracts/out/*.json, which is rebuildable output and therefore not committed.",
+        "  This run therefore shows 590 tests (589 real ones, plus this notice) instead of the full 594.",
+        "  Fix: cd contracts && forge build   — then re-run `npm test` here to see 594.",
+        "  Nothing is broken: this is a missing input, not a failing assertion.",
+        "",
+      ].join("\n"),
+    );
+  });
+}
+
 describe("bytecode comparator", { skip: !HAVE_ARTIFACTS && "run `forge build` first" }, () => {
   const registryArtifact = HAVE_ARTIFACTS
     ? JSON.parse(readFileSync(ARTIFACTS.TinjauRiskRegistry, "utf8"))
