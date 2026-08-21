@@ -42,6 +42,7 @@ Every individual component here has prior art. Tinjau does not claim to have inv
 | Automated on-chain risk response | **Hypernative**, **Chaos Labs** risk oracles | Live and broad, but general protocol risk rather than information discontinuity on tokenized equities |
 | AMM designs for adverse selection | volatility fees, TWAP guards, flow-aware fees, **Arrakis HOT** | More mature on LVR; still telemetry-driven, with no notion of *why* the price moved |
 | RWA position protection | **Argus** (Mantle RWA prototype) | Protects individual positions; does not carry challengeable corporate evidence into pool microstructure |
+| Corporate actions acted on, on chain, on tokenized equities | **Ondo Global Markets**: trading paused around dividend ex-dates, a reduced-size "limited" state around earnings that lifts by rule, oracle updates gated behind an announced pause window | **The closest system found.** It really does take bounded, deterministically-expiring on-chain action on corporate events today. It has no rumor containment, no independent market confirmation (waiting for an issuer's own number to firm up is data completeness, not corroboration), and no published baseline comparison; its action is a venue and oracle control rather than a bounded fee inside an LP's pool |
 
 **The safe positioning sentence, and the only one this project uses:**
 
@@ -49,9 +50,17 @@ Every individual component here has prior art. Tinjau does not claim to have inv
 > tokenized-equity evidence, rumor containment, OKX/X Layer confirmation, bounded LP action,
 > deterministic recovery, and measured three-policy outcome was found.
 
-"Not found" means not found in the public documentation reviewed on 2026-08-20. It is not proof
-that no such system exists privately. Full matrix and sources:
-[`docs/buildx-orion-2026/outputs/03-product/tinjau-competitive-landscape-deep-research.html`](./docs/buildx-orion-2026/outputs/03-product/tinjau-competitive-landscape-deep-research.html).
+"Not found" means not found in the public material reviewed on 2026-08-20 and re-surveyed on
+2026-08-21 across 40 queries and 22 sources, with every query, venue, and per-candidate verdict
+written down, including the searches that returned nothing:
+[`docs/…/05-build/s4-1-competitor-survey.md`](./docs/buildx-orion-2026/outputs/05-build/s4-1-competitor-survey.md).
+Earlier matrix and sources:
+[`docs/…/03-product/tinjau-competitive-landscape-deep-research.html`](./docs/buildx-orion-2026/outputs/03-product/tinjau-competitive-landscape-deep-research.html).
+
+It is not proof that no such system exists privately, and one candidate in particular is close
+enough that it belongs in the table above rather than in a footnote. The survey also records
+that four of the previously named candidates could not be fully re-verified on 2026-08-21, and
+that a null result licenses no "first", "only", or "unique" phrasing anywhere. It never has.
 
 ## 3. What Tinjau adds
 
@@ -350,7 +359,7 @@ with nothing installed beyond Foundry itself:
 
 ```bash
 git clone https://github.com/k3cs/Tinjau
-cd Tinjau/contracts && forge test     # 137 passed, 0 failed
+cd Tinjau/contracts && forge test     # 145 passed, 0 failed
 ```
 
 No `forge install`, no `git submodule update`, no network access during the build.

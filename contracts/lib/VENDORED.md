@@ -48,7 +48,9 @@ Only files that neither the compiler nor the test run reads, to keep the committ
 - `.github/` workflow directories and `.DS_Store` files
 
 `forge test` was re-run after the deletions: **137 passed, 0 failed**, identical to the result
-before them.
+before them. (That was the suite size on 2026-08-21 when the vendoring was verified. The suite
+has since grown to 145 with the integration example; the figure above is left as the number that
+actually verified the deletion, not silently updated to today's.)
 
 ## Consequence for maintainers
 

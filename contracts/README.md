@@ -8,7 +8,7 @@ Dependencies are vendored and committed. From a bare clone of this repository:
 cd contracts && forge test
 ```
 
-Expected: **137 passed, 0 failed, 0 skipped** across 7 suites. Foundry is the only prerequisite.
+Expected: **145 passed, 0 failed, 0 skipped** across 8 suites. Foundry is the only prerequisite.
 No `forge install`, no `git submodule update`, no network access during the build.
 
 **Do not run `forge install` here.** It replaces the pinned dependency sources with upstream
