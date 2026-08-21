@@ -4,10 +4,15 @@ import { DEPLOYED } from "./artifacts";
  * Deployed contracts, read from `deployed-addresses.json` rather than
  * transcribed.
  *
- * Two facts travel with every address and must reach the screen with it: the
- * list is **working, not final** (T7.2 owns the authoritative set), and every
- * pool behind it is **builder-controlled** with freely-mintable mock tokens.
- * An address shown without those two labels reads as a production system.
+ * The fact that must reach the screen with every address is that the pool
+ * behind it is **builder-controlled**, seeded with freely-mintable mock tokens
+ * that have no value. An address shown without that label reads as a production
+ * system.
+ *
+ * The list itself is no longer provisional: T7.2 re-read every address on chain
+ * on 2026-08-21 and `status` is `T7_2_AUTHORITATIVE`. The older "working, not
+ * final" wording outlived its truth and was rendering on /proof directly under
+ * a heading announcing the opposite.
  */
 export interface DeployedContract {
   role: string;
