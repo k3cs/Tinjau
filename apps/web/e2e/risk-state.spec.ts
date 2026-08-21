@@ -1,38 +1,41 @@
 import { expect, test } from "@playwright/test";
+import { choose, expectAndDismissDialog, openCleanMission } from "./helpers/mission";
 
-test("rumor scene remains WATCH and collapses syndication", async ({ page }) => {
-  await page.goto("/demo?scene=rumor&stage=relate");
+test("Scene B separates current WATCH truth from an explicit lifecycle replay", async ({ page }) => {
+  await openCleanMission(page, "B");
+  await choose(page, /Inspect filing/);
+  await choose(page, /Retrieve official source/);
+  await expect(page.getByRole("link", { name: /Open original/ })).toBeVisible();
+  await choose(page, /Normalize filing/);
+  await choose(page, /Resolve evidence graph/);
 
-  await expect(page.getByText("WATCH", { exact: true }).first()).toBeVisible();
-  await expect(page.getByText("Aggressive fee not authorized", { exact: true }).first()).toBeVisible();
-  await expect(page.getByText("5 claims collapse into 2 independence groups.")).toBeVisible();
-  await expect(page.getByText("Inspect 3 related claims")).toBeVisible();
-  await expect(page.getByText("SIMULATED", { exact: true }).first()).toBeVisible();
+  await choose(page, /Enter PROTECT now/);
+  await expectAndDismissDialog(page, "PROTECT blocked");
+  await choose(page, /Hold for market gate/);
+  await expectAndDismissDialog(page, "WATCH retained");
+  await choose(page, /Run market gate/);
+  await expectAndDismissDialog(page, "Confirmation unavailable");
+  await expect(page.getByText("Final confirmation unavailable", { exact: true })).toBeVisible();
+
+  await choose(page, /Prepare current record/);
+  await choose(page, /Apply final fee now/);
+  await expectAndDismissDialog(page, "PROTECT blocked");
+  await expect(page.getByText("Current action unavailable", { exact: true })).toBeVisible();
+
+  await choose(page, /Continue with lifecycle replay/);
+  await expectAndDismissDialog(page, "REPLAY entered PROTECT");
+  await expect(page.getByText("Lifecycle replay: PROTECT", { exact: true })).toBeVisible();
+  await expect(page.getByText("REPLAY", { exact: true }).last()).toBeVisible();
+
+  await choose(page, /Run replayed decay/);
+  await expectAndDismissDialog(page, "REPLAY returned to NORMAL");
+  await expect(page.getByRole("heading", { name: /Mission complete: Verify an official event/ })).toBeVisible();
 });
 
-test("official evidence does not bypass unavailable market confirmation", async ({ page }) => {
-  await page.goto("/demo?scene=confirmed&stage=confirm");
-
-  await expect(page.getByRole("heading", { name: "WATCH", exact: true })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "UNAVAILABLE", exact: true })).toBeVisible();
-  await expect(page.getByText("Official Filing", { exact: true })).toBeVisible();
-  await expect(page.getByText("Aggressive fee not authorized", { exact: true }).first()).toBeVisible();
-  await expect(page.getByText("No action requested", { exact: true })).toBeVisible();
-});
-
-test("legacy public routes redirect intentionally", async ({ page }) => {
+test("legacy public routes redirect without bypassing Mission Select", async ({ page }) => {
   await page.goto("/holdings");
   await expect(page).toHaveURL("/");
-
   await page.goto("/scoreboard");
-  await expect(page).toHaveURL(/\/demo\?scene=comparison/);
-});
-
-test("evidence semantics remain available on a narrow viewport", async ({ page, isMobile }) => {
-  test.skip(!isMobile, "mobile project only");
-  await page.goto("/demo?scene=rumor&stage=relate");
-
-  await expect(page.getByRole("list", { name: "Evidence independence groups" })).toBeVisible();
-  await expect(page.getByText("Independent origin 1", { exact: true })).toBeVisible();
-  await expect(page.getByText("Independent origin 2", { exact: true })).toBeVisible();
+  await expect(page).toHaveURL(/\/demo/);
+  await expect(page.getByRole("heading", { name: "Choose a field exercise." })).toBeVisible();
 });

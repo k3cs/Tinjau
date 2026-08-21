@@ -28,7 +28,7 @@ export const RUMOR_MISSION: MissionDefinition = {
       known: "One potential signal exists. Its content has not been retrieved.",
       unknown: "Author, original source, independence, and official support.",
       whyItMatters: "Discovery is not confirmation. The system starts with no action authority.",
-      outputs: [{ id: "rumor-signal", kind: "SIGNAL", title: "Potential X signal", summary: "A simulated post claims NVIDIA accepted a $250bn financing backstop.", dataMode: "SIMULATED", capabilityId: "x-listener", renderKey: "rumor-signal" }],
+      outputs: [{ id: "rumor-signal", kind: "SIGNAL", title: "Potential X signal", summary: "A simulated post claims NVIDIA accepted a $250bn financing backstop.", dataMode: "SIMULATED", capabilityId: "x-listener", renderKey: "rumor-signal", sourceUrl: null }],
       choices: [{ id: "inspect-signal", label: "Inspect signal", description: "Open the captured claim without promoting it.", outcome: "ACCEPTED", reveal: ["rumor-signal"], nextStageId: "retrieve" }],
     },
     {
@@ -38,7 +38,7 @@ export const RUMOR_MISSION: MissionDefinition = {
       known: "The social input is simulated and has no resolvable public URL.",
       unknown: "Whether any source supports the amount or obligation.",
       whyItMatters: "Tinjau must preserve a missing source instead of inventing one.",
-      outputs: [{ id: "rumor-source-chain", kind: "SOURCE", title: "Source chain retrieved", summary: "One Wall Street Journal origin and several syndicated reports are identified.", detail: ["Original social URL: unavailable", "News chain: replayed and source-linked"], dataMode: "REPLAY", capabilityId: "official-intake", renderKey: "source-intake" }],
+      outputs: [{ id: "rumor-source-chain", kind: "SOURCE", title: "Source chain retrieved", summary: "One Wall Street Journal origin and several syndicated reports are identified.", detail: ["Original social URL: unavailable", "News chain: replayed and source-linked"], dataMode: "REPLAY", capabilityId: "official-intake", renderKey: "source-intake", sourceUrl: "https://www.cnbc.com/2026/07/27/nvidia-and-openai-in-talks-for-up-to-250-billion-dollar-ai-backstop.html" }],
       choices: [
         { id: "raise-fee-early", label: "Raise fee now", description: "Treat the social claim as sufficient authority.", outcome: "REJECTED", reasonCode: "RUMOR_ONLY", reveal: [], modal: blockedFeeModal },
         { id: "retrieve-origin", label: "Retrieve source chain", description: "Trace the claim to its original reporting.", outcome: "ACCEPTED", reveal: ["rumor-source-chain"], nextStageId: "understand" },

@@ -13,6 +13,7 @@ export interface MissionOutput {
   dataMode?: DataMode;
   capabilityId?: string;
   renderKey?: string;
+  sourceUrl?: string | null;
 }
 
 export interface MissionModal {

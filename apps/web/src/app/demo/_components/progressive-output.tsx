@@ -3,6 +3,7 @@
 import { LazyMotion, domAnimation, m, useReducedMotion } from "motion/react";
 import { CapabilityBadge } from "@/components/capability-badge";
 import { DataModeLabel } from "@/components/data-mode-label";
+import { ExternalEvidenceLink } from "@/components/external-evidence-link";
 import type { MissionDefinition, MissionOutput } from "@/lib/demo/mission-types";
 import { getCapability } from "@/lib/product/capabilities";
 
@@ -51,6 +52,7 @@ function OutputRecord({ output, index }: { output: MissionOutput; index: number 
       </div>
       <p className="mt-4 max-w-[75ch] text-sm leading-relaxed text-ink-secondary">{output.summary}</p>
       {output.detail && <ul className="mt-4 border-t border-edge pt-3 font-data text-[11px] text-ink-muted">{output.detail.map((item) => <li key={item} className="py-1">— {item}</li>)}</ul>}
+      {output.sourceUrl !== undefined && <div className="mt-4"><ExternalEvidenceLink href={output.sourceUrl} /></div>}
     </article>
   );
 }

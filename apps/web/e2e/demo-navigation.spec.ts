@@ -1,27 +1,33 @@
 import { expect, test } from "@playwright/test";
+import { choose, openCleanMission } from "./helpers/mission";
 
-test("walkthrough exposes all nine stages as shareable controls", async ({ page }) => {
-  await page.goto("/demo?scene=rumor&stage=listen");
-  const controls = page.getByRole("region", { name: "Walkthrough stage controls" });
-  for (const label of ["Listen", "Retrieve", "Understand", "Relate", "Decide", "Confirm", "Record", "Act", "Recover"]) {
-    await expect(controls.getByRole("link", { name: new RegExp(label) })).toBeVisible();
+test("guided console keeps permanent explanations beside progressively unlocked output", async ({ page }) => {
+  await openCleanMission(page, "A");
+  for (const label of ["What happened", "Objective", "What Tinjau knows", "What remains unknown", "Why it matters", "Choose the next action"]) {
+    await expect(page.getByRole("heading", { name: label })).toBeVisible();
   }
-  await controls.getByRole("link", { name: /Decide/ }).click();
-  await expect(page).toHaveURL(/stage=decide/);
-  await expect(page.getByText("Aggressive fee not authorized", { exact: true })).toBeVisible();
+  await expect(page.getByText("0 revealed", { exact: true })).toBeVisible();
+  await choose(page, /Inspect signal/);
+  await expect(page.getByText("1 revealed", { exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "03 Understand" })).toBeDisabled();
 });
 
-test("confirmed scene keeps the missing final confirmation explicit", async ({ page }) => {
-  await page.goto("/demo?scene=confirmed&stage=confirm");
-  await expect(page.getByRole("heading", { name: "Official evidence still needs the market gate." })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "UNAVAILABLE", exact: true })).toBeVisible();
-  await expect(page.getByText("Not delivered", { exact: true })).toBeVisible();
+test("all nine evidence stages are visible but future work stays locked", async ({ page }) => {
+  await openCleanMission(page, "B");
+  for (const name of ["01 Listen", "02 Retrieve", "03 Understand", "04 Relate", "05 Decide", "06 Confirm", "07 Record", "08 Act", "09 Recover"]) {
+    await expect(page.getByRole("button", { name })).toBeVisible();
+  }
+  await expect(page.getByRole("button", { name: "09 Recover" })).toBeDisabled();
 });
 
-test("comparison remains a first-class scene", async ({ page }) => {
-  await page.goto("/demo?scene=comparison&case=neutral");
-  await expect(page.getByRole("heading", { name: "Same input. Three policies. No predetermined winner." })).toBeVisible();
-  await expect(page.getByText("Matched input checksum", { exact: true })).toBeVisible();
-  await expect(page.getByText("Pending handoff", { exact: true }).first()).toBeVisible();
-  await expect(page.getByText("Closed", { exact: true })).toBeVisible();
+test("mobile reading order keeps guidance before system output", async ({ page, isMobile }) => {
+  test.skip(!isMobile, "mobile project only");
+  await openCleanMission(page, "A");
+  const guide = page.getByRole("complementary", { name: "Your guide" });
+  const output = page.getByRole("region", { name: "System output" });
+  const guideBox = await guide.boundingBox();
+  const outputBox = await output.boundingBox();
+  expect(guideBox).not.toBeNull();
+  expect(outputBox).not.toBeNull();
+  expect(guideBox!.y).toBeLessThan(outputBox!.y);
 });
