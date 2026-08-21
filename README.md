@@ -321,24 +321,27 @@ bash tools/risk-reader/test/anvil-e2e.sh
 Steps 1–4 need no network access, no credentials and no deploy. Every input to the benchmark and
 to the Proof of Protection record is a committed fixture.
 
-### 8.3 The contracts are a separate Foundry repository
+### 8.3 The contracts need no setup step
 
-`contracts/` is deliberately excluded from this repository's history (see the root `.gitignore`):
-Foundry manages `lib/` as git submodules of the contracts repo, and nesting that inside this one
-was rejected. It therefore ships as its own repository, and the link belongs here — if this
-sentence still has no link beside it, that repository has not been published yet and steps 5 and 6
-cannot be run from a clone of this one.
-
-That means **steps 5 and 6 above require the contracts repository to be checked out at
-`contracts/` alongside `apps/`**, and its dependencies installed:
+`contracts/` and its dependencies are both committed here. Steps 5 and 6 run from a bare clone
+with nothing installed beyond Foundry itself:
 
 ```bash
-cd contracts && forge install && forge build
+git clone https://github.com/k3cs/Tinjau
+cd Tinjau/contracts && forge test     # 137 passed, 0 failed
 ```
 
-Steps 1–4 do not depend on it. If `contracts/` is missing, everything except the contract tests
-and the Anvil end-to-end run still works, because the demo and the benchmark read committed
-evidence rather than re-executing the chain.
+No `forge install`, no `git submodule update`, no network access during the build.
+
+This was not always true. Until 2026-08-21 `contracts/lib/` was gitignored and no dependency
+revision was pinned anywhere public, so `forge test` failed on a fresh clone even though it
+passed on the builder's machine: the tests were reproducible only for someone who already had
+the right checkout. The dependency sources are now vendored, and
+[`contracts/lib/VENDORED.md`](./contracts/lib/VENDORED.md) records each upstream revision, the
+licences, what was deleted to keep the tree small, and why git submodules were rejected rather
+than merely unused.
+
+Do not run `forge install` in `contracts/` — it overwrites the pinned sources with upstream HEAD.
 
 ### 8.4 What a judge can verify without any of the above
 

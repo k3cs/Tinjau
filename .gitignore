@@ -14,10 +14,13 @@ node_modules/
 # contracts/ was previously its own independent git repo, excluded from here and
 # intended for a separate GitHub repo linked from the README. That separation was
 # reversed on 2026-08-21: it meant a judge cloning this repository received zero
-# Solidity, no deployment receipts, and could not run `forge test`. The source is
-# ~340 KB; contracts/.gitignore already excludes lib/, out/ and cache/, so only
-# src/, test/, script/ and broadcast/ are committed here.
-contracts/lib/
+# Solidity, no deployment receipts, and could not run `forge test`.
+#
+# contracts/lib/ stayed excluded after that reversal, which left the same hole one level
+# down: `forge test` still failed on a bare clone, because no dependency revision was
+# pinned anywhere public. Since 2026-08-21 the dependency sources are vendored and
+# committed. contracts/lib/VENDORED.md records the exact upstream revisions and why
+# git submodules were rejected. Only rebuildable output stays ignored.
 contracts/out/
 contracts/cache/
 

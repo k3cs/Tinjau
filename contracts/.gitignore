@@ -2,9 +2,11 @@
 cache/
 out/
 
-# Dependencies — managed by `forge install` (git submodules), not vendored in this repo's
-# own history; see README.md for setup instructions.
-lib/
+# Dependencies are VENDORED, not ignored. `lib/` is committed on purpose so that
+# `git clone && cd contracts && forge test` works with no further steps. See
+# lib/VENDORED.md for the upstream revisions and the reason submodules were rejected.
+# Do not re-add `lib/` here, and do not run `forge install` — it would overwrite the
+# pinned sources with whatever upstream HEAD happens to be.
 
 # Local machine state
 .DS_Store
