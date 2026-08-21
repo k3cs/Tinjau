@@ -1,7 +1,7 @@
 {
   "schemaVersion": "tinjau.deployed-addresses/1.0.0",
   "status": "T7_2_AUTHORITATIVE",
-  "statusText": "T7.2 AUTHORITATIVE LIST, verified 2026-08-21. Every address here was re-read on X Layer Testnet and matches t7-2-authoritative-addresses.json exactly. Both pools remain BUILDER-CONTROLLED test liquidity seeded with freely-mintable mock tokens that have no value: these addresses prove enforcement, not a market.",
+  "statusText": "VERIFIED LIST, 2026-08-21. Every address here was re-read on X Layer Testnet against the published deployment record. Both pools remain BUILDER-CONTROLLED test liquidity seeded with freely-mintable mock tokens that have no value: these addresses prove enforcement, not a market.",
   "network": {
     "chainId": 1952,
     "name": "X Layer Testnet",
@@ -17,11 +17,11 @@
     "atIso": "2026-08-21T04:30:00Z",
     "note": "Re-verified independently of the demo manifests; both agree."
   },
-  "whyTwoStacks": "X Layer Testnet exposes no evm_increaseTime, so the production envelope's 21,600 s recovery cannot be watched live. Two full stacks are therefore deployed: the PRODUCTION envelope (the one T7.2 will publish) and a 60x-compressed DEMO envelope that preserves the invariants cap == widen + decay and cooldown == widen. `advanceTime` REFUSES LOUDLY rather than faking a curve, verified against the production stack, so three swaps at one instant can never be presented as a decay curve.",
+  "whyTwoStacks": "X Layer Testnet exposes no evm_increaseTime, so the production envelope's 21,600 s recovery cannot be watched live. Two full stacks are therefore deployed: the PRODUCTION envelope (the published one) and a 60x-compressed DEMO envelope that preserves the invariants cap == widen + decay and cooldown == widen. `advanceTime` REFUSES LOUDLY rather than faking a curve, verified against the production stack, so three swaps at one instant can never be presented as a decay curve.",
   "stacks": [
     {
       "stackId": "production-envelope",
-      "label": "Production envelope — T7.2 publishes this one",
+      "label": "Production envelope — the published one",
       "isDemoEnvelope": false,
       "envelope": {
         "baseFee": 500,

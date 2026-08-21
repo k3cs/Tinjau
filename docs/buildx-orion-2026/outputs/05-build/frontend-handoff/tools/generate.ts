@@ -204,7 +204,7 @@ write("scenario-rumor-watch.json", {
   },
   onChain: {
     status: "POSTED_ON_X_LAYER_TESTNET",
-    addressStatus: "T7.2 authoritative list, verified 2026-08-21. Both pools are builder-controlled test liquidity.",
+    addressStatus: "Verified on chain 2026-08-21. Both pools are builder-controlled test liquidity.",
     chainId: manifestProd.network.chainId,
     networkLabel: manifestProd.network.networkLabel,
     registry: manifestProd.network.addresses.registry,
@@ -389,7 +389,7 @@ write("scenario-confirmed-protect.json", {
   },
   onChain: {
     status: "POSTED_ON_X_LAYER_TESTNET",
-    addressStatus: "T7.2 authoritative list, verified 2026-08-21. Both pools are builder-controlled test liquidity.",
+    addressStatus: "Verified on chain 2026-08-21. Both pools are builder-controlled test liquidity.",
     chainId: manifestDemo.network.chainId,
     networkLabel: manifestDemo.network.networkLabel,
     registry: demoAddresses.registry,
@@ -733,8 +733,8 @@ write("deployed-addresses.json", {
 
   status: "T7_2_AUTHORITATIVE",
   statusText:
-    "T7.2 AUTHORITATIVE LIST, verified 2026-08-21. Every address here was re-read on X Layer " +
-    "Testnet and matches t7-2-authoritative-addresses.json exactly. Both pools remain " +
+    "VERIFIED LIST, 2026-08-21. Every address here was re-read on X Layer " +
+    "Testnet against the published deployment record. Both pools remain " +
     "BUILDER-CONTROLLED test liquidity seeded with freely-mintable mock tokens that have no " +
     "value: these addresses prove enforcement, not a market.",
 
@@ -763,7 +763,7 @@ write("deployed-addresses.json", {
   stacks: [
     {
       stackId: "production-envelope",
-      label: "Production envelope — T7.2 publishes this one",
+      label: "Production envelope — the published one",
       isDemoEnvelope: false,
       envelope: manifestProd.network.envelope,
       poolId: manifestProd.network.addresses.poolId,

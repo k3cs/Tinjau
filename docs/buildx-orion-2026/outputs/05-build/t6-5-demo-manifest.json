@@ -23,7 +23,7 @@
     {
       "key": "addresses",
       "path": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/deployed-addresses.json",
-      "sha256": "9a632bf3e579e5557f3f5405920cb83341bf56d33dc6116e5d8ae610f821a555"
+      "sha256": "7d94829387113217160d2914b0c9cc18671e1dfde46751236be0f8aa93f04979"
     },
     {
       "key": "chainManifest",
@@ -43,12 +43,12 @@
     {
       "key": "protectScenario",
       "path": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/scenario-confirmed-protect.json",
-      "sha256": "df31d7a02b78d1237441eb349bd7cd5e6af3c21c97661357fe1f4e753538da7b"
+      "sha256": "8a84f4609852a08cb24b474645a59f56c5a0948f6207ed3870d3d115a78b9f8f"
     },
     {
       "key": "rumourScenario",
       "path": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/scenario-rumor-watch.json",
-      "sha256": "cf82dac8e829ea64b5df135473442e4dedd46b6ca8237d080c975b897650781f"
+      "sha256": "06ea84dc465753756d89e3f00e3f40507174ef137a9712800e4f0b2a2dab94ab"
     }
   ],
   "fixtureFallback": {
@@ -99,7 +99,7 @@
         "stack": {
           "addressList": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/deployed-addresses.json",
           "stackId": "production-envelope",
-          "label": "Production envelope — T7.2 publishes this one",
+          "label": "Production envelope — the published one",
           "isDemoEnvelope": false,
           "envelope": {
             "baseFee": 500,

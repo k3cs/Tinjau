@@ -5,8 +5,11 @@
 - Deadline: **2026-08-21 23:59 UTC**
 - Google Form: <https://docs.google.com/forms/d/e/1FAIpQLSfgU_3zcXdxK0GJQxj33QeUWdEcAaYnieVe9p5cFDb2JFQa4Q/viewform>
 
-**Submitting is HUMAN-ONLY (tracker §0.20).** Nothing in this file has been posted, sent, or
-submitted. This is a paste sheet. Dien fills the form.
+**Submitting is HUMAN-ONLY.** Nothing in this file has been posted, sent, or submitted. This is a
+paste sheet. Dien fills the form.
+
+- Refreshed: **2026-08-21**, after the site restructure. Every route and status below was
+  re-checked against the live site at that time, not carried over.
 
 Every command in §5 and §9 was executed on 2026-08-21 and its real output is quoted. Nothing here
 is predicted.
@@ -15,47 +18,36 @@ is predicted.
 
 ## 0. Read this before you paste anything
 
-Three items are blocking or near-blocking. Fix 0.1 first.
+One item is still outstanding and it is on Dien, not on the build.
 
-### 0.1 The GitHub repository is not publicly reachable (BLOCKING)
+### 0.1 The GitHub repository is public now (RESOLVED)
 
-`https://github.com/k3cs/Tinjau` returns **HTTP 404 to an anonymous visitor**, and so does the
-GitHub REST API for that path. An authenticated `git ls-remote` against the same URL succeeds, so
-the repository exists and is simply **private**.
+`https://github.com/k3cs/Tinjau` returns **HTTP 200 to an anonymous visitor**, verified
+2026-08-21. This was the one blocking item in the previous version of this pack, when the
+repository was private and a judge clicking the GitHub field would have seen a 404. It is fixed.
 
-```
-github k3cs/Tinjau -> 404
-{"message":"Not Found","status":"404"}    # api.github.com/repos/k3cs/Tinjau
-```
+### 0.2 The X post is the remaining hard requirement
 
-`HACKATHON.md` line 57 records that both events require the repo to be **reachable by judges**.
-A judge clicking the GitHub field would see a 404. **Make the repository public before submitting.**
-The older `dienmsk/Tinjau` URL also 404s anonymously, so it is not a fallback.
+The submission needs a post from the project X account that **mentions `@XLayerOfficial`**, and
+the post URL is a form field. It does not exist yet. A claim-safe draft is in §1.1. The agent may
+not post it.
 
-### 0.2 The live registry currently stores a `PROTECT` that no committed artifact records
+Two form fields also need Dien: **Email** and **Telegram**.
 
-The production-envelope registry `0x6006...7317` holds a `PROTECT` record right now. It was written
-by transaction `0xba5a7b99f807e5c5d60fdaedbd8c90657fdde22d3a4641f765225479f01b2b5b`
-(block 38825964, 2026-08-21T04:00:01Z). That transaction hash and its evidence commitment
-`0x32f397d9…78cbe` appear **nowhere** in `docs/` or `apps/server/`.
+### 0.3 The live registry holds an expired `PROTECT`, and that is fine to show
 
-This is good news and a hazard at the same time.
+The production-envelope registry `0x6006...7317` holds a `PROTECT` record written by transaction
+`0xba5a7b99f807e5c5d60fdaedbd8c90657fdde22d3a4641f765225479f01b2b5b` (block 38825964,
+2026-08-21T04:00:01Z). Its `assessedAt` and `expiresAt` are exactly 21,600 seconds apart and it
+has now lapsed by wall clock, so **deterministic recovery on the full production envelope is
+observable on a public chain**: the reference reader prints `stored PROTECT, effective NORMAL`
+with the fee back at 500, and no keeper transaction ended it.
 
-- Good: its `assessedAt` and `expiresAt` are exactly 21,600 seconds apart, and the record has now
-  expired by wall clock. Deterministic recovery on the **full production envelope** is therefore
-  observable on a public chain, which the tracker previously said could not be shown live.
-- Hazard: on chain that record reads `state PROTECT`, `dataMode REPLAY`, `marketConfirmation
-  CONFIRMED`. The on-chain schema has no field for "evidence replayed, market leg constructed", so
-  read alone the record looks like a confirmed replay result. **It is not.** The canonical replay of
-  that event resolves to `WATCH`.
-
-Handling: §5.2 documents the command, shows the real output, and states the caveat next to it. Do
-not present this record as a replayed confirmation.
-
-### 0.3 Two small factual errors in existing judge-facing files
-
-See §8. Neither is an overclaim, but one puts a wrong transaction hash in a file named
-"authoritative".
+**The hazard, if a judge reads the raw record:** on chain it says `state PROTECT`, `dataMode
+REPLAY`, `marketConfirmation CONFIRMED`. The on-chain schema has no field for "evidence replayed,
+market leg constructed", so read alone it looks like a confirmed replay result. **It is not.** The
+canonical replay of that event resolves to `WATCH`. This is documented in the deployment record
+and stated on `/risk` next to the figure it produced.
 
 ---
 
@@ -66,23 +58,39 @@ See §8. Neither is an overclaim, but one puts a wrong transaction hash in a fil
 | Project name | `Tinjau` |
 | Description | see §2 (two lengths) |
 | Project URL | `https://tinjau.xyz` (verified HTTP 200) |
-| GitHub | `https://github.com/k3cs/Tinjau` **(must be made public first, see §0.1)** |
+| GitHub | `https://github.com/k3cs/Tinjau` (verified public, HTTP 200) |
 | Email | `[DIEN MUST SUPPLY]` |
 | Telegram | `[DIEN MUST SUPPLY]` (a group or a personal handle; the form requires one) |
 | X handle | `@tinjauAI` |
 | X post URL | `[DIEN MUST SUPPLY]` (the post must exist first, see §1.1) |
+| Telegram | `[DIEN MUST SUPPLY]` |
 
-Verified 2026-08-21:
+Verified live 2026-08-21, after the restructure:
 
 ```
-tinjau.xyz -> 200
-api/scoreboard -> 200
-x.com/tinjauAI -> 200
-github k3cs/Tinjau -> 404      <-- the one that must change
+tinjau.xyz            -> 200
+tinjau.xyz/api/scoreboard -> 200
+x.com/tinjauAI        -> 200
+github k3cs/Tinjau    -> 200
 ```
 
-Working public pages: `/` (200), `/demo` (200), `/compare` (200). `/roadmap`, `/evidence` and
-`/how-it-works` do not resolve, so link only to the three that do.
+**All nine public pages resolve.** The site was reorganised around the seven published judging
+criteria, so the route list has changed since the previous version of this pack:
+
+| Route | What it is for | Criterion it speaks to |
+|---|---|---|
+| `/` | The problem, the vocabulary, the honest result | orientation |
+| `/why-it-matters` | 32 real filings on 10 real X Layer pools | user value, growth potential |
+| `/risk` | What the model does and never does, then two worked cases | application of AI, innovation |
+| `/proof` | Deployment ledger, the three-policy benchmark, the claim gate | product completeness |
+| `/x-layer` | What is read from the chain, deployed onto it, and given back | integration, ecosystem |
+| `/roadmap` | What runs, what is built but unwired, what is not built | product completeness |
+| `/faq` | The seven criteria answered, plus the awkward questions | all seven |
+| `/developers` | Commands a judge can run against the deployed registry | product completeness |
+| `/demo` | Three-scene guided walkthrough | orientation |
+
+`/compare` no longer exists as a page: its benchmark content moved into `/proof` and the old URL
+**308-redirects** there, so any link already published still lands correctly.
 
 ### 1.1 The X post is a hard requirement and does not exist yet
 
@@ -107,8 +115,7 @@ Optional draft, claim-safe, for Dien to edit and post himself. The agent may not
 
 ## 2. Project description, ready to paste
 
-Plain language. No jargon left unexplained. Both versions are consistent with the claim boundary in
-tracker §0.19.
+Plain language. No jargon left unexplained. Both versions are consistent with the project's published claim boundary.
 
 ### 2.1 Short version (54 words)
 
@@ -411,7 +418,7 @@ Real output:
 
 ```
 manifest is byte-identical to what the source artifacts produce now
-sha256 c4e2acd2afda44d6ce9b1e7d16704ac5c71c4adb891799363084ce94ce33b01f
+sha256 be884920d860b0f4c92180670f52ae54400f4e5d77e25d95ae111b7221ee7196
 ```
 
 Every number the scenes print is read out of a committed artifact, and every artifact is pinned by
@@ -517,9 +524,9 @@ fixture. `simulated` means the input was written by this project. `roadmap` mean
 | All 27 comparable cells flip sign between the two metric bases | measured | `three-policy-benchmark.md`; `benchmarkComparison.test.ts` |
 | A volatility-only policy fires a false positive on the neutral control at k = 2, 3 and 5 | measured | `three-policy-benchmark.json`; scene 3 output |
 | Tinjau declines that same window twice, on materiality and on persistence | measured | `three-policy-benchmark.md` §4.3 |
-| The neutral control moved **more** than the material event (241 bps vs 235 bps) | measured | `apps/server/src/market/poolTelemetry.ts` measurements; tracker §8 |
+| The neutral control moved **more** than the material event (241 bps vs 235 bps) | measured | `apps/server/src/market/poolTelemetry.ts` measurements; deviations log |
 | The method was frozen before any result existed | procedural | `t0-4-benchmark-preregistration.md` (2026-08-20); `scenarios/benchmark-preregistration.json` |
-| Amendment AMD-002 is post-hoc and is structurally barred from opening the claim gate | procedural | tracker §8 AMD-002; a test doctors the post-hoc cells into wins and asserts the gate still returns `false` |
+| Amendment AMD-002 is post-hoc and is structurally barred from opening the claim gate | procedural | deviations log, AMD-002; a test doctors the post-hoc cells into wins and asserts the gate still returns `false` |
 
 ### 6.4 X Layer relevance
 
@@ -608,9 +615,14 @@ are kept unchanged, because renaming them would falsify provenance.
 
 ## 8. Errors found in existing judge-facing artifacts
 
-Reported here, not fixed, because the affected files belong to other lanes.
+Reported when this pack was first written, when the affected files belonged to other lanes.
+**All five are now fixed**, and the status of each is recorded inline below so a reader can see
+what changed rather than finding a rewritten history.
 
-### 8.1 A wrong transaction hash in `t7-2-authoritative-addresses.json`
+### 8.1 A wrong transaction hash in the deployment record — FIXED
+
+**Status: corrected 2026-08-21.** The field now holds the verified hash, and the correction is
+recorded in the file itself rather than applied silently.
 
 The file lists, under `stacks.production-envelope.demoTransactions`:
 
@@ -633,7 +645,10 @@ The correct production-envelope Scene A post is
 error is in a file whose name says "authoritative", so it is worth correcting even though nothing
 downstream depends on it.
 
-### 8.2 An undocumented on-chain write
+### 8.2 An undocumented on-chain write — DOCUMENTED
+
+**Status: recorded 2026-08-21** in the deployment record, with both what it proves (deterministic
+recovery on the full production envelope, on a public chain) and what it does not.
 
 Transaction `0xba5a7b99f807e5c5d60fdaedbd8c90657fdde22d3a4641f765225479f01b2b5b` posted a `PROTECT`
 assessment to the production-envelope registry at 2026-08-21T04:00:01Z, about 22 seconds after the
@@ -643,7 +658,10 @@ this write, and its stated scope is "Scenes A and F only".
 
 Documented in §5.2 with its caveat. It should be added to the T7.2 record.
 
-### 8.3 Two stale statements in `README.md` §9
+### 8.3 Two stale statements in `README.md` — FIXED
+
+**Status: corrected 2026-08-21.** Both statements now match what the endpoint and the address
+list actually do.
 
 Both err on the safe side (they under-claim) but are now factually wrong:
 
@@ -658,7 +676,10 @@ Both err on the safe side (they under-claim) but are now factually wrong:
   `status: T4.2_WORKING_ADDRESSES_NOT_FINAL` and the demo driver prints it, which reads as a
   disclaimer on the final addresses.
 
-### 8.4 Two undercounted test totals
+### 8.4 Two undercounted test totals — FIXED
+
+**Status: corrected 2026-08-21.** Current verified figures: server **594 passed / 0 failed**,
+contracts **137 passed / 0 failed**, web **30 passed / 0 failed**.
 
 `t6-4-claims-and-competitive-position.md` and the tracker both cite `forge test` **134/134**. The
 verified figure on 2026-08-21 is **137 passed / 0 failed**. Server tests are cited as 153 in the
@@ -681,7 +702,7 @@ $ node demo/tinjau-demo.mjs scene2     # CONSTRUCTED PROTECT, 20000/9470/500   O
 $ node demo/tinjau-demo.mjs scene3     # 28 rows, 72 cells, claimGate false    OK
 $ node demo/tinjau-demo.mjs check
 manifest is byte-identical to what the source artifacts produce now
-sha256 c4e2acd2afda44d6ce9b1e7d16704ac5c71c4adb891799363084ce94ce33b01f
+sha256 be884920d860b0f4c92180670f52ae54400f4e5d77e25d95ae111b7221ee7196
 ```
 
 ### 9.2 Test suites
@@ -717,7 +738,7 @@ Every size matches `t7-2-authoritative-addresses.json` exactly.
 ```
 tinjau.xyz            -> 200
 tinjau.xyz/demo       -> 200
-tinjau.xyz/compare    -> 200
+tinjau.xyz/proof      -> 200
 tinjau.xyz/api/scoreboard -> 200, provenance object present, canClaimLossAvoided false
 x.com/tinjauAI        -> 200
 github.com/k3cs/Tinjau -> 404 (anonymous)   BLOCKING

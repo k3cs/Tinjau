@@ -102,7 +102,7 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     dataMode: "REPLAY",
     evidence: "Deployed on X Layer Testnet chain 1952; bytecode verified by eth_getCode",
     limitation:
-      "Working addresses, not final. T7.2 owns the authoritative list, and the pool behind them is builder-controlled.",
+      "The pool behind these addresses is builder-controlled test liquidity with freely-mintable mock tokens, so it demonstrates enforcement and is not a market.",
     href: "/risk",
   },
   {
