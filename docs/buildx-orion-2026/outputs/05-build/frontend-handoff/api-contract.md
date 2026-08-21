@@ -15,14 +15,28 @@ explicitly, and every decoder you would need already exists below).
 
 This was measured, not theorised. During the T4.2 testnet run a `postAssessment` transaction
 confirmed, its own `AssessmentPosted` event decoded to `PROTECT`, and the very next
-`currentRecord()` call returned the **previous `WATCH` record, 13 seconds older** — while the
-swap in that same scene was correctly charged 20,000 pips by the pool. The RPC is
-load-balanced, so a read issued immediately after a confirmed write can be answered by a node
-at an older block height.
+`currentRecord()` call returned the **previous `WATCH` record** — while the swap in that same
+scene was correctly charged 20,000 pips by the pool. The RPC is load-balanced, so a read issued
+immediately after a confirmed write can be answered by a node at an older block height.
 
-Measured convergence lag: **2,519–2,746 ms per write** (five observations, all converged after
-3 attempts). The harness now waits until a read reflects the confirmed write, and throws if it
-never converges.
+**Corrected 2026-08-21.** This paragraph previously said the stale record was "13 seconds
+older". No raw observation supports that figure. The two consecutive assessments in the run are
+`assessedAt` 1787284258 and 1787284275, which are **17 seconds** apart, and the only 13 in the
+data is `totalWaitedMs: 13126`, the *sum* of all five convergence waits. The two quantities were
+conflated. The age of the stale record is left unstated here rather than replaced with a second
+unverified number.
+
+Convergence was observed within **2,519–2,746 ms per write** (five observations in
+`proof-of-protection.json`, plus three more in the production-envelope manifest at 2,530–2,594 ms,
+so eight in total; all eight converged on the third attempt).
+
+**Read those figures as upper bounds, not as the lag.** The harness polls on a fixed 1,000 ms
+interval, so a 2,519 ms figure establishes only "still stale at roughly 1.35 s, converged by
+2.52 s". It does not measure how long the node was actually behind, and the true lag is smaller
+than the number quoted. Every attempt count being exactly 3 means every write was stale on both
+the first and the second read. Full method, all eight observations, the mitigations, and a
+reproduction script an outsider can run without cloning this project:
+`docs/buildx-orion-2026/outputs/05-build/s6-2-xlayer-rpc-read-consistency.md`.
 
 **Consequence for any consumer, including this frontend:**
 

@@ -44,8 +44,11 @@ the one list that owns them,
 `docs/buildx-orion-2026/outputs/05-build/frontend-handoff/deployed-addresses.json`, and pass
 them as flags. A worked invocation is in the repository README §4.1.
 
-**The public X Layer RPC serves stale reads** (measured 2,519–2,746 ms convergence lag after a
-write). This reader issues a single point-in-time read, so a consumer that acts on the record
+**The public X Layer RPC serves stale reads** (convergence observed within 2,519–2,746 ms after a
+write, across eight writes on testnet; read those as upper bounds rather than the lag, because the
+measuring harness polled on a 1,000 ms interval, and see
+`docs/buildx-orion-2026/outputs/05-build/s6-2-xlayer-rpc-read-consistency.md` for the method and
+its limits). This reader issues a single point-in-time read, so a consumer that acts on the record
 should pin reads to a block number or follow the `AssessmentPosted` event rather than polling
 `currentRecord`. For a risk registry the failure direction is the dangerous one: a stale read
 shows `NORMAL` while a `PROTECT` is live.
