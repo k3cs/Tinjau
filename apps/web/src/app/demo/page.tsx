@@ -6,9 +6,6 @@ export const metadata: Metadata = {
   description: "Trace rumor containment, conditional bounded protection, and the matched-input policy comparison across the complete Tinjau system.",
 };
 
-type DemoPageProps = { searchParams: Promise<{ scene?: string; stage?: string; case?: string }> };
-
-export default async function DemoPage({ searchParams }: DemoPageProps) {
-  const params = await searchParams;
-  return <DemoExperience sceneParam={params.scene} stageParam={params.stage} caseId={params.case} />;
+export default function DemoPage() {
+  return <DemoExperience />;
 }
