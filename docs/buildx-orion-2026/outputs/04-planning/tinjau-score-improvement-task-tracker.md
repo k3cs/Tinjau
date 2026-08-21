@@ -348,7 +348,7 @@ submission itself.
   gained a "Setup: there isn't one" section. Both evaluation prompts already instruct exactly
   `cd contracts && forge test`, so neither needed editing and no §0.8 crossing arose.
 
-- [ ] **S1.2 — Disclose the assumed bonded-evidence input on every surface that shows the bit**
+- [x] **S1.2 — Disclose the assumed bonded-evidence input on every surface that shows the bit**
   Depends on: none (sprint task; deploy the web change before the deadline)
   Owner: agent (web copy is in scope for this tracker; there is no frontend/backend owner split
   here unless Dien reinstates one).
@@ -364,9 +364,46 @@ submission itself.
   Acceptance: grepping the built site copy and the reader output for the bit's display text
   shows the qualifier everywhere; web tests pass including the new assertion; if S2.1 later
   computes the flag for real, the qualifier is scoped to the scenarios where it was assumed.
-  Evidence: —
+  Evidence: **done 2026-08-21, commit `3d4c91a`, pre-deadline.** Surfaces changed:
+  (1) `apps/web/src/lib/risk/reason-codes.ts` — `ReasonMeaning` gains an optional `caveat`
+  field, set for `BONDED_EVIDENCE_PASSED`; its `plain` no longer says "The filing cleared the
+  existing parse-agreement and bond/challenge checks", which asserted a check that did not run.
+  (2) `apps/web/src/app/risk/_components/reason-ledger.tsx` — paints the caveat inline next to
+  the code in the watch colour under the label "Assumed, not computed"; a caveat that exists in
+  data but is never rendered discloses nothing.
+  (3) `apps/web/src/app/risk/_components/state-header.tsx` — the header renders
+  `record.humanExplanation` verbatim from the published artifact, and on the official scenarios
+  that sentence says "passed the bonded-evidence checks". The correction is attached directly
+  beneath it, conditional on the record carrying the bit.
+  (4) `apps/web/src/lib/demo/missions/confirmed.ts` — the `known` field no longer reads
+  "Official and bonded evidence conditions pass"; the stage output summary now names the
+  assumed leg too.
+  (5) `tools/risk-reader/abi/reason-bits.json` + `tinjau-risk-read.mjs` — bit 18 carries its own
+  `caveat`, printed under the bit as `LIMIT OF THIS BIT:` with a new `wrap()` helper. The reader
+  is a separate consumer with a hand-transcribed table, so it gets its own copy rather than an
+  import.
+  **Deliberately NOT changed: the published handoff artifacts**
+  (`scenario-confirmed-protect.json`, `three-policy-comparison.json`). Their `humanExplanation`
+  and `statusReason` strings feed the demo manifest sha256 that this project publishes as
+  evidence (`demo/tinjau-demo.mjs:104`), and editing an evidence artifact to improve its
+  wording is precisely what the disclosure discipline exists to prevent. The correction is
+  attached at the render site instead. The manifest hash is unchanged after this task:
+  `be884920d860b0f4c92180670f52ae54400f4e5d77e25d95ae111b7221ee7196`, which is itself the proof
+  that no evidence artifact was touched.
+  `/proof` was checked and does not name the bonded path, so it needed nothing.
+  Acceptance evidence: `npm run build` then grep of the built output —
+  `.next/server/app/risk/page.js` contains "assumed input, not a live parse result" (4
+  occurrences). Live reader run against the public RPC prints the caveat under
+  `[bit 18] BONDED_EVIDENCE_PASSED`. Web tests **32 pass, 0 fail** (was 30), including two new
+  structural assertions ("the assumed bonded-evidence input is disclosed wherever the bit is
+  shown", "the demo mission does not present the bonded condition as established"). They assert
+  the disclosure's presence, not its exact wording, so the copy may improve but cannot silently
+  vanish. The caveat text is scoped to "every published scenario", so S2.1 can narrow it by
+  editing one string once a computed record exists.
+  Full §0.7 baseline after the change: server 594/594, web 32/32, contracts 137/137, manifest
+  byte-identical, all artifacts validate.
 
-- [ ] **S1.3 — Pin and document the LLM model id**
+- [x] **S1.3 — Pin and document the LLM model id**
   Depends on: none (sprint task)
   Owner: agent.
   Work: reconcile `provider.ts`'s default (`gemini-3.6-flash`) with the five Flash ids recorded
@@ -375,7 +412,31 @@ submission itself.
   rows), and add a one-line note to `SERVICES.md` SVC-004.
   Acceptance: one default model id in code, an explanation in the study doc's post-results
   section dated per §0.3, raw rows untouched (`git diff` empty for the `.jsonl`).
-  Evidence: —
+  Evidence: **done 2026-08-21, commit `0c05d7e`, pre-deadline.** The drift was three-way, not
+  two-way: `provider.ts:22` defaulted to `gemini-3.6-flash`, `apps/server/.env.example:16-17`
+  still documented `gemini-2.5-flash` (deprecated, which `provider.ts`'s own comment records was
+  confirmed by a live API call on 2026-08-17), and the 30 published rows carry five further ids
+  in field `geminiModel` — `gemini-3.1-flash-lite` (10 rows), `gemini-3.5-flash-lite` (10),
+  `gemini-flash-latest` (4), `gemini-3.5-flash` (3), `gemini-flash-lite-latest` (3), none of
+  them the default.
+  `gemini-3.6-flash` is pinned. Its value in `provider.ts` was NOT changed: it is already what
+  `agent.ts` runs and what SVC-004 records, so the correct fix is to make the documentation and
+  the study agree with the code. `.env.example` now documents the same id and states that
+  leaving `GEMINI_MODEL` unset is the intended configuration; `provider.ts`'s comment names it
+  as the pin and `GEMINI_MODEL` as an escape hatch rather than a second default; `SERVICES.md`
+  SVC-004 gained one `- Pinned model id:` line (the temporary-provider note at line 98 is
+  intact, as that line itself requires).
+  `parse-accuracy-study.md` gained a dated appended subsection "Model id, pinned (added
+  2026-08-21)" at the end, which cross-references the existing 2026-08-18 model-mix caveat
+  rather than restating it, and states the consequence explicitly: **the published accuracy
+  numbers do not measure the pinned model.** They measure a mixed Flash population over one
+  day, and the study against `gemini-3.6-flash` alone has not been run. Two of the five ids are
+  also not independent models (`gemini-flash-latest` is an alias whose quota error named
+  `gemini-3.7-flash`).
+  Raw rows untouched: `git diff -- docs/…/data/p2_1_parse_accuracy_raw.jsonl` is **empty**.
+  No `.env` file was read or written, and no key material appears in any change.
+  Full §0.7 baseline after the change: server 594/594, web 32/32, contracts 137/137, manifest
+  byte-identical, all artifacts validate.
 
 ### Phase S2 — Application of AI: put the live model on the flagship path (P1; target 6→8)
 
