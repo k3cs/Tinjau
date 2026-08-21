@@ -284,7 +284,7 @@ gate wins.
 
 ### Phase S0 — Timeline and submission-state bookkeeping (P0, but never ahead of the sprint)
 
-- [ ] **S0.1 — Establish whether post-deadline work can influence judging**
+- [~] **S0.1 — Establish whether post-deadline work can influence judging**
   Depends on: none, but runs AFTER the §0.3 pre-deadline sprint (S1.1–S1.3), never instead of it.
   Owner: agent research + Dien confirms interpretation.
   Work: from the event's published terms and announcements (the terms text used at submission is
@@ -561,7 +561,7 @@ submission itself.
   the computed one is. Web tests still 32/32; demo manifest still
   `be884920d860b0f4c92180670f52ae54400f4e5d77e25d95ae111b7221ee7196`.
 
-- [ ] **S2.2 — Run the LLM evidence-graph derivations live for one scenario, cross-checked**
+- [~] **S2.2 — Run the LLM evidence-graph derivations live for one scenario, cross-checked**
   Depends on: S2.1
   Owner: agent.
   Work: the replay scenarios currently use heuristic derivations for entity resolution,
@@ -578,7 +578,7 @@ submission itself.
 
 ### Phase S3 — User value: a real economic demonstration, honestly bounded (P1; target 3→5)
 
-- [ ] **S3.1 — Pre-register a paired-pool protection experiment**
+- [~] **S3.1 — Pre-register a paired-pool protection experiment**
   Depends on: S0.1 (ranking), S2.1 (so the demonstrated path is the computed one)
   Owner: agent designs; Dien approves the pre-registration before any run.
   Work: design the experiment the evaluation asked for: two identical builder-controlled testnet
@@ -621,7 +621,7 @@ submission itself.
 
 ### Phase S4 — Innovation: substantiate or correct the novelty claim (P1; target: defend 7)
 
-- [ ] **S4.1 — Run and publish the competitor survey the novelty claim assumes**
+- [~] **S4.1 — Run and publish the competitor survey the novelty claim assumes**
   Depends on: the §0.3 sprint being finished; otherwise unblocked
   Owner: agent.
   Work: the site claims the combination (source-grounded tokenized-equity evidence, rumor
@@ -640,7 +640,7 @@ submission itself.
 
 ### Phase S5 — Product completeness: live intake (P1; target 7→8)
 
-- [ ] **S5.1 — Wire the built-but-unwired X listener into the loop, clearly labeled LIVE**
+- [~] **S5.1 — Wire the built-but-unwired X listener into the loop, clearly labeled LIVE**
   Depends on: S0.1; Dien confirms the X account/API access status before work starts.
   Owner: agent.
   Work: the roadmap lists "X Listener" and "X Publisher" as built but not connected. Connect the
@@ -668,7 +668,7 @@ submission itself.
 
 ### Phase S6 — Growth and ecosystem: make consumption real (P1 prep, P2 execution)
 
-- [ ] **S6.1 — Package the registry consumer path so a third party can adopt it in minutes**
+- [~] **S6.1 — Package the registry consumer path so a third party can adopt it in minutes**
   Depends on: S1.1
   Owner: agent prepares; publishing to npm (if desired) is a §0.8 action for Dien.
   Work: turn the zero-dependency reader into an adoptable integration kit: a documented
@@ -681,7 +681,7 @@ submission itself.
   read of the live record; the example contract compiles in the fixed S1.1 environment.
   Evidence: —
 
-- [ ] **S6.2 — Write the X Layer RPC read-consistency note as a standalone contribution**
+- [~] **S6.2 — Write the X Layer RPC read-consistency note as a standalone contribution**
   Depends on: the §0.3 sprint being finished; otherwise unblocked
   Owner: agent writes; any submission to X Layer's repo/forum/team is Dien's action (§0.8).
   Work: extract the measured finding (public RPC serves reads from nodes at differing heights;
@@ -710,7 +710,7 @@ submission itself.
 
 ### Phase S7 — X Layer integration: beyond testnet (P2; target 8→9, human-gated)
 
-- [ ] **S7.1 — Mainnet readiness memo, not a mainnet deployment**
+- [~] **S7.1 — Mainnet readiness memo, not a mainnet deployment**
   Depends on: S3.2, S5.1
   Owner: agent writes; deployment itself is far outside this tracker (§0.8: mainnet, real money).
   Work: the last evaluation point ("mainnet deployment, or a hook attached to real X Layer
@@ -790,3 +790,19 @@ pre-existing pre-deadline commit, exactly the case §0.3 rule 3 anticipates.
 | Q1 | Is `GEMINI_API_KEY` available, and is the funded assessor key available? | S2.1 | **answered 2026-08-21: both available.** Assessor gas comes from a wallet already present in Dien's local `.env`; Dien will top up X Layer Testnet funds if a run runs short. S2.1 is therefore a go under §0.3's stretch conditions. |
 | Q2 | Server-lane defect against the published evaluation prompts: fix before the deadline or defer? | S1.4 | **answered 2026-08-21: fix before the deadline.** The specific defect turned out to be the 589/594 skip, not the retracted `npm install` failure; see the log above. |
 | Q3 | Has `07-submission/EVALUATE-TINJAU.txt` been **sent to anyone**? It needed no change for S1.1, but §0.8 governs any future edit. | nothing yet | asked 2026-08-21, unanswered — no task so far has needed to edit it |
+| Q4 | S5.1 requires Dien to confirm X account/API access before work starts. | S5.1, S5.2 | **answered 2026-08-21: credentials active, LISTENER ONLY.** The X Publisher (outbound posting) is explicitly NOT authorised and remains disconnected. Any future outbound write needs a separate §0.8 go-ahead. |
+| Q5 | S3.1 requires Dien to approve the pre-registration before S3.2 runs. Dien may not be at the keyboard when it is written. | S3.2 | **answered 2026-08-21: pre-approved to run automatically**, on the condition that the pre-registration is committed BEFORE any result exists and that whatever the experiment shows is published, including a null or adverse result. The freeze-first ordering is enforced by the orchestrator committing S3.1 before S3.2 is started. |
+| Q6 | Who tags `submission-final` at the deadline? | S0.2 | **answered 2026-08-21: the agent does it**, watching the clock, tagging the last commit whose push preceded 23:59 UTC, then opening `POST-SUBMISSION.md`. |
+
+### 6.1 Scope change, 2026-08-21
+
+Dien instructed that **every remaining task in this tracker be executed in this session**, using
+parallel agents with the orchestrating agent as coordinator. That supersedes §0.9 rule 3's
+"confirm with Dien first" for the task list itself. It does **not** relax anything else: §0.8
+boundaries still require Dien at the moment of the action, the claim gate (§0.5) still wins every
+conflict, and the per-task confirmations that were genuinely about Dien's own resources or
+irreversible channels were asked and answered above as Q4 to Q6.
+
+Tasks that remain **out of scope** under the unchanged §0.8, and are prepared but not executed:
+publishing the integration kit to npm (S6.1), filing the RPC note with X Layer (S6.2), any
+outreach contact (S6.3), any mainnet action (S7.1), and connecting the X Publisher (S5.1).
