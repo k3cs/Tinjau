@@ -1,0 +1,24 @@
+# Keeps the Vercel upload to source, not build output.
+#
+# `docs/` is deliberately NOT ignored: apps/web imports the published handoff
+# artifacts under docs/buildx-orion-2026/outputs/05-build/frontend-handoff/
+# directly, so excluding it would break the build.
+node_modules
+**/node_modules
+.next
+**/.next
+out
+**/out
+test-results
+**/test-results
+playwright-report
+**/playwright-report
+.git
+.secrets
+.env
+.env.*
+!.env.example
+**/*.tsbuildinfo
+contracts/out
+contracts/cache
+contracts/broadcast
