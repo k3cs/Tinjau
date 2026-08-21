@@ -30,7 +30,7 @@ check, not established fact.
 The submission is "Tinjau", entered in the BuildX/Orion hackathon, AI-RWA track, on X Layer. It is
 a hackathon MVP built to a fixed deadline, not a production system.
 
-Judging criteria, verbatim from the event terms, clause 4. No weights are published:
+Judging criteria, verbatim from the event terms, clause 4:
 
   1. application of AI
   2. innovation
@@ -40,9 +40,32 @@ Judging criteria, verbatim from the event terms, clause 4. No weights are publis
   6. growth potential
   7. contribution to the X Layer ecosystem
 
-Produce a score and written justification for each of the seven, plus an overall assessment. For
-every point awarded or withheld, cite the artifact, URL, command output or file you used. Where
-you could not verify something, say so and score accordingly rather than assuming either way.
+Facts about how this event is actually judged, which constrain what your output can mean:
+
+  - **No weights are published.** The terms list the seven criteria without relative importance.
+  - **No scale is published.** The organizer does not publish a rubric, a points range, or a
+    threshold. Any scale you use is your own.
+  - **The criteria are not defined.** "contribution to the X Layer ecosystem" is not given a
+    working definition anywhere in the terms.
+  - **The organizer's decisions are final.** Your assessment is an independent analysis, not a
+    prediction of and not comparable to an official result.
+
+A separate award in the same track, the AI-RWA Liquidity Grant, is judged on different wording:
+*"overall performance during the Hackathon, including product quality, innovation, user value,
+and contribution to the ecosystem"*. Assess against the seven first; note separately whether your
+findings would differ under that four-part wording.
+
+### Eligibility gates, before any scoring
+
+Two requirements are pass/fail rather than scored. Check both and report them separately. If
+either fails, the scores below are moot and you should say so.
+
+  1. The project **must include AI**.
+  2. The project **must be deployed on X Layer Testnet during the hackathon**, meaning on or
+     before 2026-08-21 23:59 UTC. Mainnet deployment is explicitly not required at submission.
+
+Both are checkable: the first from the source and from what the running system does with a model,
+the second from the chain, using the block timestamps of the deployment transactions.
 
 ## 1. The problem the project says it addresses
 
@@ -238,21 +261,43 @@ Deployed contracts the project publishes:
 
 ## 8. How to evaluate
 
+Before scoring anything, write down two things, because without them your scores are not
+reproducible and not auditable:
+
+  a. **The scale you are using**, and a statement that it is yours rather than the organizer's.
+  b. **Your working definition of each of the seven criteria**, in one sentence each. The terms do
+     not define them. A reader must be able to see what you were measuring against.
+
+Then state how you are treating the absence of weights: equal weighting, or something else with
+your reason. Do not silently weight by your own priors.
+
+Then:
+
   1. Verify before scoring. Prefer chain data, command output and source code over any prose,
      including this prompt and the project's own site.
   2. Check whether the limitations in §6 appear on the surfaces where the corresponding claims in
      §5 appear, or only in a separate document.
   3. Distinguish implemented and running from designed, replayed, simulated, or future work. The
      project uses explicit labels for these. Assess whether the labels match reality.
-  4. Assess each criterion on its own terms. A weakness under one is not automatically a weakness
-     under another.
-  5. Note anything you find that the project has not disclosed, and weigh it.
-  6. Report any claim you could not verify, and why.
+  4. Separate two judgements that are easy to merge: whether a thing exists and works, and whether
+     it is worth much. Say which one is driving each score.
+  5. Assess each criterion on its own terms. A weakness under one is not automatically a weakness
+     under another. In particular, an unproven economic claim is not automatically a failure of
+     "application of AI" or of "integration with X Layer".
+  6. Note anything you find that the project has not disclosed, and weigh it.
+  7. Report any claim you could not verify, and why.
 
 Output format:
 
-  - One section per criterion: score, evidence checked, reasoning.
-  - A list of unverified or unverifiable claims.
-  - A list of anything that contradicts the project's own statements.
-  - An overall assessment.
+  - **Eligibility:** the two gates, pass or fail, with the evidence.
+  - **Method:** your scale, your seven working definitions, your weighting decision.
+  - **Per criterion**, one section each: the score, the specific evidence you checked, your
+    reasoning, and one sentence on what would have to change to move the score.
+  - **Unverified:** claims you could not check, and why.
+  - **Contradictions:** anything you found that conflicts with the project's own statements.
+  - **Overall assessment**, plus a note on whether it would differ under the Liquidity Grant's
+    four-part wording.
+  - A closing statement that this is an independent analysis and not comparable to an official
+    result.
+
 ````
