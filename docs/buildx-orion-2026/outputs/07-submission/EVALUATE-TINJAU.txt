@@ -1,34 +1,3 @@
-# Independent evaluation prompt
-
-Hand the block below to an AI agent that has no prior context about this project, so it can score
-the submission against the published criteria and reach its own conclusion.
-
-Three constraints shaped it:
-
-- **No adjectives of quality and no comparative claims.** Nothing in it says the project performs
-  well or badly on any criterion.
-- **Symmetric.** An earlier draft listed eight statements of limitation and zero of what the
-  project claims it demonstrates. That is not neutral, it is tilted. Both lists are present now,
-  both marked as the project's claims, and both paired with the means to check them.
-- **Complete enough to evaluate.** The agent is given the problem the project addresses, the
-  mechanism, the state model, the enforcement limits with their actual values, what is on each
-  page of the site, and where things live in the repository. A reviewer who has to reconstruct the
-  idea from source before starting will score the idea rather than the work.
-
-**Send-ready copy: [`EVALUATE-TINJAU.txt`](./EVALUATE-TINJAU.txt).** That is the file to hand over.
-It contains the fenced block below and nothing else, because the notes above are an argument about
-this prompt's own neutrality and feeding them to the evaluating agent is the framing the prompt
-exists to avoid. Regenerate it after any edit here:
-
-```bash
-node docs/buildx-orion-2026/outputs/07-submission/tools/extract-evaluation-prompt.mjs
-```
-
----
-
-## The prompt
-
-````text
 You are evaluating a hackathon submission. Score it against the published criteria using evidence
 you verify yourself. Do not accept any claim in this prompt without checking it, including the
 descriptive sections: they are the project's account of itself, reproduced so you know what to
@@ -308,5 +277,3 @@ Output format:
     four-part wording.
   - A closing statement that this is an independent analysis and not comparable to an official
     result.
-
-````
