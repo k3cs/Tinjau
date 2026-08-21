@@ -59,6 +59,21 @@ export function StateHeader({ scenario }: { scenario: ScenarioView }) {
         {STATE_MEANING[record.state]}
       </p>
       <p className="mt-3 max-w-2xl text-body-sm text-ink-muted">{record.humanExplanation}</p>
+      {/*
+        The explanation above is the published record's own sentence, reproduced
+        without edit, and on the official scenarios it says the bonded-evidence
+        checks passed. That phrasing reads as a check the engine ran. It was an
+        input. The record is evidence and is not rewritten to be flattering, so
+        the correction is attached here instead, at the same place a reader meets
+        the claim rather than further down the page.
+      */}
+      {record.reasonCodes.includes("BONDED_EVIDENCE_PASSED") ? (
+        <p className="mt-3 max-w-2xl border-l-2 border-watch pl-3 text-body-sm text-ink-secondary">
+          <span className="font-medium text-ink">One correction to that sentence.</span> The
+          bonded-evidence condition was an assumed input on this scenario, not a live parse
+          result. Nothing here measured it.
+        </p>
+      ) : null}
 
       <dl className="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
         <Fact label="Asset">

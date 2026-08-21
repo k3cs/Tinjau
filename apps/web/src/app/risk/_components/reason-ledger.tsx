@@ -63,6 +63,12 @@ export function ReasonLedger({ record }: { record: RiskRecordView }) {
                   </p>
                 </div>
                 <p className="mt-1.5 text-body-sm text-ink-muted">{meaning.plain}</p>
+                {meaning.caveat ? (
+                  <p className="mt-2.5 rounded border-l-2 border-watch bg-watch/[0.08] px-3 py-2 text-body-sm text-ink-secondary">
+                    <span className="data-label text-watch">Assumed, not computed</span>
+                    <span className="mt-1 block">{meaning.caveat}</span>
+                  </p>
+                ) : null}
                 <p className="mt-2 font-data text-[10px] uppercase tracking-[0.06em] text-ink-faint">
                   {code}
                 </p>

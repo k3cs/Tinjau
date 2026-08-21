@@ -324,3 +324,99 @@ test("no source file makes a claim the evidence does not support", () => {
   }
   assert.deepEqual(offenders, [], `Forbidden claim found in source.\n${offenders.join("\n")}`);
 });
+
+/**
+ * `BONDED_EVIDENCE_PASSED` is the one reason bit that names a check the engine
+ * never ran on any published scenario. The scenario runner takes
+ * `officialEvidencePassed` as an input and defaults it to `true`; the bit, the
+ * reader's explanation and the demo copy all then read as though a parse
+ * agreement had been verified.
+ *
+ * The project's standard is that a limitation appears on the surface carrying
+ * the claim, not only in a document a reader would have to go and find. These
+ * three assertions hold that standard in place for this bit specifically, so
+ * that deleting the qualifier fails the suite instead of quietly restoring the
+ * overclaim.
+ *
+ * They are deliberately structural rather than exact-text matches: the wording
+ * is allowed to improve, the disclosure is not allowed to disappear.
+ */
+test("the assumed bonded-evidence input is disclosed wherever the bit is shown", async () => {
+  const { REASON_MEANINGS } = await import("../src/lib/risk/reason-codes.ts");
+
+  // 1. The reason-code table carries a caveat on the bit, and it says the value
+  //    was assumed rather than computed.
+  const bonded = REASON_MEANINGS.BONDED_EVIDENCE_PASSED;
+  assert.ok(
+    bonded.caveat,
+    "BONDED_EVIDENCE_PASSED must carry a caveat: on every published scenario it was an input, not a computed check.",
+  );
+  assert.match(
+    bonded.caveat ?? "",
+    /assum/i,
+    "the BONDED_EVIDENCE_PASSED caveat must say the value was assumed",
+  );
+  assert.ok(
+    !/^The filing cleared/.test(bonded.plain),
+    "BONDED_EVIDENCE_PASSED.plain must not assert the filing cleared a check that did not run",
+  );
+
+  // 2. Every renderer of a reason meaning also renders its caveat. A caveat
+  //    that exists in data but is never painted discloses nothing.
+  const ledger = readFileSync(
+    join(WEB_ROOT, "src/app/risk/_components/reason-ledger.tsx"),
+    "utf8",
+  );
+  assert.match(
+    ledger,
+    /meaning\.caveat/,
+    "the reason ledger must render meaning.caveat next to the code it qualifies",
+  );
+
+  // 3. The header reproduces the published record's own sentence, which says
+  //    the bonded-evidence checks passed. It must correct it in place.
+  const header = readFileSync(
+    join(WEB_ROOT, "src/app/risk/_components/state-header.tsx"),
+    "utf8",
+  );
+  assert.match(
+    header,
+    /BONDED_EVIDENCE_PASSED/,
+    "the state header must qualify humanExplanation when the record carries BONDED_EVIDENCE_PASSED",
+  );
+
+  // 4. The dependency-free reader is a separate consumer with its own
+  //    hand-transcribed bit table, so it needs its own copy of the limit.
+  const readerBits = JSON.parse(
+    readFileSync(join(REPO_ROOT, "tools/risk-reader/abi/reason-bits.json"), "utf8"),
+  ) as { bits: Array<{ bit: number; code: string; caveat?: string }> };
+  const bit18 = readerBits.bits.find((entry) => entry.code === "BONDED_EVIDENCE_PASSED");
+  assert.ok(bit18, "reason-bits.json must still define BONDED_EVIDENCE_PASSED");
+  assert.match(
+    bit18?.caveat ?? "",
+    /assum/i,
+    "the reader's bit-18 entry must carry a caveat saying the value was assumed",
+  );
+});
+
+/**
+ * The demo mission walks a judge through the official scenario in prose, and
+ * its `known` field is where it states what the stage has established. Saying
+ * the bonded condition passes, full stop, is the overclaim in its most
+ * readable form.
+ */
+test("the demo mission does not present the bonded condition as established", async () => {
+  const mission = readFileSync(
+    join(WEB_ROOT, "src/lib/demo/missions/confirmed.ts"),
+    "utf8",
+  );
+  assert.ok(
+    !/known: "Official and bonded evidence conditions pass\."/.test(mission),
+    "the confirmed mission must not state the bonded condition passes without saying it was assumed",
+  );
+  assert.match(
+    mission,
+    /bonded[- ]evidence condition is assumed|bonded-evidence leg assumed/i,
+    "the confirmed mission must say the bonded-evidence value was assumed rather than computed",
+  );
+});

@@ -23,6 +23,16 @@ export interface ReasonMeaning {
   title: string;
   /** One sentence a non-specialist can act on. */
   plain: string;
+  /**
+   * A limit on what this code proves, shown wherever the code is shown.
+   *
+   * A reason bit reads as a check that ran. For at least one code that is not
+   * true of the published scenarios, and the difference between "the engine
+   * verified this" and "the engine was told this" is exactly the difference a
+   * reader is entitled to see next to the bit rather than in a document they
+   * would have to go and find. Optional: most codes are computed and carry none.
+   */
+  caveat?: string;
   leg: ReasonLeg;
   effect: ReasonEffect;
 }
@@ -150,7 +160,9 @@ export const REASON_MEANINGS: Record<ReasonCode, ReasonMeaning> = {
   },
   BONDED_EVIDENCE_PASSED: {
     title: "Bonded evidence passed",
-    plain: "The filing cleared the existing parse-agreement and bond/challenge checks.",
+    plain: "The parse-agreement and bond/challenge path is recorded as satisfied for the official filing.",
+    caveat:
+      "On every published scenario this value was an assumed input, not a live parse result. The scenario runner sets it to true so that a refusal can never be an artefact of assuming the bond failed, which makes the assumption the most favourable one available to the system rather than the most flattering reading of a check. Read this bit as an assumption on these scenarios, not as a check that ran.",
     leg: "EVIDENCE",
     effect: "SUPPORTS",
   },

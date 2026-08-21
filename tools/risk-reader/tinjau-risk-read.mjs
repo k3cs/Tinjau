@@ -183,6 +183,22 @@ function expandReasonBits(bits) {
   return { known, undefinedBits };
 }
 
+/** Greedy word wrap, so a long caveat stays readable in an 80-column terminal. */
+function wrap(text, width) {
+  const lines = [];
+  let line = '';
+  for (const word of String(text).split(/\s+/)) {
+    if (line && line.length + 1 + word.length > width) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = line ? `${line} ${word}` : word;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
 function printReasonBits(bits) {
   const hex = '0x' + (bits >>> 0).toString(16).padStart(8, '0');
   const { known, undefinedBits } = expandReasonBits(bits);
@@ -194,6 +210,14 @@ function printReasonBits(bits) {
   for (const e of known) {
     say(`    [bit ${String(e.bit).padStart(2)}] ${e.code}`);
     say(`             ${e.meaning}`);
+    // A bit whose meaning overstates what was actually established carries a
+    // `caveat` in reason-bits.json. It prints here, attached to the bit, and not
+    // in a footnote: a consumer reading this output is deciding whether to trust
+    // the bit, and that is the moment the limit has to be in front of them.
+    if (e.caveat) {
+      say('             LIMIT OF THIS BIT:');
+      for (const line of wrap(e.caveat, 62)) say(`               ${line}`);
+    }
   }
   if (undefinedBits.length > 0) {
     say('');
