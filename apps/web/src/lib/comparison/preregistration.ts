@@ -11,6 +11,7 @@ export interface PreregisteredScenario {
   observedSwaps: number;
   carriesEconomicRow: boolean;
   expectedEvidenceState: string;
+  inputChecksum: string;
 }
 
 export interface PreregisteredPolicy {
@@ -34,6 +35,7 @@ export const COMPARISON_SCENARIOS: PreregisteredScenario[] = [
     observedSwaps: 0,
     carriesEconomicRow: false,
     expectedEvidenceState: "WATCH",
+    inputChecksum: "a69691da55a84968c9076b6f71d6dd64fbca2a647e8a03785dd3598d2f03fc22",
   },
   {
     slug: "confirmed-event",
@@ -46,6 +48,7 @@ export const COMPARISON_SCENARIOS: PreregisteredScenario[] = [
     observedSwaps: 4145,
     carriesEconomicRow: true,
     expectedEvidenceState: "PROTECT only with fresh confirmation",
+    inputChecksum: "c4774e470dd970d0778add24d509148ebba6587debc1c93cbf5a4a14b3a5f2da",
   },
   {
     slug: "hard-case",
@@ -58,6 +61,7 @@ export const COMPARISON_SCENARIOS: PreregisteredScenario[] = [
     observedSwaps: 265,
     carriesEconomicRow: true,
     expectedEvidenceState: "WATCH under frozen self-revision rule",
+    inputChecksum: "375142f7ba1b4ec145a031c3d3cd39870cc76a013407e87e97deb6204ce67876",
   },
   {
     slug: "neutral",
@@ -70,6 +74,7 @@ export const COMPARISON_SCENARIOS: PreregisteredScenario[] = [
     observedSwaps: 367,
     carriesEconomicRow: true,
     expectedEvidenceState: "NORMAL",
+    inputChecksum: "6872ab5452ef3dc57da3b0c000f06c9349e6f5d9f55effc20c3c130d7953ab76",
   },
 ];
 

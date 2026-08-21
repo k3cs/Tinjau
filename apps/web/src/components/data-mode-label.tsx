@@ -7,10 +7,19 @@ const tone: Record<DataMode, string> = {
   SIMULATED: "border-watch/50 bg-watch/10 text-watch",
 };
 
-export function DataModeLabel({ mode }: { mode: DataMode }) {
+const lightTone: Record<DataMode, string> = {
+  LIVE: "border-normal bg-normal/10 text-coal",
+  OBSERVED: "border-confirm bg-confirm/10 text-coal",
+  REPLAY: "border-black/40 bg-black/[0.04] text-coal",
+  SIMULATED: "border-watch bg-watch/10 text-coal",
+};
+
+export function DataModeLabel({ mode, onLight = false }: { mode: DataMode; onLight?: boolean }) {
   return (
     <span
-      className={`inline-flex min-h-6 items-center rounded border px-2 font-data text-[10px] font-semibold tracking-[0.06em] ${tone[mode]}`}
+      className={`inline-flex min-h-6 items-center border px-2 font-data text-[10px] font-semibold tracking-[0.06em] ${
+        onLight ? lightTone[mode] : tone[mode]
+      }`}
     >
       {mode}
     </span>

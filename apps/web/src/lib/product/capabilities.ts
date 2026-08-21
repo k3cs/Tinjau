@@ -1,0 +1,152 @@
+import type { DataMode } from "@/lib/risk/model";
+
+export type CapabilityMaturity = "IMPLEMENTED" | "HISTORICAL" | "PENDING" | "ROADMAP";
+
+export interface ProductCapability {
+  id: string;
+  stage: string;
+  name: string;
+  summary: string;
+  maturity: CapabilityMaturity;
+  dataMode?: DataMode;
+  evidence: string;
+  limitation: string;
+  href?: string;
+}
+
+export const PRODUCT_CAPABILITIES: ProductCapability[] = [
+  {
+    id: "official-intake",
+    stage: "01 · Listen",
+    name: "SEC / issuer intake",
+    summary: "Preserves a canonical source, timestamp precision, and content commitment.",
+    maturity: "IMPLEMENTED",
+    dataMode: "REPLAY",
+    evidence: "EDGAR adapter + immutable scenario fixtures",
+    limitation: "The guided demo replays frozen filings; it does not claim continuous production coverage.",
+    href: "/demo?scene=confirmed&stage=listen",
+  },
+  {
+    id: "x-listener",
+    stage: "01 · Listen",
+    name: "X Listener",
+    summary: "Treats social posts as potential evidence, never as automatic confirmation.",
+    maturity: "PENDING",
+    dataMode: "SIMULATED",
+    evidence: "Negative-control social fixture",
+    limitation: "No live X discovery provider is authorized for this MVP.",
+    href: "/demo?scene=rumor&stage=listen",
+  },
+  {
+    id: "evidence-graph",
+    stage: "02–04 · Understand",
+    name: "AI Evidence Graph",
+    summary: "Normalizes claims, resolves assets, collapses duplicates, and exposes contradictions.",
+    maturity: "IMPLEMENTED",
+    dataMode: "REPLAY",
+    evidence: "14 labeled evaluation cases + evidence graph tests",
+    limitation: "Heuristic derivations surface disagreements for review; they do not silently repair them.",
+    href: "/demo?scene=rumor&stage=relate",
+  },
+  {
+    id: "risk-policy",
+    stage: "05 · Decide",
+    name: "Deterministic risk policy",
+    summary: "Promotes NORMAL, WATCH, or PROTECT without letting a model bypass fixed rules.",
+    maturity: "IMPLEMENTED",
+    dataMode: "REPLAY",
+    evidence: "Cross-language truth table and policy tests",
+    limitation: "A final signed orchestration path is still pending.",
+    href: "/demo?scene=rumor&stage=decide",
+  },
+  {
+    id: "okx-reference",
+    stage: "06 · Confirm",
+    name: "OKX reference adapter",
+    summary: "Returns timestamped available, stale, or unavailable samples without manufacturing confirmation.",
+    maturity: "IMPLEMENTED",
+    dataMode: "OBSERVED",
+    evidence: "Fixture-backed adapter and freshness tests",
+    limitation: "The adapter supplies input; it is not the final confirmation engine.",
+    href: "/demo?scene=confirmed&stage=confirm",
+  },
+  {
+    id: "pool-telemetry",
+    stage: "06 · Confirm",
+    name: "X Layer pool telemetry",
+    summary: "Measures pool price, flow, liquidity, drawdown, velocity, and bounded exit depth with provenance.",
+    maturity: "IMPLEMENTED",
+    dataMode: "OBSERVED",
+    evidence: "Chain-196 replay fixtures + telemetry tests",
+    limitation: "Thin and empty windows remain unavailable or insufficient rather than being imputed.",
+    href: "/demo?scene=confirmed&stage=confirm",
+  },
+  {
+    id: "confirmation-engine",
+    stage: "06 · Confirm",
+    name: "Market-confirmation engine",
+    summary: "Target gate for basis, drawdown, velocity, exit depth, freshness, and anti-wick checks.",
+    maturity: "PENDING",
+    evidence: "T3.3 / T3.4 tracker tasks",
+    limitation: "No current frontend state may label this engine complete or live.",
+  },
+  {
+    id: "risk-registry",
+    stage: "07 · Record",
+    name: "X Layer Risk Registry",
+    summary: "Stores a versioned, expiring, reusable risk record without requiring dashboard trust.",
+    maturity: "IMPLEMENTED",
+    dataMode: "REPLAY",
+    evidence: "Local contracts + 93 contract tests",
+    limitation: "Final contracts are not yet deployed; no final address exists.",
+    href: "/demo?scene=confirmed&stage=record",
+  },
+  {
+    id: "fee-hook",
+    stage: "08–09 · Act / recover",
+    name: "Bounded fee hook",
+    summary: "Historical deployment demonstrates a 500–20,000 fee band and deterministic decay.",
+    maturity: "HISTORICAL",
+    dataMode: "OBSERVED",
+    evidence: "Deployed AfterhoursFeeHook historical artifact",
+    limitation: "The immutable historical name is factual; final Tinjau registry-to-hook integration is pending.",
+    href: "/demo?scene=confirmed&stage=act",
+  },
+  {
+    id: "x-publisher",
+    stage: "08 · Communicate",
+    name: "X Publisher",
+    summary: "Target path for source-linked, expiry-aware public risk communication.",
+    maturity: "HISTORICAL",
+    dataMode: "REPLAY",
+    evidence: "Guarded registry-event X bot",
+    limitation: "The existing bot is not yet integrated with the final risk pipeline.",
+    href: "/demo?scene=rumor&stage=act",
+  },
+  {
+    id: "policy-benchmark",
+    stage: "Proof",
+    name: "Three-policy benchmark",
+    summary: "Compares static, volatility-only, and Tinjau using preregistered matched inputs.",
+    maturity: "PENDING",
+    dataMode: "REPLAY",
+    evidence: "Frozen benchmark method and scenario manifest",
+    limitation: "T5 has not produced validated outcomes; the claim gate remains closed.",
+    href: "/demo?scene=comparison",
+  },
+  {
+    id: "exchange-os",
+    stage: "Expansion",
+    name: "Exchange OS adapter",
+    summary: "Potential future distribution and execution adapter across the wider ecosystem.",
+    maturity: "ROADMAP",
+    evidence: "Product roadmap only",
+    limitation: "No live Exchange OS integration is claimed.",
+  },
+];
+
+export function getCapability(id: string): ProductCapability {
+  const capability = PRODUCT_CAPABILITIES.find((item) => item.id === id);
+  if (!capability) throw new Error(`Unknown product capability: ${id}`);
+  return capability;
+}

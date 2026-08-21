@@ -4,9 +4,11 @@ import type { PreregisteredScenario } from "@/lib/comparison/preregistration";
 export function ComparisonScenarioSwitcher({
   scenarios,
   selected,
+  baseHref = "/compare",
 }: {
   scenarios: PreregisteredScenario[];
   selected: string;
+  baseHref?: string;
 }) {
   return (
     <nav aria-label="Comparison scenarios" className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
@@ -15,7 +17,7 @@ export function ComparisonScenarioSwitcher({
         return (
           <Link
             key={scenario.slug}
-            href={`/compare?scenario=${scenario.slug}`}
+            href={`${baseHref}${baseHref.includes("?") ? "&" : "?"}case=${scenario.slug}`}
             aria-current={active ? "page" : undefined}
             className={`min-h-14 rounded-md border px-4 py-3 transition-colors ${
               active

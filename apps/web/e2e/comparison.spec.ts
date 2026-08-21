@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("false-rumor scenario preserves null economics for all policies", async ({ page }) => {
-  await page.goto("/compare?scenario=false-rumor");
+  await page.goto("/demo?scene=comparison&case=false-rumor");
 
   await expect(page.getByText("No economic row by design", { exact: true })).toBeVisible();
   const comparison = page.getByRole("region", { name: "Equal policy comparison" });
@@ -12,7 +12,7 @@ test("false-rumor scenario preserves null economics for all policies", async ({ 
 });
 
 test("economic scenarios remain pending instead of becoming zero", async ({ page }) => {
-  await page.goto("/compare?scenario=confirmed-event");
+  await page.goto("/demo?scene=comparison&case=confirmed-event");
 
   await expect(page.getByText("4,145", { exact: true })).toBeVisible();
   await expect(page.getByText("Pending handoff", { exact: true }).first()).toBeVisible();
@@ -23,9 +23,9 @@ test("economic scenarios remain pending instead of becoming zero", async ({ page
 });
 
 test("neutral control is a first-class deep link", async ({ page }) => {
-  await page.goto("/compare?scenario=neutral");
+  await page.goto("/demo?scene=comparison&case=neutral");
 
-  await expect(page).toHaveURL(/scenario=neutral/);
+  await expect(page).toHaveURL(/case=neutral/);
   await expect(page.getByText("367", { exact: true })).toBeVisible();
   await expect(page.getByText("Neutral control", { exact: true })).toBeVisible();
 });

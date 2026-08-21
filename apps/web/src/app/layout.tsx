@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { DirectionContract } from "@/components/direction-contract";
 
-const display = Space_Grotesk({
+const display = Inter_Tight({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
@@ -25,30 +25,30 @@ const data = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tinjau.xyz"),
-  title: "Tinjau — LP Risk Autopilot on X Layer",
+  title: "Tinjau — Bounded LP Risk Autopilot",
   description:
-    "Source-grounded market discontinuity protection for tokenized-stock liquidity: evidence, independent confirmation, bounded action, and deterministic recovery.",
+    "Source-grounded evidence, independent market confirmation, and bounded protection for tokenized-stock liquidity on X Layer.",
   applicationName: "Tinjau",
   openGraph: {
-    title: "Tinjau — LP Risk Autopilot on X Layer",
+    title: "Tinjau — Bounded LP Risk Autopilot",
     description:
-      "Evidence, independent market confirmation, bounded LP protection, and deterministic recovery.",
+      "Tokenized-stock liquidity should not react blind. Inspect the evidence, policy boundary, and bounded action path.",
     siteName: "Tinjau",
     type: "website",
     url: "/",
   },
   twitter: {
     card: "summary",
-    title: "Tinjau — LP Risk Autopilot on X Layer",
+    title: "Tinjau — Bounded LP Risk Autopilot",
     description:
-      "Source-grounded risk state and bounded protection for tokenized-stock liquidity.",
+      "Source-grounded risk state and bounded protection for tokenized-stock liquidity on X Layer.",
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${data.variable}`}>
-      <body className="bg-canvas font-body text-ink antialiased">
+      <body className="bg-paper font-body text-coal antialiased">
         <DirectionContract />
         <div className="flex min-h-screen flex-col">
           <SiteHeader />

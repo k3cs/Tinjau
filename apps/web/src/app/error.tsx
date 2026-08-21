@@ -2,21 +2,21 @@
 
 export default function ErrorPage({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
   return (
-    <div className="circuit-field min-h-[calc(100vh-8rem)] px-4 py-12 sm:px-6 lg:px-8">
-      <section className="mx-auto max-w-2xl rounded-lg border border-protect/50 bg-canvas p-6 sm:p-8">
-        <p className="data-label text-protect">Risk record unavailable</p>
-        <h1 className="mt-4 font-display text-3xl font-semibold tracking-display text-ink">
-          Tinjau failed closed.
+    <div className="paper-grid min-h-[calc(100vh-4rem)] bg-paper px-4 py-16 text-coal sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-2xl border border-black bg-paper-bright p-6 sm:p-8">
+        <p className="data-label text-coal-muted">Product page unavailable</p>
+        <h1 className="mt-4 font-display text-3xl font-semibold tracking-display">
+          The page did not infer a fallback claim.
         </h1>
-        <p className="mt-4 leading-relaxed text-ink-secondary">
-          The assessment could not be validated or rendered, so no risk state or action is inferred.
+        <p className="mt-4 leading-relaxed text-coal-muted">
+          Tinjau could not render this surface. Retry the page; the error does not imply a risk state or completed action.
         </p>
         <button
           type="button"
           onClick={reset}
-          className="mt-7 min-h-11 rounded-md bg-signal px-4 font-data text-xs font-semibold uppercase tracking-[0.06em] text-black transition-colors hover:bg-white"
+          className="mt-7 min-h-11 border border-black bg-black px-4 font-data text-xs font-semibold uppercase tracking-[0.06em] text-white transition-colors duration-100 ease-tinjau hover:bg-signal hover:text-black active:translate-y-px"
         >
-          Retry assessment
+          Retry page
         </button>
       </section>
     </div>

@@ -1,5 +1,5 @@
 import { DataModeLabel } from "@/components/data-mode-label";
-import { formatUtc } from "@/lib/risk/format";
+import { formatUtc, shortHex } from "@/lib/risk/format";
 import type { PreregisteredScenario } from "@/lib/comparison/preregistration";
 
 export function InputIdentityRibbon({ scenario }: { scenario: PreregisteredScenario }) {
@@ -8,6 +8,7 @@ export function InputIdentityRibbon({ scenario }: { scenario: PreregisteredScena
     ["Replay blocks", `${scenario.fromBlock}–${scenario.toBlock}`],
     ["Observed swaps", scenario.observedSwaps.toLocaleString("en-US")],
     ["Economic row", scenario.carriesEconomicRow ? "Required" : "Null by pre-registration"],
+    ["Matched input checksum", shortHex(`0x${scenario.inputChecksum}`)],
   ] as const;
 
   return (
@@ -22,7 +23,7 @@ export function InputIdentityRibbon({ scenario }: { scenario: PreregisteredScena
           <DataModeLabel mode="REPLAY" />
         </div>
       </div>
-      <dl className="grid divide-y divide-edge sm:grid-cols-2 sm:divide-x sm:divide-y-0 xl:grid-cols-4">
+      <dl className="grid divide-y divide-edge sm:grid-cols-2 xl:grid-cols-5 xl:divide-x xl:divide-y-0">
         {fields.map(([label, value]) => (
           <div key={label} className="px-4 py-3">
             <dt className="data-label text-ink-muted">{label}</dt>
