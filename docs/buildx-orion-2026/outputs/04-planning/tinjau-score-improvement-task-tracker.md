@@ -495,7 +495,7 @@ submission itself.
 
 ### Phase S2 — Application of AI: put the live model on the flagship path (P1; target 6→8)
 
-- [ ] **S2.1 — Compute the bonded-evidence result live for scenario B and land it on chain**
+- [x] **S2.1 — Compute the bonded-evidence result live for scenario B and land it on chain**
   Depends on: S1.2, S1.3; requires `GEMINI_API_KEY` (already an approved service, SVC-004) and
   testnet gas from the existing funded assessor key (Dien confirms key availability). Stretch
   goal for the pre-deadline sprint under the §0.3 conditions (≥3 hours left, keys confirmed);
@@ -515,7 +515,51 @@ submission itself.
   `officialEvidencePassed: computed`); a new on-chain record exists whose reason bits derive
   from the computed flag; `POST-SUBMISSION.md` dates it; S1.2's qualifier is narrowed
   accordingly.
-  Evidence: —
+  Evidence: **done 2026-08-21, commit `e2f75c1`, pre-deadline.** Dien confirmed both keys
+  available (see §6 Q1), and S1.1–S1.4 were complete with more than 6 hours left, so §0.3's
+  stretch conditions were met. `POST-SUBMISSION.md` is therefore **not** required: this landed
+  before the deadline and is part of the submitted state.
+  Runner: `apps/server/src/studies/scenarioBBondedLive.ts` (new file; no existing file was
+  modified to make the run work). Artifact:
+  `docs/…/05-build/data/s2_1_scenario_b_bonded_live.json`, written to a NEW path so the p2.1
+  dataset is untouched (`git diff` for `p2_1_parse_accuracy_raw.jsonl` is empty).
+  **Result, run 2026-08-21T17:34Z.** Document verified before any LLM call was spent: sha256
+  `1c480e33…928133` over the committed `scenarios/sources/nvda-20260817-8k.htm` (31 418 bytes),
+  matching `claim-b-001.sourceContentSha256`; read from disk, never re-fetched from EDGAR, so
+  the run is reproducible against the frozen scenario rather than against whatever the network
+  serves today. Stripped to 9 451 chars. Three independent parses: **3/3 ok**. Key fields
+  `eventType` and `affectedToken` both **agree**; `declaredAmounts` **disagrees**, which is the
+  field the p2.1 study already identified as the one parses disagree on most and which is not a
+  key field, so it does not gate. `readyToPost: true` therefore
+  **`officialEvidencePassed: true`, `officialEvidencePassedSource: "computed"`**.
+  Model pinned to `gemini-3.6-flash` by the script, overriding the machine's ambient
+  `GEMINI_MODEL=gemini-3.5-flash`; both values are recorded in the artifact.
+  **The outcome did not change.** Computed and assumed-true both resolve `WATCH` with identical
+  reason codes (`outcomeChanged: false`). The artifact publishes that as a finding in both
+  directions: it means the assumption was correct for scenario B, and it also means this run
+  does **not** demonstrate that the bonded path can change a verdict. `WATCH` is the
+  pre-registered outcome for the canonical replay, so `WATCH` is the run working, exactly as
+  this task's `Work` line anticipated.
+  **On chain**, X Layer Testnet chain 1952, registry `0x60062389a7AB08F0030FC06Adf9CE0C180537317`:
+  tx `0x7edfb15d0ad5ff44da16253dfabe1191843ebbacf584c2daabc2ad07c4fdd507`, block **38 875 116**,
+  `state WATCH`, `reasonBits 0x00055214` with bit 18 set. Read back independently with the
+  zero-dependency reader (`--asset 0xf07A9D…F903 --pool-id 0x0000…2a2b11730c2b6d99a58034a869dd810d7300a7b2`).
+  **Nothing was overwritten.** That `(asset, poolId)` key was confirmed to hold `NO RECORD`
+  before the write, and the previously published record at pool `0x5e9eff19…` still reads
+  stored `PROTECT` / effective `NORMAL`, `protection ends 2026-08-21T09:59:57Z`, unchanged.
+  **Two disclosed compromises**, both in the artifact's `limitations`: (1) posting required a
+  time shift, because the scenario is anchored 2026-08-17 and the registry rejects an expired
+  assessment on `AssessmentExpired` before reaching anything this study is about. The shift is
+  applied to the whole scenario and the run **asserts** it left state and reason codes unchanged,
+  refusing to post if it had not; the artifact's `decision` is always the canonical unshifted
+  run. (2) The record lands under the canonical chain-196 pool id, which is a different pool
+  from the one the deployed hook serves, so this demonstrates the assessment path and not fee
+  enforcement. Both ids are recorded side by side in the artifact.
+  S1.2's qualifier narrowed on all three surfaces (`reason-codes.ts`, `reason-bits.json`,
+  `demo/tinjau-demo.mjs`): it no longer claims every published record assumed the bit, because
+  that is now false. Each surface states what is true of the records it shows and names where
+  the computed one is. Web tests still 32/32; demo manifest still
+  `be884920d860b0f4c92180670f52ae54400f4e5d77e25d95ae111b7221ee7196`.
 
 - [ ] **S2.2 — Run the LLM evidence-graph derivations live for one scenario, cross-checked**
   Depends on: S2.1
@@ -721,6 +765,9 @@ ecosystem carry 2 of 4 weights there versus 2 of 7 here.
 | 2026-08-21 | §0.7 baseline | Reported that `cd apps/server && npm install` fails with `ERESOLVE` (`knip` vs `typescript@5.9.3`). **This report was wrong and is retracted.** | Retracted 2026-08-21 after direct re-test. `npm install` was run against a pre-existing `node_modules` on the builder's machine; the quoted `dev knip@"^5.44.4" from the root project` is TypeScript's own published `devDependencies` block being misread, and no `knip` dependency exists anywhere in this project. On a genuinely fresh `git clone`, `cd apps/server && npm install` exits **0**. No judge would have hit this. Kept in the log rather than deleted, because a retracted finding that silently disappears is the same failure mode this tracker exists to prevent. |
 | 2026-08-21 | S1.4 (new) | The real server-lane defect, found while retracting the one above: on a fresh clone `npm test` reports **589 pass, `skipped 0`**, not the 594 both published evaluation prompts claim. `apps/server/test/tinjauBytecodeAudit.test.ts:28` skips its 5-test `bytecode comparator` suite when `contracts/out/` is absent, and `contracts/out/` is correctly gitignored as rebuildable output. Node prints `skipped 0`, so nothing signals the omission. A judge running the server tests before the contract tests sees 589 against a published claim of 594. | Approved by Dien 2026-08-21 and fixed pre-deadline; see S1.4. |
 | 2026-08-21 | S1.1 | Tracker's preferred mechanism (submodules) was not usable. | Vendored instead, which the task's own `Work` line permits. Both reasons recorded in the S1.1 Evidence field. |
+| 2026-08-21 | S2.1 | The frozen scenario is anchored 2026-08-17, so the registry rejects its assessment on `AssessmentExpired` before evaluating anything the study is about. A chain post is impossible without shifting time. | Shifted the whole scenario and swap window by one constant, the same mechanism `runSceneA` already uses, and **asserted** the shift left state and reason codes unchanged, refusing to post otherwise. The artifact's `decision` is always the canonical unshifted run. Disclosed in the artifact's `limitations`. |
+| 2026-08-21 | S2.1 | The posted record lands under the canonical chain-196 pool id, not the pool the deployed hook serves, because `remapAssetForChain` substitutes the asset and deliberately leaves the pool id alone. | Accepted and disclosed rather than worked around. Overriding the pool id would have written over the existing published `PROTECT` record, destroying the evidence §0.3 rule 1 protects. Landing on a fresh key was the safer choice; both pool ids are recorded in the artifact and the limitation states plainly that this shows the assessment path, not fee enforcement. |
+| 2026-08-21 | housekeeping | Three untracked files appeared at the repo root during this session and are **not** part of this work: `package.json` and `package-lock.json` declaring `remotion`/`@remotion/cli`, plus `remotion-saas-animations-SKILL.md`. | Left untouched and not committed, since they may belong to Dien's parallel work. Flagged for Dien to remove or keep deliberately. The Vercel project builds from `apps/web` as its root directory, so a stray root `package.json` did not affect the deploy, which succeeded and was verified live. |
 
 ### 5.1 §0.7 baseline, run 2026-08-21 16:13-16:20 UTC at commit `1cd4add` (pre-change)
 
