@@ -625,6 +625,18 @@ function renderScene(s) {
 
   console.log("\n  DO NOT SAY");
   for (const m of s.mustNotSay) console.log(`    - ${m}`);
+  // Added by the driver rather than read from the artifact, on purpose. The
+  // artifact's own `mustNotSay` list is frozen evidence and feeds the manifest
+  // hash, so it is not edited to add a disclosure after the fact. This line is
+  // the driver speaking in its own voice about a bit it just printed:
+  // BONDED_EVIDENCE_PASSED reads as a check that ran, and on every published
+  // scenario it was an input the scenario runner defaulted to true.
+  if (s.facts?.reasonCodes?.includes?.("BONDED_EVIDENCE_PASSED")) {
+    console.log(
+      "    - Do not read BONDED_EVIDENCE_PASSED as a parse that was verified here. On every\n" +
+        "      published scenario that value was an assumed input, not a live parse result.",
+    );
+  }
 
   console.log("\n  COMMANDS");
   for (const [name, c] of Object.entries(s.commands)) {
