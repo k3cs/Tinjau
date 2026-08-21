@@ -402,6 +402,15 @@ submission itself.
   editing one string once a computed record exists.
   Full §0.7 baseline after the change: server 594/594, web 32/32, contracts 137/137, manifest
   byte-identical, all artifacts validate.
+  **Deployed to production 2026-08-21, pre-deadline.** The Vercel project deploys from a push to
+  `main`, so commit `3d4c91a` shipped with the push. Live verification against
+  `https://tinjau.xyz`, not against a preview URL: the string "assumed input, not a live parse
+  result" is served in `/_next/static/chunks/app/risk/page-d056e3cfa8e7f73b.js`, and a headless
+  browser run that clicks through to the "Confirmed event" tab (the only scenario whose record
+  carries the bit) reads back, from the rendered page, both the reason-ledger caveat text and
+  the state-header correction "One correction to that sentence". Note the caveat is correctly
+  absent from the rumour scenario, which does not carry bit 18 — the disclosure is scoped to
+  where the claim appears, which is the point of it.
 
 - [x] **S1.3 — Pin and document the LLM model id**
   Depends on: none (sprint task)
@@ -437,6 +446,27 @@ submission itself.
   No `.env` file was read or written, and no key material appears in any change.
   Full §0.7 baseline after the change: server 594/594, web 32/32, contracts 137/137, manifest
   byte-identical, all artifacts validate.
+
+- [~] **S1.4 — Make the published server test count match what a fresh clone reports** (added
+  2026-08-21, approved by Dien the same day; pre-deadline)
+  Depends on: none.
+  Owner: agent.
+  Work: on a fresh clone `cd apps/server && npm test` reports **589 pass, `skipped 0`**, while
+  both published evaluation prompts claim 594 server tests and list the server suite *before*
+  the contract suite. The five missing tests are the `bytecode comparator` suite
+  (`apps/server/test/tinjauBytecodeAudit.test.ts:28`), conditionally skipped when
+  `contracts/out/` is absent — which it always is on a clone, since build output is correctly
+  gitignored. Node's reporter prints `skipped 0`, so the omission is invisible. The published
+  prompts must not be edited (§0.8, and they may already be sent), so the fix is to make the
+  gap announce itself: an always-running test that names the omission when the artifacts are
+  missing, plus a README line stating that the suite reports 589 before `forge build` and 594
+  after, and why. Also commit `apps/server/package-lock.json` so the `npm install` the prompts
+  publish resolves reproducibly rather than fresh from the registry on the judge's machine
+  (`apps/web` already commits one; `apps/server` shipped only `pnpm-lock.yaml`).
+  Acceptance: a fresh clone's `npm test` output makes the 589-vs-594 difference legible without
+  the reader having to already know about it; `pnpm-lock.yaml` unchanged; 594 still passes
+  locally; no published prompt edited; no test weakened.
+  Evidence: —
 
 ### Phase S2 — Application of AI: put the live model on the flagship path (P1; target 6→8)
 
@@ -663,14 +693,15 @@ ecosystem carry 2 of 4 weights there versus 2 of 7 here.
 
 | Date | Task | Deviation/blocker | Resolution |
 |---|---|---|---|
-| 2026-08-21 | §0.7 baseline | `cd apps/server && npm install` fails (`ERESOLVE`, `knip` vs `typescript@5.9.3`). `apps/server` ships `pnpm-lock.yaml` only, and README §8.2 says `pnpm`. Both evaluation prompts tell the evaluator to run `npm install`. Same defect class as S1.1 defect 1, on the server lane. | Baseline re-run with the existing `node_modules`: **594 pass, 0 fail**. Not fixed — outside the approved sprint. Raised to Dien for a go/no-go; see §6. |
+| 2026-08-21 | §0.7 baseline | Reported that `cd apps/server && npm install` fails with `ERESOLVE` (`knip` vs `typescript@5.9.3`). **This report was wrong and is retracted.** | Retracted 2026-08-21 after direct re-test. `npm install` was run against a pre-existing `node_modules` on the builder's machine; the quoted `dev knip@"^5.44.4" from the root project` is TypeScript's own published `devDependencies` block being misread, and no `knip` dependency exists anywhere in this project. On a genuinely fresh `git clone`, `cd apps/server && npm install` exits **0**. No judge would have hit this. Kept in the log rather than deleted, because a retracted finding that silently disappears is the same failure mode this tracker exists to prevent. |
+| 2026-08-21 | S1.4 (new) | The real server-lane defect, found while retracting the one above: on a fresh clone `npm test` reports **589 pass, `skipped 0`**, not the 594 both published evaluation prompts claim. `apps/server/test/tinjauBytecodeAudit.test.ts:28` skips its 5-test `bytecode comparator` suite when `contracts/out/` is absent, and `contracts/out/` is correctly gitignored as rebuildable output. Node prints `skipped 0`, so nothing signals the omission. A judge running the server tests before the contract tests sees 589 against a published claim of 594. | Approved by Dien 2026-08-21 and fixed pre-deadline; see S1.4. |
 | 2026-08-21 | S1.1 | Tracker's preferred mechanism (submodules) was not usable. | Vendored instead, which the task's own `Work` line permits. Both reasons recorded in the S1.1 Evidence field. |
 
 ### 5.1 §0.7 baseline, run 2026-08-21 16:13-16:20 UTC at commit `1cd4add` (pre-change)
 
 | Command | Expected | Observed |
 |---|---|---|
-| `cd apps/server && npm test` | 594 pass, 0 fail | **594 pass, 0 fail** (`npm install` failed first, see log above) |
+| `cd apps/server && npm test` | 594 pass, 0 fail | **594 pass, 0 fail** on the builder's machine; **589 pass** on a fresh clone, see the S1.4 log entry |
 | `cd apps/web && npm run test:contract` | 30 pass, 0 fail | **30 pass, 0 fail** |
 | `cd contracts && forge test` | 137 pass (local `lib/` only) | **137 pass, 0 fail** with the builder's `lib/`; the S1.1 defect confirmed as described |
 | `node demo/tinjau-demo.mjs check` | byte-identical, sha256 `be884920…7196` | **byte-identical**, sha256 `be884920d860b0f4c92180670f52ae54400f4e5d77e25d95ae111b7221ee7196` |
@@ -684,6 +715,6 @@ pre-existing pre-deadline commit, exactly the case §0.3 rule 3 anticipates.
 
 | # | Question | Blocks | Status |
 |---|---|---|---|
-| Q1 | Is `GEMINI_API_KEY` available, and is the funded assessor key available? | S2.1 stretch goal only | asked 2026-08-21, unanswered |
-| Q2 | `npm install` in `apps/server` fails on a fresh clone; the fix is a server-lane change outside the approved sprint. Fix it before the deadline, or leave it? | nothing in the sprint | asked 2026-08-21, unanswered |
-| Q3 | Has `07-submission/EVALUATE-TINJAU.txt` been **sent to anyone**? It needed no change for S1.1, but §0.8 governs any future edit. | nothing yet | asked 2026-08-21, unanswered |
+| Q1 | Is `GEMINI_API_KEY` available, and is the funded assessor key available? | S2.1 | **answered 2026-08-21: both available.** Assessor gas comes from a wallet already present in Dien's local `.env`; Dien will top up X Layer Testnet funds if a run runs short. S2.1 is therefore a go under §0.3's stretch conditions. |
+| Q2 | Server-lane defect against the published evaluation prompts: fix before the deadline or defer? | S1.4 | **answered 2026-08-21: fix before the deadline.** The specific defect turned out to be the 589/594 skip, not the retracted `npm install` failure; see the log above. |
+| Q3 | Has `07-submission/EVALUATE-TINJAU.txt` been **sent to anyone**? It needed no change for S1.1, but §0.8 governs any future edit. | nothing yet | asked 2026-08-21, unanswered — no task so far has needed to edit it |
