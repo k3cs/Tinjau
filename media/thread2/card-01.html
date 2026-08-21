@@ -1,0 +1,90 @@
+<!doctype html>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canvas: #000000;
+    --ink: #FFFFFF;
+    --ink-2: #B3B3B3;
+    --ink-3: #5B5B5B;
+    --edge: #383838;
+    --edge-soft: #1D1D1D;
+    --raised: #F76816;
+    --flat: #BCFF2F;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1600px; height: 900px; background: var(--canvas);
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    color: var(--ink); padding: 88px 96px 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1 { font-size: 54px; font-weight: 600; letter-spacing: -0.018em; }
+  .sub { font-size: 28px; color: var(--ink-2); margin-top: 12px; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 64px; }
+  th {
+    text-align: left; font-size: 19px; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-3); padding-bottom: 18px;
+    border-bottom: 1px solid var(--edge);
+  }
+  td { padding: 30px 0; border-bottom: 1px solid var(--edge-soft); }
+  tr:last-child td { border-bottom: none; }
+
+  .scn { font-size: 31px; font-weight: 500; }
+  .fee { font-family: 'JetBrains Mono', monospace; font-size: 34px; font-weight: 500; }
+  .mark { display: inline-block; width: 34px; }
+  .raised { color: var(--raised); }
+  .flat { color: var(--flat); }
+  .off { color: var(--ink-3); }
+  .tag { font-family: 'Inter Tight', sans-serif; font-size: 22px; font-weight: 500;
+         color: var(--raised); margin-left: 12px; }
+
+  .foot { position: absolute; left: 96px; bottom: 76px; right: 96px; }
+  .rule { height: 1px; background: var(--edge); margin-bottom: 30px; }
+  .finding { font-size: 34px; font-weight: 500; }
+  .src { font-family: 'JetBrains Mono', monospace; font-size: 18px; color: var(--ink-3); margin-top: 20px; }
+</style>
+
+<h1>The fee each policy charged.</h1>
+<p class="sub">Same trades, same pool.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:40%">&nbsp;</th>
+      <th style="width:32%">Price swings only</th>
+      <th style="width:28%">Tinjau</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="scn">Rumour</td>
+      <td class="fee off"><span class="mark">&ndash;</span>no data</td>
+      <td class="fee flat"><span class="mark">&#9679;</span>0.05%</td>
+    </tr>
+    <tr>
+      <td class="scn">Big announcement</td>
+      <td class="fee raised"><span class="mark">&#9650;</span>2%</td>
+      <td class="fee flat"><span class="mark">&#9679;</span>0.05%</td>
+    </tr>
+    <tr>
+      <td class="scn">Conflicting reports</td>
+      <td class="fee raised"><span class="mark">&#9650;</span>2%</td>
+      <td class="fee flat"><span class="mark">&#9679;</span>0.05%</td>
+    </tr>
+    <tr>
+      <td class="scn">Routine filing</td>
+      <td class="fee raised"><span class="mark">&#9650;</span>2%<span class="tag">wrong</span></td>
+      <td class="fee flat"><span class="mark">&#9679;</span>0.05%</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="foot">
+  <div class="rule"></div>
+  <p class="finding">A price-only fee fired on a routine filing. Tinjau did not.</p>
+  <p class="src">three-policy-benchmark.json &nbsp;·&nbsp; replayed data</p>
+</div>

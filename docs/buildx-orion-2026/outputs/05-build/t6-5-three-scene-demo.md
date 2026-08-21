@@ -5,19 +5,21 @@ Non-frontend build artifact for workspace `buildx-orion-2026`.
 - Created: 2026-08-21
 - Owner: external non-frontend AI agent
 - Covers: T6.5 scenario orchestration, factual demo manifest, reproducible scripts, fixture
-  fallback; T7.4 clean-path reproduction of the CLI, the registry read, and the contract evidence
+fallback; T7.4 clean-path reproduction of the CLI, the registry read, and the contract evidence
 - Lane boundary: `apps/web/**` and `DESIGN.md` were not opened. The frontend lane owns browser
-  choreography and visual presentation; this half owns the facts and the commands.
+choreography and visual presentation; this half owns the facts and the commands.
 
 ## 1. What was built
 
-| File | Role |
-|---|---|
-| `demo/tinjau-demo.mjs` | the three-scene driver. Zero dependencies, Node 18+, network sealed |
-| `docs/.../05-build/t6-5-demo-manifest.json` | the single factual demo manifest, derived not authored |
-| `apps/server/test/demoManifest.test.ts` | 8 tests; fails if the manifest drifts from its evidence |
-| `README.md` §4.1, §7, §8 | the judge-facing walkthrough, corrected (§6 below) |
-| `tools/risk-reader/README.md` | stale "nothing is deployed yet" section corrected |
+
+| File                                        | Role                                                                |
+| ------------------------------------------- | ------------------------------------------------------------------- |
+| `demo/tinjau-demo.mjs`                      | the three-scene driver. Zero dependencies, Node 18+, network sealed |
+| `docs/.../05-build/t6-5-demo-manifest.json` | the single factual demo manifest, derived not authored              |
+| `apps/server/test/demoManifest.test.ts`     | 8 tests; fails if the manifest drifts from its evidence             |
+| `README.md` §4.1, §7, §8                    | the judge-facing walkthrough, corrected (§6 below)                  |
+| `tools/risk-reader/README.md`               | stale "nothing is deployed yet" section corrected                   |
+
 
 Nothing in the driver computes a result. Every number it prints is read out of a committed
 artifact, and every one of those artifacts is pinned by sha256 inside the manifest.
@@ -27,11 +29,13 @@ artifact, and every one of those artifacts is pinned by sha256 inside the manife
 Scenes follow tracker §0.14. Each has **three** commands, separated by what they cost the person
 running them — a distinction the demo would otherwise blur.
 
-| | needs | who can run it |
-|---|---|---|
-| `fixtureOnly` | Node 18+ | anyone, offline |
-| `judgeVerifiable` | internet or one `pnpm install`, **no credentials** | anyone |
-| `builderRegeneration` | funded X Layer Testnet keys | **builder only** |
+
+|                       | needs                                              | who can run it   |
+| --------------------- | -------------------------------------------------- | ---------------- |
+| `fixtureOnly`         | Node 18+                                           | anyone, offline  |
+| `judgeVerifiable`     | internet or one `pnpm install`, **no credentials** | anyone           |
+| `builderRegeneration` | funded X Layer Testnet keys                        | **builder only** |
+
 
 The third column is the honest part. `builderRegeneration` is how the on-chain evidence was
 produced, and a judge cannot run it. Presenting it as the reproduction command would be the easy
@@ -153,8 +157,8 @@ cannot supply one: all 27 comparable cells flip sign between the two metric base
 trades. Both bases are printed. `canClaimLossAvoided` is `false` and Tinjau **ties** `STATIC`.
 
 - `judgeVerifiable`: `cd apps/server && npx tsx src/benchmark/emit.ts`, which rewrites
-  `three-policy-benchmark.json` **byte-identically**. Verified here by hashing before and after:
-  `da9dff24e64fbed4eebd15018863981e0a1c63680bc05de122a40cce4ba3a910` both times.
+`three-policy-benchmark.json` **byte-identically**. Verified here by hashing before and after:
+`da9dff24e64fbed4eebd15018863981e0a1c63680bc05de122a40cce4ba3a910` both times.
 
 ## 3. The fixture-only fallback, and why it is evidence rather than a promise
 
@@ -231,9 +235,9 @@ harness: it waits until a read reflects a confirmed write and throws if it never
 `chain-verify` needs the **read-side** answer, which is different:
 
 1. `eth_blockNumber` twice, 1.5 s apart. If the second is lower, the driver prints
-   `*** WENT BACKWARDS — stale read observed ***` rather than hiding it.
+ `*** WENT BACKWARDS — stale read observed ***` rather than hiding it.
 2. Every `eth_getCode` is pinned to `min(h1, h2)` as an explicit block parameter, so a report can
-   never mix heights.
+ never mix heights.
 
 The fixture fallback sidesteps the problem entirely by not touching the network.
 
@@ -280,20 +284,22 @@ The README was followed as written, from a shell holding no context this project
 
 ### 6.1 Measured wall-clock time
 
-| Step | Warm | Cold |
-|---|---|---|
-| `node demo/tinjau-demo.mjs all` + `seal-selftest` + `check` | 0.1 s | 0.1 s |
-| `pnpm install` (`apps/server`) | 0.4 s | **17.2 s** |
-| `pnpm test` — 594 pass, 0 fail | 11.4 s | 11.4 s |
-| `pnpm typecheck` | 4.3 s | 4.3 s |
-| `npx tsx src/benchmark/emit.ts` | 1.2 s | 1.2 s |
-| `validate.mjs` (frontend handoff) | 0.1 s | 0.1 s |
-| `forge test` — 137 pass, 0 fail | 0.3 s | **37.4 s** (`forge clean` first) |
-| `bash tools/risk-reader/test/anvil-e2e.sh` — 59 pass, 0 fail | 1.8 s | 1.8 s |
-| **offline subtotal** | **19.7 s** | **≈ 74 s** |
-| `chain-verify` (live) | 26.6 s | 26.6 s |
-| live registry read | 3.4 s | 3.4 s |
-| **full walkthrough** | **49.7 s** | **≈ 104 s** |
+
+| Step                                                         | Warm       | Cold                             |
+| ------------------------------------------------------------ | ---------- | -------------------------------- |
+| `node demo/tinjau-demo.mjs all` + `seal-selftest` + `check`  | 0.1 s      | 0.1 s                            |
+| `pnpm install` (`apps/server`)                               | 0.4 s      | **17.2 s**                       |
+| `pnpm test` — 594 pass, 0 fail                               | 11.4 s     | 11.4 s                           |
+| `pnpm typecheck`                                             | 4.3 s      | 4.3 s                            |
+| `npx tsx src/benchmark/emit.ts`                              | 1.2 s      | 1.2 s                            |
+| `validate.mjs` (frontend handoff)                            | 0.1 s      | 0.1 s                            |
+| `forge test` — 137 pass, 0 fail                              | 0.3 s      | **37.4 s** (`forge clean` first) |
+| `bash tools/risk-reader/test/anvil-e2e.sh` — 59 pass, 0 fail | 1.8 s      | 1.8 s                            |
+| **offline subtotal**                                         | **19.7 s** | **≈ 74 s**                       |
+| `chain-verify` (live)                                        | 26.6 s     | 26.6 s                           |
+| live registry read                                           | 3.4 s      | 3.4 s                            |
+| **full walkthrough**                                         | **49.7 s** | **≈ 104 s**                      |
+
 
 Every step exited 0. The two live steps are the variable ones; a second measurement minutes earlier
 gave 56.5 s and 43.2 s for the same two commands, so **budget three minutes for the full
@@ -302,25 +308,25 @@ walkthrough on a bad connection** and note that the offline path is under half a
 ### 6.2 README defects found and fixed
 
 1. **No demo commands at all.** The README documented tests, the benchmark and the reference
-   consumer, but nothing that runs the three-scene story T6.5 exists to deliver. Fixed: new §4.1.
+ consumer, but nothing that runs the three-scene story T6.5 exists to deliver. Fixed: new §4.1.
 2. **No prerequisites anywhere.** Node version, pnpm and Foundry were assumed. A reader could not
-   tell which steps needed which tool, or that most of them need neither. Fixed: §8.1 table mapping
-   each step to what it needs and how long it takes.
-3. **`cd contracts && forge test` presented as runnable from a clone.** `contracts/` is excluded by
-   the root `.gitignore` (it is a separate Foundry repository, because `forge install` manages
-   `lib/` as submodules of *that* repo). Fixed: new §8.3 states the prerequisite and, importantly,
-   states that steps 1–4 do not depend on it. See §7 for the packaging blocker this exposes.
-4. **`forge install` never mentioned.** `contracts/lib/` is git-ignored inside the contracts repo
-   too, so a fresh checkout has no `forge-std` and no `v4-core`. Fixed in §8.3.
+ tell which steps needed which tool, or that most of them need neither. Fixed: §8.1 table mapping
+ each step to what it needs and how long it takes.
+3. `**cd contracts && forge test` presented as runnable from a clone.** `contracts/` is excluded by
+ the root `.gitignore` (it is a separate Foundry repository, because `forge install` manages
+ `lib/` as submodules of *that* repo). Fixed: new §8.3 states the prerequisite and, importantly,
+ states that steps 1–4 do not depend on it. See §7 for the packaging blocker this exposes.
+4. `**forge install` never mentioned.** `contracts/lib/` is git-ignored inside the contracts repo
+ too, so a fresh checkout has no `forge-std` and no `v4-core`. Fixed in §8.3.
 5. **Benchmark reproduction assumed a completed `pnpm install`.** §4.4 was read before §8 and would
-   fail on a clean machine. Fixed, and a determinism check the reader can run themselves was added
-   rather than leaving "byte-identically" as an assertion.
+ fail on a clean machine. Fixed, and a determinism check the reader can run themselves was added
+ rather than leaving "byte-identically" as an assertion.
 6. **The repository map omitted `apps/server/src/chain/`** — the harness that produced every
-   transaction hash the README quotes — **and `demo/`.** Fixed.
-7. **`tools/risk-reader/README.md` said "Nothing is deployed yet"** and that no address may be
-   published. Both stopped being true at T4.2. Left uncorrected, the one artifact whose job is to
-   prove a stranger can read the registry would have told that stranger there was nothing to read.
-   Fixed, with the address list named as the source and the stale-read caveat added.
+ transaction hash the README quotes — **and `demo/`.** Fixed.
+7. `**tools/risk-reader/README.md` said "Nothing is deployed yet"** and that no address may be
+ published. Both stopped being true at T4.2. Left uncorrected, the one artifact whose job is to
+ prove a stranger can read the registry would have told that stranger there was nothing to read.
+ Fixed, with the address list named as the source and the stale-read caveat added.
 
 ### 6.3 What the rehearsal confirmed working without private context
 
@@ -328,9 +334,9 @@ walkthrough on a bad connection** and note that the offline path is under half a
 - the benchmark, reproduced and byte-identical across two runs;
 - the registry read, decoded against the live testnet, exit 0;
 - source links — the frozen scenarios' EDGAR URLs and content hashes validate offline through
-  `validate.mjs` and `scenarioFixtures.test.ts`;
+`validate.mjs` and `scenarioFixtures.test.ts`;
 - transaction evidence — every published address returned bytecode at one pinned block, and every
-  quoted transaction hash appears in the committed manifests;
+quoted transaction hash appears in the committed manifests;
 - the contract suite, 137 tests, from a cold `forge clean`.
 
 ## 7. Blocker found during T7.4 — packaging, not code
@@ -338,14 +344,14 @@ walkthrough on a bad connection** and note that the offline path is under half a
 **Almost none of this work is in the published repository.** Measured on 2026-08-21:
 
 - `git status` reports **148 untracked files**, including `README.md` itself, `tools/`, `demo/`,
-  `apps/server/src/{evidence,market,risk,decision,benchmark,chain}`, `apps/server/scenarios/`, and
-  the whole of `docs/.../05-build/frontend-handoff/`;
+`apps/server/src/{evidence,market,risk,decision,benchmark,chain}`, `apps/server/scenarios/`, and
+the whole of `docs/.../05-build/frontend-handoff/`;
 - the working tree is **23 commits ahead of `origin/main`**, unpushed;
 - `contracts/` is git-ignored by the root repository (`.gitignore:17`), and its own nested
-  repository has **one commit** — `chore: scaffold foundry project` — **no remote**, and
-  `src/`, `test/` and `script/` untracked. Every `Tinjau*.sol` file exists only on this machine.
+repository has **one commit** — `chore: scaffold foundry project` — **no remote**, and
+`src/`, `test/` and `script/` untracked. Every `Tinjau*.sol` file exists only on this machine.
 
-So a judge cloning `github.com/dienmsk/Tinjau` today gets a README-less tree with no evidence, no
+So a judge cloning `github.com/k3cs/Tinjau` today gets a README-less tree with no evidence, no  
 demo driver, and no contracts. Every reproduction claim in §6 was verified against the **working
 tree**, not against what is published.
 
@@ -357,12 +363,12 @@ silently patched.** Remediation, in order:
 1. `git add` the untracked work and push the 23 commits;
 2. give `contracts/` a remote, commit `src/`/`test/`/`script/`, push, and link it from README §8.3;
 3. re-run §6.1 from a fresh `git clone` into an empty directory — the numbers above do not
-   establish that this works, only that it works here.
+ establish that this works, only that it works here.
 
 ## 8. What this does not prove
 
 - **Scene 2's `PROTECT` is constructed** and the canonical replay of that same event is `WATCH`.
-  Nothing in the demo may present it as a replayed result.
+Nothing in the demo may present it as a replayed result.
 - **Tinjau ties `STATIC`.** `canClaimLossAvoided` is `false`. No scene claims reduced LP loss.
 - **The OKX leg is `UNAVAILABLE` for all four scenarios.** There is no dual confirmation.
 - **The rumour fixture is `SIMULATED`.** Containment is provable; live social discovery is not.
@@ -370,3 +376,4 @@ silently patched.** Remediation, in order:
 - **Addresses are T4.2 working addresses.** T7.2 owns the authoritative list.
 - **The fixture fallback replays recorded facts.** It cannot detect that the chain has changed.
 - **The clean-path timings are from this machine's working tree**, not from a fresh clone (§7).
+

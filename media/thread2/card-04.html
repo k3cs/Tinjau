@@ -1,0 +1,55 @@
+<!doctype html>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canvas: #000000; --ink: #FFFFFF; --ink-2: #B3B3B3; --ink-3: #5B5B5B;
+    --edge: #383838; --shell: #0E0E0E; --off: #F04872; --ok: #BCFF2F;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1600px; height: 900px; background: var(--canvas);
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    color: var(--ink); padding: 88px 96px 0; -webkit-font-smoothing: antialiased;
+  }
+  h1 { font-size: 54px; font-weight: 600; letter-spacing: -0.018em; }
+  .sub { font-size: 28px; color: var(--ink-2); margin-top: 12px; }
+
+  .shell {
+    margin-top: 62px; background: var(--shell); border: 1px solid var(--edge);
+    border-radius: 10px; padding: 38px 44px;
+    font-family: 'JetBrains Mono', monospace; font-size: 23px; line-height: 1.85;
+  }
+  .prompt { color: var(--ink-3); }
+  .cmd { color: var(--ink); }
+  .out { color: var(--ink-2); white-space: pre; }
+  .key { color: var(--ink-3); }
+  .off { color: var(--off); font-weight: 500; }
+  .ok { color: var(--ok); }
+
+  .foot { position: absolute; left: 96px; bottom: 76px; right: 96px; }
+  .rule { height: 1px; background: var(--edge); margin-bottom: 30px; }
+  .finding { font-size: 34px; font-weight: 500; }
+  .src { font-family: 'JetBrains Mono', monospace; font-size: 18px; color: var(--ink-3); margin-top: 20px; }
+</style>
+
+<h1>Our main claim is switched off.</h1>
+<p class="sub">Checked by a script anyone can run.</p>
+
+<div class="shell">
+  <div><span class="prompt">$ </span><span class="cmd">node tools/verify-proof-of-protection.mjs</span></div>
+  <div class="out">
+<span class="ok">proof-of-protection.json OK</span>
+  <span class="key">claim gate       </span> canClaimLossAvoided = <span class="off">false</span>
+  <span class="key">replay figures   </span> TINJAU ties STATIC
+  <span class="key">observed fees    </span> 20000 -&gt; 9470 -&gt; 500 -&gt; 500 pips
+  <span class="key">canonical replay </span> WATCH</div>
+</div>
+
+<div class="foot">
+  <div class="rule"></div>
+  <p class="finding">Tinjau tied the flat fee. A tie is not a win.</p>
+  <p class="src">real output, 4 lines cut to fit &nbsp;·&nbsp; github.com/k3cs/Tinjau</p>
+</div>

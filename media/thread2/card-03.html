@@ -1,0 +1,63 @@
+<!doctype html>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canvas: #000000; --ink: #FFFFFF; --ink-2: #B3B3B3; --ink-3: #5B5B5B;
+    --edge: #383838; --edge-soft: #1D1D1D; --loud: #F76816; --quiet: #4D4D4D;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1600px; height: 900px; background: var(--canvas);
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    color: var(--ink); padding: 88px 96px 0; -webkit-font-smoothing: antialiased;
+  }
+  h1 { font-size: 54px; font-weight: 600; letter-spacing: -0.018em; }
+  .sub { font-size: 28px; color: var(--ink-2); margin-top: 12px; }
+
+  .rows { margin-top: 84px; }
+  .row { border-bottom: 1px solid var(--edge-soft); padding-bottom: 34px; margin-bottom: 46px; }
+  .row:last-child { border-bottom: none; }
+  .label { font-size: 31px; font-weight: 500; margin-bottom: 22px; }
+
+  .bar-line { display: flex; align-items: center; gap: 30px; }
+  .bar { height: 30px; border-radius: 4px; }
+  .b-loud { background: var(--loud); }
+  .b-quiet { background: var(--quiet); }
+  .val { font-family: 'JetBrains Mono', monospace; font-size: 38px; font-weight: 500; }
+  .v-loud { color: var(--loud); }
+  .v-quiet { color: var(--ink-2); }
+
+  .foot { position: absolute; left: 96px; bottom: 76px; right: 96px; }
+  .rule { height: 1px; background: var(--edge); margin-bottom: 30px; }
+  .finding { font-size: 34px; font-weight: 500; }
+  .src { font-family: 'JetBrains Mono', monospace; font-size: 18px; color: var(--ink-3); margin-top: 20px; }
+</style>
+
+<h1>The boring filing moved the price more.</h1>
+<p class="sub">Biggest fall in each window.</p>
+
+<div class="rows">
+  <div class="row">
+    <div class="label">Routine filing</div>
+    <div class="bar-line">
+      <div class="bar b-loud" style="width: 1080px"></div>
+      <div class="val v-loud">2.41%</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="label">$105bn announcement</div>
+    <div class="bar-line">
+      <div class="bar b-quiet" style="width: 1053px"></div>
+      <div class="val v-quiet">2.35%</div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <div class="rule"></div>
+  <p class="finding">Price alone cannot tell a real event from a boring one.</p>
+  <p class="src">measured on X Layer &nbsp;·&nbsp; replayed data</p>
+</div>

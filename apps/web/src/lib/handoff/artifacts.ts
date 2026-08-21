@@ -13,6 +13,10 @@
  * The JSON is validated at module load (see `scenarios.ts`), so a handoff that
  * breaks its own contract fails the build rather than rendering something false.
  */
+// Relative, not `@/lib/copy`: `test/ts-resolver.mjs` only retries relative
+// specifiers, so an aliased import here would make this module untestable.
+import { deepHouseStyle } from "../copy";
+
 import deployedAddressesJson from "../../../../../docs/buildx-orion-2026/outputs/05-build/frontend-handoff/deployed-addresses.json";
 import comparisonJson from "../../../../../docs/buildx-orion-2026/outputs/05-build/frontend-handoff/three-policy-comparison.json";
 import confirmedJson from "../../../../../docs/buildx-orion-2026/outputs/05-build/frontend-handoff/scenario-confirmed-protect.json";
@@ -226,7 +230,12 @@ export interface DeployedAddressesDoc {
 // handoff directory and, for the risk records, by `validateRiskRecord` at load.
 // The casts below narrow the inferred literal types to the interfaces above;
 // they widen nothing that is not already guaranteed by those two checks.
-export const RUMOUR_SCENARIO = rumourJson as unknown as ScenarioDoc;
-export const CONFIRMED_SCENARIO = confirmedJson as unknown as ScenarioDoc;
-export const COMPARISON = comparisonJson as unknown as ComparisonDoc;
-export const DEPLOYED = deployedAddressesJson as unknown as DeployedAddressesDoc;
+//
+// `deepHouseStyle` runs once per artifact, here, so the handoff's em dashes
+// cannot reach the DOM through a component that forgot to sanitise. It rewrites
+// string leaves only: no number, hash, address or boolean is touched, and no
+// clause is dropped. See `src/lib/copy.ts`.
+export const RUMOUR_SCENARIO = deepHouseStyle(rumourJson) as unknown as ScenarioDoc;
+export const CONFIRMED_SCENARIO = deepHouseStyle(confirmedJson) as unknown as ScenarioDoc;
+export const COMPARISON = deepHouseStyle(comparisonJson) as unknown as ComparisonDoc;
+export const DEPLOYED = deepHouseStyle(deployedAddressesJson) as unknown as DeployedAddressesDoc;

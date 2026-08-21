@@ -21,8 +21,33 @@ import { fileURLToPath } from "node:url";
 const WEB_ROOT = fileURLToPath(new URL("..", import.meta.url));
 const REPO_ROOT = fileURLToPath(new URL("../../..", import.meta.url));
 
-const EM_DASH = "—";
+/**
+ * Built from the code point rather than typed, so this file can name the
+ * character it bans without becoming its own first offender.
+ */
+const EM_DASH = String.fromCharCode(0x2014);
+/**
+ * The same character as a JSON/JS escape, which `includes(EM_DASH)` misses.
+ * Concatenated so this line does not contain the sequence it searches for.
+ */
+const EM_DASH_ESCAPE = "\\" + "u2014";
 const SCAN_EXTENSIONS = [".ts", ".tsx", ".css", ".mjs", ".json"];
+
+/**
+ * Config and manifest files that sit beside `src/` rather than inside it.
+ *
+ * `package.json` is on this list because its `description` shipped an escaped
+ * em dash for months: the old walk started at `src/` and `e2e/`, so nothing at
+ * the package root was ever read, and the escape form would have slipped past
+ * a literal-only match even if it had been.
+ */
+const ROOT_FILES = [
+  "package.json",
+  "next.config.mjs",
+  "tailwind.config.ts",
+  "postcss.config.mjs",
+  "playwright.config.ts",
+];
 
 function walk(dir: string): string[] {
   const out: string[] = [];
@@ -40,13 +65,24 @@ function walk(dir: string): string[] {
 
 const SOURCE_FILES = [...walk(join(WEB_ROOT, "src")), ...walk(join(WEB_ROOT, "e2e"))];
 
-test("no source file contains an em dash", () => {
+/** Source, plus the config files the old `src/`-only walk never looked at. */
+const WRITTEN_FILES = [
+  ...SOURCE_FILES,
+  ...walk(join(WEB_ROOT, "test")),
+  ...ROOT_FILES.map((name) => join(WEB_ROOT, name)),
+];
+
+function hasEmDash(line: string): boolean {
+  return line.includes(EM_DASH) || line.includes(EM_DASH_ESCAPE);
+}
+
+test("no written file contains an em dash", () => {
   const offenders: string[] = [];
-  for (const file of SOURCE_FILES) {
+  for (const file of WRITTEN_FILES) {
     const text = readFileSync(file, "utf8");
-    if (!text.includes(EM_DASH)) continue;
+    if (!hasEmDash(text)) continue;
     text.split("\n").forEach((line, i) => {
-      if (line.includes(EM_DASH)) {
+      if (hasEmDash(line)) {
         offenders.push(`${relative(WEB_ROOT, file)}:${i + 1}: ${line.trim()}`);
       }
     });
@@ -56,6 +92,114 @@ test("no source file contains an em dash", () => {
     [],
     `Em dash (U+2014) is not used in this project. Use parentheses or two sentences.\n${offenders.join("\n")}`,
   );
+});
+
+/**
+ * The handoff is read-only to this lane and it does use em dashes, so the rule
+ * cannot be enforced at its source. It is enforced at the boundary instead:
+ * `src/lib/handoff/artifacts.ts` runs every artifact through `deepHouseStyle`
+ * once, at module load. This test reads what the components actually receive.
+ *
+ * It is the check that was missing. A component sweep passed while
+ * `three-policy-comparison.json` shipped an em dash straight to `/compare`.
+ */
+test("no string reaching a component from the handoff contains an em dash", async () => {
+  const artifacts = await import("../src/lib/handoff/artifacts.ts");
+  const offenders: string[] = [];
+
+  function scan(value: unknown, path: string): void {
+    if (typeof value === "string") {
+      if (hasEmDash(value)) offenders.push(`${path}: ${value.slice(0, 120)}`);
+      return;
+    }
+    if (Array.isArray(value)) {
+      value.forEach((item, i) => scan(item, `${path}[${i}]`));
+      return;
+    }
+    if (value && typeof value === "object") {
+      for (const [key, item] of Object.entries(value)) scan(item, `${path}.${key}`);
+    }
+  }
+
+  for (const name of ["RUMOUR_SCENARIO", "CONFIRMED_SCENARIO", "COMPARISON", "DEPLOYED"]) {
+    scan((artifacts as Record<string, unknown>)[name], name);
+  }
+
+  assert.deepEqual(
+    offenders,
+    [],
+    `Handoff copy reached the UI with an em dash. deepHouseStyle should have rewritten it.\n${offenders.join("\n")}`,
+  );
+});
+
+/**
+ * The em dash rewrite must keep the clause, not delete it. Compressing a hedged
+ * sentence is how a qualification quietly disappears, and every one of these
+ * strings is a backend qualification.
+ */
+test("houseStyle rewrites an em dash without dropping the clause", async () => {
+  const { houseStyle } = await import("../src/lib/copy.ts");
+  const dash = EM_DASH;
+
+  assert.equal(
+    houseStyle(`No decision anchor is reachable from its input type ${dash} enforced by the type, not by convention.`),
+    "No decision anchor is reachable from its input type (enforced by the type, not by convention).",
+  );
+  assert.equal(
+    houseStyle(`The market leg ${dash} unavailable for all four ${dash} cannot confirm.`),
+    "The market leg, unavailable for all four, cannot confirm.",
+  );
+  assert.equal(houseStyle("Untouched text stays identical."), "Untouched text stays identical.");
+});
+
+/**
+ * Dark is the only theme, and the light half of the OKX ramp was deleted from
+ * `tailwind.config.ts` so nothing can reach for it. Tailwind does not error on
+ * an unknown class, though: `bg-paper-bright` would just silently produce no
+ * background, which on a black page looks almost right and is not. This is the
+ * check that turns that silence into a build failure.
+ */
+const LIGHT_ONLY_CLASS =
+  /(?:^|["'\s`{])(?:[a-z-]+:)*(?:bg|text|border|ring|ring-offset|decoration|fill|stroke|divide|placeholder|outline|shadow)-(?:paper|coal|edge-light|signal-deep|normal-deep|watch-deep|protect-deep|confirm-deep)(?![a-z])/;
+
+test("no component reaches for a light-theme token", () => {
+  const offenders: string[] = [];
+  for (const file of SOURCE_FILES) {
+    const text = readFileSync(file, "utf8");
+    text.split("\n").forEach((line, i) => {
+      if (LIGHT_ONLY_CLASS.test(line)) {
+        offenders.push(`${relative(WEB_ROOT, file)}:${i + 1}: ${line.trim().slice(0, 140)}`);
+      }
+    });
+  }
+  assert.deepEqual(
+    offenders,
+    [],
+    `Tinjau ships one theme (dark). These tokens no longer exist.\n${offenders.join("\n")}`,
+  );
+});
+
+/**
+ * `color-scheme` and `prefers-color-scheme` are the two ways a light rendering
+ * can come back after the tokens are gone: the first lets the browser paint its
+ * own light chrome, the second reintroduces a branch.
+ */
+test("no stylesheet reintroduces a light rendering", () => {
+  const css = readFileSync(join(WEB_ROOT, "src/app/globals.css"), "utf8");
+  assert.ok(
+    /color-scheme:\s*dark\s*;/.test(css),
+    "globals.css must pin `color-scheme: dark` so browser chrome matches the page.",
+  );
+  assert.ok(
+    !/color-scheme:\s*light/.test(css),
+    "globals.css must not offer a light color-scheme.",
+  );
+  for (const file of [...SOURCE_FILES, join(WEB_ROOT, "src/app/globals.css")]) {
+    assert.ok(
+      !readFileSync(file, "utf8").includes("prefers-color-scheme"),
+      `${relative(WEB_ROOT, file)} branches on prefers-color-scheme; dark is the only theme.`,
+    );
+  }
 });
 
 test("DESIGN.md contains no em dash", () => {

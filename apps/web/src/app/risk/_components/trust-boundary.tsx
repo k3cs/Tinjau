@@ -1,3 +1,4 @@
+import { AuthorityDiagram } from "@/components/diagrams/authority-diagram";
 import { formatFee } from "@/lib/risk/format";
 import type { ScenarioView } from "@/lib/handoff/scenarios";
 
@@ -47,10 +48,12 @@ export function TrustBoundary({ scenario }: { scenario: ScenarioView }) {
         <h2 id="trust-boundary" className="font-display text-heading-sm text-ink">
           AI proposes. The contract decides.
         </h2>
-        <p className="mt-1 max-w-3xl text-body-sm text-ink-muted">
-          The model produces structured evidence. Deterministic code and the contract decide
-          whether anything is allowed to happen. Nothing the model returns can widen those limits.
+        <p className="mt-1 max-w-[56ch] text-body-sm text-ink-muted">
+          Nothing the model returns can widen a limit.
         </p>
+        <div className="mt-6">
+          <AuthorityDiagram />
+        </div>
       </div>
 
       <div className="grid gap-px bg-edge md:grid-cols-2">

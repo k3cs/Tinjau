@@ -1,25 +1,41 @@
+/**
+ * Why this chain, in four lines instead of four paragraphs.
+ *
+ * Each reason is now a short noun phrase plus one clause. The longer versions
+ * said the same things with more hedging words, and the hedges were not the
+ * qualifications that matter (those live on `/roadmap` and `/proof`, where they
+ * are attached to the specific capability they qualify).
+ */
 const reasons = [
-  ["Reference context", "OKX market samples provide a separate reference input with explicit source and ingestion time."],
-  ["Pool reality", "X Layer telemetry measures price, flow, liquidity, drawdown, velocity, and bounded exit depth."],
-  ["Cheap settlement", "An expiring risk record and bounded action can be read and enforced onchain without dashboard trust."],
-  ["Reusable proof", "Another contract or application can consume the registry record; wider Exchange OS adapters remain roadmap."],
+  ["Reference price", "OKX index samples arrive with a source and a timestamp."],
+  ["Pool reality", "X Layer telemetry measures the pool itself, not a proxy."],
+  ["Cheap enforcement", "An expiring record and a bounded fee both fit on chain."],
+  ["Readable by others", "Another contract can read the record. Wider adapters are roadmap."],
 ] as const;
 
 export function WhyXLayer() {
   return (
-    <section id="why-x-layer" className="section-rule bg-paper" aria-labelledby="x-layer-title">
-      <div className="mx-auto max-w-[1440px] px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-        <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
+    <section id="why-x-layer" className="section-rule bg-canvas" aria-labelledby="x-layer-title">
+      <div className="mx-auto max-w-[1440px] px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+        <div className="grid gap-10 lg:grid-cols-[0.62fr_1.38fr]">
           <div>
-            <p className="font-data text-[10px] font-semibold uppercase tracking-[0.08em] text-coal-muted">Why X Layer</p>
-            <h2 id="x-layer-title" className="mt-4 font-display text-4xl font-bold leading-tight tracking-display sm:text-5xl">The reference market and the pool belong in the same risk story.</h2>
+            <p className="data-label text-ink-faint">Why X Layer</p>
+            <h2
+              id="x-layer-title"
+              className="mt-4 max-w-[16ch] font-display text-section-sm text-ink lg:text-section-lg"
+            >
+              The market and the pool, on one chain.
+            </h2>
           </div>
-          <ol className="border-t border-black">
+          <ol className="border-t border-edge">
             {reasons.map(([term, detail], index) => (
-              <li key={term} className="grid gap-3 border-b border-black/20 py-6 sm:grid-cols-[3rem_0.7fr_1.3fr]">
-                <span className="font-data text-xs text-coal-muted">0{index + 1}</span>
-                <h3 className="text-sm font-semibold">{term}</h3>
-                <p className="text-sm leading-relaxed text-coal-muted">{detail}</p>
+              <li
+                key={term}
+                className="grid gap-2 border-b border-edge py-5 sm:grid-cols-[3rem_0.7fr_1.3fr] sm:gap-4"
+              >
+                <span className="font-data text-[11px] text-ink-faint">0{index + 1}</span>
+                <h3 className="text-body-sm font-semibold text-ink">{term}</h3>
+                <p className="text-body-sm text-ink-muted">{detail}</p>
               </li>
             ))}
           </ol>

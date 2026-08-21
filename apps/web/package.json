@@ -2,7 +2,7 @@
   "name": "tinjau-web",
   "version": "0.1.0",
   "private": true,
-  "description": "Tinjau frontend \u2014 source-grounded LP risk autopilot for tokenized-stock liquidity on X Layer.",
+  "description": "Tinjau frontend (source-grounded LP risk autopilot for tokenized-stock liquidity on X Layer).",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -35,7 +35,7 @@ export function ProtectionEnvelope({ action }: { action: RiskActionView }) {
           {applied !== null && (
             <span
               aria-hidden
-              className="absolute top-1/2 h-4 w-1 -translate-y-1/2 bg-white"
+              className="absolute top-1/2 h-4 w-1 -translate-y-1/2 bg-ink"
               style={{ left: `calc(${position}% - 2px)` }}
             />
           )}

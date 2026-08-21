@@ -3,7 +3,7 @@ import Link from "next/link";
 import { TinjauMark } from "@/components/tinjau-mark";
 
 const LINKS = [
-  { href: "/risk", label: "Risk state" },
+  { href: "/risk", label: "How it decides" },
   { href: "/compare", label: "Compare" },
   { href: "/proof", label: "Proof" },
   { href: "/roadmap", label: "Roadmap" },

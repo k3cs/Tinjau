@@ -155,7 +155,7 @@ duplicated syndications of one origin count as one source.
 | The fee decayed and **recovered to 500 with no keeper and no transaction** | same manifest, txs `0x93ae1e24…7bab` (9,470) and `0xcf229e22…4c0` (500) | observed, **demo envelope (60/300/360 s)** |
 | Immediate re-arming is refused on chain | `CooldownActive(1787284659, 60)` in the manifest | observed |
 | A **failed action is recorded as failed and claims no benefit** | scene F: guardian pause → `ProtectionPaused`, measured fee afterwards 500 | observed |
-| Production timings (3,600 / 18,000 / 21,600 s) behave identically | `forge test` **134/134**; local Anvil run charges 20,000 → 10,250 → 500 → 500 | tested, not on chain 1952 |
+| Production timings (3,600 / 18,000 / 21,600 s) behave identically | `forge test` **137/137**; local Anvil run charges 20,000 → 10,250 → 500 → 500 | tested, not on chain 1952 |
 | The risk record is readable by a stranger with only the chain and the ABI | `tools/risk-reader/`, `bash tools/risk-reader/test/anvil-e2e.sh` → **59 passed / 0 failed** | proven on local Anvil; **reference consumer, built by Tinjau** |
 | Rumour-only input never reaches the aggressive path | `riskPromotion*.test.ts`; contract-side property test | proven in both languages |
 | Volatility-only fires a **false positive on the neutral control at every `k`** | `three-policy-benchmark.json` `headlineFindings`; pinned by test | measured |
@@ -220,7 +220,7 @@ is not claimed.
 | Deterministic recovery with no keeper | same manifest, scene B `swap:recovered` |
 | Cooldown enforced by the contract | same manifest, `postAssessment:blocked-by-cooldown` |
 | Failed action recorded without benefit | same manifest, scene F |
-| Production-envelope behaviour | `contracts/test/TinjauFeeHook.t.sol`, `forge test` 134/134 |
+| Production-envelope behaviour | `contracts/test/TinjauFeeHook.t.sol`, `forge test` 137/137 |
 | Rumour containment | `apps/server/test/riskPromotion*.test.ts`, `contracts/test/` |
 | Evidence provenance and byte commitments | `apps/server/scenarios/*.json`, `t0-2-frozen-scenarios.md` |
 | Market confirmation method and its two closed defects | `t3-3-confirmation-method.md`, `t3-4-degraded-cases.md` |

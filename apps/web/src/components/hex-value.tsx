@@ -15,12 +15,10 @@ export function HexValue({
   value,
   href,
   label,
-  onDark = true,
 }: {
   value: string;
   href?: string;
   label?: string;
-  onDark?: boolean;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -35,16 +33,12 @@ export function HexValue({
     }
   }
 
-  const tone = onDark
-    ? "border-edge text-ink-secondary hover:border-edge-strong hover:text-ink"
-    : "border-edge-light text-coal-soft hover:border-coal-muted hover:text-coal";
+  const tone = "border-edge text-ink-secondary hover:border-edge-strong hover:text-ink";
 
   return (
     <span className="inline-flex flex-wrap items-center gap-1.5">
       {label ? (
-        <span className={`data-label ${onDark ? "text-ink-faint" : "text-coal-faint"}`}>
-          {label}
-        </span>
+        <span className="data-label text-ink-faint">{label}</span>
       ) : null}
       <span
         className={`inline-flex items-center rounded border px-2 py-1 font-data text-[11px] ${tone}`}
@@ -55,9 +49,7 @@ export function HexValue({
       <button
         type="button"
         onClick={copy}
-        className={`inline-flex min-h-10 min-w-10 items-center justify-center rounded px-2 font-data text-[10px] uppercase tracking-[0.06em] transition-colors duration-150 ease-tinjau ${
-          onDark ? "text-ink-faint hover:text-signal" : "text-coal-faint hover:text-coal"
-        }`}
+        className="inline-flex min-h-10 min-w-10 items-center justify-center rounded px-2 font-data text-[10px] uppercase tracking-[0.06em] text-ink-faint transition-colors duration-150 ease-tinjau hover:text-signal"
         aria-label={copied ? `Copied ${value}` : `Copy ${label ?? "value"} ${value}`}
       >
         {copied ? "Copied" : "Copy"}
@@ -67,9 +59,7 @@ export function HexValue({
           href={href}
           target="_blank"
           rel="noreferrer noopener"
-          className={`inline-flex min-h-10 items-center rounded px-2 font-data text-[10px] uppercase tracking-[0.06em] underline transition-colors duration-150 ease-tinjau ${
-            onDark ? "text-ink-faint hover:text-signal" : "text-coal-faint hover:text-coal"
-          }`}
+          className="inline-flex min-h-10 items-center rounded px-2 font-data text-[10px] uppercase tracking-[0.06em] text-ink-faint underline transition-colors duration-150 ease-tinjau hover:text-signal"
         >
           Explorer
         </a>

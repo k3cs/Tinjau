@@ -25,10 +25,10 @@ const VERDICT_LABEL: Record<ComparisonCell["vsVolatilityOnly"], string> = {
 };
 
 const VERDICT_TONE: Record<ComparisonCell["vsVolatilityOnly"], string> = {
-  TINJAU_BEATS: "text-normal-deep",
-  TINJAU_LOSES: "text-protect-deep",
-  TINJAU_TIES: "text-coal-muted",
-  NOT_COMPARABLE: "text-coal-faint",
+  TINJAU_BEATS: "text-normal-soft",
+  TINJAU_LOSES: "text-protect-soft",
+  TINJAU_TIES: "text-ink-muted",
+  NOT_COMPARABLE: "text-ink-faint",
 };
 
 const SCENARIO_LABEL: Record<string, string> = {
@@ -58,12 +58,12 @@ export function ComparisonGrid() {
   return (
     <LazyMotion features={domAnimation} strict>
       <section aria-labelledby="comparison-grid" className="scroll-mt-24" id="grid">
-        <h2 id="comparison-grid" className="font-display text-heading-lg text-coal">
+        <h2 id="comparison-grid" className="font-display text-heading-lg text-ink">
           Every cell, both bases
         </h2>
-        <p className="mt-2 max-w-3xl text-body-md text-coal-muted">
-          The volatility baseline&rsquo;s trigger multiplier and Tinjau&rsquo;s own drawdown floor
-          are both reported across a grid, so neither could be chosen after the results were seen.
+        <p className="mt-2 max-w-[56ch] text-body-md text-ink-muted">
+          Both trigger settings are reported across the whole grid, so neither could be chosen
+          after the results were in.
         </p>
 
         <div className="mt-8 grid gap-4 lg:grid-cols-3">
@@ -100,8 +100,8 @@ export function ComparisonGrid() {
         </div>
 
         {scenarioMeta ? (
-          <p className="mt-5 text-body-sm text-coal-muted">
-            <span className="font-medium text-coal">{scenarioMeta.role.replaceAll("_", " ")}.</span>{" "}
+          <p className="mt-5 text-body-sm text-ink-muted">
+            <span className="font-medium text-ink">{scenarioMeta.role.replaceAll("_", " ")}.</span>{" "}
             Pre-registered outcome: {scenarioMeta.preRegisteredState}.
           </p>
         ) : null}
@@ -124,20 +124,20 @@ export function ComparisonGrid() {
               LP markout at 3600 seconds for each policy, under both metric bases
             </caption>
             <thead>
-              <tr className="border-b border-coal">
-                <th scope="col" className="data-label py-3 pr-4 text-coal-muted">
+              <tr className="border-b border-edge">
+                <th scope="col" className="data-label py-3 pr-4 text-ink-muted">
                   Metric basis
                 </th>
-                <th scope="col" className="data-label py-3 pr-4 text-coal-muted">
+                <th scope="col" className="data-label py-3 pr-4 text-ink-muted">
                   Static
                 </th>
-                <th scope="col" className="data-label py-3 pr-4 text-coal-muted">
+                <th scope="col" className="data-label py-3 pr-4 text-ink-muted">
                   Volatility-only
                 </th>
-                <th scope="col" className="data-label py-3 pr-4 text-coal-muted">
+                <th scope="col" className="data-label py-3 pr-4 text-ink-muted">
                   Tinjau
                 </th>
-                <th scope="col" className="data-label py-3 text-coal-muted">
+                <th scope="col" className="data-label py-3 text-ink-muted">
                   Tinjau vs volatility-only
                 </th>
               </tr>
@@ -147,12 +147,12 @@ export function ComparisonGrid() {
                 const cell = pair.byBasis[basis];
                 if (!cell) return null;
                 return (
-                  <tr key={basis} className="border-b border-edge-light align-top">
+                  <tr key={basis} className="border-b border-edge align-top">
                     <th scope="row" className="py-4 pr-4">
-                      <span className="block font-body text-body-sm font-medium text-coal">
+                      <span className="block font-body text-body-sm font-medium text-ink">
                         {BASIS_LABEL[basis]}
                       </span>
-                      <span className="mt-1 block max-w-[16rem] text-body-xs text-coal-faint">
+                      <span className="mt-1 block max-w-[16rem] text-body-xs text-ink-faint">
                         {basis === "PRE_REGISTERED"
                           ? "Frozen before results. The only basis the claim gate reads."
                           : "Written after results were seen. Excluded from the claim gate."}
@@ -167,7 +167,7 @@ export function ComparisonGrid() {
                       >
                         {VERDICT_LABEL[cell.vsVolatilityOnly]}
                       </span>
-                      <span className="mt-1 block font-data text-[11px] text-coal-faint">
+                      <span className="mt-1 block font-data text-[11px] text-ink-faint">
                         vs static: {VERDICT_LABEL[cell.vsStatic]}
                       </span>
                     </td>
@@ -179,17 +179,15 @@ export function ComparisonGrid() {
         </m.div>
 
         {pair.signFlips ? (
-          <p className="mt-5 rounded-xl border-2 border-watch bg-watch/[0.06] p-5 text-body-sm text-coal">
-            <span className="font-medium">These two rows disagree about the direction.</span> Same
-            trades, same triggers, same fee schedule. Only the arithmetic convention changed. The
-            pre-registered metric mechanically penalises raising a fee; the post-hoc one
-            mechanically rewards it. The truth is somewhere between them, and the bracket spans
-            zero.
+          <p className="mt-5 rounded-xl border-2 border-watch bg-watch/[0.06] p-5 text-body-sm text-ink">
+            <span className="font-medium">These two rows disagree about the direction.</span> One
+            metric penalises raising a fee, the other rewards it. The truth sits between them and
+            the gap crosses zero.
           </p>
         ) : null}
 
         {!pair.comparable ? (
-          <p className="mt-5 rounded-xl border border-edge-light bg-paper-soft p-5 text-body-sm text-coal-muted">
+          <p className="mt-5 rounded-xl border border-edge bg-surface p-5 text-body-sm text-ink-muted">
             {pair.byBasis.PRE_REGISTERED?.note ??
               "This scenario carries no economic row. Reported as unavailable, never imputed."}
           </p>
@@ -199,20 +197,20 @@ export function ComparisonGrid() {
           {COMPARISON_DOC.method.metricBases.map((basis) => (
             <div key={basis.id} className="panel p-5">
               <div className="flex flex-wrap items-center gap-2">
-                <p className="font-body text-body-sm font-medium text-coal">
+                <p className="font-body text-body-sm font-medium text-ink">
                   {BASIS_LABEL[basis.id]}
                 </p>
                 {basis.governsClaimGate ? (
-                  <span className="data-label rounded border border-coal px-1.5 py-0.5 text-coal">
+                  <span className="data-label rounded border border-edge px-1.5 py-0.5 text-ink">
                     Governs the claim gate
                   </span>
                 ) : (
-                  <span className="data-label rounded border border-watch-deep px-1.5 py-0.5 text-watch-deep">
+                  <span className="data-label rounded border border-watch-soft px-1.5 py-0.5 text-watch-soft">
                     Post-hoc · excluded
                   </span>
                 )}
               </div>
-              <p className="mt-3 text-body-sm text-coal-muted">{basis.knownDefect}</p>
+              <p className="mt-3 text-body-sm text-ink-muted">{basis.knownDefect}</p>
             </div>
           ))}
         </div>
@@ -223,9 +221,9 @@ export function ComparisonGrid() {
 
 function Cell({ value }: { value: number | null }) {
   return (
-    <td className="py-4 pr-4 font-data text-[13px] text-coal tabular">
+    <td className="py-4 pr-4 font-data text-[13px] text-ink tabular">
       {value === null ? (
-        <span className="text-coal-faint">No economic row</span>
+        <span className="text-ink-faint">No economic row</span>
       ) : (
         formatUsd(value)
       )}
@@ -236,7 +234,7 @@ function Cell({ value }: { value: number | null }) {
 function Control({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <p className="data-label mb-2 text-coal-faint">{label}</p>
+      <p className="data-label mb-2 text-ink-faint">{label}</p>
       {children}
     </div>
   );

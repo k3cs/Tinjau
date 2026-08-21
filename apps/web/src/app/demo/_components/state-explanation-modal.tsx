@@ -33,11 +33,11 @@ export function StateExplanationModal({ modal, onClose }: { modal: MissionModal;
 
   return (
     <LazyMotion features={domAnimation}>
-      <m.div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4 py-8" initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: reduceMotion ? 0 : 0.18 }}>
-        <m.div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="state-modal-title" aria-describedby="state-modal-cause" className="max-h-full w-full max-w-2xl overflow-y-auto border border-edge-strong bg-canvas text-white" initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.3, ease: [0.23, 1, 0.32, 1] }}>
+      <m.div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 px-4 py-8" initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: reduceMotion ? 0 : 0.18 }}>
+        <m.div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="state-modal-title" aria-describedby="state-modal-cause" className="max-h-full w-full max-w-2xl overflow-y-auto border border-edge-strong bg-canvas text-ink" initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.3, ease: [0.23, 1, 0.32, 1] }}>
           <div className="flex items-start justify-between gap-6 border-b border-edge px-5 py-5 sm:px-6">
             <div><div className="flex flex-wrap gap-2"><CapabilityBadge maturity={capability.maturity} /><DataModeLabel mode={modal.dataMode} /></div><h2 id="state-modal-title" className="mt-5 font-display text-3xl font-bold tracking-display">{modal.title}</h2>{modal.previousState && modal.nextState && <p className="mt-3 font-data text-xs text-ink-muted">{modal.previousState} → {modal.nextState}</p>}</div>
-            <button ref={closeRef} type="button" onClick={onClose} className="inline-flex min-h-11 min-w-11 items-center justify-center border border-edge text-ink-secondary transition-colors duration-150 ease-tinjau hover:border-white hover:text-white" aria-label="Close state explanation">
+            <button ref={closeRef} type="button" onClick={onClose} className="inline-flex min-h-11 min-w-11 items-center justify-center border border-edge text-ink-secondary transition-colors duration-150 ease-tinjau hover:border-white hover:text-ink" aria-label="Close state explanation">
               <svg aria-hidden viewBox="0 0 16 16" className="h-4 w-4" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" /></svg>
             </button>
           </div>
@@ -48,7 +48,7 @@ export function StateExplanationModal({ modal, onClose }: { modal: MissionModal;
             <ModalField label="Allowed now" value={modal.allowed} />
             <ModalField label="Prohibited now" value={modal.prohibited} wide />
           </div>
-          <div className="border-t border-edge px-5 py-4 sm:px-6"><button type="button" onClick={onClose} className="inline-flex min-h-11 w-full items-center justify-center bg-signal px-5 font-data text-[11px] font-semibold uppercase tracking-[0.06em] text-black transition-colors duration-150 ease-tinjau hover:bg-white">Return to mission</button></div>
+          <div className="border-t border-edge px-5 py-4 sm:px-6"><button type="button" onClick={onClose} className="inline-flex min-h-11 w-full items-center justify-center bg-signal px-5 font-data text-[11px] font-semibold uppercase tracking-[0.06em] text-black transition-colors duration-150 ease-tinjau hover:bg-signal-soft">Return to mission</button></div>
         </m.div>
       </m.div>
     </LazyMotion>

@@ -1,51 +1,77 @@
 import Link from "next/link";
+
 import { CapabilityBadge } from "@/components/capability-badge";
-import { DataModeLabel } from "@/components/data-mode-label";
 import { PRODUCT_CAPABILITIES } from "@/lib/product/capabilities";
 import { XLAYER_TESTNET_PROOF } from "@/lib/product/deployments";
 
+/**
+ * The built / not-built line, as a count and a link.
+ *
+ * This section used to reprint all eleven capabilities with their evidence and
+ * limitation strings, which is exactly what `/proof` and `/roadmap` are for. It
+ * printed about 320 words to say something a tally says better, and a reader who
+ * wants the detail is one click away from the page that owns it.
+ */
+const TALLY = ["IMPLEMENTED", "HISTORICAL", "PENDING", "ROADMAP"] as const;
+
 export function ProofLedger() {
+  const counts = TALLY.map((maturity) => ({
+    maturity,
+    count: PRODUCT_CAPABILITIES.filter((c) => c.maturity === maturity).length,
+  })).filter((row) => row.count > 0);
+
   return (
-    <section className="section-rule bg-paper-bright" aria-labelledby="proof-ledger-title">
-      <div className="mx-auto max-w-[1440px] px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+    <section className="section-rule bg-canvas-sunken" aria-labelledby="proof-ledger-title">
+      <div className="mx-auto max-w-[1440px] px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="font-data text-[10px] font-semibold uppercase tracking-[0.08em] text-coal-muted">Proof ledger</p>
-            <h2 id="proof-ledger-title" className="mt-4 font-display text-4xl font-bold tracking-display sm:text-5xl">What exists. What does not. One ledger.</h2>
+            <p className="data-label text-ink-faint">Proof ledger</p>
+            <h2
+              id="proof-ledger-title"
+              className="mt-4 max-w-[18ch] font-display text-section-sm text-ink lg:text-section-lg"
+            >
+              What exists. What does not.
+            </h2>
           </div>
-          <p className="max-w-xl text-sm leading-relaxed text-coal-muted">Maturity describes the capability. Data mode describes the material shown. Neither is inferred from animation.</p>
+          <p className="max-w-[42ch] text-body-sm text-ink-muted">
+            Maturity describes the capability. Data mode describes the material. Neither is
+            inferred from a nice animation.
+          </p>
         </div>
 
-        <div className="mt-10 grid border-y border-black bg-black text-white md:grid-cols-[1fr_1fr_auto]">
-          <div className="border-b border-edge px-5 py-4 md:border-b-0 md:border-r">
-            <p className="font-data text-[10px] uppercase tracking-[0.06em] text-ink-muted">Verified network</p>
-            <p className="mt-2 font-semibold">{XLAYER_TESTNET_PROOF.name} · chain {XLAYER_TESTNET_PROOF.chainId}</p>
-          </div>
-          <div className="border-b border-edge px-5 py-4 md:border-b-0 md:border-r">
-            <p className="font-data text-[10px] uppercase tracking-[0.06em] text-ink-muted">Truth boundary</p>
-            <p className="mt-2 text-sm text-ink-secondary">Historical prototype deployed. Final Tinjau integration pending.</p>
-          </div>
-          <Link href="/proof" className="inline-flex min-h-16 items-center justify-center bg-signal px-6 font-data text-[10px] font-semibold uppercase tracking-[0.06em] text-black transition-colors duration-150 ease-tinjau hover:bg-white">Open Proof ↗</Link>
-        </div>
-
-        <div className="mt-12 border-t border-black">
-          {PRODUCT_CAPABILITIES.map((capability) => (
-            <article key={capability.id} className="grid gap-4 border-b border-black/20 py-5 lg:grid-cols-[0.65fr_1fr_0.8fr]">
-              <div>
-                <p className="font-data text-[10px] text-coal-muted">{capability.stage}</p>
-                <h3 className="mt-1 text-sm font-semibold">{capability.name}</h3>
-              </div>
-              <div>
-                <p className="text-sm leading-relaxed text-coal-muted">{capability.evidence}</p>
-                <p className="mt-2 text-xs leading-relaxed text-coal-muted">Limit: {capability.limitation}</p>
-              </div>
-              <div className="flex flex-wrap items-start gap-2 lg:justify-end">
-                <CapabilityBadge maturity={capability.maturity} onLight />
-                {capability.dataMode && <DataModeLabel mode={capability.dataMode} onLight />}
-                {capability.href && <Link href={capability.href} className="inline-flex min-h-8 items-center border-b border-black font-data text-[10px] font-semibold uppercase tracking-[0.06em]">Inspect ↗</Link>}
-              </div>
-            </article>
+        <dl className="mt-10 grid gap-px border border-edge bg-edge sm:grid-cols-2 lg:grid-cols-4">
+          {counts.map(({ maturity, count }) => (
+            <div key={maturity} className="bg-canvas p-5">
+              <dt>
+                <CapabilityBadge maturity={maturity} />
+              </dt>
+              <dd className="mt-3 font-data text-[30px] tabular text-ink">{count}</dd>
+            </div>
           ))}
+        </dl>
+
+        <div className="mt-8 grid gap-px border border-edge bg-edge md:grid-cols-[1fr_1fr_auto]">
+          <div className="bg-canvas px-5 py-4">
+            <p className="data-label text-ink-faint">Verified network</p>
+            <p className="mt-2 text-body-sm font-medium text-ink">
+              {XLAYER_TESTNET_PROOF.name} · chain {XLAYER_TESTNET_PROOF.chainId}
+            </p>
+          </div>
+          <div className="bg-canvas px-5 py-4">
+            <p className="data-label text-ink-faint">Truth boundary</p>
+            <p className="mt-2 text-body-sm text-ink-muted">
+              Historical prototype deployed. Final integration pending.
+            </p>
+          </div>
+          <Link
+            href="/proof"
+            className="inline-flex min-h-16 items-center justify-center bg-signal px-6 font-body text-body-sm font-medium text-black transition-colors duration-150 ease-tinjau hover:bg-signal-soft"
+          >
+            Open the ledger
+            <span aria-hidden className="ml-2">
+              &rarr;
+            </span>
+          </Link>
         </div>
       </div>
     </section>

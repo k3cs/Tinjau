@@ -28,3 +28,8 @@ apps/*/out/
 *.tsbuildinfo
 .vercel
 .env*
+
+# Local Anvil (chain 31337) deploy artifacts. `run-latest.json` is tracked as the
+# pointer; the timestamped siblings are regenerated on every harness run and are
+# pure churn in the diff.
+contracts/broadcast/**/31337/run-[0-9]*.json

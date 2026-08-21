@@ -1,28 +1,30 @@
-import { BLIND_WINDOW } from "@/lib/product/system";
+import { BlindWindowDiagram } from "@/components/diagrams/blind-window-diagram";
 
+/**
+ * The problem, in a drawing and eighteen words.
+ *
+ * This section used to be a four-row timeline table with a sentence of prose in
+ * every row. The rows were describing a shape, so the shape replaced them.
+ */
 export function BlindWindow() {
   return (
-    <section className="section-rule bg-paper" aria-labelledby="blind-window-title">
-      <div className="mx-auto max-w-[1440px] px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-        <div className="grid gap-10 lg:grid-cols-[0.7fr_1.3fr]">
+    <section className="section-rule bg-canvas" aria-labelledby="blind-window-title">
+      <div className="mx-auto max-w-[1440px] px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+        <div className="grid gap-10 lg:grid-cols-[0.62fr_1.38fr] lg:items-center">
           <div>
-            <p className="font-data text-[10px] font-semibold uppercase tracking-[0.08em] text-coal-muted">The blind window</p>
-            <h2 id="blind-window-title" className="mt-4 max-w-xl font-display text-4xl font-bold leading-tight tracking-display sm:text-5xl">
-              The pool sees the trade. It does not see why the trade arrived.
+            <p className="data-label text-ink-faint">The blind window</p>
+            <h2
+              id="blind-window-title"
+              className="mt-4 max-w-[16ch] font-display text-section-sm text-ink lg:text-section-lg"
+            >
+              The pool sees the trade. Not the reason for it.
             </h2>
+            <p className="mt-5 max-w-[42ch] text-body-md text-ink-muted">
+              A tokenised stock trades all night. The company announcement that explains the move
+              arrives whenever it arrives, and the pool has no way to read it.
+            </p>
           </div>
-          <div className="border-t border-black">
-            <ol>
-              {BLIND_WINDOW.map((step, index) => (
-                <li key={step.time} className="grid grid-cols-[4rem_1fr] gap-4 border-b border-black/20 py-5 sm:grid-cols-[6rem_0.7fr_1.3fr]">
-                  <span className="font-data text-xs font-semibold">{step.time}</span>
-                  <span className="text-sm font-semibold">{step.title}</span>
-                  <span className="col-start-2 text-sm leading-relaxed text-coal-muted sm:col-start-auto">{step.detail}</span>
-                  {index === 2 && <span className="col-span-full mt-2 border-l-2 border-watch bg-watch/10 px-4 py-3 font-data text-[11px] font-semibold uppercase tracking-[0.06em] text-coal">Context gap</span>}
-                </li>
-              ))}
-            </ol>
-          </div>
+          <BlindWindowDiagram />
         </div>
       </div>
     </section>

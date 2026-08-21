@@ -29,7 +29,7 @@ export function MissionSelect({ onSelect }: { onSelect: (missionId: MissionId) =
                 <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink-secondary">{mission.objective}</p>
                 <p className="mt-3 font-data text-[10px] uppercase tracking-[0.06em] text-ink-muted">{mission.stages.length} decisions · {mission.duration}</p>
               </div>
-              <button type="button" onClick={() => onSelect(mission.id)} className="inline-flex min-h-12 w-full items-center justify-between border border-signal bg-signal px-4 font-data text-[11px] font-semibold uppercase tracking-[0.06em] text-black transition-colors duration-150 ease-tinjau hover:bg-white lg:justify-center lg:gap-3">
+              <button type="button" onClick={() => onSelect(mission.id)} className="inline-flex min-h-12 w-full items-center justify-between border border-signal bg-signal px-4 font-data text-[11px] font-semibold uppercase tracking-[0.06em] text-black transition-colors duration-150 ease-tinjau hover:bg-signal-soft lg:justify-center lg:gap-3">
                 Start {mission.label}
                 <svg aria-hidden viewBox="0 0 16 16" className="h-4 w-4" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" /></svg>
               </button>

@@ -8,7 +8,7 @@ export function ExternalEvidenceLink({ href }: { href: string | null }) {
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="inline-flex min-h-8 items-center gap-2 rounded-sm font-data text-[11px] font-medium text-signal underline decoration-edge-strong transition-colors hover:text-white"
+      className="inline-flex min-h-8 items-center gap-2 rounded-sm font-data text-[11px] font-medium text-signal underline decoration-edge-strong transition-colors hover:text-ink"
     >
       Open original
       <svg aria-hidden viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none">

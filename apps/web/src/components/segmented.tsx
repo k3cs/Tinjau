@@ -23,13 +23,11 @@ export function Segmented({
   options,
   value,
   onChange,
-  onDark = false,
   ariaLabel,
 }: {
   options: SegmentOption[];
   value: string;
   onChange: (value: string) => void;
-  onDark?: boolean;
   ariaLabel: string;
 }) {
   const layoutId = useId();
@@ -40,9 +38,7 @@ export function Segmented({
       <div
         role="tablist"
         aria-label={ariaLabel}
-        className={`flex flex-wrap gap-1 rounded-xl border p-1 ${
-          onDark ? "border-edge bg-canvas-sunken" : "border-edge-light bg-paper-soft"
-        }`}
+        className="flex flex-wrap gap-1 rounded-xl border border-edge bg-canvas-sunken p-1"
       >
         {options.map((option) => {
           const selected = option.value === value;
@@ -54,13 +50,7 @@ export function Segmented({
               aria-selected={selected}
               onClick={() => onChange(option.value)}
               className={`relative min-h-11 flex-1 rounded-lg px-4 py-2 text-left transition-colors duration-150 ease-tinjau ${
-                selected
-                  ? onDark
-                    ? "text-black"
-                    : "text-black"
-                  : onDark
-                    ? "text-ink-muted hover:text-ink"
-                    : "text-coal-muted hover:text-coal"
+                selected ? "text-black" : "text-ink-muted hover:text-ink"
               }`}
             >
               {selected ? (
@@ -79,7 +69,7 @@ export function Segmented({
               {option.hint ? (
                 <span
                   className={`relative mt-0.5 block font-data text-[10px] uppercase tracking-[0.06em] ${
-                    selected ? "text-black/70" : onDark ? "text-ink-faint" : "text-coal-faint"
+                    selected ? "text-black/70" : "text-ink-faint"
                   }`}
                 >
                   {option.hint}

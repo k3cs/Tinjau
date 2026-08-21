@@ -1,3 +1,4 @@
+import { ContainmentDiagram } from "@/components/diagrams/containment-diagram";
 import { DataModeLabel } from "@/components/data-mode-label";
 import { formatUtc } from "@/lib/risk/format";
 import type { ScenarioView } from "@/lib/handoff/scenarios";
@@ -38,6 +39,17 @@ export function EvidencePanel({ scenario }: { scenario: ScenarioView }) {
       <h2 id="evidence-panel" className="font-display text-heading-sm text-ink">
         Evidence
       </h2>
+
+      <div className="mt-4">
+        <ContainmentDiagram
+          sources={claims.map((claim) => ({
+            label: claim.publisherOrAuthor ?? "An anonymous post",
+            sourceClass: claim.sourceClass,
+          }))}
+          usableOrigins={scenario.usableOriginCount}
+          state={scenario.record.state}
+        />
+      </div>
 
       <div className="mt-4 flex flex-wrap gap-x-8 gap-y-3 rounded-lg border border-edge bg-canvas-sunken p-4">
         <Count value={claims.length} label="Claims ingested" />

@@ -21,5 +21,5 @@ export function CoachConsole({ stage, onChoose }: { stage: MissionStage; onChoos
 }
 
 function ConsoleField({ label, value, strong = false }: { label: string; value: string; strong?: boolean }) {
-  return <section className="px-4 py-4"><h3 className="font-data text-[10px] uppercase tracking-[0.06em] text-ink-muted">{label}</h3><p className={`mt-2 text-sm leading-relaxed ${strong ? "font-semibold text-white" : "text-ink-secondary"}`}>{value}</p></section>;
+  return <section className="px-4 py-4"><h3 className="font-data text-[10px] uppercase tracking-[0.06em] text-ink-muted">{label}</h3><p className={`mt-2 text-sm leading-relaxed ${strong ? "font-semibold text-ink" : "text-ink-secondary"}`}>{value}</p></section>;
 }

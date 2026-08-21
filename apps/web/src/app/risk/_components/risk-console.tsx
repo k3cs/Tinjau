@@ -14,6 +14,7 @@ import { EvidencePanel } from "./evidence-panel";
 import { MarketPanel } from "./market-panel";
 import { ReasonLedger } from "./reason-ledger";
 import { StateHeader } from "./state-header";
+import { StateLadder } from "./state-ladder";
 import { TrustBoundary } from "./trust-boundary";
 
 const OPTIONS = SCENARIOS.map((scenario) => ({
@@ -41,13 +42,14 @@ export function RiskConsole() {
       <div className="demo-shell">
         <div className="mx-auto max-w-[1440px] px-4 py-12 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <p className="data-label text-signal">Risk state</p>
+            <p className="data-label text-signal">How it decides</p>
             <h1 className="mt-3 font-display text-section-sm text-ink lg:text-section-lg">
               Read the decision, not the dashboard.
             </h1>
-            <p className="mt-4 text-body-md text-ink-muted">
-              Two frozen scenarios, end to end. Every value below is read from the published
-              backend handoff, including the ones that do not flatter us.
+            <p className="mt-4 max-w-[54ch] text-body-md text-ink-muted">
+              Two saved cases, followed from the news that arrived to the fee the pool charged.
+              Every value comes from the published record, including the ones that do not flatter
+              us.
             </p>
           </div>
 
@@ -56,7 +58,6 @@ export function RiskConsole() {
               options={OPTIONS}
               value={slug}
               onChange={(next) => setSlug(next as typeof slug)}
-              onDark
               ariaLabel="Choose a scenario"
             />
             <p className="mt-3 text-body-sm text-ink-faint">{scenario.purpose}</p>
@@ -69,6 +70,9 @@ export function RiskConsole() {
             transition={reduced ? { duration: 0 } : scenarioTransition}
             className="mt-10 space-y-10"
           >
+            {/* The vocabulary before the argument that uses it. */}
+            <StateLadder state={scenario.record.state} />
+
             <StateHeader scenario={scenario} />
 
             {scenario.caveat ? <ConstructedCaveat caveat={scenario.caveat} /> : null}

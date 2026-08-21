@@ -109,11 +109,16 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     id: "fee-hook",
     stage: "08–09 · Act / recover",
     name: "Bounded fee hook",
-    summary: "Historical deployment demonstrates a 500–20,000 fee band and deterministic decay.",
-    maturity: "HISTORICAL",
+    summary: "Reads the registry and charges a fee inside a 500 to 20,000 band that decays on a clock.",
+    // Promoted from HISTORICAL on 2026-08-21. The old entry said the
+    // registry-to-hook integration was still pending, which stopped being true
+    // at T4.2: TinjauFeeHook is deployed on X Layer Testnet reading
+    // TinjauRiskRegistry, and the fee it produces was decoded from
+    // PoolManager's own Swap event rather than from a view function.
+    maturity: "IMPLEMENTED",
     dataMode: "OBSERVED",
-    evidence: "Deployed AfterhoursFeeHook historical artifact",
-    limitation: "The immutable historical name is factual; final Tinjau registry-to-hook integration is pending.",
+    evidence: "TinjauFeeHook on X Layer Testnet; fees read from PoolManager Swap events",
+    limitation: "The pool is builder-controlled test liquidity with mock tokens, so it demonstrates enforcement and is not a market.",
     href: "/demo",
   },
   {

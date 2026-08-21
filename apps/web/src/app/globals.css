@@ -6,20 +6,26 @@
  * Base layer values mirror the OKX Design System tokens read from
  * web3.okx.com/xlayer on 2026-08-21. Token names are in the comments so a
  * reader can check any value against that stylesheet. See DESIGN.md.
+ *
+ * Dark is the only theme. `color-scheme: dark` is a single value, not the
+ * `light dark` pair, so form controls, scrollbars and the pre-paint background
+ * the browser draws before CSS lands are all carbon. There is no toggle and no
+ * system-preference branch anywhere in this file; `test/writing-rules.test.ts`
+ * fails the build if one appears.
  */
 @layer base {
   html {
-    color-scheme: light dark;
+    color-scheme: dark;
     scroll-behavior: smooth;
-    /* --okd-color-content-tertiary / --okd-color-background-base-secondary */
-    scrollbar-color: #5b5b5b #fafafa;
+    /* --okd-color-content-tertiary / --okd-color-background-base-primary */
+    scrollbar-color: #5b5b5b #000000;
     scrollbar-width: thin;
   }
 
   body {
     min-width: 320px;
-    background-color: #fafafa; /* --okd-color-background-base-secondary */
-    color: #000000; /* --okd-color-content-primary */
+    background-color: #000000; /* --okd-color-background-base-primary (dark) */
+    color: #ffffff; /* --okd-color-content-primary (dark) */
     font-size: 16px; /* --okd-text-body-md-regular-font-size */
     line-height: 24px; /* --okd-text-body-md-regular-line-height */
     -webkit-font-smoothing: antialiased;
@@ -40,20 +46,20 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #b3b3b3;
+    background-color: #5b5b5b;
     border: 2px solid transparent;
     background-clip: content-box;
     border-radius: 8px; /* --global-scrollbar-border-radius */
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background-color: #5b5b5b;
+    background-color: #b3b3b3;
   }
 
   /*
-   * Two rings so the indicator survives on paper, on carbon and on the brand
-   * lime itself. OKX's own focus treatment layers a contrast ring under the
-   * colour ring for the same reason.
+   * Two rings, because the indicator has to survive on carbon, on a raised
+   * surface, and on the brand lime itself. OKX's own focus treatment layers a
+   * contrast ring under the colour ring for the same reason.
    */
   :focus-visible {
     outline: 2px solid #bcff2f;
@@ -63,7 +69,7 @@
   }
 
   ::placeholder {
-    color: #5b5b5b;
+    color: #b3b3b3;
     opacity: 1;
   }
 
@@ -95,11 +101,10 @@
   }
 
   .section-rule {
-    @apply border-t border-edge-light;
+    @apply border-t border-edge;
   }
 
   .demo-shell {
-    color-scheme: dark;
     @apply min-h-[calc(100vh-4rem)] bg-canvas text-ink;
   }
 
@@ -112,13 +117,13 @@
 
   .btn-secondary {
     @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-pill border
-      border-current px-5 font-body text-body-sm font-medium transition-colors duration-150
-      ease-tinjau hover:bg-black/[0.06] active:translate-y-px;
+      border-edge-strong px-5 font-body text-body-sm font-medium text-ink transition-colors
+      duration-150 ease-tinjau hover:border-signal hover:text-signal active:translate-y-px;
   }
 
   /* A panel is a flat field bounded by a hairline, never a shadowed card. */
   .panel {
-    @apply rounded-xl border border-edge-light bg-paper-bright;
+    @apply rounded-xl border border-edge bg-canvas-sunken;
   }
 
   .panel-dark {

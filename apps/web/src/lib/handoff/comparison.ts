@@ -64,6 +64,20 @@ export function cellPair(
   };
 }
 
+/** Every comparable grid point, in a stable order, both bases attached. */
+export function comparablePairs(): CellPair[] {
+  const out: CellPair[] = [];
+  for (const scenario of SCENARIO_ROWS) {
+    for (const k of K_GRID) {
+      for (const bps of DRAWDOWN_GRID) {
+        const pair = cellPair(scenario.scenarioId, k, bps);
+        if (pair.comparable) out.push(pair);
+      }
+    }
+  }
+  return out;
+}
+
 /** How many comparable cells flip sign between the two bases. */
 export function signFlipCount(): { flipped: number; comparable: number } {
   let flipped = 0;
@@ -79,6 +93,46 @@ export function signFlipCount(): { flipped: number; comparable: number } {
     }
   }
   return { flipped, comparable };
+}
+
+/**
+ * The behavioural half of the benchmark: did a policy fire, and on what.
+ *
+ * This is the half that survives. The economics flip sign between the two
+ * metric bases, so nothing here reads a dollar figure; `triggerCount` and
+ * `status` are unaffected by the arithmetic convention, which is exactly why
+ * the defensible claim is a behavioural one.
+ */
+export interface PolicyBehaviour {
+  policyId: string;
+  /** The grid point, as a short label: `k=2` or `150 bps`. */
+  setting: string;
+  status: string;
+  triggerCount: number;
+  fired: boolean;
+}
+
+interface BenchmarkRow {
+  scenarioId: string;
+  policyId: string;
+  parameters: Record<string, number | undefined>;
+  behaviour?: { status: string; triggerCount: number };
+}
+
+export function behaviourFor(scenarioId: string): PolicyBehaviour[] {
+  return (COMPARISON.results as BenchmarkRow[])
+    .filter((row) => row.scenarioId === scenarioId && row.behaviour !== undefined)
+    .map((row) => {
+      const k = row.parameters.k;
+      const bps = row.parameters.minDrawdownBps;
+      return {
+        policyId: row.policyId,
+        setting: k !== undefined ? `k=${k}` : bps !== undefined ? `${bps} bps` : "fixed",
+        status: row.behaviour!.status,
+        triggerCount: row.behaviour!.triggerCount,
+        fired: row.behaviour!.triggerCount > 0,
+      };
+    });
 }
 
 export function formatUsd(value: number | null): string {

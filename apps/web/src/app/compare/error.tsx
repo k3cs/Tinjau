@@ -12,7 +12,7 @@ export default function ComparisonError({ reset }: { error: Error & { digest?: s
         <button
           type="button"
           onClick={reset}
-          className="mt-7 min-h-11 rounded-md bg-signal px-4 font-data text-xs font-semibold uppercase tracking-[0.06em] text-black transition-colors hover:bg-white"
+          className="mt-7 min-h-11 rounded-md bg-signal px-4 font-data text-xs font-semibold uppercase tracking-[0.06em] text-black transition-colors hover:bg-signal-soft"
         >
           Retry comparison
         </button>

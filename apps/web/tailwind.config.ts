@@ -8,29 +8,19 @@ import type { Config } from "tailwindcss";
  *
  * Semantic risk colours are Tinjau's own meaning applied to OKX's functional
  * ramp, so a judge who knows X Layer reads our states without relearning them.
+ *
+ * **Dark is the only theme.** The light half of the OKX ramp (`paper`, `coal`,
+ * `edge-light`, and the `-deep` text steps) was deleted rather than left unused,
+ * because an unused token is an invitation: the next component that reaches for
+ * `bg-paper-bright` would silently punch a white hole in a black page. There is
+ * no token to reach for now, and `test/writing-rules.test.ts` fails the build if
+ * one of the old names reappears in a class string.
  */
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        // --- OKX light surfaces (okd background-base / surface, light theme) ---
-        paper: {
-          DEFAULT: "#FAFAFA", // --okd-color-background-base-secondary
-          bright: "#FFFFFF", // --okd-color-background-base-primary
-          soft: "#F3F3F3", // --okd-color-background-surface-primary
-          sunken: "#F6F6F6", // --okd-color-card-secondary
-        },
-        // --- OKX light content ramp ---
-        coal: {
-          DEFAULT: "#000000", // --okd-color-content-primary
-          soft: "#383838", // --okd-color-content-secondary
-          muted: "#5B5B5B", // --okd-color-content-tertiary
-          // --okd-color-content-static-subtle. OKX also ships #858585
-          // (content-static-subtler), but at 3.5:1 on #FAFAFA it fails AA for
-          // label text, so the subtler step is reserved for non-text use.
-          faint: "#5E5E5E",
-        },
         // --- OKX dark surfaces ---
         canvas: {
           DEFAULT: "#000000", // --okd-color-background-base-primary (dark)
@@ -53,37 +43,31 @@ const config: Config = {
         edge: {
           DEFAULT: "#383838", // --okd-color-border-primary (dark)
           strong: "#4D4D4D", // --okd-color-border-secondary (dark)
-          light: "#E6E6E6", // --okd-color-border-primary (light)
         },
         // --- OKX brand ---
         signal: {
           DEFAULT: "#BCFF2F", // --okd-color-background-surface-brand (dark)
           soft: "#E6FFB0", // --okd-color-brand-content
-          deep: "#2B6D17", // --okd-color-brand-primary (light)
         },
         // --- Tinjau semantics, drawn from OKX's functional colours ---
-        // Each semantic colour ships three steps because one value cannot pass
-        // AA on both #000 and #FAFAFA. `DEFAULT` is for fills, borders and
-        // large type; `soft` is text on carbon; `deep` is text on paper.
+        // Two steps each. `DEFAULT` is for fills, borders and large type; `soft`
+        // is the lighter step used when the colour has to carry small text on
+        // carbon, where the fill step lands near the AA boundary.
         normal: {
-          DEFAULT: "#31BD65", // --okd-color-fq-positive (light)
-          soft: "#12E366", // --okd-color-categorical-04 (light)
-          deep: "#2B6D17", // --okd-color-content-success-default (light)
+          DEFAULT: "#31BD65", // --okd-color-fq-positive
+          soft: "#12E366", // --okd-color-categorical-04
         },
         watch: {
           DEFAULT: "#F76816", // --okd-color-fq-warning (dark)
           soft: "#FFB729", // --okd-color-content-dataviz-categorical-3 (dark)
-          deep: "#BA5D00", // --okd-color-content-warning-default (light)
         },
         protect: {
           DEFAULT: "#F04872", // --okd-color-fq-critical (dark)
-          soft: "#FF7888", // --okd-color-categorical-05 (light)
-          deep: "#BA2133", // --okd-color-content-danger-default (light)
+          soft: "#FF7888", // --okd-color-categorical-05
         },
         confirm: {
           DEFAULT: "#4283FF", // --okd-color-blue-900 (dark)
-          soft: "#6BA6FF", // --okd-color-blue-400 (light)
-          deep: "#0B5BCB", // --okd-color-content-dataviz-categorical-2 (light)
+          soft: "#6BA6FF", // --okd-color-blue-400
         },
         maturity: {
           implemented: "#31BD65",
@@ -146,10 +130,40 @@ const config: Config = {
           from: { transform: "scaleX(0)" },
           to: { transform: "scaleX(1)" },
         },
+        /*
+         * Diagram vocabulary. `draw` traces a path in the direction the system
+         * actually runs, so the animation carries the reading order rather than
+         * decorating it. Every one of these uses `both`, so the global
+         * reduced-motion rule (which collapses the duration to 0.01ms) leaves the
+         * finished state on screen instead of a half-drawn line.
+         */
+        draw: {
+          from: { strokeDashoffset: "var(--draw-length, 1000)" },
+          to: { strokeDashoffset: "0" },
+        },
+        "fade-up": {
+          from: { opacity: "0", transform: "translateY(6px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "fade-right": {
+          from: { opacity: "0", transform: "translateX(-8px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
+        "stop-short": {
+          "0%": { transform: "translateX(-40px)", opacity: "0" },
+          "60%": { transform: "translateX(0)", opacity: "1" },
+          "72%": { transform: "translateX(-4px)", opacity: "1" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
+        },
       },
       animation: {
         "rise-in": "rise-in 380ms cubic-bezier(0.22, 1, 0.36, 1) both",
         "sweep-in": "sweep-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both",
+        draw: "draw 900ms cubic-bezier(0.22, 1, 0.36, 1) both",
+        "draw-slow": "draw 1400ms cubic-bezier(0.22, 1, 0.36, 1) both",
+        "fade-up": "fade-up 420ms cubic-bezier(0.22, 1, 0.36, 1) both",
+        "fade-right": "fade-right 420ms cubic-bezier(0.22, 1, 0.36, 1) both",
+        "stop-short": "stop-short 900ms cubic-bezier(0.22, 1, 0.36, 1) both",
       },
     },
   },

@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Reveal } from "@/components/reveal";
+import { WiringGapDiagram } from "@/components/diagrams/wiring-gap-diagram";
 import { PRODUCT_CAPABILITIES } from "@/lib/product/capabilities";
 import { ROADMAP, ROADMAP_HORIZON_LABEL, type RoadmapHorizon } from "@/lib/product/roadmap";
 
 import { CapabilityCard } from "./_components/capability-card";
+import { RoadmapRail } from "./_components/roadmap-rail";
 
 export const metadata: Metadata = {
   title: "What exists, what doesn't · Tinjau",
@@ -22,17 +24,16 @@ const PARTIAL = PRODUCT_CAPABILITIES.filter(
 
 export default function RoadmapPage() {
   return (
-    <div className="bg-paper text-coal">
+    <div className="bg-canvas text-ink">
       <section className="mx-auto max-w-[1440px] px-4 pb-16 pt-14 sm:px-6 lg:px-8">
         <div className="max-w-4xl">
-          <p className="data-label text-coal-faint">Roadmap</p>
-          <h1 className="mt-4 font-display text-section-sm text-coal lg:text-section-lg">
+          <p className="data-label text-ink-faint">Roadmap</p>
+          <h1 className="mt-4 font-display text-section-sm text-ink lg:text-section-lg">
             A line down the middle of the product.
           </h1>
-          <p className="mt-6 max-w-3xl text-body-md text-coal-soft">
-            Everything on the left runs today and has evidence behind it. Everything on the right
-            is an intention. Nothing on the right is described in the present tense, and none of it
-            is part of what this submission claims.
+          <p className="mt-5 max-w-[50ch] text-body-md text-ink-secondary">
+            The top half runs today and has evidence behind it. The bottom half is an intention,
+            written in the future tense, and claims nothing.
           </p>
         </div>
       </section>
@@ -40,15 +41,15 @@ export default function RoadmapPage() {
       <section className="section-rule">
         <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-baseline gap-x-4">
-            <h2 className="font-display text-heading-lg text-coal">Runs today</h2>
-            <p className="font-data text-[12px] text-coal-faint">
+            <h2 className="font-display text-heading-lg text-ink">Runs today</h2>
+            <p className="font-data text-[12px] text-ink-faint">
               {BUILT.length} capabilities · each with a test or an artifact
             </p>
           </div>
 
-          <div className="mt-8 grid gap-px border border-edge-light bg-edge-light sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-px border border-edge bg-edge sm:grid-cols-2 lg:grid-cols-3">
             {BUILT.map((capability, index) => (
-              <Reveal key={capability.id} delay={index * 0.03} className="bg-paper-bright">
+              <Reveal key={capability.id} delay={index * 0.03} className="bg-canvas-sunken">
                 <CapabilityCard capability={capability} />
               </Reveal>
             ))}
@@ -58,23 +59,28 @@ export default function RoadmapPage() {
 
       <section className="section-rule">
         <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 lg:px-8">
-          <h2 className="font-display text-heading-lg text-coal">Exists, but not finished</h2>
-          <p className="mt-2 max-w-3xl text-body-md text-coal-muted">
-            Historical deployments and unintegrated paths. Real, and not yet part of the final
-            loop.
-          </p>
+          <div className="max-w-2xl">
+            <h2 className="font-display text-heading-lg text-ink">Built, not plugged in</h2>
+            <p className="mt-2 max-w-[52ch] text-body-md text-ink-muted">
+              These pieces are finished and they work. Nothing joins them to the loop yet, so
+              the loop runs without them.
+            </p>
+          </div>
 
-          <div className="mt-8 grid gap-px border border-edge-light bg-edge-light sm:grid-cols-2">
-            {PARTIAL.map((capability, index) => (
-              <Reveal key={capability.id} delay={index * 0.03} className="bg-paper-bright">
-                <CapabilityCard capability={capability} />
-              </Reveal>
-            ))}
+          <div className="mt-8 grid gap-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-start">
+            <WiringGapDiagram />
+            <div className="grid gap-px border border-edge bg-edge">
+              {PARTIAL.map((capability, index) => (
+                <Reveal key={capability.id} delay={index * 0.03} className="bg-canvas-sunken">
+                  <CapabilityCard capability={capability} />
+                </Reveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-coal text-paper-bright">
+      <section className="section-rule bg-canvas-sunken text-ink">
         <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-baseline gap-x-4">
             <h2 className="font-display text-heading-lg">Not built</h2>
@@ -82,54 +88,20 @@ export default function RoadmapPage() {
               Roadmap · nothing here is shipped
             </span>
           </div>
-          <p className="mt-3 max-w-3xl text-body-md text-ink-muted">
-            No dates, no progress bars. Each item names the thing that would have to become true
-            before it could start, which is more useful than a quarter.
+          <p className="mt-3 max-w-[54ch] text-body-md text-ink-muted">
+            No dates and no progress bars, because nothing here is part-way through. The rail
+            below is gated by conditions instead: each gate names what has to become true before
+            anything behind it can move.
           </p>
 
-          <div className="mt-10 space-y-12">
-            {HORIZONS.map((horizon) => {
-              const items = ROADMAP.filter((item) => item.horizon === horizon);
-              if (items.length === 0) return null;
-              return (
-                <div key={horizon}>
-                  <h3 className="data-label border-b border-edge pb-3 text-signal">
-                    {ROADMAP_HORIZON_LABEL[horizon]}
-                  </h3>
-                  <ul className="mt-6 grid gap-8 lg:grid-cols-2">
-                    {items.map((item, index) => (
-                      // Reveal sits inside the <li>, never between <ul> and
-                      // <li>. An intervening <div> breaks the list semantics.
-                      <li key={item.id} className="border-l-2 border-edge-strong pl-5">
-                        <Reveal delay={index * 0.04}>
-                          <div className="flex flex-wrap items-center gap-2">
-                            <h4 className="font-display text-heading-sm text-ink">
-                              {item.title}
-                            </h4>
-                            <span className="data-label rounded border border-maturity-roadmap px-1.5 py-0.5 text-ink-faint">
-                              Roadmap
-                            </span>
-                          </div>
-                          <p className="mt-2 text-body-sm text-ink-secondary">{item.intent}</p>
-                          <p className="mt-3 text-body-sm text-ink-muted">
-                            <span className="text-watch-soft">Blocked by: </span>
-                            {item.blockedBy}
-                          </p>
-                        </Reveal>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
+          <RoadmapRail builtCount={BUILT.length} />
 
           <p className="mt-14 border-t border-edge pt-6 text-body-sm text-ink-muted">
-            The evidence for the left-hand side is on{" "}
+            The evidence for the top half is on{" "}
             <Link href="/proof" className="text-signal underline">
               Proof
             </Link>
-            , and the measured comparison (including the part that did not go our way) is on{" "}
+            , and the measured comparison, including the part that did not go our way, is on{" "}
             <Link href="/compare" className="text-signal underline">
               Compare
             </Link>

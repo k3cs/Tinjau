@@ -1,9 +1,9 @@
 import { COMPARISON_DOC } from "@/lib/handoff/comparison";
 
 const MARK: Record<string, { glyph: string; label: string; tone: string }> = {
-  true: { glyph: "✓", label: "Passed", tone: "text-normal-deep" },
-  false: { glyph: "✕", label: "Failed", tone: "text-protect-deep" },
-  null: { glyph: "–", label: "Not evaluable", tone: "text-coal-faint" },
+  true: { glyph: "✓", label: "Passed", tone: "text-normal-soft" },
+  false: { glyph: "✕", label: "Failed", tone: "text-protect-soft" },
+  null: { glyph: "–", label: "Not evaluable", tone: "text-ink-faint" },
 };
 
 /**
@@ -19,15 +19,15 @@ export function ClaimGate() {
 
   return (
     <section aria-labelledby="claim-gate">
-      <h2 id="claim-gate" className="font-display text-heading-lg text-coal">
+      <h2 id="claim-gate" className="font-display text-heading-lg text-ink">
         The claim gate
       </h2>
-      <p className="mt-2 max-w-3xl text-body-md text-coal-muted">
+      <p className="mt-2 max-w-3xl text-body-md text-ink-muted">
         Four conditions were fixed before the benchmark ran. All four had to hold before this
         project could claim it reduced LP loss.
       </p>
 
-      <div className="mt-6 rounded-xl border-2 border-coal bg-coal p-6 text-paper-bright">
+      <div className="mt-6 rounded-xl border-2 border-protect/50 bg-canvas-sunken p-6 text-ink">
         <p className="data-label text-signal">Result</p>
         <p className="mt-2 font-display text-heading-md">
           <span className="font-data">{gate.field}</span> ={" "}
@@ -53,15 +53,15 @@ export function ClaimGate() {
                   {mark.glyph}
                 </span>
                 <div className="min-w-0">
-                  <p className="font-body text-body-sm font-medium text-coal">
-                    <span className="text-coal-faint">{index + 1}. </span>
+                  <p className="font-body text-body-sm font-medium text-ink">
+                    <span className="text-ink-faint">{index + 1}. </span>
                     {condition.text}
                   </p>
-                  <p className="mt-1 font-data text-[10px] uppercase tracking-[0.06em] text-coal-faint">
+                  <p className="mt-1 font-data text-[10px] uppercase tracking-[0.06em] text-ink-faint">
                     <span className="sr-only">Status: </span>
                     {mark.label}
                   </p>
-                  <p className="mt-2 text-body-sm text-coal-muted">{condition.detail}</p>
+                  <p className="mt-2 text-body-sm text-ink-muted">{condition.detail}</p>
                 </div>
               </div>
             </li>
@@ -69,7 +69,7 @@ export function ClaimGate() {
         })}
       </ol>
 
-      <p className="mt-6 rounded-xl border border-edge-light bg-paper-soft p-5 text-body-sm text-coal-muted">
+      <p className="mt-6 rounded-xl border border-edge bg-surface p-5 text-body-sm text-ink-muted">
         {gate.amd002Excluded}
       </p>
     </section>

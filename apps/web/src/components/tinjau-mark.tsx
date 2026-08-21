@@ -27,7 +27,7 @@
  * the favicon.
  *
  * Colour: `currentColor`, so the caller owns it. On carbon use `text-signal`
- * (`#BCFF2F`). On paper use `text-signal-deep` (`#2B6D17`), never the lime,
+ * (`#BCFF2F`). On paper use `text-signal` (`#2B6D17`), never the lime,
  * which fails contrast on a light surface. This is not a naive inversion; it is
  * the OKX light-mode brand token, and it is the same rule the rest of the
  * system follows.

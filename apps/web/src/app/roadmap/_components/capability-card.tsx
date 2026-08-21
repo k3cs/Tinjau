@@ -30,15 +30,15 @@ export function CapabilityCard({ capability }: { capability: ProductCapability }
   return (
     <article className="flex h-full flex-col p-6">
       <div className="flex flex-wrap items-center gap-2">
-        <CapabilityBadge maturity={capability.maturity} onLight />
+        <CapabilityBadge maturity={capability.maturity} />
         {capability.dataMode ? (
-          <span className="data-label text-coal-faint">{capability.dataMode}</span>
+          <span className="data-label text-ink-faint">{capability.dataMode}</span>
         ) : null}
       </div>
 
-      <h3 className="mt-3 font-display text-heading-sm text-coal">{capability.name}</h3>
-      <p className="mt-2 text-body-sm text-coal-muted">{capability.summary}</p>
-      <p className="mt-4 border-t border-edge-light pt-3 text-body-xs text-coal-faint">
+      <h3 className="mt-3 font-display text-heading-sm text-ink">{capability.name}</h3>
+      <p className="mt-2 text-body-sm text-ink-muted">{capability.summary}</p>
+      <p className="mt-4 border-t border-edge pt-3 text-body-xs text-ink-faint">
         {capability.limitation}
       </p>
 
@@ -49,7 +49,7 @@ export function CapabilityCard({ capability }: { capability: ProductCapability }
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
         aria-controls={panelId}
-        className="-mx-2 inline-flex min-h-10 items-center gap-2 self-start rounded px-2 font-body text-body-xs font-medium text-coal-soft transition-colors duration-150 ease-tinjau hover:text-coal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coal focus-visible:ring-offset-2 focus-visible:ring-offset-paper-bright"
+        className="-mx-2 inline-flex min-h-10 items-center gap-2 self-start rounded px-2 font-body text-body-xs font-medium text-ink-secondary transition-colors duration-150 ease-tinjau hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
       >
         <m.span
           aria-hidden
@@ -74,16 +74,16 @@ export function CapabilityCard({ capability }: { capability: ProductCapability }
               transition={reduced ? { duration: 0 } : { duration: 0.26, ease: EASE_OUT }}
               className="overflow-hidden"
             >
-              <dl className="mt-3 border-t border-edge-light pt-3 text-body-xs">
-                <dt className="data-label text-coal-faint">Stage</dt>
-                <dd className="mt-1 font-data text-coal-soft">{capability.stage}</dd>
-                <dt className="data-label mt-3 text-coal-faint">Evidence</dt>
-                <dd className="mt-1 font-data text-coal-soft">{capability.evidence}</dd>
+              <dl className="mt-3 border-t border-edge pt-3 text-body-xs">
+                <dt className="data-label text-ink-faint">Stage</dt>
+                <dd className="mt-1 font-data text-ink-secondary">{capability.stage}</dd>
+                <dt className="data-label mt-3 text-ink-faint">Evidence</dt>
+                <dd className="mt-1 font-data text-ink-secondary">{capability.evidence}</dd>
               </dl>
               {capability.href ? (
                 <Link
                   href={capability.href}
-                  className="mt-3 inline-flex min-h-10 items-center font-body text-body-xs font-medium text-coal underline underline-offset-2 hover:text-signal-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coal focus-visible:ring-offset-2"
+                  className="mt-3 inline-flex min-h-10 items-center font-body text-body-xs font-medium text-ink underline underline-offset-2 hover:text-signal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2"
                 >
                   See it on {capability.href}
                 </Link>
