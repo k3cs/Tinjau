@@ -43,12 +43,12 @@
     {
       "key": "protectScenario",
       "path": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/scenario-confirmed-protect.json",
-      "sha256": "3c1d2534dee0f2c43270ef582821b17306335cce9e6fc6b8aad089c5e8239c7e"
+      "sha256": "df31d7a02b78d1237441eb349bd7cd5e6af3c21c97661357fe1f4e753538da7b"
     },
     {
       "key": "rumourScenario",
       "path": "docs/buildx-orion-2026/outputs/05-build/frontend-handoff/scenario-rumor-watch.json",
-      "sha256": "3b1abefa5d48e546e89b3f730da96c14595f5984de988b29163d8c1aa9c1b03a"
+      "sha256": "cf82dac8e829ea64b5df135473442e4dedd46b6ca8237d080c975b897650781f"
     }
   ],
   "fixtureFallback": {

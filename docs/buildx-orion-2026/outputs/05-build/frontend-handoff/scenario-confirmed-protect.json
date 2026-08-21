@@ -704,7 +704,7 @@
   },
   "onChain": {
     "status": "POSTED_ON_X_LAYER_TESTNET",
-    "addressStatus": "T4.2 working addresses — not final; T7.2 owns the authoritative list",
+    "addressStatus": "T7.2 authoritative list, verified 2026-08-21. Both pools are builder-controlled test liquidity.",
     "chainId": 1952,
     "networkLabel": "x-layer-testnet",
     "registry": "0x1a1e17306f789f5Ec7012B1E2CB866DeDB61E2b1",

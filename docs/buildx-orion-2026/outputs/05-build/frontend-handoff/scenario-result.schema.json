@@ -165,8 +165,8 @@
         "status": { "const": "POSTED_ON_X_LAYER_TESTNET" },
         "addressStatus": {
           "type": "string",
-          "pattern": "not final",
-          "description": "Pattern-constrained. These are T4.2 working addresses; T7.2 owns the authoritative list, and the label may not be quietly dropped."
+          "pattern": "builder-controlled",
+          "description": "Pattern-constrained so the label cannot be quietly dropped. This pattern used to require 'not final', which was correct until T7.2 verified the list and then began enforcing a false statement. The fact that must survive every rewrite is that the pools are BUILDER-CONTROLLED test liquidity, so that is what is pinned now."
         },
         "chainId": {
           "const": 1952,

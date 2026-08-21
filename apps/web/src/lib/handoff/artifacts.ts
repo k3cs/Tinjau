@@ -22,6 +22,20 @@ import comparisonJson from "../../../../../docs/buildx-orion-2026/outputs/05-bui
 import confirmedJson from "../../../../../docs/buildx-orion-2026/outputs/05-build/frontend-handoff/scenario-confirmed-protect.json";
 import rumourJson from "../../../../../docs/buildx-orion-2026/outputs/05-build/frontend-handoff/scenario-rumor-watch.json";
 
+/**
+ * A repository path, as something a reader can actually open.
+ *
+ * The handoff cites its own provenance by path. Printed as bare text on a page
+ * that is a dead end: the file is public, but a visitor has no way to get to it.
+ * Linked, the same string becomes the strongest thing on the page, because the
+ * claim above it can be checked.
+ */
+export const REPO = "https://github.com/k3cs/Tinjau/blob/main";
+
+export function repoUrl(path: string): string {
+  return `${REPO}/${path.replace(/^\/+/, "")}`;
+}
+
 export const HANDOFF_DIR = "docs/buildx-orion-2026/outputs/05-build/frontend-handoff";
 
 /** Regenerated 2026-08-21. Validated by `tools/validate.mjs` in that directory. */

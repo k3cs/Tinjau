@@ -23,7 +23,8 @@ const NAV = [
   { href: "/proof", label: "Proof" },
   { href: "/x-layer", label: "Why X Layer" },
   { href: "/roadmap", label: "Roadmap" },
-  { href: "/developers", label: "Developers" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/developers", label: "Developer Support" },
 ];
 
 export function SiteHeader() {

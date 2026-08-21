@@ -204,7 +204,7 @@ write("scenario-rumor-watch.json", {
   },
   onChain: {
     status: "POSTED_ON_X_LAYER_TESTNET",
-    addressStatus: "T4.2 working addresses — not final; T7.2 owns the authoritative list",
+    addressStatus: "T7.2 authoritative list, verified 2026-08-21. Both pools are builder-controlled test liquidity.",
     chainId: manifestProd.network.chainId,
     networkLabel: manifestProd.network.networkLabel,
     registry: manifestProd.network.addresses.registry,
@@ -389,7 +389,7 @@ write("scenario-confirmed-protect.json", {
   },
   onChain: {
     status: "POSTED_ON_X_LAYER_TESTNET",
-    addressStatus: "T4.2 working addresses — not final; T7.2 owns the authoritative list",
+    addressStatus: "T7.2 authoritative list, verified 2026-08-21. Both pools are builder-controlled test liquidity.",
     chainId: manifestDemo.network.chainId,
     networkLabel: manifestDemo.network.networkLabel,
     registry: demoAddresses.registry,

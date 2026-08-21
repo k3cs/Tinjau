@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PolicySightDiagram } from "@/components/diagrams/policy-sight-diagram";
 import { RestraintDiagram } from "@/components/diagrams/restraint-diagram";
 import { SignFlipDiagram } from "@/components/diagrams/sign-flip-diagram";
-import { HANDOFF_DIR, HANDOFF_GENERATED } from "@/lib/handoff/artifacts";
+import { HANDOFF_DIR, HANDOFF_GENERATED, repoUrl } from "@/lib/handoff/artifacts";
 import { COMPARISON_DOC, signFlipCount } from "@/lib/handoff/comparison";
 
 import { ClaimGate } from "./claim-gate";
@@ -209,12 +209,28 @@ export function Benchmark() {
               {COMPARISON_DOC.eventSelection.disclosure}
             </p>
             <p className="mt-4 font-data text-[11px] text-ink-faint">
-              {COMPARISON_DOC.eventSelection.document}
+              <a
+                href={repoUrl(COMPARISON_DOC.eventSelection.document)}
+                target="_blank"
+                rel="noreferrer"
+                className="text-signal underline underline-offset-4"
+              >
+                {COMPARISON_DOC.eventSelection.document}
+              </a>
             </p>
           </div>
 
           <p className="mt-10 font-data text-[11px] text-ink-faint">
-            Source: {HANDOFF_DIR}/three-policy-comparison.json · regenerated {HANDOFF_GENERATED}.{" "}
+            Source:{" "}
+            <a
+              href={repoUrl(`${HANDOFF_DIR}/three-policy-comparison.json`)}
+              target="_blank"
+              rel="noreferrer"
+              className="text-signal underline underline-offset-4"
+            >
+              three-policy-comparison.json
+            </a>{" "}
+            · regenerated {HANDOFF_GENERATED}.{" "}
             <Link href="/risk" className="underline underline-offset-4">
               See the risk records these policies were run against
             </Link>

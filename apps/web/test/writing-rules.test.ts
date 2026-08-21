@@ -275,6 +275,41 @@ test("every loading skeleton that names itself also carries a role", () => {
   assert.deepEqual(offenders, [], offenders.join("\n"));
 });
 
+/**
+ * The handoff cites the planning documents by identifier, because it is written
+ * for people holding them. On a page those identifiers are unreadable: a visitor
+ * gets "T0.4 §5" with no link and no way to learn what it names. `deepHouseStyle`
+ * rewrites them at the boundary, and this pins that it actually runs, on the
+ * real artifacts rather than on a fixture.
+ */
+test("no string reaching a component still cites an internal document", async () => {
+  const artifacts = await import("../src/lib/handoff/artifacts.ts");
+  const offenders: string[] = [];
+  // `producedBy.tasks` and `producedByTasks` are arrays of bare task ids: machine
+  // provenance, not prose, and nothing renders them as a sentence. Rewriting
+  // them would destroy the provenance without helping any reader, so they are
+  // excluded here rather than mangled at the boundary.
+  const PROVENANCE_FIELDS = /\.(producedBy\.tasks|producedByTasks)\[/;
+
+  const walk = (value: unknown, path: string) => {
+    if (PROVENANCE_FIELDS.test(path)) return;
+    if (typeof value === "string") {
+      if (/§\s*\d/.test(value)) offenders.push(`${path}: section marker in ${JSON.stringify(value.slice(0, 90))}`);
+      if (/\bT\d\.\d\b/.test(value)) offenders.push(`${path}: task id in ${JSON.stringify(value.slice(0, 90))}`);
+      if (/\btracker\b/i.test(value)) offenders.push(`${path}: names the tracker in ${JSON.stringify(value.slice(0, 90))}`);
+      return;
+    }
+    if (Array.isArray(value)) return value.forEach((item, i) => walk(item, `${path}[${i}]`));
+    if (value && typeof value === "object") {
+      for (const [key, item] of Object.entries(value)) walk(item, `${path}.${key}`);
+    }
+  };
+  for (const name of ["RUMOUR_SCENARIO", "CONFIRMED_SCENARIO", "COMPARISON", "DEPLOYED"]) {
+    walk((artifacts as Record<string, unknown>)[name], name);
+  }
+  assert.deepEqual(offenders, [], `Internal document reference reached the UI.\n${offenders.join("\n")}`);
+});
+
 test("no source file makes a claim the evidence does not support", () => {
   const offenders: string[] = [];
   for (const file of SOURCE_FILES) {
