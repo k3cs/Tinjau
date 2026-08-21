@@ -44,8 +44,10 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     summary: "Normalizes claims, resolves assets, collapses duplicates, and exposes contradictions.",
     maturity: "IMPLEMENTED",
     dataMode: "REPLAY",
-    evidence: "14 labeled evaluation cases + evidence graph tests",
-    limitation: "Heuristic derivations surface disagreements for review; they do not silently repair them.",
+    evidence:
+      "14 labeled evaluation cases + evidence graph tests; one live model run on scenario A published beside the heuristics",
+    limitation:
+      "The derivations are heuristics, not a model. One live model run on scenario A agreed on entity resolution and contradiction and differed on 3 of 10 syndication pairs; one run measures no accuracy and changed no verdict.",
     href: "/demo",
   },
   {

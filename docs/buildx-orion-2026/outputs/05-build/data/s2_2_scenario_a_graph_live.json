@@ -1,0 +1,966 @@
+{
+  "schemaVersion": "tinjau.scenario-a-graph-live/1.0.0",
+  "producedBy": "apps/server/src/studies/scenarioAGraphLive.ts",
+  "runAtUtc": "2026-08-21T18:01:11.747Z",
+  "scenarioId": "A-rumor-watch",
+  "scenarioFilePath": "apps/server/scenarios/scenario-a-rumor-watch.json",
+  "scenarioFileSha256": "a69691da55a84968c9076b6f71d6dd64fbca2a647e8a03785dd3598d2f03fc22",
+  "scenarioFilePinnedSha256": "a69691da55a84968c9076b6f71d6dd64fbca2a647e8a03785dd3598d2f03fc22",
+  "documentIntegrity": {
+    "note": "Scenario A pins no sourceContentSha256 on any claim. Rows marked UNPINNED were hashed and recorded but NOT verified against anything. The scenario file itself is checked against a constant this study declared at authoring time, which is a drift alarm rather than an independent freeze.",
+    "pinnedClaimCount": 0,
+    "rows": [
+      {
+        "claimId": "claim-a-001",
+        "localPath": "apps/server/scenarios/sources/simulated-rumor-2026-07-27-social.json",
+        "observedSha256": "d6ec48514fc50c252d6aebd3bc5b71e51b630c3c216470f99d3085e66079dbcd",
+        "pinnedSha256": null,
+        "status": "UNPINNED"
+      }
+    ]
+  },
+  "geminiModel": "gemini-3.6-flash",
+  "ambientGeminiModelEnv": "gemini-3.5-flash",
+  "ambientGeminiModelOverridden": true,
+  "presentedClaims": [
+    {
+      "claimId": "claim-a-001",
+      "sourceClass": "RUMOR",
+      "sourceId": "simulated://tinjau/T0.2/social/nvda-openai-ohio-2026-07-27",
+      "publisherOrAuthor": null,
+      "publishedAt": "2026-07-27T19:11:05Z",
+      "company": "NVIDIA CORPORATION",
+      "tokenSymbol": "wNVDAx",
+      "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+      "claimTextOrPointer": "sources/simulated-rumor-2026-07-27-social.json#claimText"
+    },
+    {
+      "claimId": "claim-a-002",
+      "sourceClass": "NEWS",
+      "sourceId": "cnbc.com/2026-07-27/nvidia-openai-250bn-backstop",
+      "publisherOrAuthor": "CNBC, reporting a Wall Street Journal story",
+      "publishedAt": "2026-07-27T00:00:00Z",
+      "company": "NVIDIA CORPORATION",
+      "tokenSymbol": "wNVDAx",
+      "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+      "claimTextOrPointer": "Headline (verbatim): \"Nvidia and OpenAI in talks for up to $250 billion backstop to fund AI infrastructure plans\""
+    },
+    {
+      "claimId": "claim-a-003",
+      "sourceClass": "NEWS",
+      "sourceId": "thenextweb.com/2026-07-27T20:33:00Z/nvidia-openai-250-billion-backstop",
+      "publisherOrAuthor": "The Next Web — Ana Maria Constantin",
+      "publishedAt": "2026-07-27T20:33:00Z",
+      "company": "NVIDIA CORPORATION",
+      "tokenSymbol": "wNVDAx",
+      "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+      "claimTextOrPointer": "Attribution (verbatim): \"Nvidia is in talks to provide roughly $250 billion in financing guarantees for OpenAI, the Wall Street Journal reported on Sunday, citing people familiar with the matter.\" Non-verification (verbatim): \"Reuters said it could not immediately verify the report, and Nvidia, OpenAI, and the US Commerce Department did not respond to requests for comment.\""
+    },
+    {
+      "claimId": "claim-a-004",
+      "sourceClass": "NEWS",
+      "sourceId": "wsj/2026-07-26/nvidia-openai-financing-guarantees",
+      "publisherOrAuthor": "The Wall Street Journal",
+      "publishedAt": "2026-07-26T00:00:00Z",
+      "company": "NVIDIA CORPORATION",
+      "tokenSymbol": "wNVDAx",
+      "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+      "claimTextOrPointer": "As reported by its syndications: Nvidia is in talks to provide roughly $250 billion in financing guarantees for OpenAI, citing people familiar with the matter."
+    },
+    {
+      "claimId": "claim-a-005",
+      "sourceClass": "NEWS",
+      "sourceId": "datacenterdynamics.com/2026-07/nvidia-considers-250bn-backstop",
+      "publisherOrAuthor": "DataCenterDynamics",
+      "publishedAt": "2026-07-27T00:00:00Z",
+      "company": "NVIDIA CORPORATION",
+      "tokenSymbol": "wNVDAx",
+      "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+      "claimTextOrPointer": "Headline (verbatim): \"Nvidia considers $250bn backstop for OpenAI's planned 10GW Ohio data center - report\""
+    }
+  ],
+  "handLabelsWithheldFromModel": [
+    {
+      "claimId": "claim-a-001",
+      "independenceGroup": "simulated:social/nvda-openai-ohio-2026-07-27",
+      "relation": "ORIGIN",
+      "duplicateOf": null
+    },
+    {
+      "claimId": "claim-a-002",
+      "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+      "relation": "DUPLICATE",
+      "duplicateOf": "claim-a-004"
+    },
+    {
+      "claimId": "claim-a-003",
+      "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+      "relation": "DUPLICATE",
+      "duplicateOf": "claim-a-004"
+    },
+    {
+      "claimId": "claim-a-004",
+      "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+      "relation": "ORIGIN",
+      "duplicateOf": null
+    },
+    {
+      "claimId": "claim-a-005",
+      "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+      "relation": "DUPLICATE",
+      "duplicateOf": "claim-a-004"
+    }
+  ],
+  "prompt": "You are deriving the STRUCTURE of an evidence graph over a fixed set of claims about a tokenised equity. You are not assessing risk, severity, or truth, and you are not recommending any action. Answer only the three structural questions below.\n\n1. ENTITY. Which claims refer to the same underlying entity (company and tokenised asset)? Partition every claim id into entity groups.\n\n2. SYNDICATION ORIGIN. Which claims are syndicated copies of one origin's reporting? A claim that attributes its story to another outlet belongs in that outlet's group, not its own. A claim that is nobody's copy forms a group of one. Partition every claim id into origin groups, and name the origin claim id when the origin is itself one of the claims below.\n\n3. CONTRADICTION. Which PAIRS of claims directly contradict each other — that is, state things that cannot both be true? Different aspects of the same event are not a contradiction. Return an empty array if there are none.\n\nUse only the fields given. Do not use outside knowledge about these companies or these news stories. Every claimId you return must be one of the ids below, spelled exactly.\n\nNote: one claim's \"claimTextOrPointer\" is a file pointer rather than prose. Treat it as the only text available for that claim; do not invent its contents.\n\n--- CLAIMS START ---\n\n[\n  {\n    \"claimId\": \"claim-a-001\",\n    \"sourceClass\": \"RUMOR\",\n    \"sourceId\": \"simulated://tinjau/T0.2/social/nvda-openai-ohio-2026-07-27\",\n    \"publisherOrAuthor\": null,\n    \"publishedAt\": \"2026-07-27T19:11:05Z\",\n    \"company\": \"NVIDIA CORPORATION\",\n    \"tokenSymbol\": \"wNVDAx\",\n    \"tokenAddress\": \"0xa8ddb5cd96b5222afe198316e9a57caa642850d5\",\n    \"eventType\": \"CONTINGENT_FINANCIAL_OBLIGATION\",\n    \"claimTextOrPointer\": \"sources/simulated-rumor-2026-07-27-social.json#claimText\"\n  },\n  {\n    \"claimId\": \"claim-a-002\",\n    \"sourceClass\": \"NEWS\",\n    \"sourceId\": \"cnbc.com/2026-07-27/nvidia-openai-250bn-backstop\",\n    \"publisherOrAuthor\": \"CNBC, reporting a Wall Street Journal story\",\n    \"publishedAt\": \"2026-07-27T00:00:00Z\",\n    \"company\": \"NVIDIA CORPORATION\",\n    \"tokenSymbol\": \"wNVDAx\",\n    \"tokenAddress\": \"0xa8ddb5cd96b5222afe198316e9a57caa642850d5\",\n    \"eventType\": \"CONTINGENT_FINANCIAL_OBLIGATION\",\n    \"claimTextOrPointer\": \"Headline (verbatim): \\\"Nvidia and OpenAI in talks for up to $250 billion backstop to fund AI infrastructure plans\\\"\"\n  },\n  {\n    \"claimId\": \"claim-a-003\",\n    \"sourceClass\": \"NEWS\",\n    \"sourceId\": \"thenextweb.com/2026-07-27T20:33:00Z/nvidia-openai-250-billion-backstop\",\n    \"publisherOrAuthor\": \"The Next Web — Ana Maria Constantin\",\n    \"publishedAt\": \"2026-07-27T20:33:00Z\",\n    \"company\": \"NVIDIA CORPORATION\",\n    \"tokenSymbol\": \"wNVDAx\",\n    \"tokenAddress\": \"0xa8ddb5cd96b5222afe198316e9a57caa642850d5\",\n    \"eventType\": \"CONTINGENT_FINANCIAL_OBLIGATION\",\n    \"claimTextOrPointer\": \"Attribution (verbatim): \\\"Nvidia is in talks to provide roughly $250 billion in financing guarantees for OpenAI, the Wall Street Journal reported on Sunday, citing people familiar with the matter.\\\" Non-verification (verbatim): \\\"Reuters said it could not immediately verify the report, and Nvidia, OpenAI, and the US Commerce Department did not respond to requests for comment.\\\"\"\n  },\n  {\n    \"claimId\": \"claim-a-004\",\n    \"sourceClass\": \"NEWS\",\n    \"sourceId\": \"wsj/2026-07-26/nvidia-openai-financing-guarantees\",\n    \"publisherOrAuthor\": \"The Wall Street Journal\",\n    \"publishedAt\": \"2026-07-26T00:00:00Z\",\n    \"company\": \"NVIDIA CORPORATION\",\n    \"tokenSymbol\": \"wNVDAx\",\n    \"tokenAddress\": \"0xa8ddb5cd96b5222afe198316e9a57caa642850d5\",\n    \"eventType\": \"CONTINGENT_FINANCIAL_OBLIGATION\",\n    \"claimTextOrPointer\": \"As reported by its syndications: Nvidia is in talks to provide roughly $250 billion in financing guarantees for OpenAI, citing people familiar with the matter.\"\n  },\n  {\n    \"claimId\": \"claim-a-005\",\n    \"sourceClass\": \"NEWS\",\n    \"sourceId\": \"datacenterdynamics.com/2026-07/nvidia-considers-250bn-backstop\",\n    \"publisherOrAuthor\": \"DataCenterDynamics\",\n    \"publishedAt\": \"2026-07-27T00:00:00Z\",\n    \"company\": \"NVIDIA CORPORATION\",\n    \"tokenSymbol\": \"wNVDAx\",\n    \"tokenAddress\": \"0xa8ddb5cd96b5222afe198316e9a57caa642850d5\",\n    \"eventType\": \"CONTINGENT_FINANCIAL_OBLIGATION\",\n    \"claimTextOrPointer\": \"Headline (verbatim): \\\"Nvidia considers $250bn backstop for OpenAI's planned 10GW Ohio data center - report\\\"\"\n  }\n]\n\n--- CLAIMS END ---",
+  "promptSha256": "5ab014c161793d73c500b4a3e542e812bb060232fee7ee4744d134b99acd05da",
+  "heuristic": {
+    "entityResolutions": [
+      {
+        "claimId": "claim-a-001",
+        "outcome": "RESOLVED",
+        "resolvedTokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "entityKey": "asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "explanation": "NVIDIA CORPORATION resolves to wNVDAx (0xa8ddb5cd96b5222afe198316e9a57caa642850d5) in pool 0x2a2b11730c2b6d99a58034a869dd810d7300a7b2."
+      },
+      {
+        "claimId": "claim-a-002",
+        "outcome": "RESOLVED",
+        "resolvedTokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "entityKey": "asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "explanation": "NVIDIA CORPORATION resolves to wNVDAx (0xa8ddb5cd96b5222afe198316e9a57caa642850d5) in pool 0x2a2b11730c2b6d99a58034a869dd810d7300a7b2."
+      },
+      {
+        "claimId": "claim-a-003",
+        "outcome": "RESOLVED",
+        "resolvedTokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "entityKey": "asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "explanation": "NVIDIA CORPORATION resolves to wNVDAx (0xa8ddb5cd96b5222afe198316e9a57caa642850d5) in pool 0x2a2b11730c2b6d99a58034a869dd810d7300a7b2."
+      },
+      {
+        "claimId": "claim-a-004",
+        "outcome": "RESOLVED",
+        "resolvedTokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "entityKey": "asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "explanation": "NVIDIA CORPORATION resolves to wNVDAx (0xa8ddb5cd96b5222afe198316e9a57caa642850d5) in pool 0x2a2b11730c2b6d99a58034a869dd810d7300a7b2."
+      },
+      {
+        "claimId": "claim-a-005",
+        "outcome": "RESOLVED",
+        "resolvedTokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "entityKey": "asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "explanation": "NVIDIA CORPORATION resolves to wNVDAx (0xa8ddb5cd96b5222afe198316e9a57caa642850d5) in pool 0x2a2b11730c2b6d99a58034a869dd810d7300a7b2."
+      }
+    ],
+    "independence": [
+      {
+        "claimId": "claim-a-001",
+        "derivedOriginKey": "unrecognised:simulated:",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "simulated:social/nvda-openai-ohio-2026-07-27",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "claim-a-002",
+        "derivedOriginKey": "wsj",
+        "isSyndication": true,
+        "attributedTo": "wsj",
+        "evidence": "reporting a Wall Street Journal story",
+        "relaysUnnamedReport": false,
+        "declaredGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "claim-a-003",
+        "derivedOriginKey": "wsj",
+        "isSyndication": true,
+        "attributedTo": "wsj",
+        "evidence": "the Wall Street Journal reported",
+        "relaysUnnamedReport": false,
+        "declaredGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "claim-a-004",
+        "derivedOriginKey": "wsj",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "claim-a-005",
+        "derivedOriginKey": "unrecognised:datacenterdynamics.com",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": " planned 10GW Ohio data center - report\"",
+        "relaysUnnamedReport": true,
+        "declaredGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+        "disagreesWithDeclared": false
+      }
+    ],
+    "selfRevision": [
+      {
+        "originKey": "wsj",
+        "revised": false,
+        "amounts": [
+          {
+            "claimId": "claim-a-002",
+            "amount": {
+              "value": 250000000000,
+              "text": "$250 billion"
+            }
+          },
+          {
+            "claimId": "claim-a-003",
+            "amount": {
+              "value": 250000000000,
+              "text": "$250 billion"
+            }
+          },
+          {
+            "claimId": "claim-a-004",
+            "amount": {
+              "value": 250000000000,
+              "text": "$250 billion"
+            }
+          }
+        ],
+        "explanation": "Source line \"wsj\" stated a consistent figure."
+      },
+      {
+        "originKey": "unrecognised:datacenterdynamics.com",
+        "revised": false,
+        "amounts": [
+          {
+            "claimId": "claim-a-005",
+            "amount": {
+              "value": 250,
+              "text": "$250"
+            }
+          }
+        ],
+        "explanation": "Source line \"unrecognised:datacenterdynamics.com\" stated a consistent figure."
+      }
+    ],
+    "evidenceGraph": {
+      "independence": [
+        {
+          "claimId": "claim-a-001",
+          "derivedOriginKey": "unrecognised:simulated:",
+          "isSyndication": false,
+          "attributedTo": null,
+          "evidence": null,
+          "relaysUnnamedReport": false,
+          "declaredGroup": "simulated:social/nvda-openai-ohio-2026-07-27",
+          "disagreesWithDeclared": false
+        },
+        {
+          "claimId": "claim-a-002",
+          "derivedOriginKey": "wsj",
+          "isSyndication": true,
+          "attributedTo": "wsj",
+          "evidence": "reporting a Wall Street Journal story",
+          "relaysUnnamedReport": false,
+          "declaredGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+          "disagreesWithDeclared": false
+        },
+        {
+          "claimId": "claim-a-003",
+          "derivedOriginKey": "wsj",
+          "isSyndication": true,
+          "attributedTo": "wsj",
+          "evidence": "the Wall Street Journal reported",
+          "relaysUnnamedReport": false,
+          "declaredGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+          "disagreesWithDeclared": false
+        },
+        {
+          "claimId": "claim-a-004",
+          "derivedOriginKey": "wsj",
+          "isSyndication": false,
+          "attributedTo": null,
+          "evidence": null,
+          "relaysUnnamedReport": false,
+          "declaredGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+          "disagreesWithDeclared": false
+        },
+        {
+          "claimId": "claim-a-005",
+          "derivedOriginKey": "unrecognised:datacenterdynamics.com",
+          "isSyndication": false,
+          "attributedTo": null,
+          "evidence": " planned 10GW Ohio data center - report\"",
+          "relaysUnnamedReport": true,
+          "declaredGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+          "disagreesWithDeclared": false
+        }
+      ],
+      "selfRevision": [
+        {
+          "originKey": "wsj",
+          "revised": false,
+          "amounts": [
+            {
+              "claimId": "claim-a-002",
+              "amount": {
+                "value": 250000000000,
+                "text": "$250 billion"
+              }
+            },
+            {
+              "claimId": "claim-a-003",
+              "amount": {
+                "value": 250000000000,
+                "text": "$250 billion"
+              }
+            },
+            {
+              "claimId": "claim-a-004",
+              "amount": {
+                "value": 250000000000,
+                "text": "$250 billion"
+              }
+            }
+          ],
+          "explanation": "Source line \"wsj\" stated a consistent figure."
+        },
+        {
+          "originKey": "unrecognised:datacenterdynamics.com",
+          "revised": false,
+          "amounts": [
+            {
+              "claimId": "claim-a-005",
+              "amount": {
+                "value": 250,
+                "text": "$250"
+              }
+            }
+          ],
+          "explanation": "Source line \"unrecognised:datacenterdynamics.com\" stated a consistent figure."
+        }
+      ],
+      "recency": [
+        {
+          "claimId": "claim-a-001",
+          "ageSeconds": 4915,
+          "withinWindow": true,
+          "fromFuture": false
+        },
+        {
+          "claimId": "claim-a-002",
+          "ageSeconds": 73980,
+          "withinWindow": true,
+          "fromFuture": false
+        },
+        {
+          "claimId": "claim-a-003",
+          "ageSeconds": 0,
+          "withinWindow": true,
+          "fromFuture": false
+        },
+        {
+          "claimId": "claim-a-004",
+          "ageSeconds": 160380,
+          "withinWindow": true,
+          "fromFuture": false
+        },
+        {
+          "claimId": "claim-a-005",
+          "ageSeconds": 73980,
+          "withinWindow": true,
+          "fromFuture": false
+        }
+      ],
+      "independentOriginCount": 1,
+      "revisedOriginKeys": [],
+      "usableOriginCount": 1,
+      "confidenceFactors": [
+        {
+          "code": "SYNDICATION_DETECTED",
+          "direction": "LOWERS",
+          "explanation": "2 claim(s) attribute their reporting to another outlet, so they were collapsed into that origin rather than counted separately.",
+          "claimIds": [
+            "claim-a-002",
+            "claim-a-003"
+          ]
+        },
+        {
+          "code": "SINGLE_ORIGIN",
+          "direction": "LOWERS",
+          "explanation": "Only 1 independent origin(s) can corroborate this event, below the two required for non-official promotion.",
+          "claimIds": [
+            "claim-a-001",
+            "claim-a-002",
+            "claim-a-003",
+            "claim-a-004",
+            "claim-a-005"
+          ]
+        },
+        {
+          "code": "UNVERIFIED_ATTRIBUTION",
+          "direction": "LOWERS",
+          "explanation": "2 claim(s) rest on unnamed sources or were explicitly not verified by the publisher.",
+          "claimIds": [
+            "claim-a-003",
+            "claim-a-004"
+          ]
+        }
+      ]
+    },
+    "deterministicClustering": {
+      "clusters": [
+        {
+          "eventKey": "deterministic:NVIDIA CORPORATION::CONTINGENT_FINANCIAL_OBLIGATION",
+          "label": "NVIDIA CORPORATION — CONTINGENT_FINANCIAL_OBLIGATION",
+          "claims": [
+            {
+              "claimId": "claim-a-001",
+              "sourceClass": "RUMOR",
+              "dataMode": "SIMULATED",
+              "sourceUrl": null,
+              "sourceId": "simulated://tinjau/T0.2/social/nvda-openai-ohio-2026-07-27",
+              "publisherOrAuthor": null,
+              "publishedAt": "2026-07-27T19:11:05Z",
+              "publishedAtPrecision": "DAY",
+              "sourceContentSha256": null,
+              "company": "NVIDIA CORPORATION",
+              "tokenSymbol": "wNVDAx",
+              "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+              "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+              "claimTextOrPointer": "sources/simulated-rumor-2026-07-27-social.json#claimText",
+              "assertionLevel": "ASSERTED",
+              "describesCompletedEvent": true,
+              "speculationMarkers": [],
+              "publisherDisclaimedVerification": false,
+              "independenceGroup": "simulated:social/nvda-openai-ohio-2026-07-27",
+              "relation": "ORIGIN",
+              "officialConfirmation": false,
+              "expiresAt": "2026-07-28T19:11:05Z",
+              "materiality": "MATERIAL",
+              "provenanceViolations": [],
+              "promotable": true
+            },
+            {
+              "claimId": "claim-a-002",
+              "sourceClass": "NEWS",
+              "dataMode": "REPLAY",
+              "sourceUrl": "https://www.cnbc.com/2026/07/27/nvidia-and-openai-in-talks-for-up-to-250-billion-dollar-ai-backstop.html",
+              "sourceId": "cnbc.com/2026-07-27/nvidia-openai-250bn-backstop",
+              "publisherOrAuthor": "CNBC, reporting a Wall Street Journal story",
+              "publishedAt": "2026-07-27T00:00:00Z",
+              "publishedAtPrecision": "DAY",
+              "sourceContentSha256": null,
+              "company": "NVIDIA CORPORATION",
+              "tokenSymbol": "wNVDAx",
+              "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+              "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+              "claimTextOrPointer": "Headline (verbatim): \"Nvidia and OpenAI in talks for up to $250 billion backstop to fund AI infrastructure plans\"",
+              "assertionLevel": "SPECULATIVE",
+              "describesCompletedEvent": false,
+              "speculationMarkers": [
+                "in talks"
+              ],
+              "publisherDisclaimedVerification": false,
+              "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+              "relation": "DUPLICATE",
+              "officialConfirmation": false,
+              "expiresAt": "2026-07-30T00:00:00Z",
+              "materiality": "MATERIAL",
+              "provenanceViolations": [],
+              "promotable": true
+            },
+            {
+              "claimId": "claim-a-003",
+              "sourceClass": "NEWS",
+              "dataMode": "REPLAY",
+              "sourceUrl": "https://thenextweb.com/news/nvidia-openai-250-billion-backstop-ohio-data-centre",
+              "sourceId": "thenextweb.com/2026-07-27T20:33:00Z/nvidia-openai-250-billion-backstop",
+              "publisherOrAuthor": "The Next Web — Ana Maria Constantin",
+              "publishedAt": "2026-07-27T20:33:00Z",
+              "publishedAtPrecision": "MINUTE",
+              "sourceContentSha256": null,
+              "company": "NVIDIA CORPORATION",
+              "tokenSymbol": "wNVDAx",
+              "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+              "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+              "claimTextOrPointer": "Attribution (verbatim): \"Nvidia is in talks to provide roughly $250 billion in financing guarantees for OpenAI, the Wall Street Journal reported on Sunday, citing people familiar with the matter.\" Non-verification (verbatim): \"Reuters said it could not immediately verify the report, and Nvidia, OpenAI, and the US Commerce Department did not respond to requests for comment.\"",
+              "assertionLevel": "REPORTED_UNVERIFIED",
+              "describesCompletedEvent": false,
+              "speculationMarkers": [
+                "people familiar",
+                "citing people",
+                "could not immediately verify",
+                "did not respond to requests for comment",
+                "in talks",
+                "could "
+              ],
+              "publisherDisclaimedVerification": true,
+              "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+              "relation": "DUPLICATE",
+              "officialConfirmation": false,
+              "expiresAt": "2026-07-30T20:33:00Z",
+              "materiality": "MATERIAL",
+              "provenanceViolations": [],
+              "promotable": true
+            },
+            {
+              "claimId": "claim-a-004",
+              "sourceClass": "NEWS",
+              "dataMode": "REPLAY",
+              "sourceUrl": null,
+              "sourceId": "wsj/2026-07-26/nvidia-openai-financing-guarantees",
+              "publisherOrAuthor": "The Wall Street Journal",
+              "publishedAt": "2026-07-26T00:00:00Z",
+              "publishedAtPrecision": "DAY",
+              "sourceContentSha256": null,
+              "company": "NVIDIA CORPORATION",
+              "tokenSymbol": "wNVDAx",
+              "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+              "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+              "claimTextOrPointer": "As reported by its syndications: Nvidia is in talks to provide roughly $250 billion in financing guarantees for OpenAI, citing people familiar with the matter.",
+              "assertionLevel": "REPORTED_UNVERIFIED",
+              "describesCompletedEvent": false,
+              "speculationMarkers": [
+                "people familiar",
+                "citing people",
+                "in talks"
+              ],
+              "publisherDisclaimedVerification": false,
+              "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+              "relation": "ORIGIN",
+              "officialConfirmation": false,
+              "expiresAt": "2026-07-29T00:00:00Z",
+              "materiality": "MATERIAL",
+              "provenanceViolations": [
+                "MISSING_URL_FOR_NON_SIMULATED"
+              ],
+              "promotable": false
+            },
+            {
+              "claimId": "claim-a-005",
+              "sourceClass": "NEWS",
+              "dataMode": "REPLAY",
+              "sourceUrl": "https://www.datacenterdynamics.com/en/news/nvidia-considers-250bn-backstop-for-openais-planned-10gw-ohio-data-center-report/",
+              "sourceId": "datacenterdynamics.com/2026-07/nvidia-considers-250bn-backstop",
+              "publisherOrAuthor": "DataCenterDynamics",
+              "publishedAt": "2026-07-27T00:00:00Z",
+              "publishedAtPrecision": "DAY",
+              "sourceContentSha256": null,
+              "company": "NVIDIA CORPORATION",
+              "tokenSymbol": "wNVDAx",
+              "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+              "eventType": "CONTINGENT_FINANCIAL_OBLIGATION",
+              "claimTextOrPointer": "Headline (verbatim): \"Nvidia considers $250bn backstop for OpenAI's planned 10GW Ohio data center - report\"",
+              "assertionLevel": "ASSERTED",
+              "describesCompletedEvent": true,
+              "speculationMarkers": [],
+              "publisherDisclaimedVerification": false,
+              "independenceGroup": "origin:wsj/2026-07-26/nvda-openai-250bn-backstop",
+              "relation": "DUPLICATE",
+              "officialConfirmation": false,
+              "expiresAt": "2026-07-30T00:00:00Z",
+              "materiality": "MATERIAL",
+              "provenanceViolations": [],
+              "promotable": true
+            }
+          ],
+          "resolution": {
+            "outcome": "RESOLVED",
+            "asset": {
+              "company": "NVIDIA CORPORATION",
+              "cik": "0001045810",
+              "ticker": "NVDA",
+              "tokenSymbol": "wNVDAx",
+              "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+              "tokenName": "Wrapped NVIDIA xStock",
+              "decimals": 18,
+              "chainId": 196,
+              "poolAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+              "quoteSymbol": "USDG",
+              "hasIndexFeed": true,
+              "supported": true,
+              "supportNote": "The token in the USDG reference pool and the one the OKX index poller samples. This is the only NVDA-linked asset on X Layer with both an observable market and a reference price."
+            },
+            "candidates": [
+              {
+                "company": "NVIDIA CORPORATION",
+                "cik": "0001045810",
+                "ticker": "NVDA",
+                "tokenSymbol": "wNVDAx",
+                "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+                "tokenName": "Wrapped NVIDIA xStock",
+                "decimals": 18,
+                "chainId": 196,
+                "poolAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+                "quoteSymbol": "USDG",
+                "hasIndexFeed": true,
+                "supported": true,
+                "supportNote": "The token in the USDG reference pool and the one the OKX index poller samples. This is the only NVDA-linked asset on X Layer with both an observable market and a reference price."
+              }
+            ],
+            "explanation": "NVIDIA CORPORATION resolves to wNVDAx (0xa8ddb5cd96b5222afe198316e9a57caa642850d5) in pool 0x2a2b11730c2b6d99a58034a869dd810d7300a7b2.",
+            "mayAuthorizeAction": true
+          },
+          "mayAuthorizeAction": true
+        }
+      ],
+      "unclustered": [],
+      "rejections": []
+    }
+  },
+  "model": {
+    "rawOutput": {
+      "entityGroups": [
+        {
+          "entityLabel": "NVIDIA CORPORATION / wNVDAx",
+          "claimIds": [
+            "claim-a-001",
+            "claim-a-002",
+            "claim-a-003",
+            "claim-a-004",
+            "claim-a-005"
+          ]
+        }
+      ],
+      "syndicationGroups": [
+        {
+          "originLabel": "Social media rumor, 2026-07-27",
+          "originClaimId": "claim-a-001",
+          "claimIds": [
+            "claim-a-001"
+          ],
+          "basis": "Independent rumor source with no attribution to external news outlets."
+        },
+        {
+          "originLabel": "The Wall Street Journal, 2026-07-26",
+          "originClaimId": "claim-a-004",
+          "claimIds": [
+            "claim-a-002",
+            "claim-a-003",
+            "claim-a-004",
+            "claim-a-005"
+          ],
+          "basis": "CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report."
+        }
+      ],
+      "contradictions": []
+    },
+    "unknownClaimIdsNamed": [],
+    "claimIdsNotPlacedInAnyEntityGroup": [],
+    "claimIdsNotPlacedInAnySyndicationGroup": [],
+    "claimIdsPlacedInMoreThanOneEntityGroup": [],
+    "claimIdsPlacedInMoreThanOneSyndicationGroup": []
+  },
+  "edges": [
+    {
+      "claimIdA": "claim-a-001",
+      "claimIdB": "claim-a-002",
+      "entitySame": {
+        "heuristic": true,
+        "model": true,
+        "verdict": "AGREE",
+        "heuristicBasis": "resolveAsset entity keys: \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\" vs \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\"",
+        "modelBasis": "model entity labels: \"NVIDIA CORPORATION / wNVDAx\" vs \"NVIDIA CORPORATION / wNVDAx\""
+      },
+      "syndicationSameOrigin": {
+        "heuristic": false,
+        "model": false,
+        "verdict": "AGREE",
+        "heuristicBasis": "deriveIndependence origin keys: \"unrecognised:simulated:\" (attributedTo=null, relaysUnnamedReport=false) vs \"wsj\" (attributedTo=wsj, relaysUnnamedReport=false)",
+        "modelBasis": "origin \"Social media rumor, 2026-07-27\" (originClaimId claim-a-001): Independent rumor source with no attribution to external news outlets. || origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report."
+      },
+      "contradicts": {
+        "heuristic": false,
+        "model": false,
+        "verdict": "AGREE",
+        "heuristicBasis": "declaredContradictsRelation=false (hand label), sharedSelfRevisedOrigin=false (derived)",
+        "modelBasis": "model listed no contradiction for this pair"
+      }
+    },
+    {
+      "claimIdA": "claim-a-001",
+      "claimIdB": "claim-a-003",
+      "entitySame": {
+        "heuristic": true,
+        "model": true,
+        "verdict": "AGREE",
+        "heuristicBasis": "resolveAsset entity keys: \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\" vs \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\"",
+        "modelBasis": "model entity labels: \"NVIDIA CORPORATION / wNVDAx\" vs \"NVIDIA CORPORATION / wNVDAx\""
+      },
+      "syndicationSameOrigin": {
+        "heuristic": false,
+        "model": false,
+        "verdict": "AGREE",
+        "heuristicBasis": "deriveIndependence origin keys: \"unrecognised:simulated:\" (attributedTo=null, relaysUnnamedReport=false) vs \"wsj\" (attributedTo=wsj, relaysUnnamedReport=false)",
+        "modelBasis": "origin \"Social media rumor, 2026-07-27\" (originClaimId claim-a-001): Independent rumor source with no attribution to external news outlets. || origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report."
+      },
+      "contradicts": {
+        "heuristic": false,
+        "model": false,
+        "verdict": "AGREE",
+        "heuristicBasis": "declaredContradictsRelation=false (hand label), sharedSelfRevisedOrigin=false (derived)",
+        "modelBasis": "model listed no contradiction for this pair"
+      }
+    },
+    {
+      "claimIdA": "claim-a-001",
+      "claimIdB": "claim-a-004",
+      "entitySame": {
+        "heuristic": true,
+        "model": true,
+        "verdict": "AGREE",
+        "heuristicBasis": "resolveAsset entity keys: \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\" vs \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\"",
+        "modelBasis": "model entity labels: \"NVIDIA CORPORATION / wNVDAx\" vs \"NVIDIA CORPORATION / wNVDAx\""
+      },
+      "syndicationSameOrigin": {
+        "heuristic": false,
+        "model": false,
+        "verdict": "AGREE",
+        "heuristicBasis": "deriveIndependence origin keys: \"unrecognised:simulated:\" (attributedTo=null, relaysUnnamedReport=false) vs \"wsj\" (attributedTo=null, relaysUnnamedReport=false)",
+        "modelBasis": "origin \"Social media rumor, 2026-07-27\" (originClaimId claim-a-001): Independent rumor source with no attribution to external news outlets. || origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report."
+      },
+      "contradicts": {
+        "heuristic": false,
+        "model": false,
+        "verdict": "AGREE",
+        "heuristicBasis": "declaredContradictsRelation=false (hand label), sharedSelfRevisedOrigin=false (derived)",
+        "modelBasis": "model listed no contradiction for this pair"
+      }
+    },
+    {
+      "claimIdA": "claim-a-001",
+      "claimIdB": "claim-a-005",
+      "entitySame": {
+        "heuristic": true,
+        "model": true,
+        "verdict": "AGREE",
+        "heuristicBasis": "resolveAsset entity keys: \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\" vs \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\"",
+        "modelBasis": "model entity labels: \"NVIDIA CORPORATION / wNVDAx\" vs \"NVIDIA CORPORATION / wNVDAx\""
+      },
+      "syndicationSameOrigin": {
+        "heuristic": false,
+        "model": false,
+        "verdict": "AGREE",
+        "heuristicBasis": "deriveIndependence origin keys: \"unrecognised:simulated:\" (attributedTo=null, relaysUnnamedReport=false) vs \"unrecognised:datacenterdynamics.com\" (attributedTo=null, relaysUnnamedReport=true)",
+        "modelBasis": "origin \"Social media rumor, 2026-07-27\" (originClaimId claim-a-001): Independent rumor source with no attribution to external news outlets. || origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report."
+      },
+      "contradicts": {
+        "heuristic": false,
+        "model": false,
+        "verdict": "AGREE",
+        "heuristicBasis": "declaredContradictsRelation=false (hand label), sharedSelfRevisedOrigin=false (derived)",
+        "modelBasis": "model listed no contradiction for this pair"
+      }
+    },
+    {
+      "claimIdA": "claim-a-002",
+      "claimIdB": "claim-a-003",
+      "entitySame": {
+        "heuristic": true,
+        "model": true,
+        "verdict": "AGREE",
+        "heuristicBasis": "resolveAsset entity keys: \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\" vs \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\"",
+        "modelBasis": "model entity labels: \"NVIDIA CORPORATION / wNVDAx\" vs \"NVIDIA CORPORATION / wNVDAx\""
+      },
+      "syndicationSameOrigin": {
+        "heuristic": true,
+        "model": true,
+        "verdict": "AGREE",
+        "heuristicBasis": "deriveIndependence origin keys: \"wsj\" (attributedTo=wsj, relaysUnnamedReport=false) vs \"wsj\" (attributedTo=wsj, relaysUnnamedReport=false)",
+        "modelBasis": "origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report. || origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report."
+      },
+      "contradicts": {
+        "heuristic": false,
+        "model": false,
+        "verdict": "AGREE",
+        "heuristicBasis": "declaredContradictsRelation=false (hand label), sharedSelfRevisedOrigin=false (derived)",
+        "modelBasis": "model listed no contradiction for this pair"
+      }
+    },
+    {
+      "claimIdA": "claim-a-002",
+      "claimIdB": "claim-a-004",
+      "entitySame": {
+        "heuristic": true,
+        "model": true,
+        "verdict": "AGREE",
+        "heuristicBasis": "resolveAsset entity keys: \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\" vs \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\"",
+        "modelBasis": "model entity labels: \"NVIDIA CORPORATION / wNVDAx\" vs \"NVIDIA CORPORATION / wNVDAx\""
+      },
+      "syndicationSameOrigin": {
+        "heuristic": true,
+        "model": true,
+        "verdict": "AGREE",
+        "heuristicBasis": "deriveIndependence origin keys: \"wsj\" (attributedTo=wsj, relaysUnnamedReport=false) vs \"wsj\" (attributedTo=null, relaysUnnamedReport=false)",
+        "modelBasis": "origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report. || origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report."
+      },
+      "contradicts": {
+        "heuristic": false,
+        "model": false,
+        "verdict": "AGREE",
+        "heuristicBasis": "declaredContradictsRelation=false (hand label), sharedSelfRevisedOrigin=false (derived)",
+        "modelBasis": "model listed no contradiction for this pair"
+      }
+    },
+    {
+      "claimIdA": "claim-a-002",
+      "claimIdB": "claim-a-005",
+      "entitySame": {
+        "heuristic": true,
+        "model": true,
+        "verdict": "AGREE",
+        "heuristicBasis": "resolveAsset entity keys: \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\" vs \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\"",
+        "modelBasis": "model entity labels: \"NVIDIA CORPORATION / wNVDAx\" vs \"NVIDIA CORPORATION / wNVDAx\""
+      },
+      "syndicationSameOrigin": {
+        "heuristic": false,
+        "model": true,
+        "verdict": "DISAGREE",
+        "heuristicBasis": "deriveIndependence origin keys: \"wsj\" (attributedTo=wsj, relaysUnnamedReport=false) vs \"unrecognised:datacenterdynamics.com\" (attributedTo=null, relaysUnnamedReport=true)",
+        "modelBasis": "origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report. || origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report."
+      },
+      "contradicts": {
+        "heuristic": false,
+        "model": false,
+        "verdict": "AGREE",
+        "heuristicBasis": "declaredContradictsRelation=false (hand label), sharedSelfRevisedOrigin=false (derived)",
+        "modelBasis": "model listed no contradiction for this pair"
+      }
+    },
+    {
+      "claimIdA": "claim-a-003",
+      "claimIdB": "claim-a-004",
+      "entitySame": {
+        "heuristic": true,
+        "model": true,
+        "verdict": "AGREE",
+        "heuristicBasis": "resolveAsset entity keys: \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\" vs \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\"",
+        "modelBasis": "model entity labels: \"NVIDIA CORPORATION / wNVDAx\" vs \"NVIDIA CORPORATION / wNVDAx\""
+      },
+      "syndicationSameOrigin": {
+        "heuristic": true,
+        "model": true,
+        "verdict": "AGREE",
+        "heuristicBasis": "deriveIndependence origin keys: \"wsj\" (attributedTo=wsj, relaysUnnamedReport=false) vs \"wsj\" (attributedTo=null, relaysUnnamedReport=false)",
+        "modelBasis": "origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report. || origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report."
+      },
+      "contradicts": {
+        "heuristic": false,
+        "model": false,
+        "verdict": "AGREE",
+        "heuristicBasis": "declaredContradictsRelation=false (hand label), sharedSelfRevisedOrigin=false (derived)",
+        "modelBasis": "model listed no contradiction for this pair"
+      }
+    },
+    {
+      "claimIdA": "claim-a-003",
+      "claimIdB": "claim-a-005",
+      "entitySame": {
+        "heuristic": true,
+        "model": true,
+        "verdict": "AGREE",
+        "heuristicBasis": "resolveAsset entity keys: \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\" vs \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\"",
+        "modelBasis": "model entity labels: \"NVIDIA CORPORATION / wNVDAx\" vs \"NVIDIA CORPORATION / wNVDAx\""
+      },
+      "syndicationSameOrigin": {
+        "heuristic": false,
+        "model": true,
+        "verdict": "DISAGREE",
+        "heuristicBasis": "deriveIndependence origin keys: \"wsj\" (attributedTo=wsj, relaysUnnamedReport=false) vs \"unrecognised:datacenterdynamics.com\" (attributedTo=null, relaysUnnamedReport=true)",
+        "modelBasis": "origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report. || origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report."
+      },
+      "contradicts": {
+        "heuristic": false,
+        "model": false,
+        "verdict": "AGREE",
+        "heuristicBasis": "declaredContradictsRelation=false (hand label), sharedSelfRevisedOrigin=false (derived)",
+        "modelBasis": "model listed no contradiction for this pair"
+      }
+    },
+    {
+      "claimIdA": "claim-a-004",
+      "claimIdB": "claim-a-005",
+      "entitySame": {
+        "heuristic": true,
+        "model": true,
+        "verdict": "AGREE",
+        "heuristicBasis": "resolveAsset entity keys: \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\" vs \"asset:0xa8ddb5cd96b5222afe198316e9a57caa642850d5\"",
+        "modelBasis": "model entity labels: \"NVIDIA CORPORATION / wNVDAx\" vs \"NVIDIA CORPORATION / wNVDAx\""
+      },
+      "syndicationSameOrigin": {
+        "heuristic": false,
+        "model": true,
+        "verdict": "DISAGREE",
+        "heuristicBasis": "deriveIndependence origin keys: \"wsj\" (attributedTo=null, relaysUnnamedReport=false) vs \"unrecognised:datacenterdynamics.com\" (attributedTo=null, relaysUnnamedReport=true)",
+        "modelBasis": "origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report. || origin \"The Wall Street Journal, 2026-07-26\" (originClaimId claim-a-004): CNBC, The Next Web, and DataCenterDynamics attribute their reports regarding the $250 billion Nvidia-OpenAI financing backstop to the Wall Street Journal report."
+      },
+      "contradicts": {
+        "heuristic": false,
+        "model": false,
+        "verdict": "AGREE",
+        "heuristicBasis": "declaredContradictsRelation=false (hand label), sharedSelfRevisedOrigin=false (derived)",
+        "modelBasis": "model listed no contradiction for this pair"
+      }
+    }
+  ],
+  "counts": {
+    "entity": {
+      "totalPairs": 10,
+      "agree": 10,
+      "disagree": 0,
+      "modelSilent": 0,
+      "disagreeingPairs": []
+    },
+    "syndication": {
+      "totalPairs": 10,
+      "agree": 7,
+      "disagree": 3,
+      "modelSilent": 0,
+      "disagreeingPairs": [
+        "claim-a-002 / claim-a-005",
+        "claim-a-003 / claim-a-005",
+        "claim-a-004 / claim-a-005"
+      ]
+    },
+    "contradiction": {
+      "totalPairs": 10,
+      "agree": 10,
+      "disagree": 0,
+      "modelSilent": 0,
+      "disagreeingPairs": []
+    }
+  },
+  "deterministicDecision": {
+    "state": "WATCH",
+    "reasonCodes": [
+      "DUPLICATE_SYNDICATION",
+      "INSUFFICIENT_SAMPLE",
+      "MARKET_DATA_UNAVAILABLE",
+      "NO_OFFICIAL_CONFIRMATION",
+      "REFERENCE_MARKET_CLOSED",
+      "SINGLE_SOURCE"
+    ],
+    "note": "Produced by runScenario on the unchanged scenario through the unchanged decision engine. The model output above was not an input to it. Scenario A's pre-registered expectation is WATCH."
+  },
+  "limitations": [
+    "One scenario, one run, one live non-deterministic model call. This measures NOTHING about accuracy. Re-running it can produce a different grouping and therefore a different agreement count. It is a record of what one call returned, not a claim about what the model does.",
+    "The deterministic promotion engine remains the decider. The model's output is graph structure only and is not wired into decision/, risk/, or any scenario file. Scenario A's published state is unchanged by this study, and the state produced by the unchanged engine is recorded in `deterministicDecision` so a reader can check that rather than take it on trust.",
+    "Disagreements are REPORTED, not adjudicated. Neither the model nor the heuristic is treated as ground truth anywhere in this artifact. No heuristic was changed to match the model and no model output was post-processed to match a heuristic.",
+    "The CONTRADICTION axis is not like-for-like. The heuristic half of it reads `relation === \"CONTRADICTS\"`, which is a hand label a human wrote into the frozen scenario in T0.2; only the self-revision half is derived from text. The model was deliberately not shown that label. Agreement or disagreement on this axis therefore says less than it appears to.",
+    "The model was shown claimId, sourceClass, sourceId, publisherOrAuthor, publishedAt, company, tokenSymbol, tokenAddress, eventType and the verbatim claimTextOrPointer, and was NOT shown independenceGroup, relation or duplicateOf. Those are the frozen scenario's answers; showing them would have made this a reading test of the fixture.",
+    "claim-a-001's claimTextOrPointer is a file pointer, not prose. `normalizeClaim` stores it verbatim, so the heuristic never reads the rumour's wording — and to keep the sides even neither does the model. Both are blind to that claim's language, which is a property of the fixture rather than of either method.",
+    "Scenario A's evidence window contains zero swaps on chain 196, so there is no market leg here at all. This study is entirely on the evidence path.",
+    "Only three structural questions were asked. Recency, provenance violations, materiality, assertion level and self-revision amounts are derived by the heuristics alone and were not put to the model, so `heuristic.evidenceGraph` contains findings with no counterpart in `model.rawOutput`.",
+    "1 of the local source documents scenario A references carry no sourceContentSha256 in the scenario file, so nothing about their bytes was actually verified. Their observed hashes are recorded as UNPINNED, which is a statement about the fixture and must not be read as a pass. The scenario FILE itself is pinned, but by a constant this study declared at authoring time rather than by an independent freeze."
+  ]
+}
