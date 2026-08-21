@@ -1,0 +1,2635 @@
+{
+  "schemaVersion": "tinjau.news-intake-live/1.0.0",
+  "producedBy": "apps/server/src/studies/newsIntakeLive.ts",
+  "runAtUtc": "2026-08-21T18:26:48.216Z",
+  "taskId": "S5.2",
+  "outcome": "CLAIMS_NORMALISED",
+  "headline": "10 live SEC EDGAR filing(s) (OFFICIAL, dataMode LIVE) traversed feed intake -> normalisation -> syndication dedup -> evidence graph -> decision engine and produced NORMAL. The 10 live item(s) collapsed to 1 independent origin(s).",
+  "sourceChoice": {
+    "selected": "SEC EDGAR company-filings Atom feed (www.sec.gov/cgi-bin/browse-edgar?output=atom)",
+    "feedUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&dateb=&owner=include&count=10&output=atom&type=8-K",
+    "format": "atom",
+    "credentialRequired": "none. SEC requires a descriptive User-Agent from every requester (https://www.sec.gov/os/webmaster-faq#developers); it is not an account, a key, or a paid tier.",
+    "sourceClassProduced": "OFFICIAL",
+    "whySelected": [
+      "No credential, no account, no paid tier, no terms accepted. SEC requires only a descriptive User-Agent from every requester, read through the existing getEdgarUserAgent().",
+      "It is the ORIGIN, not a report about the origin. Nothing at intake can be a syndicated copy of something else, which is the narrowest possible starting position for a provenance chain.",
+      "It timestamps acceptance to the second, so publishedAtPrecision is SECOND on real data rather than the schema's DAY default.",
+      "It publishes the document the claim points at, so sourceContentSha256 commits to bytes that actually exist and can be re-fetched and re-hashed by a reader.",
+      "An 8-K is definitionally corporate news: it is the form a US registrant must file to disclose a material event between periodic reports.",
+      "This project already has an EDGAR adapter and an EDGAR_USER_AGENT convention (SVC-001), so no new service, dependency, or contact detail was introduced."
+    ],
+    "whatThisDoesNotReplace": "An 8-K is OFFICIAL, not NEWS. This replaces the frozen intake path for CORPORATE DISCLOSURE only. Live third-party press intake remains unbuilt, and every NEWS-class claim in this product is still the frozen REPLAY fixture in apps/server/scenarios/.",
+    "alternativesProbed": [
+      {
+        "url": "https://feeds.finance.yahoo.com/rss/2.0/headline?s=NVDA&region=US&lang=en-US",
+        "observed": "HTTP 200, application/xml, 20 <item> elements (probed 2026-08-21)",
+        "rejectedBecause": "Most items were about other companies entirely (Webull, Cummins, Coinbase), and the feed carries no publisher element — the outlet would have to be guessed from the link host. Guessing a publisher is precisely the fabrication the provenance schema exists to prevent."
+      },
+      {
+        "url": "https://nvidianews.nvidia.com/releases.xml",
+        "observed": "HTTP 200, text/xml, 20 <item> elements (probed 2026-08-21)",
+        "rejectedBecause": "Genuinely narrow, but it mixes marketing posts with corporate announcements, and a self-published press release is not OFFICIAL in this system (normalize.ts requires an https://www.sec.gov/ URL for that class). It would have been NEWS at best, from a source with an interest in the story."
+      },
+      {
+        "url": "https://feeds.reuters.com/reuters/businessNews",
+        "observed": "did not resolve (probed 2026-08-21)",
+        "rejectedBecause": "Reuters no longer serves an open RSS feed. Recorded because it is the obvious first choice and it does not exist — 'just read a wire's RSS' is not the easy answer it sounds."
+      }
+    ]
+  },
+  "assetUniverse": {
+    "source": "apps/server/src/evidence/assets.ts :: SUPPORTED_ASSETS (supported === true)",
+    "supported": [
+      {
+        "company": "NVIDIA CORPORATION",
+        "cik": "0001045810",
+        "ticker": "NVDA",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "poolAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2"
+      }
+    ],
+    "unsupportedButKnown": [
+      {
+        "tokenSymbol": "NVDAx",
+        "reason": "The unwrapped sibling of wNVDAx. Listed deliberately rather than omitted: it is the address `tokenAddresses.ts` maps the symbol NVDAx to, so anything resolving a claim by ticker alone can land here. It has no verified pool and no index feed, so no action can be authorised against it. See the T0.2 §2.2 mapping defect."
+      }
+    ],
+    "note": "The registry holds exactly one supported asset (wNVDAx, NVIDIA CORPORATION, CIK 0001045810) and one deliberately unsupported sibling (NVDAx, no verified pool). There is NO MSTR-linked asset in it at all, so this study cannot and does not read a feed for one. The CIK below was read from this registry, not typed."
+  },
+  "intake": {
+    "provider": "sec-edgar-browse-atom",
+    "feedUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&dateb=&owner=include&count=10&output=atom&type=8-K",
+    "httpMethod": "GET",
+    "authMode": "none — descriptive User-Agent only, as SEC requires of every requester",
+    "outboundWritesAttempted": 0,
+    "fetchedAtUtc": "2026-08-21T18:26:34.041Z",
+    "httpStatus": 200,
+    "ok": true,
+    "contentType": "application/atom+xml",
+    "charset": {
+      "value": "iso-8859-1",
+      "source": "xml-declaration"
+    },
+    "lastModified": null,
+    "feedByteLength": 18529,
+    "feedSha256": "8e652f9ccfecc12acc0b06df7378347f768f7b6656eb57a6cfb68c0cc41a6d63",
+    "rawItemCount": 10,
+    "feedCompanyName": "NVIDIA CORP",
+    "feedCik": "0001045810",
+    "documentFetches": {
+      "attempted": 10,
+      "succeeded": 10,
+      "failed": 0
+    },
+    "failure": null
+  },
+  "candidates": [
+    {
+      "index": 0,
+      "feedEntryId": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000069",
+      "title": "8-K  - Current report",
+      "formType": "8-K",
+      "accessionNumber": "0001045810-26-000069",
+      "publishedIso": "2026-08-17T12:41:33.000Z",
+      "eligible": true,
+      "rejectedBecause": null
+    },
+    {
+      "index": 1,
+      "feedEntryId": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000060",
+      "title": "8-K  - Current report",
+      "formType": "8-K",
+      "accessionNumber": "0001045810-26-000060",
+      "publishedIso": "2026-07-02T13:23:16.000Z",
+      "eligible": true,
+      "rejectedBecause": null
+    },
+    {
+      "index": 2,
+      "feedEntryId": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000056",
+      "title": "8-K  - Current report",
+      "formType": "8-K",
+      "accessionNumber": "0001045810-26-000056",
+      "publishedIso": "2026-06-30T20:27:26.000Z",
+      "eligible": true,
+      "rejectedBecause": null
+    },
+    {
+      "index": 3,
+      "feedEntryId": "urn:tag:sec.gov,2008:accession-number=0001193125-26-275783",
+      "title": "8-K  - Current report",
+      "formType": "8-K",
+      "accessionNumber": "0001193125-26-275783",
+      "publishedIso": "2026-06-18T20:00:24.000Z",
+      "eligible": true,
+      "rejectedBecause": null
+    },
+    {
+      "index": 4,
+      "feedEntryId": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000051",
+      "title": "8-K  - Current report",
+      "formType": "8-K",
+      "accessionNumber": "0001045810-26-000051",
+      "publishedIso": "2026-05-20T20:21:19.000Z",
+      "eligible": true,
+      "rejectedBecause": null
+    },
+    {
+      "index": 5,
+      "feedEntryId": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000028",
+      "title": "8-K  - Current report",
+      "formType": "8-K",
+      "accessionNumber": "0001045810-26-000028",
+      "publishedIso": "2026-05-08T20:35:07.000Z",
+      "eligible": true,
+      "rejectedBecause": null
+    },
+    {
+      "index": 6,
+      "feedEntryId": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000026",
+      "title": "8-K  - Current report",
+      "formType": "8-K",
+      "accessionNumber": "0001045810-26-000026",
+      "publishedIso": "2026-04-27T20:10:30.000Z",
+      "eligible": true,
+      "rejectedBecause": null
+    },
+    {
+      "index": 7,
+      "feedEntryId": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000024",
+      "title": "8-K  - Current report",
+      "formType": "8-K",
+      "accessionNumber": "0001045810-26-000024",
+      "publishedIso": "2026-03-06T21:11:25.000Z",
+      "eligible": true,
+      "rejectedBecause": null
+    },
+    {
+      "index": 8,
+      "feedEntryId": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000019",
+      "title": "8-K  - Current report",
+      "formType": "8-K",
+      "accessionNumber": "0001045810-26-000019",
+      "publishedIso": "2026-02-25T21:31:25.000Z",
+      "eligible": true,
+      "rejectedBecause": null
+    },
+    {
+      "index": 9,
+      "feedEntryId": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000003",
+      "title": "8-K  - Current report",
+      "formType": "8-K",
+      "accessionNumber": "0001045810-26-000003",
+      "publishedIso": "2026-01-23T22:01:33.000Z",
+      "eligible": true,
+      "rejectedBecause": null
+    }
+  ],
+  "claims": [
+    {
+      "provenance": {
+        "claimId": {
+          "value": "edgar-0001045810-26-000069",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "edgar-<accession number>"
+        },
+        "sourceClass": {
+          "value": "OFFICIAL",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "an SEC filing retrieved from www.sec.gov is OFFICIAL in this system"
+        },
+        "sourceClassRule": "OFFICIAL requires both an https://www.sec.gov/ URL and a content hash (normalize.ts). The URL was checked with xbot/sourceUrlGuard.ts::isRealSecFilingSourceUrl before the document was fetched; the hash is sha256 over the exact bytes that URL served.",
+        "dataMode": {
+          "value": "LIVE",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "LIVE: read from the SEC EDGAR Atom feed during this run, not replayed from a fixture."
+        },
+        "sourceUrl": {
+          "value": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/0001045810-26-000069-index.htm",
+          "source": "sec-edgar-atom-feed",
+          "note": "the entry's own filing-href"
+        },
+        "sourceId": {
+          "value": "sec.gov/2026-08-17/0001045810-26-000069",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "origin-leading by design: graph.ts::ownOriginKey keys an unrecognised publisher on the leading path segment, so this shape collapses every EDGAR filing into one origin."
+        },
+        "publisherOrAuthor": {
+          "value": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "source": "sec-edgar-atom-feed",
+          "note": "conformed-name from the feed's company-info block, plus the registry CIK"
+        },
+        "publishedAt": {
+          "value": "2026-08-17T12:41:33.000Z",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "the entry's <updated> instant, converted to the strict ...Z form normalize.ts accepts"
+        },
+        "publishedAtRaw": {
+          "value": "2026-08-17T08:41:33-04:00",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim from <updated>, before any conversion"
+        },
+        "publishedAtPrecision": {
+          "value": "SECOND",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR states the acceptance instant to the second"
+        },
+        "sourceContentSha256": {
+          "value": "109763cb17fbb692b3ec88a56983303687ca15501e7f1cf10184be96c72f08d0",
+          "source": "sec-edgar-document-fetch",
+          "note": "sha256 over the 10089 bytes served by https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/0001045810-26-000069-index.htm at 2026-08-21T18:26:43.726Z"
+        },
+        "company": {
+          "value": "NVIDIA CORPORATION",
+          "source": "project-registry",
+          "note": "evidence/assets.ts SUPPORTED_ASSETS"
+        },
+        "tokenSymbol": {
+          "value": "wNVDAx",
+          "source": "project-registry"
+        },
+        "tokenAddress": {
+          "value": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "source": "project-registry"
+        },
+        "eventType": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not classified: mapping 8-K item codes onto this project's event vocabulary needs a classifier this task does not authorise. The raw item codes are recorded below."
+        },
+        "materiality": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not determined. promote.ts treats UNKNOWN as non-material and refuses to promote on it, which is the fail-safe direction and is left in place deliberately."
+        },
+        "independenceGroup": {
+          "value": "official:edgar/filer/0001045810",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "one group per FILER, not per filing: ten filings by one registrant are one source line"
+        },
+        "relation": {
+          "value": "ORIGIN",
+          "source": "derived-from-sec-edgar-atom-feed"
+        },
+        "officialConfirmation": {
+          "value": "true",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "this claim is itself an official filing, matching how frozen scenario B labels its EDGAR claims"
+        },
+        "expiresAt": {
+          "value": null,
+          "source": "UNAVAILABLE",
+          "note": "no source fact supports a TTL for a filing; left null rather than assumed"
+        },
+        "claimTextOrPointer": {
+          "value": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000069, filing date 2026-08-17. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 1.01, 2.03and7.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/0001045810-26-000069-index.htm",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "a pointer with verbatim spans quoted from the feed entry. No paraphrase of the filing's contents."
+        },
+        "assertionLevel": {
+          "value": "ASSERTED",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "derived by evidence/speculation.ts from the claim text; the structural hint ASSERTED was offered because the issuer signed the filing. Markers matched: (none)."
+        },
+        "feedEntryId": {
+          "value": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000069",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR's own <id> URN. Recorded, but NOT used as sourceId — see the sourceId note."
+        },
+        "feedEntryTitle": {
+          "value": "8-K  - Current report",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntrySummary": {
+          "value": "<b>Filed:</b> 2026-08-17 <b>AccNo:</b> 0001045810-26-000069 <b>Size:</b> 178 KB<br>Item 1.01: Entry into a Material Definitive Agreement<br>Item 2.03: Creation of a Direct Financial Obligation or an Obligation under an Off-Balance Sheet Arrangement of a Registrant<br>Item 7.01: Regulation FD Disclosure",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim, entity-decoded; SEC's own summary markup is left intact"
+        },
+        "feedFormType": {
+          "value": "8-K",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedFilingDate": {
+          "value": "2026-08-17",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedAccessionNumber": {
+          "value": "0001045810-26-000069",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedItemsDescription": {
+          "value": "items 1.01, 2.03and7.01",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntryRawSha256": {
+          "value": "6db836d89715328e1510fe34298dff744a9a2c81a62f0c45606de54f07075f97",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "sha256 over the UTF-8 bytes of this entry's verbatim XML within the feed"
+        },
+        "documentFetch": {
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/0001045810-26-000069-index.htm",
+          "attempted": true,
+          "httpStatus": 200,
+          "byteLength": 10089,
+          "contentType": "text/html; charset=UTF-8",
+          "retrievedAtUtc": "2026-08-21T18:26:43.726Z",
+          "failure": null
+        }
+      },
+      "normalized": {
+        "claimId": "edgar-0001045810-26-000069",
+        "sourceClass": "OFFICIAL",
+        "dataMode": "LIVE",
+        "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/0001045810-26-000069-index.htm",
+        "sourceId": "sec.gov/2026-08-17/0001045810-26-000069",
+        "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+        "publishedAt": "2026-08-17T12:41:33.000Z",
+        "publishedAtPrecision": "SECOND",
+        "sourceContentSha256": "109763cb17fbb692b3ec88a56983303687ca15501e7f1cf10184be96c72f08d0",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "UNKNOWN",
+        "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000069, filing date 2026-08-17. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 1.01, 2.03and7.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/0001045810-26-000069-index.htm",
+        "assertionLevel": "ASSERTED",
+        "describesCompletedEvent": true,
+        "speculationMarkers": [],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "official:edgar/filer/0001045810",
+        "relation": "ORIGIN",
+        "officialConfirmation": true,
+        "expiresAt": null,
+        "materiality": "UNKNOWN",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      "provenanceViolations": [],
+      "promotable": true
+    },
+    {
+      "provenance": {
+        "claimId": {
+          "value": "edgar-0001045810-26-000060",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "edgar-<accession number>"
+        },
+        "sourceClass": {
+          "value": "OFFICIAL",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "an SEC filing retrieved from www.sec.gov is OFFICIAL in this system"
+        },
+        "sourceClassRule": "OFFICIAL requires both an https://www.sec.gov/ URL and a content hash (normalize.ts). The URL was checked with xbot/sourceUrlGuard.ts::isRealSecFilingSourceUrl before the document was fetched; the hash is sha256 over the exact bytes that URL served.",
+        "dataMode": {
+          "value": "LIVE",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "LIVE: read from the SEC EDGAR Atom feed during this run, not replayed from a fixture."
+        },
+        "sourceUrl": {
+          "value": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000060/0001045810-26-000060-index.htm",
+          "source": "sec-edgar-atom-feed",
+          "note": "the entry's own filing-href"
+        },
+        "sourceId": {
+          "value": "sec.gov/2026-07-02/0001045810-26-000060",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "origin-leading by design: graph.ts::ownOriginKey keys an unrecognised publisher on the leading path segment, so this shape collapses every EDGAR filing into one origin."
+        },
+        "publisherOrAuthor": {
+          "value": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "source": "sec-edgar-atom-feed",
+          "note": "conformed-name from the feed's company-info block, plus the registry CIK"
+        },
+        "publishedAt": {
+          "value": "2026-07-02T13:23:16.000Z",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "the entry's <updated> instant, converted to the strict ...Z form normalize.ts accepts"
+        },
+        "publishedAtRaw": {
+          "value": "2026-07-02T09:23:16-04:00",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim from <updated>, before any conversion"
+        },
+        "publishedAtPrecision": {
+          "value": "SECOND",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR states the acceptance instant to the second"
+        },
+        "sourceContentSha256": {
+          "value": "9d8ba371ef09e5c7b5b158dd6804041089bd4c6cabc4bc15966ba6707d5fd295",
+          "source": "sec-edgar-document-fetch",
+          "note": "sha256 over the 9681 bytes served by https://www.sec.gov/Archives/edgar/data/1045810/000104581026000060/0001045810-26-000060-index.htm at 2026-08-21T18:26:43.932Z"
+        },
+        "company": {
+          "value": "NVIDIA CORPORATION",
+          "source": "project-registry",
+          "note": "evidence/assets.ts SUPPORTED_ASSETS"
+        },
+        "tokenSymbol": {
+          "value": "wNVDAx",
+          "source": "project-registry"
+        },
+        "tokenAddress": {
+          "value": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "source": "project-registry"
+        },
+        "eventType": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not classified: mapping 8-K item codes onto this project's event vocabulary needs a classifier this task does not authorise. The raw item codes are recorded below."
+        },
+        "materiality": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not determined. promote.ts treats UNKNOWN as non-material and refuses to promote on it, which is the fail-safe direction and is left in place deliberately."
+        },
+        "independenceGroup": {
+          "value": "official:edgar/filer/0001045810",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "one group per FILER, not per filing: ten filings by one registrant are one source line"
+        },
+        "relation": {
+          "value": "ORIGIN",
+          "source": "derived-from-sec-edgar-atom-feed"
+        },
+        "officialConfirmation": {
+          "value": "true",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "this claim is itself an official filing, matching how frozen scenario B labels its EDGAR claims"
+        },
+        "expiresAt": {
+          "value": null,
+          "source": "UNAVAILABLE",
+          "note": "no source fact supports a TTL for a filing; left null rather than assumed"
+        },
+        "claimTextOrPointer": {
+          "value": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000060, filing date 2026-07-02. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.02\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000060/0001045810-26-000060-index.htm",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "a pointer with verbatim spans quoted from the feed entry. No paraphrase of the filing's contents."
+        },
+        "assertionLevel": {
+          "value": "ASSERTED",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "derived by evidence/speculation.ts from the claim text; the structural hint ASSERTED was offered because the issuer signed the filing. Markers matched: (none)."
+        },
+        "feedEntryId": {
+          "value": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000060",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR's own <id> URN. Recorded, but NOT used as sourceId — see the sourceId note."
+        },
+        "feedEntryTitle": {
+          "value": "8-K  - Current report",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntrySummary": {
+          "value": "<b>Filed:</b> 2026-07-02 <b>AccNo:</b> 0001045810-26-000060 <b>Size:</b> 138 KB<br>Item 5.02: Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers: Compensatory Arrangements of Certain Officers",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim, entity-decoded; SEC's own summary markup is left intact"
+        },
+        "feedFormType": {
+          "value": "8-K",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedFilingDate": {
+          "value": "2026-07-02",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedAccessionNumber": {
+          "value": "0001045810-26-000060",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedItemsDescription": {
+          "value": "item 5.02",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntryRawSha256": {
+          "value": "862cb180024008854707b778e64308cdb1dbbf065b02d2e4c2e8dd8cf9d3f2db",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "sha256 over the UTF-8 bytes of this entry's verbatim XML within the feed"
+        },
+        "documentFetch": {
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000060/0001045810-26-000060-index.htm",
+          "attempted": true,
+          "httpStatus": 200,
+          "byteLength": 9681,
+          "contentType": "text/html",
+          "retrievedAtUtc": "2026-08-21T18:26:43.932Z",
+          "failure": null
+        }
+      },
+      "normalized": {
+        "claimId": "edgar-0001045810-26-000060",
+        "sourceClass": "OFFICIAL",
+        "dataMode": "LIVE",
+        "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000060/0001045810-26-000060-index.htm",
+        "sourceId": "sec.gov/2026-07-02/0001045810-26-000060",
+        "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+        "publishedAt": "2026-07-02T13:23:16.000Z",
+        "publishedAtPrecision": "SECOND",
+        "sourceContentSha256": "9d8ba371ef09e5c7b5b158dd6804041089bd4c6cabc4bc15966ba6707d5fd295",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "UNKNOWN",
+        "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000060, filing date 2026-07-02. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.02\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000060/0001045810-26-000060-index.htm",
+        "assertionLevel": "ASSERTED",
+        "describesCompletedEvent": true,
+        "speculationMarkers": [],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "official:edgar/filer/0001045810",
+        "relation": "ORIGIN",
+        "officialConfirmation": true,
+        "expiresAt": null,
+        "materiality": "UNKNOWN",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      "provenanceViolations": [],
+      "promotable": true
+    },
+    {
+      "provenance": {
+        "claimId": {
+          "value": "edgar-0001045810-26-000056",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "edgar-<accession number>"
+        },
+        "sourceClass": {
+          "value": "OFFICIAL",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "an SEC filing retrieved from www.sec.gov is OFFICIAL in this system"
+        },
+        "sourceClassRule": "OFFICIAL requires both an https://www.sec.gov/ URL and a content hash (normalize.ts). The URL was checked with xbot/sourceUrlGuard.ts::isRealSecFilingSourceUrl before the document was fetched; the hash is sha256 over the exact bytes that URL served.",
+        "dataMode": {
+          "value": "LIVE",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "LIVE: read from the SEC EDGAR Atom feed during this run, not replayed from a fixture."
+        },
+        "sourceUrl": {
+          "value": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000056/0001045810-26-000056-index.htm",
+          "source": "sec-edgar-atom-feed",
+          "note": "the entry's own filing-href"
+        },
+        "sourceId": {
+          "value": "sec.gov/2026-06-30/0001045810-26-000056",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "origin-leading by design: graph.ts::ownOriginKey keys an unrecognised publisher on the leading path segment, so this shape collapses every EDGAR filing into one origin."
+        },
+        "publisherOrAuthor": {
+          "value": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "source": "sec-edgar-atom-feed",
+          "note": "conformed-name from the feed's company-info block, plus the registry CIK"
+        },
+        "publishedAt": {
+          "value": "2026-06-30T20:27:26.000Z",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "the entry's <updated> instant, converted to the strict ...Z form normalize.ts accepts"
+        },
+        "publishedAtRaw": {
+          "value": "2026-06-30T16:27:26-04:00",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim from <updated>, before any conversion"
+        },
+        "publishedAtPrecision": {
+          "value": "SECOND",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR states the acceptance instant to the second"
+        },
+        "sourceContentSha256": {
+          "value": "836e985a065250c2f5dcfe966e2897bc74a9f9290da7af9431071e647ecbfdc0",
+          "source": "sec-edgar-document-fetch",
+          "note": "sha256 over the 9587 bytes served by https://www.sec.gov/Archives/edgar/data/1045810/000104581026000056/0001045810-26-000056-index.htm at 2026-08-21T18:26:44.387Z"
+        },
+        "company": {
+          "value": "NVIDIA CORPORATION",
+          "source": "project-registry",
+          "note": "evidence/assets.ts SUPPORTED_ASSETS"
+        },
+        "tokenSymbol": {
+          "value": "wNVDAx",
+          "source": "project-registry"
+        },
+        "tokenAddress": {
+          "value": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "source": "project-registry"
+        },
+        "eventType": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not classified: mapping 8-K item codes onto this project's event vocabulary needs a classifier this task does not authorise. The raw item codes are recorded below."
+        },
+        "materiality": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not determined. promote.ts treats UNKNOWN as non-material and refuses to promote on it, which is the fail-safe direction and is left in place deliberately."
+        },
+        "independenceGroup": {
+          "value": "official:edgar/filer/0001045810",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "one group per FILER, not per filing: ten filings by one registrant are one source line"
+        },
+        "relation": {
+          "value": "ORIGIN",
+          "source": "derived-from-sec-edgar-atom-feed"
+        },
+        "officialConfirmation": {
+          "value": "true",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "this claim is itself an official filing, matching how frozen scenario B labels its EDGAR claims"
+        },
+        "expiresAt": {
+          "value": null,
+          "source": "UNAVAILABLE",
+          "note": "no source fact supports a TTL for a filing; left null rather than assumed"
+        },
+        "claimTextOrPointer": {
+          "value": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000056, filing date 2026-06-30. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.07\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000056/0001045810-26-000056-index.htm",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "a pointer with verbatim spans quoted from the feed entry. No paraphrase of the filing's contents."
+        },
+        "assertionLevel": {
+          "value": "ASSERTED",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "derived by evidence/speculation.ts from the claim text; the structural hint ASSERTED was offered because the issuer signed the filing. Markers matched: (none)."
+        },
+        "feedEntryId": {
+          "value": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000056",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR's own <id> URN. Recorded, but NOT used as sourceId — see the sourceId note."
+        },
+        "feedEntryTitle": {
+          "value": "8-K  - Current report",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntrySummary": {
+          "value": "<b>Filed:</b> 2026-06-30 <b>AccNo:</b> 0001045810-26-000056 <b>Size:</b> 178 KB<br>Item 5.07: Submission of Matters to a Vote of Security Holders",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim, entity-decoded; SEC's own summary markup is left intact"
+        },
+        "feedFormType": {
+          "value": "8-K",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedFilingDate": {
+          "value": "2026-06-30",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedAccessionNumber": {
+          "value": "0001045810-26-000056",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedItemsDescription": {
+          "value": "item 5.07",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntryRawSha256": {
+          "value": "3477b9e911f4040340289f6f64ec31d6019b30978fe1b276ad951d0b398cee8a",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "sha256 over the UTF-8 bytes of this entry's verbatim XML within the feed"
+        },
+        "documentFetch": {
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000056/0001045810-26-000056-index.htm",
+          "attempted": true,
+          "httpStatus": 200,
+          "byteLength": 9587,
+          "contentType": "text/html",
+          "retrievedAtUtc": "2026-08-21T18:26:44.387Z",
+          "failure": null
+        }
+      },
+      "normalized": {
+        "claimId": "edgar-0001045810-26-000056",
+        "sourceClass": "OFFICIAL",
+        "dataMode": "LIVE",
+        "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000056/0001045810-26-000056-index.htm",
+        "sourceId": "sec.gov/2026-06-30/0001045810-26-000056",
+        "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+        "publishedAt": "2026-06-30T20:27:26.000Z",
+        "publishedAtPrecision": "SECOND",
+        "sourceContentSha256": "836e985a065250c2f5dcfe966e2897bc74a9f9290da7af9431071e647ecbfdc0",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "UNKNOWN",
+        "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000056, filing date 2026-06-30. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.07\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000056/0001045810-26-000056-index.htm",
+        "assertionLevel": "ASSERTED",
+        "describesCompletedEvent": true,
+        "speculationMarkers": [],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "official:edgar/filer/0001045810",
+        "relation": "ORIGIN",
+        "officialConfirmation": true,
+        "expiresAt": null,
+        "materiality": "UNKNOWN",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      "provenanceViolations": [],
+      "promotable": true
+    },
+    {
+      "provenance": {
+        "claimId": {
+          "value": "edgar-0001193125-26-275783",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "edgar-<accession number>"
+        },
+        "sourceClass": {
+          "value": "OFFICIAL",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "an SEC filing retrieved from www.sec.gov is OFFICIAL in this system"
+        },
+        "sourceClassRule": "OFFICIAL requires both an https://www.sec.gov/ URL and a content hash (normalize.ts). The URL was checked with xbot/sourceUrlGuard.ts::isRealSecFilingSourceUrl before the document was fetched; the hash is sha256 over the exact bytes that URL served.",
+        "dataMode": {
+          "value": "LIVE",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "LIVE: read from the SEC EDGAR Atom feed during this run, not replayed from a fixture."
+        },
+        "sourceUrl": {
+          "value": "https://www.sec.gov/Archives/edgar/data/1045810/000119312526275783/0001193125-26-275783-index.htm",
+          "source": "sec-edgar-atom-feed",
+          "note": "the entry's own filing-href"
+        },
+        "sourceId": {
+          "value": "sec.gov/2026-06-18/0001193125-26-275783",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "origin-leading by design: graph.ts::ownOriginKey keys an unrecognised publisher on the leading path segment, so this shape collapses every EDGAR filing into one origin."
+        },
+        "publisherOrAuthor": {
+          "value": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "source": "sec-edgar-atom-feed",
+          "note": "conformed-name from the feed's company-info block, plus the registry CIK"
+        },
+        "publishedAt": {
+          "value": "2026-06-18T20:00:24.000Z",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "the entry's <updated> instant, converted to the strict ...Z form normalize.ts accepts"
+        },
+        "publishedAtRaw": {
+          "value": "2026-06-18T16:00:24-04:00",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim from <updated>, before any conversion"
+        },
+        "publishedAtPrecision": {
+          "value": "SECOND",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR states the acceptance instant to the second"
+        },
+        "sourceContentSha256": {
+          "value": "b6ce07e3114b09645911d631de7b4c1b2c029c305c0cfb4e60d13e41669d99b8",
+          "source": "sec-edgar-document-fetch",
+          "note": "sha256 over the 10504 bytes served by https://www.sec.gov/Archives/edgar/data/1045810/000119312526275783/0001193125-26-275783-index.htm at 2026-08-21T18:26:44.884Z"
+        },
+        "company": {
+          "value": "NVIDIA CORPORATION",
+          "source": "project-registry",
+          "note": "evidence/assets.ts SUPPORTED_ASSETS"
+        },
+        "tokenSymbol": {
+          "value": "wNVDAx",
+          "source": "project-registry"
+        },
+        "tokenAddress": {
+          "value": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "source": "project-registry"
+        },
+        "eventType": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not classified: mapping 8-K item codes onto this project's event vocabulary needs a classifier this task does not authorise. The raw item codes are recorded below."
+        },
+        "materiality": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not determined. promote.ts treats UNKNOWN as non-material and refuses to promote on it, which is the fail-safe direction and is left in place deliberately."
+        },
+        "independenceGroup": {
+          "value": "official:edgar/filer/0001045810",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "one group per FILER, not per filing: ten filings by one registrant are one source line"
+        },
+        "relation": {
+          "value": "ORIGIN",
+          "source": "derived-from-sec-edgar-atom-feed"
+        },
+        "officialConfirmation": {
+          "value": "true",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "this claim is itself an official filing, matching how frozen scenario B labels its EDGAR claims"
+        },
+        "expiresAt": {
+          "value": null,
+          "source": "UNAVAILABLE",
+          "note": "no source fact supports a TTL for a filing; left null rather than assumed"
+        },
+        "claimTextOrPointer": {
+          "value": "SEC Form 8-K filed with EDGAR under accession 0001193125-26-275783, filing date 2026-06-18. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 8.01 and 9.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000119312526275783/0001193125-26-275783-index.htm",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "a pointer with verbatim spans quoted from the feed entry. No paraphrase of the filing's contents."
+        },
+        "assertionLevel": {
+          "value": "ASSERTED",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "derived by evidence/speculation.ts from the claim text; the structural hint ASSERTED was offered because the issuer signed the filing. Markers matched: (none)."
+        },
+        "feedEntryId": {
+          "value": "urn:tag:sec.gov,2008:accession-number=0001193125-26-275783",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR's own <id> URN. Recorded, but NOT used as sourceId — see the sourceId note."
+        },
+        "feedEntryTitle": {
+          "value": "8-K  - Current report",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntrySummary": {
+          "value": "<b>Filed:</b> 2026-06-18 <b>AccNo:</b> 0001193125-26-275783 <b>Size:</b> 1 MB<br>Item 8.01: Other Events<br>Item 9.01: Financial Statements and Exhibits",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim, entity-decoded; SEC's own summary markup is left intact"
+        },
+        "feedFormType": {
+          "value": "8-K",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedFilingDate": {
+          "value": "2026-06-18",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedAccessionNumber": {
+          "value": "0001193125-26-275783",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedItemsDescription": {
+          "value": "items 8.01 and 9.01",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntryRawSha256": {
+          "value": "7f3246dc059ddaec652166c53c9a10c68eda7abded42e3131301e32ce5ccdb40",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "sha256 over the UTF-8 bytes of this entry's verbatim XML within the feed"
+        },
+        "documentFetch": {
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000119312526275783/0001193125-26-275783-index.htm",
+          "attempted": true,
+          "httpStatus": 200,
+          "byteLength": 10504,
+          "contentType": "text/html",
+          "retrievedAtUtc": "2026-08-21T18:26:44.884Z",
+          "failure": null
+        }
+      },
+      "normalized": {
+        "claimId": "edgar-0001193125-26-275783",
+        "sourceClass": "OFFICIAL",
+        "dataMode": "LIVE",
+        "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000119312526275783/0001193125-26-275783-index.htm",
+        "sourceId": "sec.gov/2026-06-18/0001193125-26-275783",
+        "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+        "publishedAt": "2026-06-18T20:00:24.000Z",
+        "publishedAtPrecision": "SECOND",
+        "sourceContentSha256": "b6ce07e3114b09645911d631de7b4c1b2c029c305c0cfb4e60d13e41669d99b8",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "UNKNOWN",
+        "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001193125-26-275783, filing date 2026-06-18. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 8.01 and 9.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000119312526275783/0001193125-26-275783-index.htm",
+        "assertionLevel": "ASSERTED",
+        "describesCompletedEvent": true,
+        "speculationMarkers": [],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "official:edgar/filer/0001045810",
+        "relation": "ORIGIN",
+        "officialConfirmation": true,
+        "expiresAt": null,
+        "materiality": "UNKNOWN",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      "provenanceViolations": [],
+      "promotable": true
+    },
+    {
+      "provenance": {
+        "claimId": {
+          "value": "edgar-0001045810-26-000051",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "edgar-<accession number>"
+        },
+        "sourceClass": {
+          "value": "OFFICIAL",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "an SEC filing retrieved from www.sec.gov is OFFICIAL in this system"
+        },
+        "sourceClassRule": "OFFICIAL requires both an https://www.sec.gov/ URL and a content hash (normalize.ts). The URL was checked with xbot/sourceUrlGuard.ts::isRealSecFilingSourceUrl before the document was fetched; the hash is sha256 over the exact bytes that URL served.",
+        "dataMode": {
+          "value": "LIVE",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "LIVE: read from the SEC EDGAR Atom feed during this run, not replayed from a fixture."
+        },
+        "sourceUrl": {
+          "value": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000051/0001045810-26-000051-index.htm",
+          "source": "sec-edgar-atom-feed",
+          "note": "the entry's own filing-href"
+        },
+        "sourceId": {
+          "value": "sec.gov/2026-05-20/0001045810-26-000051",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "origin-leading by design: graph.ts::ownOriginKey keys an unrecognised publisher on the leading path segment, so this shape collapses every EDGAR filing into one origin."
+        },
+        "publisherOrAuthor": {
+          "value": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "source": "sec-edgar-atom-feed",
+          "note": "conformed-name from the feed's company-info block, plus the registry CIK"
+        },
+        "publishedAt": {
+          "value": "2026-05-20T20:21:19.000Z",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "the entry's <updated> instant, converted to the strict ...Z form normalize.ts accepts"
+        },
+        "publishedAtRaw": {
+          "value": "2026-05-20T16:21:19-04:00",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim from <updated>, before any conversion"
+        },
+        "publishedAtPrecision": {
+          "value": "SECOND",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR states the acceptance instant to the second"
+        },
+        "sourceContentSha256": {
+          "value": "a382dfc4b612bc5798f8f33d096689beb18eb97d989cecd8bcd94ccba30387c9",
+          "source": "sec-edgar-document-fetch",
+          "note": "sha256 over the 10599 bytes served by https://www.sec.gov/Archives/edgar/data/1045810/000104581026000051/0001045810-26-000051-index.htm at 2026-08-21T18:26:45.393Z"
+        },
+        "company": {
+          "value": "NVIDIA CORPORATION",
+          "source": "project-registry",
+          "note": "evidence/assets.ts SUPPORTED_ASSETS"
+        },
+        "tokenSymbol": {
+          "value": "wNVDAx",
+          "source": "project-registry"
+        },
+        "tokenAddress": {
+          "value": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "source": "project-registry"
+        },
+        "eventType": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not classified: mapping 8-K item codes onto this project's event vocabulary needs a classifier this task does not authorise. The raw item codes are recorded below."
+        },
+        "materiality": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not determined. promote.ts treats UNKNOWN as non-material and refuses to promote on it, which is the fail-safe direction and is left in place deliberately."
+        },
+        "independenceGroup": {
+          "value": "official:edgar/filer/0001045810",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "one group per FILER, not per filing: ten filings by one registrant are one source line"
+        },
+        "relation": {
+          "value": "ORIGIN",
+          "source": "derived-from-sec-edgar-atom-feed"
+        },
+        "officialConfirmation": {
+          "value": "true",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "this claim is itself an official filing, matching how frozen scenario B labels its EDGAR claims"
+        },
+        "expiresAt": {
+          "value": null,
+          "source": "UNAVAILABLE",
+          "note": "no source fact supports a TTL for a filing; left null rather than assumed"
+        },
+        "claimTextOrPointer": {
+          "value": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000051, filing date 2026-05-20. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 2.02 and 9.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000051/0001045810-26-000051-index.htm",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "a pointer with verbatim spans quoted from the feed entry. No paraphrase of the filing's contents."
+        },
+        "assertionLevel": {
+          "value": "ASSERTED",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "derived by evidence/speculation.ts from the claim text; the structural hint ASSERTED was offered because the issuer signed the filing. Markers matched: (none)."
+        },
+        "feedEntryId": {
+          "value": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000051",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR's own <id> URN. Recorded, but NOT used as sourceId — see the sourceId note."
+        },
+        "feedEntryTitle": {
+          "value": "8-K  - Current report",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntrySummary": {
+          "value": "<b>Filed:</b> 2026-05-20 <b>AccNo:</b> 0001045810-26-000051 <b>Size:</b> 637 KB<br>Item 2.02: Results of Operations and Financial Condition<br>Item 9.01: Financial Statements and Exhibits",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim, entity-decoded; SEC's own summary markup is left intact"
+        },
+        "feedFormType": {
+          "value": "8-K",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedFilingDate": {
+          "value": "2026-05-20",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedAccessionNumber": {
+          "value": "0001045810-26-000051",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedItemsDescription": {
+          "value": "items 2.02 and 9.01",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntryRawSha256": {
+          "value": "285200a56b9b3115fd72441c0777ab7ba3df6b7116875922738ef479373bfff6",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "sha256 over the UTF-8 bytes of this entry's verbatim XML within the feed"
+        },
+        "documentFetch": {
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000051/0001045810-26-000051-index.htm",
+          "attempted": true,
+          "httpStatus": 200,
+          "byteLength": 10599,
+          "contentType": "text/html",
+          "retrievedAtUtc": "2026-08-21T18:26:45.393Z",
+          "failure": null
+        }
+      },
+      "normalized": {
+        "claimId": "edgar-0001045810-26-000051",
+        "sourceClass": "OFFICIAL",
+        "dataMode": "LIVE",
+        "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000051/0001045810-26-000051-index.htm",
+        "sourceId": "sec.gov/2026-05-20/0001045810-26-000051",
+        "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+        "publishedAt": "2026-05-20T20:21:19.000Z",
+        "publishedAtPrecision": "SECOND",
+        "sourceContentSha256": "a382dfc4b612bc5798f8f33d096689beb18eb97d989cecd8bcd94ccba30387c9",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "UNKNOWN",
+        "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000051, filing date 2026-05-20. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 2.02 and 9.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000051/0001045810-26-000051-index.htm",
+        "assertionLevel": "ASSERTED",
+        "describesCompletedEvent": true,
+        "speculationMarkers": [],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "official:edgar/filer/0001045810",
+        "relation": "ORIGIN",
+        "officialConfirmation": true,
+        "expiresAt": null,
+        "materiality": "UNKNOWN",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      "provenanceViolations": [],
+      "promotable": true
+    },
+    {
+      "provenance": {
+        "claimId": {
+          "value": "edgar-0001045810-26-000028",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "edgar-<accession number>"
+        },
+        "sourceClass": {
+          "value": "OFFICIAL",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "an SEC filing retrieved from www.sec.gov is OFFICIAL in this system"
+        },
+        "sourceClassRule": "OFFICIAL requires both an https://www.sec.gov/ URL and a content hash (normalize.ts). The URL was checked with xbot/sourceUrlGuard.ts::isRealSecFilingSourceUrl before the document was fetched; the hash is sha256 over the exact bytes that URL served.",
+        "dataMode": {
+          "value": "LIVE",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "LIVE: read from the SEC EDGAR Atom feed during this run, not replayed from a fixture."
+        },
+        "sourceUrl": {
+          "value": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/0001045810-26-000028-index.htm",
+          "source": "sec-edgar-atom-feed",
+          "note": "the entry's own filing-href"
+        },
+        "sourceId": {
+          "value": "sec.gov/2026-05-08/0001045810-26-000028",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "origin-leading by design: graph.ts::ownOriginKey keys an unrecognised publisher on the leading path segment, so this shape collapses every EDGAR filing into one origin."
+        },
+        "publisherOrAuthor": {
+          "value": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "source": "sec-edgar-atom-feed",
+          "note": "conformed-name from the feed's company-info block, plus the registry CIK"
+        },
+        "publishedAt": {
+          "value": "2026-05-08T20:35:07.000Z",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "the entry's <updated> instant, converted to the strict ...Z form normalize.ts accepts"
+        },
+        "publishedAtRaw": {
+          "value": "2026-05-08T16:35:07-04:00",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim from <updated>, before any conversion"
+        },
+        "publishedAtPrecision": {
+          "value": "SECOND",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR states the acceptance instant to the second"
+        },
+        "sourceContentSha256": {
+          "value": "04684763447337abc4061a611ebfa7670ff71c35be9e95f1bb1bd5ddb1afddba",
+          "source": "sec-edgar-document-fetch",
+          "note": "sha256 over the 9680 bytes served by https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/0001045810-26-000028-index.htm at 2026-08-21T18:26:45.913Z"
+        },
+        "company": {
+          "value": "NVIDIA CORPORATION",
+          "source": "project-registry",
+          "note": "evidence/assets.ts SUPPORTED_ASSETS"
+        },
+        "tokenSymbol": {
+          "value": "wNVDAx",
+          "source": "project-registry"
+        },
+        "tokenAddress": {
+          "value": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "source": "project-registry"
+        },
+        "eventType": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not classified: mapping 8-K item codes onto this project's event vocabulary needs a classifier this task does not authorise. The raw item codes are recorded below."
+        },
+        "materiality": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not determined. promote.ts treats UNKNOWN as non-material and refuses to promote on it, which is the fail-safe direction and is left in place deliberately."
+        },
+        "independenceGroup": {
+          "value": "official:edgar/filer/0001045810",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "one group per FILER, not per filing: ten filings by one registrant are one source line"
+        },
+        "relation": {
+          "value": "ORIGIN",
+          "source": "derived-from-sec-edgar-atom-feed"
+        },
+        "officialConfirmation": {
+          "value": "true",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "this claim is itself an official filing, matching how frozen scenario B labels its EDGAR claims"
+        },
+        "expiresAt": {
+          "value": null,
+          "source": "UNAVAILABLE",
+          "note": "no source fact supports a TTL for a filing; left null rather than assumed"
+        },
+        "claimTextOrPointer": {
+          "value": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000028, filing date 2026-05-08. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.02\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/0001045810-26-000028-index.htm",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "a pointer with verbatim spans quoted from the feed entry. No paraphrase of the filing's contents."
+        },
+        "assertionLevel": {
+          "value": "ASSERTED",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "derived by evidence/speculation.ts from the claim text; the structural hint ASSERTED was offered because the issuer signed the filing. Markers matched: (none)."
+        },
+        "feedEntryId": {
+          "value": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000028",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR's own <id> URN. Recorded, but NOT used as sourceId — see the sourceId note."
+        },
+        "feedEntryTitle": {
+          "value": "8-K  - Current report",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntrySummary": {
+          "value": "<b>Filed:</b> 2026-05-08 <b>AccNo:</b> 0001045810-26-000028 <b>Size:</b> 135 KB<br>Item 5.02: Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers: Compensatory Arrangements of Certain Officers",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim, entity-decoded; SEC's own summary markup is left intact"
+        },
+        "feedFormType": {
+          "value": "8-K",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedFilingDate": {
+          "value": "2026-05-08",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedAccessionNumber": {
+          "value": "0001045810-26-000028",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedItemsDescription": {
+          "value": "item 5.02",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntryRawSha256": {
+          "value": "14fa6c3c5f564e2b8a34fc46547e32f97690223798f15b2d49396a7b05a17a6a",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "sha256 over the UTF-8 bytes of this entry's verbatim XML within the feed"
+        },
+        "documentFetch": {
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/0001045810-26-000028-index.htm",
+          "attempted": true,
+          "httpStatus": 200,
+          "byteLength": 9680,
+          "contentType": "text/html",
+          "retrievedAtUtc": "2026-08-21T18:26:45.913Z",
+          "failure": null
+        }
+      },
+      "normalized": {
+        "claimId": "edgar-0001045810-26-000028",
+        "sourceClass": "OFFICIAL",
+        "dataMode": "LIVE",
+        "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/0001045810-26-000028-index.htm",
+        "sourceId": "sec.gov/2026-05-08/0001045810-26-000028",
+        "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+        "publishedAt": "2026-05-08T20:35:07.000Z",
+        "publishedAtPrecision": "SECOND",
+        "sourceContentSha256": "04684763447337abc4061a611ebfa7670ff71c35be9e95f1bb1bd5ddb1afddba",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "UNKNOWN",
+        "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000028, filing date 2026-05-08. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.02\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/0001045810-26-000028-index.htm",
+        "assertionLevel": "ASSERTED",
+        "describesCompletedEvent": true,
+        "speculationMarkers": [],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "official:edgar/filer/0001045810",
+        "relation": "ORIGIN",
+        "officialConfirmation": true,
+        "expiresAt": null,
+        "materiality": "UNKNOWN",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      "provenanceViolations": [],
+      "promotable": true
+    },
+    {
+      "provenance": {
+        "claimId": {
+          "value": "edgar-0001045810-26-000026",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "edgar-<accession number>"
+        },
+        "sourceClass": {
+          "value": "OFFICIAL",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "an SEC filing retrieved from www.sec.gov is OFFICIAL in this system"
+        },
+        "sourceClassRule": "OFFICIAL requires both an https://www.sec.gov/ URL and a content hash (normalize.ts). The URL was checked with xbot/sourceUrlGuard.ts::isRealSecFilingSourceUrl before the document was fetched; the hash is sha256 over the exact bytes that URL served.",
+        "dataMode": {
+          "value": "LIVE",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "LIVE: read from the SEC EDGAR Atom feed during this run, not replayed from a fixture."
+        },
+        "sourceUrl": {
+          "value": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000026/0001045810-26-000026-index.htm",
+          "source": "sec-edgar-atom-feed",
+          "note": "the entry's own filing-href"
+        },
+        "sourceId": {
+          "value": "sec.gov/2026-04-27/0001045810-26-000026",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "origin-leading by design: graph.ts::ownOriginKey keys an unrecognised publisher on the leading path segment, so this shape collapses every EDGAR filing into one origin."
+        },
+        "publisherOrAuthor": {
+          "value": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "source": "sec-edgar-atom-feed",
+          "note": "conformed-name from the feed's company-info block, plus the registry CIK"
+        },
+        "publishedAt": {
+          "value": "2026-04-27T20:10:30.000Z",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "the entry's <updated> instant, converted to the strict ...Z form normalize.ts accepts"
+        },
+        "publishedAtRaw": {
+          "value": "2026-04-27T16:10:30-04:00",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim from <updated>, before any conversion"
+        },
+        "publishedAtPrecision": {
+          "value": "SECOND",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR states the acceptance instant to the second"
+        },
+        "sourceContentSha256": {
+          "value": "4fe40ea852c241f0782b071e8bae8ec044499aef4493eed6e36fc30dd2844575",
+          "source": "sec-edgar-document-fetch",
+          "note": "sha256 over the 9680 bytes served by https://www.sec.gov/Archives/edgar/data/1045810/000104581026000026/0001045810-26-000026-index.htm at 2026-08-21T18:26:46.350Z"
+        },
+        "company": {
+          "value": "NVIDIA CORPORATION",
+          "source": "project-registry",
+          "note": "evidence/assets.ts SUPPORTED_ASSETS"
+        },
+        "tokenSymbol": {
+          "value": "wNVDAx",
+          "source": "project-registry"
+        },
+        "tokenAddress": {
+          "value": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "source": "project-registry"
+        },
+        "eventType": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not classified: mapping 8-K item codes onto this project's event vocabulary needs a classifier this task does not authorise. The raw item codes are recorded below."
+        },
+        "materiality": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not determined. promote.ts treats UNKNOWN as non-material and refuses to promote on it, which is the fail-safe direction and is left in place deliberately."
+        },
+        "independenceGroup": {
+          "value": "official:edgar/filer/0001045810",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "one group per FILER, not per filing: ten filings by one registrant are one source line"
+        },
+        "relation": {
+          "value": "ORIGIN",
+          "source": "derived-from-sec-edgar-atom-feed"
+        },
+        "officialConfirmation": {
+          "value": "true",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "this claim is itself an official filing, matching how frozen scenario B labels its EDGAR claims"
+        },
+        "expiresAt": {
+          "value": null,
+          "source": "UNAVAILABLE",
+          "note": "no source fact supports a TTL for a filing; left null rather than assumed"
+        },
+        "claimTextOrPointer": {
+          "value": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000026, filing date 2026-04-27. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.02\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000026/0001045810-26-000026-index.htm",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "a pointer with verbatim spans quoted from the feed entry. No paraphrase of the filing's contents."
+        },
+        "assertionLevel": {
+          "value": "ASSERTED",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "derived by evidence/speculation.ts from the claim text; the structural hint ASSERTED was offered because the issuer signed the filing. Markers matched: (none)."
+        },
+        "feedEntryId": {
+          "value": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000026",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR's own <id> URN. Recorded, but NOT used as sourceId — see the sourceId note."
+        },
+        "feedEntryTitle": {
+          "value": "8-K  - Current report",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntrySummary": {
+          "value": "<b>Filed:</b> 2026-04-27 <b>AccNo:</b> 0001045810-26-000026 <b>Size:</b> 137 KB<br>Item 5.02: Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers: Compensatory Arrangements of Certain Officers",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim, entity-decoded; SEC's own summary markup is left intact"
+        },
+        "feedFormType": {
+          "value": "8-K",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedFilingDate": {
+          "value": "2026-04-27",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedAccessionNumber": {
+          "value": "0001045810-26-000026",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedItemsDescription": {
+          "value": "item 5.02",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntryRawSha256": {
+          "value": "f46892b781b8ff2bbc2097193f206f4ed575b2868a7429a24583a281cb42be8c",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "sha256 over the UTF-8 bytes of this entry's verbatim XML within the feed"
+        },
+        "documentFetch": {
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000026/0001045810-26-000026-index.htm",
+          "attempted": true,
+          "httpStatus": 200,
+          "byteLength": 9680,
+          "contentType": "text/html",
+          "retrievedAtUtc": "2026-08-21T18:26:46.350Z",
+          "failure": null
+        }
+      },
+      "normalized": {
+        "claimId": "edgar-0001045810-26-000026",
+        "sourceClass": "OFFICIAL",
+        "dataMode": "LIVE",
+        "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000026/0001045810-26-000026-index.htm",
+        "sourceId": "sec.gov/2026-04-27/0001045810-26-000026",
+        "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+        "publishedAt": "2026-04-27T20:10:30.000Z",
+        "publishedAtPrecision": "SECOND",
+        "sourceContentSha256": "4fe40ea852c241f0782b071e8bae8ec044499aef4493eed6e36fc30dd2844575",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "UNKNOWN",
+        "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000026, filing date 2026-04-27. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.02\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000026/0001045810-26-000026-index.htm",
+        "assertionLevel": "ASSERTED",
+        "describesCompletedEvent": true,
+        "speculationMarkers": [],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "official:edgar/filer/0001045810",
+        "relation": "ORIGIN",
+        "officialConfirmation": true,
+        "expiresAt": null,
+        "materiality": "UNKNOWN",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      "provenanceViolations": [],
+      "promotable": true
+    },
+    {
+      "provenance": {
+        "claimId": {
+          "value": "edgar-0001045810-26-000024",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "edgar-<accession number>"
+        },
+        "sourceClass": {
+          "value": "OFFICIAL",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "an SEC filing retrieved from www.sec.gov is OFFICIAL in this system"
+        },
+        "sourceClassRule": "OFFICIAL requires both an https://www.sec.gov/ URL and a content hash (normalize.ts). The URL was checked with xbot/sourceUrlGuard.ts::isRealSecFilingSourceUrl before the document was fetched; the hash is sha256 over the exact bytes that URL served.",
+        "dataMode": {
+          "value": "LIVE",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "LIVE: read from the SEC EDGAR Atom feed during this run, not replayed from a fixture."
+        },
+        "sourceUrl": {
+          "value": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000024/0001045810-26-000024-index.htm",
+          "source": "sec-edgar-atom-feed",
+          "note": "the entry's own filing-href"
+        },
+        "sourceId": {
+          "value": "sec.gov/2026-03-06/0001045810-26-000024",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "origin-leading by design: graph.ts::ownOriginKey keys an unrecognised publisher on the leading path segment, so this shape collapses every EDGAR filing into one origin."
+        },
+        "publisherOrAuthor": {
+          "value": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "source": "sec-edgar-atom-feed",
+          "note": "conformed-name from the feed's company-info block, plus the registry CIK"
+        },
+        "publishedAt": {
+          "value": "2026-03-06T21:11:25.000Z",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "the entry's <updated> instant, converted to the strict ...Z form normalize.ts accepts"
+        },
+        "publishedAtRaw": {
+          "value": "2026-03-06T16:11:25-05:00",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim from <updated>, before any conversion"
+        },
+        "publishedAtPrecision": {
+          "value": "SECOND",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR states the acceptance instant to the second"
+        },
+        "sourceContentSha256": {
+          "value": "a69c2a7536e7371092df66f30cce84cb8a00c4d67ac3acec7b6adb3918f95804",
+          "source": "sec-edgar-document-fetch",
+          "note": "sha256 over the 10072 bytes served by https://www.sec.gov/Archives/edgar/data/1045810/000104581026000024/0001045810-26-000024-index.htm at 2026-08-21T18:26:46.818Z"
+        },
+        "company": {
+          "value": "NVIDIA CORPORATION",
+          "source": "project-registry",
+          "note": "evidence/assets.ts SUPPORTED_ASSETS"
+        },
+        "tokenSymbol": {
+          "value": "wNVDAx",
+          "source": "project-registry"
+        },
+        "tokenAddress": {
+          "value": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "source": "project-registry"
+        },
+        "eventType": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not classified: mapping 8-K item codes onto this project's event vocabulary needs a classifier this task does not authorise. The raw item codes are recorded below."
+        },
+        "materiality": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not determined. promote.ts treats UNKNOWN as non-material and refuses to promote on it, which is the fail-safe direction and is left in place deliberately."
+        },
+        "independenceGroup": {
+          "value": "official:edgar/filer/0001045810",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "one group per FILER, not per filing: ten filings by one registrant are one source line"
+        },
+        "relation": {
+          "value": "ORIGIN",
+          "source": "derived-from-sec-edgar-atom-feed"
+        },
+        "officialConfirmation": {
+          "value": "true",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "this claim is itself an official filing, matching how frozen scenario B labels its EDGAR claims"
+        },
+        "expiresAt": {
+          "value": null,
+          "source": "UNAVAILABLE",
+          "note": "no source fact supports a TTL for a filing; left null rather than assumed"
+        },
+        "claimTextOrPointer": {
+          "value": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000024, filing date 2026-03-06. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 5.02 and 9.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000024/0001045810-26-000024-index.htm",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "a pointer with verbatim spans quoted from the feed entry. No paraphrase of the filing's contents."
+        },
+        "assertionLevel": {
+          "value": "ASSERTED",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "derived by evidence/speculation.ts from the claim text; the structural hint ASSERTED was offered because the issuer signed the filing. Markers matched: (none)."
+        },
+        "feedEntryId": {
+          "value": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000024",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR's own <id> URN. Recorded, but NOT used as sourceId — see the sourceId note."
+        },
+        "feedEntryTitle": {
+          "value": "8-K  - Current report",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntrySummary": {
+          "value": "<b>Filed:</b> 2026-03-06 <b>AccNo:</b> 0001045810-26-000024 <b>Size:</b> 165 KB<br>Item 5.02: Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers: Compensatory Arrangements of Certain Officers<br>Item 9.01: Financial Statements and Exhibits",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim, entity-decoded; SEC's own summary markup is left intact"
+        },
+        "feedFormType": {
+          "value": "8-K",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedFilingDate": {
+          "value": "2026-03-06",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedAccessionNumber": {
+          "value": "0001045810-26-000024",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedItemsDescription": {
+          "value": "items 5.02 and 9.01",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntryRawSha256": {
+          "value": "849a3a8152c4649b12ef38638bfe6122c8ccb055f71e40c47c46681592f52cf6",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "sha256 over the UTF-8 bytes of this entry's verbatim XML within the feed"
+        },
+        "documentFetch": {
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000024/0001045810-26-000024-index.htm",
+          "attempted": true,
+          "httpStatus": 200,
+          "byteLength": 10072,
+          "contentType": "text/html",
+          "retrievedAtUtc": "2026-08-21T18:26:46.818Z",
+          "failure": null
+        }
+      },
+      "normalized": {
+        "claimId": "edgar-0001045810-26-000024",
+        "sourceClass": "OFFICIAL",
+        "dataMode": "LIVE",
+        "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000024/0001045810-26-000024-index.htm",
+        "sourceId": "sec.gov/2026-03-06/0001045810-26-000024",
+        "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+        "publishedAt": "2026-03-06T21:11:25.000Z",
+        "publishedAtPrecision": "SECOND",
+        "sourceContentSha256": "a69c2a7536e7371092df66f30cce84cb8a00c4d67ac3acec7b6adb3918f95804",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "UNKNOWN",
+        "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000024, filing date 2026-03-06. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 5.02 and 9.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000024/0001045810-26-000024-index.htm",
+        "assertionLevel": "ASSERTED",
+        "describesCompletedEvent": true,
+        "speculationMarkers": [],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "official:edgar/filer/0001045810",
+        "relation": "ORIGIN",
+        "officialConfirmation": true,
+        "expiresAt": null,
+        "materiality": "UNKNOWN",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      "provenanceViolations": [],
+      "promotable": true
+    },
+    {
+      "provenance": {
+        "claimId": {
+          "value": "edgar-0001045810-26-000019",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "edgar-<accession number>"
+        },
+        "sourceClass": {
+          "value": "OFFICIAL",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "an SEC filing retrieved from www.sec.gov is OFFICIAL in this system"
+        },
+        "sourceClassRule": "OFFICIAL requires both an https://www.sec.gov/ URL and a content hash (normalize.ts). The URL was checked with xbot/sourceUrlGuard.ts::isRealSecFilingSourceUrl before the document was fetched; the hash is sha256 over the exact bytes that URL served.",
+        "dataMode": {
+          "value": "LIVE",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "LIVE: read from the SEC EDGAR Atom feed during this run, not replayed from a fixture."
+        },
+        "sourceUrl": {
+          "value": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/0001045810-26-000019-index.htm",
+          "source": "sec-edgar-atom-feed",
+          "note": "the entry's own filing-href"
+        },
+        "sourceId": {
+          "value": "sec.gov/2026-02-25/0001045810-26-000019",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "origin-leading by design: graph.ts::ownOriginKey keys an unrecognised publisher on the leading path segment, so this shape collapses every EDGAR filing into one origin."
+        },
+        "publisherOrAuthor": {
+          "value": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "source": "sec-edgar-atom-feed",
+          "note": "conformed-name from the feed's company-info block, plus the registry CIK"
+        },
+        "publishedAt": {
+          "value": "2026-02-25T21:31:25.000Z",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "the entry's <updated> instant, converted to the strict ...Z form normalize.ts accepts"
+        },
+        "publishedAtRaw": {
+          "value": "2026-02-25T16:31:25-05:00",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim from <updated>, before any conversion"
+        },
+        "publishedAtPrecision": {
+          "value": "SECOND",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR states the acceptance instant to the second"
+        },
+        "sourceContentSha256": {
+          "value": "80b8a460178dc944f2137146c79bc8bbbf9591f0239eb2e28d97c62ffe3c72b5",
+          "source": "sec-edgar-document-fetch",
+          "note": "sha256 over the 10596 bytes served by https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/0001045810-26-000019-index.htm at 2026-08-21T18:26:47.269Z"
+        },
+        "company": {
+          "value": "NVIDIA CORPORATION",
+          "source": "project-registry",
+          "note": "evidence/assets.ts SUPPORTED_ASSETS"
+        },
+        "tokenSymbol": {
+          "value": "wNVDAx",
+          "source": "project-registry"
+        },
+        "tokenAddress": {
+          "value": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "source": "project-registry"
+        },
+        "eventType": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not classified: mapping 8-K item codes onto this project's event vocabulary needs a classifier this task does not authorise. The raw item codes are recorded below."
+        },
+        "materiality": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not determined. promote.ts treats UNKNOWN as non-material and refuses to promote on it, which is the fail-safe direction and is left in place deliberately."
+        },
+        "independenceGroup": {
+          "value": "official:edgar/filer/0001045810",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "one group per FILER, not per filing: ten filings by one registrant are one source line"
+        },
+        "relation": {
+          "value": "ORIGIN",
+          "source": "derived-from-sec-edgar-atom-feed"
+        },
+        "officialConfirmation": {
+          "value": "true",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "this claim is itself an official filing, matching how frozen scenario B labels its EDGAR claims"
+        },
+        "expiresAt": {
+          "value": null,
+          "source": "UNAVAILABLE",
+          "note": "no source fact supports a TTL for a filing; left null rather than assumed"
+        },
+        "claimTextOrPointer": {
+          "value": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000019, filing date 2026-02-25. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 2.02 and 9.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/0001045810-26-000019-index.htm",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "a pointer with verbatim spans quoted from the feed entry. No paraphrase of the filing's contents."
+        },
+        "assertionLevel": {
+          "value": "ASSERTED",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "derived by evidence/speculation.ts from the claim text; the structural hint ASSERTED was offered because the issuer signed the filing. Markers matched: (none)."
+        },
+        "feedEntryId": {
+          "value": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000019",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR's own <id> URN. Recorded, but NOT used as sourceId — see the sourceId note."
+        },
+        "feedEntryTitle": {
+          "value": "8-K  - Current report",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntrySummary": {
+          "value": "<b>Filed:</b> 2026-02-25 <b>AccNo:</b> 0001045810-26-000019 <b>Size:</b> 859 KB<br>Item 2.02: Results of Operations and Financial Condition<br>Item 9.01: Financial Statements and Exhibits",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim, entity-decoded; SEC's own summary markup is left intact"
+        },
+        "feedFormType": {
+          "value": "8-K",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedFilingDate": {
+          "value": "2026-02-25",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedAccessionNumber": {
+          "value": "0001045810-26-000019",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedItemsDescription": {
+          "value": "items 2.02 and 9.01",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntryRawSha256": {
+          "value": "a5cac726545d03313c09c9cf1e954113297fb883d72e19de9e949a72b3a91027",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "sha256 over the UTF-8 bytes of this entry's verbatim XML within the feed"
+        },
+        "documentFetch": {
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/0001045810-26-000019-index.htm",
+          "attempted": true,
+          "httpStatus": 200,
+          "byteLength": 10596,
+          "contentType": "text/html",
+          "retrievedAtUtc": "2026-08-21T18:26:47.269Z",
+          "failure": null
+        }
+      },
+      "normalized": {
+        "claimId": "edgar-0001045810-26-000019",
+        "sourceClass": "OFFICIAL",
+        "dataMode": "LIVE",
+        "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/0001045810-26-000019-index.htm",
+        "sourceId": "sec.gov/2026-02-25/0001045810-26-000019",
+        "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+        "publishedAt": "2026-02-25T21:31:25.000Z",
+        "publishedAtPrecision": "SECOND",
+        "sourceContentSha256": "80b8a460178dc944f2137146c79bc8bbbf9591f0239eb2e28d97c62ffe3c72b5",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "UNKNOWN",
+        "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000019, filing date 2026-02-25. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 2.02 and 9.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/0001045810-26-000019-index.htm",
+        "assertionLevel": "ASSERTED",
+        "describesCompletedEvent": true,
+        "speculationMarkers": [],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "official:edgar/filer/0001045810",
+        "relation": "ORIGIN",
+        "officialConfirmation": true,
+        "expiresAt": null,
+        "materiality": "UNKNOWN",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      "provenanceViolations": [],
+      "promotable": true
+    },
+    {
+      "provenance": {
+        "claimId": {
+          "value": "edgar-0001045810-26-000003",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "edgar-<accession number>"
+        },
+        "sourceClass": {
+          "value": "OFFICIAL",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "an SEC filing retrieved from www.sec.gov is OFFICIAL in this system"
+        },
+        "sourceClassRule": "OFFICIAL requires both an https://www.sec.gov/ URL and a content hash (normalize.ts). The URL was checked with xbot/sourceUrlGuard.ts::isRealSecFilingSourceUrl before the document was fetched; the hash is sha256 over the exact bytes that URL served.",
+        "dataMode": {
+          "value": "LIVE",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "LIVE: read from the SEC EDGAR Atom feed during this run, not replayed from a fixture."
+        },
+        "sourceUrl": {
+          "value": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000003/0001045810-26-000003-index.htm",
+          "source": "sec-edgar-atom-feed",
+          "note": "the entry's own filing-href"
+        },
+        "sourceId": {
+          "value": "sec.gov/2026-01-23/0001045810-26-000003",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "origin-leading by design: graph.ts::ownOriginKey keys an unrecognised publisher on the leading path segment, so this shape collapses every EDGAR filing into one origin."
+        },
+        "publisherOrAuthor": {
+          "value": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "source": "sec-edgar-atom-feed",
+          "note": "conformed-name from the feed's company-info block, plus the registry CIK"
+        },
+        "publishedAt": {
+          "value": "2026-01-23T22:01:33.000Z",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "the entry's <updated> instant, converted to the strict ...Z form normalize.ts accepts"
+        },
+        "publishedAtRaw": {
+          "value": "2026-01-23T17:01:33-05:00",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim from <updated>, before any conversion"
+        },
+        "publishedAtPrecision": {
+          "value": "SECOND",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR states the acceptance instant to the second"
+        },
+        "sourceContentSha256": {
+          "value": "a1d7a5d7177b4f6e209781ff1981eb4dc1cbb6190c505290f8ae551ac50f3097",
+          "source": "sec-edgar-document-fetch",
+          "note": "sha256 over the 9680 bytes served by https://www.sec.gov/Archives/edgar/data/1045810/000104581026000003/0001045810-26-000003-index.htm at 2026-08-21T18:26:47.735Z"
+        },
+        "company": {
+          "value": "NVIDIA CORPORATION",
+          "source": "project-registry",
+          "note": "evidence/assets.ts SUPPORTED_ASSETS"
+        },
+        "tokenSymbol": {
+          "value": "wNVDAx",
+          "source": "project-registry"
+        },
+        "tokenAddress": {
+          "value": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "source": "project-registry"
+        },
+        "eventType": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not classified: mapping 8-K item codes onto this project's event vocabulary needs a classifier this task does not authorise. The raw item codes are recorded below."
+        },
+        "materiality": {
+          "value": "UNKNOWN",
+          "source": "UNAVAILABLE",
+          "note": "not determined. promote.ts treats UNKNOWN as non-material and refuses to promote on it, which is the fail-safe direction and is left in place deliberately."
+        },
+        "independenceGroup": {
+          "value": "official:edgar/filer/0001045810",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "one group per FILER, not per filing: ten filings by one registrant are one source line"
+        },
+        "relation": {
+          "value": "ORIGIN",
+          "source": "derived-from-sec-edgar-atom-feed"
+        },
+        "officialConfirmation": {
+          "value": "true",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "this claim is itself an official filing, matching how frozen scenario B labels its EDGAR claims"
+        },
+        "expiresAt": {
+          "value": null,
+          "source": "UNAVAILABLE",
+          "note": "no source fact supports a TTL for a filing; left null rather than assumed"
+        },
+        "claimTextOrPointer": {
+          "value": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000003, filing date 2026-01-23. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.02\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000003/0001045810-26-000003-index.htm",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "a pointer with verbatim spans quoted from the feed entry. No paraphrase of the filing's contents."
+        },
+        "assertionLevel": {
+          "value": "ASSERTED",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "derived by evidence/speculation.ts from the claim text; the structural hint ASSERTED was offered because the issuer signed the filing. Markers matched: (none)."
+        },
+        "feedEntryId": {
+          "value": "urn:tag:sec.gov,2008:accession-number=0001045810-26-000003",
+          "source": "sec-edgar-atom-feed",
+          "note": "EDGAR's own <id> URN. Recorded, but NOT used as sourceId — see the sourceId note."
+        },
+        "feedEntryTitle": {
+          "value": "8-K  - Current report",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntrySummary": {
+          "value": "<b>Filed:</b> 2026-01-23 <b>AccNo:</b> 0001045810-26-000003 <b>Size:</b> 133 KB<br>Item 5.02: Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers: Compensatory Arrangements of Certain Officers",
+          "source": "sec-edgar-atom-feed",
+          "note": "verbatim, entity-decoded; SEC's own summary markup is left intact"
+        },
+        "feedFormType": {
+          "value": "8-K",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedFilingDate": {
+          "value": "2026-01-23",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedAccessionNumber": {
+          "value": "0001045810-26-000003",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedItemsDescription": {
+          "value": "item 5.02",
+          "source": "sec-edgar-atom-feed"
+        },
+        "feedEntryRawSha256": {
+          "value": "2594260170edc4bffb3b94121202568c56bafa48805144ce5202a950fedf8a99",
+          "source": "derived-from-sec-edgar-atom-feed",
+          "note": "sha256 over the UTF-8 bytes of this entry's verbatim XML within the feed"
+        },
+        "documentFetch": {
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000003/0001045810-26-000003-index.htm",
+          "attempted": true,
+          "httpStatus": 200,
+          "byteLength": 9680,
+          "contentType": "text/html",
+          "retrievedAtUtc": "2026-08-21T18:26:47.735Z",
+          "failure": null
+        }
+      },
+      "normalized": {
+        "claimId": "edgar-0001045810-26-000003",
+        "sourceClass": "OFFICIAL",
+        "dataMode": "LIVE",
+        "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000003/0001045810-26-000003-index.htm",
+        "sourceId": "sec.gov/2026-01-23/0001045810-26-000003",
+        "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+        "publishedAt": "2026-01-23T22:01:33.000Z",
+        "publishedAtPrecision": "SECOND",
+        "sourceContentSha256": "a1d7a5d7177b4f6e209781ff1981eb4dc1cbb6190c505290f8ae551ac50f3097",
+        "company": "NVIDIA CORPORATION",
+        "tokenSymbol": "wNVDAx",
+        "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+        "eventType": "UNKNOWN",
+        "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000003, filing date 2026-01-23. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.02\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000003/0001045810-26-000003-index.htm",
+        "assertionLevel": "ASSERTED",
+        "describesCompletedEvent": true,
+        "speculationMarkers": [],
+        "publisherDisclaimedVerification": false,
+        "independenceGroup": "official:edgar/filer/0001045810",
+        "relation": "ORIGIN",
+        "officialConfirmation": true,
+        "expiresAt": null,
+        "materiality": "UNKNOWN",
+        "provenanceViolations": [],
+        "promotable": true
+      },
+      "provenanceViolations": [],
+      "promotable": true
+    }
+  ],
+  "dedup": {
+    "method": "apps/server/src/evidence/graph.ts :: deriveIndependence + countDerivedIndependentOrigins, unmodified, run over the live claims produced by this run.",
+    "liveClaimCount": 10,
+    "findings": [
+      {
+        "claimId": "edgar-0001045810-26-000069",
+        "derivedOriginKey": "unrecognised:sec.gov",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "official:edgar/filer/0001045810",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "edgar-0001045810-26-000060",
+        "derivedOriginKey": "unrecognised:sec.gov",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "official:edgar/filer/0001045810",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "edgar-0001045810-26-000056",
+        "derivedOriginKey": "unrecognised:sec.gov",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "official:edgar/filer/0001045810",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "edgar-0001193125-26-275783",
+        "derivedOriginKey": "unrecognised:sec.gov",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "official:edgar/filer/0001045810",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "edgar-0001045810-26-000051",
+        "derivedOriginKey": "unrecognised:sec.gov",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "official:edgar/filer/0001045810",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "edgar-0001045810-26-000028",
+        "derivedOriginKey": "unrecognised:sec.gov",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "official:edgar/filer/0001045810",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "edgar-0001045810-26-000026",
+        "derivedOriginKey": "unrecognised:sec.gov",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "official:edgar/filer/0001045810",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "edgar-0001045810-26-000024",
+        "derivedOriginKey": "unrecognised:sec.gov",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "official:edgar/filer/0001045810",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "edgar-0001045810-26-000019",
+        "derivedOriginKey": "unrecognised:sec.gov",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "official:edgar/filer/0001045810",
+        "disagreesWithDeclared": false
+      },
+      {
+        "claimId": "edgar-0001045810-26-000003",
+        "derivedOriginKey": "unrecognised:sec.gov",
+        "isSyndication": false,
+        "attributedTo": null,
+        "evidence": null,
+        "relaysUnnamedReport": false,
+        "declaredGroup": "official:edgar/filer/0001045810",
+        "disagreesWithDeclared": false
+      }
+    ],
+    "derivedOriginKeys": [
+      "unrecognised:sec.gov"
+    ],
+    "derivedIndependentOriginCount": 1,
+    "syndicationsDetected": 0,
+    "unnamedRelaysDetected": 0,
+    "disagreementsWithDeclaredGroup": 0,
+    "interpretation": "10 live filing(s) collapsed to 1 derived independent origin(s): unrecognised:sec.gov. That is the correct answer under §0.7 — every filing came from one registrant through one channel, so they are one source line and cannot corroborate each other, however many of them there are. No attribution phrase was found in any live item, which is expected: EDGAR filings do not cite other outlets, so the attribution branch of the derivation was NOT exercised by this data. The branch that was exercised is the one that matters for a primary source — many items, one origin.",
+    "observedFragility": "graph.ts::ownOriginKey derives an unrecognised publisher's origin from sourceId.split('/')[0]. That makes the origin count a function of a shape the INTAKE adapter chooses. Had this adapter used EDGAR's own per-entry URN (urn:tag:sec.gov,2008:accession-number=…) as sourceId, each filing would have become its own origin and one registrant would have looked like N independent sources. This run avoids that by using an origin-leading sourceId, matching the frozen NEWS fixtures. The fragility is reported here and NOT patched: graph.ts is unchanged by this task."
+  },
+  "decision": {
+    "record": {
+      "schemaVersion": "tinjau.risk/1.0.0",
+      "assessmentId": "0xe04935e1ca1af1175859153d7dce1f527d0866541f2f209d0df5ea2d8397c1d7",
+      "assetAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "tokenSymbol": "wNVDAx",
+      "poolIdOrAddress": "0x2a2b11730c2b6d99a58034a869dd810d7300a7b2",
+      "state": "NORMAL",
+      "reasonCodes": [
+        "INSUFFICIENT_SAMPLE",
+        "MARKET_DATA_UNAVAILABLE",
+        "NON_MATERIAL_EVENT",
+        "REFERENCE_MARKET_CLOSED",
+        "STALE_EVIDENCE"
+      ],
+      "humanExplanation": "The only evidence in window reports no corporate action affecting obligations, solvency, or listing status, so the risk state is unchanged. Official provenance does not by itself make an event material. Market leg: UNAVAILABLE. Only 0 swap(s) in the window, below the 30 required to form a verdict. A drawdown built from this few trades is an artifact of which trades happened to land, not a property of the market. The OKX reference leg was unavailable, so no artifact may describe this as dual-leg OKX/X Layer confirmation. No bounded action is authorised in state NORMAL: the aggressive fee path stays closed and the pool keeps its baseline fee.",
+      "evidenceCommitment": "0x3028295fbfc5314b33a837c7eb78027229f0ab19dfbd710d1cfb3d778ac7c690",
+      "confidenceBand": "LOW",
+      "assessedAt": "2026-08-17T12:41:33.000Z",
+      "expiresAt": "2026-08-18T12:41:33.000Z",
+      "policyVersion": "tinjau.policy/1.0.0",
+      "dataMode": "LIVE",
+      "evidence": [
+        {
+          "claimId": "edgar-0001045810-26-000069",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "LIVE",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/0001045810-26-000069-index.htm",
+          "sourceId": "sec.gov/2026-08-17/0001045810-26-000069",
+          "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "publishedAt": "2026-08-17T12:41:33.000Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "UNKNOWN",
+          "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000069, filing date 2026-08-17. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 1.01, 2.03and7.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/0001045810-26-000069-index.htm",
+          "independenceGroup": "official:edgar/filer/0001045810",
+          "relation": "ORIGIN",
+          "officialConfirmation": true,
+          "expiresAt": null
+        },
+        {
+          "claimId": "edgar-0001045810-26-000060",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "LIVE",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000060/0001045810-26-000060-index.htm",
+          "sourceId": "sec.gov/2026-07-02/0001045810-26-000060",
+          "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "publishedAt": "2026-07-02T13:23:16.000Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "UNKNOWN",
+          "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000060, filing date 2026-07-02. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.02\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000060/0001045810-26-000060-index.htm",
+          "independenceGroup": "official:edgar/filer/0001045810",
+          "relation": "ORIGIN",
+          "officialConfirmation": true,
+          "expiresAt": null
+        },
+        {
+          "claimId": "edgar-0001045810-26-000056",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "LIVE",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000056/0001045810-26-000056-index.htm",
+          "sourceId": "sec.gov/2026-06-30/0001045810-26-000056",
+          "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "publishedAt": "2026-06-30T20:27:26.000Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "UNKNOWN",
+          "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000056, filing date 2026-06-30. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.07\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000056/0001045810-26-000056-index.htm",
+          "independenceGroup": "official:edgar/filer/0001045810",
+          "relation": "ORIGIN",
+          "officialConfirmation": true,
+          "expiresAt": null
+        },
+        {
+          "claimId": "edgar-0001193125-26-275783",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "LIVE",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000119312526275783/0001193125-26-275783-index.htm",
+          "sourceId": "sec.gov/2026-06-18/0001193125-26-275783",
+          "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "publishedAt": "2026-06-18T20:00:24.000Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "UNKNOWN",
+          "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001193125-26-275783, filing date 2026-06-18. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 8.01 and 9.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000119312526275783/0001193125-26-275783-index.htm",
+          "independenceGroup": "official:edgar/filer/0001045810",
+          "relation": "ORIGIN",
+          "officialConfirmation": true,
+          "expiresAt": null
+        },
+        {
+          "claimId": "edgar-0001045810-26-000051",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "LIVE",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000051/0001045810-26-000051-index.htm",
+          "sourceId": "sec.gov/2026-05-20/0001045810-26-000051",
+          "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "publishedAt": "2026-05-20T20:21:19.000Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "UNKNOWN",
+          "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000051, filing date 2026-05-20. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 2.02 and 9.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000051/0001045810-26-000051-index.htm",
+          "independenceGroup": "official:edgar/filer/0001045810",
+          "relation": "ORIGIN",
+          "officialConfirmation": true,
+          "expiresAt": null
+        },
+        {
+          "claimId": "edgar-0001045810-26-000028",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "LIVE",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/0001045810-26-000028-index.htm",
+          "sourceId": "sec.gov/2026-05-08/0001045810-26-000028",
+          "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "publishedAt": "2026-05-08T20:35:07.000Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "UNKNOWN",
+          "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000028, filing date 2026-05-08. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.02\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/0001045810-26-000028-index.htm",
+          "independenceGroup": "official:edgar/filer/0001045810",
+          "relation": "ORIGIN",
+          "officialConfirmation": true,
+          "expiresAt": null
+        },
+        {
+          "claimId": "edgar-0001045810-26-000026",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "LIVE",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000026/0001045810-26-000026-index.htm",
+          "sourceId": "sec.gov/2026-04-27/0001045810-26-000026",
+          "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "publishedAt": "2026-04-27T20:10:30.000Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "UNKNOWN",
+          "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000026, filing date 2026-04-27. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.02\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000026/0001045810-26-000026-index.htm",
+          "independenceGroup": "official:edgar/filer/0001045810",
+          "relation": "ORIGIN",
+          "officialConfirmation": true,
+          "expiresAt": null
+        },
+        {
+          "claimId": "edgar-0001045810-26-000024",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "LIVE",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000024/0001045810-26-000024-index.htm",
+          "sourceId": "sec.gov/2026-03-06/0001045810-26-000024",
+          "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "publishedAt": "2026-03-06T21:11:25.000Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "UNKNOWN",
+          "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000024, filing date 2026-03-06. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 5.02 and 9.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000024/0001045810-26-000024-index.htm",
+          "independenceGroup": "official:edgar/filer/0001045810",
+          "relation": "ORIGIN",
+          "officialConfirmation": true,
+          "expiresAt": null
+        },
+        {
+          "claimId": "edgar-0001045810-26-000019",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "LIVE",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/0001045810-26-000019-index.htm",
+          "sourceId": "sec.gov/2026-02-25/0001045810-26-000019",
+          "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "publishedAt": "2026-02-25T21:31:25.000Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "UNKNOWN",
+          "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000019, filing date 2026-02-25. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"items 2.02 and 9.01\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/0001045810-26-000019-index.htm",
+          "independenceGroup": "official:edgar/filer/0001045810",
+          "relation": "ORIGIN",
+          "officialConfirmation": true,
+          "expiresAt": null
+        },
+        {
+          "claimId": "edgar-0001045810-26-000003",
+          "sourceClass": "OFFICIAL",
+          "dataMode": "LIVE",
+          "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000003/0001045810-26-000003-index.htm",
+          "sourceId": "sec.gov/2026-01-23/0001045810-26-000003",
+          "publisherOrAuthor": "NVIDIA CORP — filed with the U.S. Securities and Exchange Commission (EDGAR), CIK 0001045810",
+          "publishedAt": "2026-01-23T22:01:33.000Z",
+          "company": "NVIDIA CORPORATION",
+          "tokenSymbol": "wNVDAx",
+          "tokenAddress": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+          "eventType": "UNKNOWN",
+          "claimTextOrPointer": "SEC Form 8-K filed with EDGAR under accession 0001045810-26-000003, filing date 2026-01-23. Feed entry title (verbatim): \"8-K  - Current report\". Items reported (verbatim): \"item 5.02\". Filing index: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000003/0001045810-26-000003-index.htm",
+          "independenceGroup": "official:edgar/filer/0001045810",
+          "relation": "ORIGIN",
+          "officialConfirmation": true,
+          "expiresAt": null
+        }
+      ],
+      "marketConfirmation": {
+        "status": "UNAVAILABLE",
+        "observedAt": null,
+        "blockNumber": null,
+        "fresh": false,
+        "antiWickSatisfied": false,
+        "okxReferencePrice": null,
+        "xLayerPoolPrice": null,
+        "basisBps": null,
+        "drawdownBps": null,
+        "tradeVelocity": null,
+        "executableExitDepth": null,
+        "reasonCodes": [
+          "INSUFFICIENT_SAMPLE",
+          "MARKET_DATA_UNAVAILABLE",
+          "REFERENCE_MARKET_CLOSED"
+        ]
+      },
+      "action": {
+        "authorized": false,
+        "status": "NONE",
+        "baseFee": "500",
+        "maxFee": "20000",
+        "requestedFee": null,
+        "appliedFee": null,
+        "maximumDurationSec": 21600,
+        "txHash": null,
+        "failureReason": null
+      }
+    },
+    "assessment": {
+      "asset": "0xa8ddb5cd96b5222afe198316e9a57caa642850d5",
+      "poolId": "0x0000000000000000000000002a2b11730c2b6d99a58034a869dd810d7300a7b2",
+      "state": 0,
+      "confidence": 1,
+      "dataMode": 1,
+      "confirmation": 2,
+      "reasonBits": 2639888,
+      "assessedAt": "1786970493",
+      "expiresAt": "1787056893",
+      "evidenceCommitment": "0x3028295fbfc5314b33a837c7eb78027229f0ab19dfbd710d1cfb3d778ac7c690",
+      "requestedFee": 0,
+      "nonce": "298127201583088299771529247909414313810",
+      "deadline": "1787056893"
+    },
+    "domain": {
+      "name": "TinjauRiskRegistry",
+      "version": "1",
+      "chainId": 196,
+      "verifyingContract": "0x00000000000000000000000000000000000000c1"
+    },
+    "digest": "0x84e87d6e771331c8a96c92d673451350b0c301d078b232577cd899518307b67b",
+    "eventKey": "tinjau.scenario/S5.2-news-intake-live/edgar-0001045810-26-000069",
+    "assessmentId": "0xe04935e1ca1af1175859153d7dce1f527d0866541f2f209d0df5ea2d8397c1d7",
+    "nonce": "298127201583088299771529247909414313810",
+    "postable": true,
+    "protectStartedAt": null,
+    "remainingProtectSec": null,
+    "policyTargetFee": 7000,
+    "promotion": {
+      "state": "NORMAL",
+      "reasonCodes": [
+        "MARKET_DATA_UNAVAILABLE",
+        "NON_MATERIAL_EVENT",
+        "STALE_EVIDENCE"
+      ],
+      "reasonBits": 526352,
+      "confidenceBand": "LOW",
+      "expiresAt": 1787056893,
+      "policyVersion": "tinjau.policy/1.0.0",
+      "explanation": "The only evidence in window reports no corporate action affecting obligations, solvency, or listing status, so the risk state is unchanged. Official provenance does not by itself make an event material.",
+      "independentSourceCount": 0,
+      "highestSourceClass": "OFFICIAL",
+      "aggressiveFeeAuthorized": false
+    },
+    "wiredClaims": [
+      {
+        "claimId": "edgar-0001045810-26-000069",
+        "sourceClass": "OFFICIAL",
+        "independenceGroup": "unrecognised:sec.gov",
+        "relation": "ORIGIN",
+        "publishedAt": 1786970493,
+        "officialConfirmation": true,
+        "materiality": "UNKNOWN",
+        "selfRevised": false,
+        "contributesIndependentOrigin": true,
+        "disqualifications": []
+      },
+      {
+        "claimId": "edgar-0001045810-26-000060",
+        "sourceClass": "OFFICIAL",
+        "independenceGroup": "unrecognised:sec.gov",
+        "relation": "ORIGIN",
+        "publishedAt": 1782998596,
+        "officialConfirmation": true,
+        "materiality": "UNKNOWN",
+        "selfRevised": false,
+        "contributesIndependentOrigin": true,
+        "disqualifications": []
+      },
+      {
+        "claimId": "edgar-0001045810-26-000056",
+        "sourceClass": "OFFICIAL",
+        "independenceGroup": "unrecognised:sec.gov",
+        "relation": "ORIGIN",
+        "publishedAt": 1782851246,
+        "officialConfirmation": true,
+        "materiality": "UNKNOWN",
+        "selfRevised": false,
+        "contributesIndependentOrigin": true,
+        "disqualifications": []
+      },
+      {
+        "claimId": "edgar-0001193125-26-275783",
+        "sourceClass": "OFFICIAL",
+        "independenceGroup": "unrecognised:sec.gov",
+        "relation": "ORIGIN",
+        "publishedAt": 1781812824,
+        "officialConfirmation": true,
+        "materiality": "UNKNOWN",
+        "selfRevised": false,
+        "contributesIndependentOrigin": true,
+        "disqualifications": []
+      },
+      {
+        "claimId": "edgar-0001045810-26-000051",
+        "sourceClass": "OFFICIAL",
+        "independenceGroup": "unrecognised:sec.gov",
+        "relation": "ORIGIN",
+        "publishedAt": 1779308479,
+        "officialConfirmation": true,
+        "materiality": "UNKNOWN",
+        "selfRevised": false,
+        "contributesIndependentOrigin": true,
+        "disqualifications": []
+      },
+      {
+        "claimId": "edgar-0001045810-26-000028",
+        "sourceClass": "OFFICIAL",
+        "independenceGroup": "unrecognised:sec.gov",
+        "relation": "ORIGIN",
+        "publishedAt": 1778272507,
+        "officialConfirmation": true,
+        "materiality": "UNKNOWN",
+        "selfRevised": false,
+        "contributesIndependentOrigin": true,
+        "disqualifications": []
+      },
+      {
+        "claimId": "edgar-0001045810-26-000026",
+        "sourceClass": "OFFICIAL",
+        "independenceGroup": "unrecognised:sec.gov",
+        "relation": "ORIGIN",
+        "publishedAt": 1777320630,
+        "officialConfirmation": true,
+        "materiality": "UNKNOWN",
+        "selfRevised": false,
+        "contributesIndependentOrigin": true,
+        "disqualifications": []
+      },
+      {
+        "claimId": "edgar-0001045810-26-000024",
+        "sourceClass": "OFFICIAL",
+        "independenceGroup": "unrecognised:sec.gov",
+        "relation": "ORIGIN",
+        "publishedAt": 1772831485,
+        "officialConfirmation": true,
+        "materiality": "UNKNOWN",
+        "selfRevised": false,
+        "contributesIndependentOrigin": true,
+        "disqualifications": []
+      },
+      {
+        "claimId": "edgar-0001045810-26-000019",
+        "sourceClass": "OFFICIAL",
+        "independenceGroup": "unrecognised:sec.gov",
+        "relation": "ORIGIN",
+        "publishedAt": 1772055085,
+        "officialConfirmation": true,
+        "materiality": "UNKNOWN",
+        "selfRevised": false,
+        "contributesIndependentOrigin": true,
+        "disqualifications": []
+      },
+      {
+        "claimId": "edgar-0001045810-26-000003",
+        "sourceClass": "OFFICIAL",
+        "independenceGroup": "unrecognised:sec.gov",
+        "relation": "ORIGIN",
+        "publishedAt": 1769205693,
+        "officialConfirmation": true,
+        "materiality": "UNKNOWN",
+        "selfRevised": false,
+        "contributesIndependentOrigin": true,
+        "disqualifications": []
+      }
+    ],
+    "effectiveConfirmation": "UNAVAILABLE",
+    "ruleVersions": {
+      "schema": "tinjau.risk/1.0.0",
+      "policy": "tinjau.policy/1.0.0",
+      "confirmation": "tinjau.confirm/2.0.0",
+      "evidenceCommitment": "tinjau.evidence-commitment/1.0.0",
+      "assessmentId": "tinjau.assessment-id/1.0.0"
+    }
+  },
+  "decisionSummary": {
+    "state": "NORMAL",
+    "reasonCodes": [
+      "INSUFFICIENT_SAMPLE",
+      "MARKET_DATA_UNAVAILABLE",
+      "NON_MATERIAL_EVENT",
+      "REFERENCE_MARKET_CLOSED",
+      "STALE_EVIDENCE"
+    ],
+    "confidence": "LOW",
+    "confirmationStatus": "UNAVAILABLE",
+    "explanation": "The only evidence in window reports no corporate action affecting obligations, solvency, or listing status, so the risk state is unchanged. Official provenance does not by itself make an event material."
+  },
+  "bondSensitivity": {
+    "question": "Is the refusal to promote an artefact of assuming the bonded parse failed, or is it on the merits?",
+    "publishedWith": false,
+    "recomputedWith": true,
+    "publishedState": "NORMAL",
+    "recomputedState": "NORMAL",
+    "stateMoved": false,
+    "interpretation": "The state is NORMAL either way, so the refusal is on the merits: UNKNOWN materiality and an UNAVAILABLE market leg each block promotion independently of the bonded bit."
+  },
+  "invariants": [
+    {
+      "id": "INV-DEDUP-ONE-ORIGIN",
+      "statement": "Duplicated copies of one origin count as one source (§0.7). Many filings by one registrant through one channel are one origin, not many.",
+      "evidence": "deriveIndependence over 10 live claim(s) produced 1 origin key(s): unrecognised:sec.gov.",
+      "held": true
+    },
+    {
+      "id": "INV-MARKET-EXACT-CONFIRMED",
+      "statement": "Only an exact CONFIRMED market verdict may satisfy a promotion gate; STALE, NOT_CONFIRMED and UNAVAILABLE all fail closed (risk/types.ts::mayReachProtect).",
+      "evidence": "Market confirmation came back UNAVAILABLE over the pinned zero-swap replay window, and the state is NORMAL.",
+      "held": true
+    },
+    {
+      "id": "INV-MATERIALITY-FAILS-CLOSED",
+      "statement": "Evidence whose materiality is UNKNOWN cannot promote, however impeccable its provenance (risk/promote.ts: UNKNOWN is treated as non-material).",
+      "evidence": "Every live claim carries materiality UNKNOWN, and the decision's reason codes include NON_MATERIAL_EVENT.",
+      "held": true
+    },
+    {
+      "id": "INV-SINGLE-NEWS-CANNOT-PROTECT",
+      "statement": "One news source alone can never authorise PROTECT: NEWS requires two independent origins AND an exact CONFIRMED market verdict (mayReachProtect invariants 2 and 3).",
+      "evidence": "Not exercised by this run: the highest source class present is OFFICIAL, which takes the officialEvidencePassed branch instead. The NEWS branch is proven by test/riskPromotionScenarios.test.ts, not by this artifact.",
+      "held": null
+    }
+  ],
+  "marketLeg": {
+    "fixturePath": "apps/server/src/market/fixtures/pool-scenario-a-swaps.json",
+    "why": "Pinned chain-196 replay, not a live capture. This task authorised a live INTAKE only. The window holds zero swaps, so market confirmation is UNAVAILABLE and fails closed. Scenario A's window was used rather than scenario B's — even though the newest live filing is scenario B's 8-K — precisely because it cannot flatter the outcome."
+  },
+  "crossCheck": {
+    "statement": "Frozen scenario B (apps/server/scenarios/scenario-b-confirmed-protect.json) records its decision anchor as the EDGAR acceptance timestamp of accession 0001045810-26-000069, hand-verified during T0.2. If the live feed names the same accession, its timestamp should match exactly. This verifies the reader, not the engine.",
+    "frozenValue": "2026-08-17T12:41:33Z (accession 0001045810-26-000069)",
+    "liveValue": "2026-08-17T12:41:33.000Z (accession 0001045810-26-000069)",
+    "match": true
+  },
+  "stages": [
+    {
+      "stage": "run_started",
+      "atUtc": "2026-08-21T18:26:34.040Z"
+    },
+    {
+      "stage": "asset_universe_resolved",
+      "atUtc": "2026-08-21T18:26:34.041Z"
+    },
+    {
+      "stage": "feed_read_requested",
+      "atUtc": "2026-08-21T18:26:34.041Z"
+    },
+    {
+      "stage": "feed_read_completed",
+      "atUtc": "2026-08-21T18:26:43.721Z"
+    },
+    {
+      "stage": "feed_parsed",
+      "atUtc": "2026-08-21T18:26:43.725Z"
+    },
+    {
+      "stage": "candidates_judged",
+      "atUtc": "2026-08-21T18:26:43.726Z"
+    },
+    {
+      "stage": "document_fetches_started",
+      "atUtc": "2026-08-21T18:26:43.726Z"
+    },
+    {
+      "stage": "document_fetches_completed",
+      "atUtc": "2026-08-21T18:26:48.189Z"
+    },
+    {
+      "stage": "claims_normalised",
+      "atUtc": "2026-08-21T18:26:48.191Z"
+    },
+    {
+      "stage": "dedup_derived",
+      "atUtc": "2026-08-21T18:26:48.194Z"
+    },
+    {
+      "stage": "decision_produced",
+      "atUtc": "2026-08-21T18:26:48.216Z"
+    }
+  ],
+  "limitations": [
+    "This is ONE read of one feed at one moment. It measures nothing about latency and nothing about coverage, and it does not make this intake production monitoring. No process polls EDGAR on a schedule as part of this study, no window is guaranteed to be sampled, and nothing here supports any claim about how quickly a filing would be seen.",
+    "Read-only. Every request this run made was a GET (news/readFeed.ts has exactly one request primitive and it hardcodes the method). Nothing was posted, submitted, or subscribed to; no account was created and no terms were accepted. The only header sent was the descriptive User-Agent SEC requires of every requester.",
+    "SEC EDGAR is an OFFICIAL source, not a NEWS source. This run replaces the frozen intake path for CORPORATE DISCLOSURE. It does NOT give this project live third-party press intake: no wire, publisher, or aggregator feed is read, and every NEWS-class claim in the product is still the frozen REPLAY fixture in apps/server/scenarios/.",
+    "The XML extraction is a hand-rolled tag scanner with no dependency (news/readFeed.ts). It does not resolve namespaces, validate the document, or handle nested CDATA. Each item's verbatim XML and its sha256 are published beside the extracted values so any extraction error is visible rather than buried, but the extraction itself is not proven correct.",
+    "The reader handles both Atom <entry> and RSS <item>, but only the Atom path was exercised by this run. The RSS path is written and untested against a live publisher.",
+    "The market leg is the PINNED chain-196 replay window from pool-scenario-a-swaps.json, not a live capture. That window holds zero swaps, so market confirmation is UNAVAILABLE and the market cannot contribute to a promotion in this run. This task authorised a live intake only; a live market capture would have been a second live input nobody reviewed.",
+    "Every claim's eventType and materiality are UNKNOWN, because neither can be read off an 8-K item code without a classifier this task does not authorise. promote.ts treats UNKNOWN materiality as non-material and refuses to promote on it, so the state reached here is partly a consequence of what was NOT classified, not only of the evidence.",
+    "That gate cuts both ways, and the honest reading is not flattering. A filing whose own SEC summary says 'Item 1.01: Entry into a Material Definitive Agreement' still came out as NON_MATERIAL_EVENT, because nothing in this run classified it. That is safe in the sense that it cannot raise a fee for nothing; it is NOT evidence that the pipeline would notice a material event. It is a missing classifier, not a virtue.",
+    "The content hash commits to a SERVER-GENERATED index page. It was byte-identical across repeated fetches during this run, but SEC controls that page's rendering: a template change would move the hash without the filing changing. A hash over the primary document (as frozen scenario B takes) does not have that property.",
+    "officialEvidencePassed is published as false because this task did not run the bonded three-way parse. The same decision recomputed with true is published beside it, so a reader can check whether that choice moved the outcome — but the bonded bit itself was not computed here, and S2.1 remains the only run that computes it.",
+    "The content hash commits to the bytes the filing INDEX page served at fetch time, not to the primary document, its exhibits, or any XBRL. Frozen scenario B hashes the primary 8-K document instead, so the two hashes are not comparable and neither is wrong.",
+    "The decision's assessment instant is the newest live claim's publication timestamp, not the moment this script ran. That is what puts the claim inside the 72-hour evidence window; it also means older filings in the same feed fall outside it and are recorded as stale rather than counted."
+  ]
+}

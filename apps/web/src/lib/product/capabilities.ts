@@ -22,8 +22,10 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     summary: "Preserves a canonical source, timestamp precision, and content commitment.",
     maturity: "IMPLEMENTED",
     dataMode: "REPLAY",
-    evidence: "EDGAR adapter + immutable scenario fixtures",
-    limitation: "The guided demo replays frozen filings; it does not claim continuous production coverage.",
+    evidence:
+      "EDGAR adapter + immutable scenario fixtures; a credential-free EDGAR Atom feed read live on 2026-08-21 that normalised 10 filings with full provenance and collapsed them to one origin",
+    limitation:
+      "One read is not monitoring: nothing polls EDGAR on a schedule, so no coverage and no latency is claimed. That run classified no materiality, so a filing whose own SEC summary says \"Material Definitive Agreement\" still resolved to NORMAL. Live intake here means corporate disclosure only; every third-party press claim in the product is still a frozen fixture, and the guided demo still replays.",
     href: "/demo",
   },
   {

@@ -162,16 +162,16 @@ Use this file as the source of truth for third-party service decisions and readi
 - Need: one source-linked news claim for the Hackathon MVP Evidence Graph; later, timely discovery across supported tokenized equities
 - Candidates: immutable source-linked repository replay fixture (selected for P0); live financial-news API/provider (deferred to P2 and not selected)
 - Decision: selected
-- Selected service: immutable source-linked repository replay fixture
+- Selected service: **SEC EDGAR company-filings Atom feed** for OFFICIAL corporate disclosure (`www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK={10-digit}&type=8-K&output=atom`), credential-free, read through the existing `getEdgarUserAgent()`; the immutable source-linked repository replay fixtures are **retained** for NEWS-class (third-party press) claims, which still have no live path (updated 2026-08-21, S5.2)
 - Reason: Dien explicitly approved the reproducible no-account fallback for the Hackathon MVP. It proves normalization, provenance, Evidence Graph behavior, and safe policy handling without creating a credential or paid-provider dependency
 - References: REF-028, REF-029
 - Verified on: 2026-08-20
 - Owner: Dien
 - Plan and budget: repository-local fixture, zero incremental service cost, no account or credential. Live provider evaluation remains P2
-- Limits: a replay fixture proves normalization, reasoning, safety, and demo reproducibility but not live discovery or real-time latency
+- Limits: **updated 2026-08-21.** Live corporate-disclosure discovery is now real, and one-shot rather than continuous. A single credential-free read of the EDGAR Atom feed returned 10 live 8-K entries, normalised all 10 into the full provenance schema with real URLs, second-precision acceptance timestamps and sha256 commitments over the fetched bytes, ran syndication dedup over them live (10 items collapsed to 1 independent origin), and produced one decision record (`NORMAL`). Still NOT proven: (a) **coverage and latency** — nothing polls EDGAR on a schedule, and one read measures neither; (b) **live NEWS-class intake** — no wire, publisher or aggregator feed is read, so every third-party press claim in the product remains a REPLAY fixture; (c) **event classification** — `eventType` and `materiality` were left `UNKNOWN`, so a filing whose own SEC summary reads "Item 1.01: Entry into a Material Definitive Agreement" still resolved to `NON_MATERIAL_EVENT`. A replay fixture proved normalization, reasoning, safety and demo reproducibility; the live feed now also proves discovery of the disclosure itself, and nothing beyond that
 - Integration points: revised tracker T0.3, T2.1–T2.4, T4.4–T4.5
 - Readiness criteria: one article/record is fetched or frozen with original URL, publisher, publication timestamp, affected entity/token, claim text/source pointer, and `LIVE` or `REPLAY` label
-- Status: approved
+- Status: **ready** for corporate disclosure (OFFICIAL class); **approved-with-fixture** for the NEWS class
 - Fallback: immutable source-linked historical replay fixture; must never be presented as live ingestion
 - Lock-in / exit cost: none; the normalized claim adapter remains provider-portable
 - Decision link: DEC-009, DEC-010
