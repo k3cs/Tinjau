@@ -102,6 +102,7 @@ Use this file as the source of truth for third-party service decisions and readi
 - Owner: Dien
 - Plan and budget: free tier reportedly available — Flash/Flash-Lite models, no card required (REF-026, unverified); paid tier available later at roughly $1.50/$9.00 per 1M tokens for Flash if free-tier limits are ever hit (REF-026, aggregator-sourced)
 - Limits: free tier reportedly ~5–15 requests/minute, up to 1,000 requests/day (REF-026, unverified) — AFTERHOURS's actual volume is ~4 calls per filing (3 parses + 1 grade) at roughly 1–2 filings/day across the 2 live names, comfortably inside this cap even on a busy day if the figures hold; re-check if live coverage expands beyond NVDAx/MSTRx, and reverify the cap itself before relying on it
+- Pinned model id: **`gemini-3.6-flash`** — pinned as `DEFAULT_GEMINI_MODEL` in `apps/server/src/llm/provider.ts` (2026-08-21); `GEMINI_MODEL` remains an escape hatch, not a second default. The published p2.1 parse-accuracy rows predate this pin and carry five other Flash-family ids (free-tier quota exhaustion on 2026-08-18) — see outputs/05-build/parse-accuracy-study.md
 - Integration points: task-tracker.md P1.3, P1.5 (built against Gemini now); P1.10/P1.11 (billing setup + migration to Claude, tracked as real tasks since 2026-08-17, not gated on billing existing first)
 - Readiness criteria: one real filing parsed three times with schema-valid output from Gemini
 - Status: approved

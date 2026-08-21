@@ -21,7 +21,14 @@ import type { LanguageModel } from "ai";
 
 const DEFAULT_GEMINI_MODEL = "gemini-3.6-flash"; // "Flash tier" per SVC-004 — corrected 2026-08-17,
 // live API call confirmed "gemini-2.5-flash" is deprecated ("no longer available to new
-// users"), Google's own error response named this as the replacement
+// users"), Google's own error response named this as the replacement.
+//
+// Pinned 2026-08-21: "gemini-3.6-flash" is *the* model id for this project. It is what
+// agent.ts runs, what SVC-004 records, and what .env.example documents. GEMINI_MODEL below
+// is an escape hatch (quota exhaustion, one-off experiments), not a second default — anything
+// published that records a different id was collected under an override and must say so. The
+// one case in this repo is the p2.1 parse-accuracy sample, whose 30 rows carry five other ids;
+// see docs/buildx-orion-2026/outputs/05-build/parse-accuracy-study.md.
 
 /**
  * Resolves the Gemini API key from whichever supported env var is set, without

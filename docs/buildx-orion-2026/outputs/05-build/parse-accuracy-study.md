@@ -324,3 +324,23 @@ script only aggregates. Tier B and D are computed here for the first time, direc
 `buildAgreementReport()`'s own output — no independent reimplementation of the agreement
 logic, deliberately, since the point is to score what the real pipeline's diff logic
 actually produced, not a parallel guess at it.
+
+### Model id, pinned (added 2026-08-21)
+
+The project now has one model id, pinned in code: **`gemini-3.6-flash`**, the value of
+`DEFAULT_GEMINI_MODEL` in `apps/server/src/llm/provider.ts`. That is what `agent.ts` runs and
+what SVC-004 records. The `GEMINI_MODEL` env var still exists as an escape hatch, but leaving
+it unset is the intended configuration.
+
+The 30 published rows in `data/p2_1_parse_accuracy_raw.jsonl` carry five *other* ids, none of
+them the pinned one. That is a historical fact about how the sample was collected — free-tier
+daily per-model quota exhaustion on 2026-08-18, model-by-model, explained in full in the
+model-mix caveat above. The rows are deliberately left exactly as collected: they are raw data,
+and rewriting them to look tidier would be falsifying a record. (Two of the five ids are also
+not independent models — `gemini-flash-latest` is an alias whose quota error named
+`gemini-3.7-flash` underneath, as noted in the caveat above.)
+
+The consequence a reader must draw: **the accuracy numbers in this study are not a measurement
+of the pinned model.** They measure a mixed Gemini Flash population over one day. Running the
+same 30 filings against `gemini-3.6-flash` alone would be a different study, and it has not
+been run.
