@@ -447,7 +447,7 @@ submission itself.
   Full §0.7 baseline after the change: server 594/594, web 32/32, contracts 137/137, manifest
   byte-identical, all artifacts validate.
 
-- [~] **S1.4 — Make the published server test count match what a fresh clone reports** (added
+- [x] **S1.4 — Make the published server test count match what a fresh clone reports** (added
   2026-08-21, approved by Dien the same day; pre-deadline)
   Depends on: none.
   Owner: agent.
@@ -466,7 +466,32 @@ submission itself.
   Acceptance: a fresh clone's `npm test` output makes the 589-vs-594 difference legible without
   the reader having to already know about it; `pnpm-lock.yaml` unchanged; 594 still passes
   locally; no published prompt edited; no test weakened.
-  Evidence: —
+  Evidence: **done 2026-08-21, commit `c5d8066`, pre-deadline.** The defect turned out to have
+  **two** instances, not one. The second was found while fixing the first:
+  `apps/server/test/tinjauHarness.test.ts:198` skips its 8-test local-chain suite when `anvil`
+  and `forge` are absent, and that file's own header already claimed it skipped "loudly" — which
+  was untrue for the same reason (a skipped `describe` is never registered, so node prints
+  `skipped 0`). Both are now fixed by the same mechanism: a named, always-passing notice test
+  registered **only** on the missing path, which prints what is missing and how to restore it.
+  Registering on the passing path instead would have pushed a full run to 596 and broken the 594
+  the published prompts state, so it was deliberately not done.
+  All three counts measured, not derived:
+
+  | Environment | `npm test` reports | Notices shown |
+  |---|---|---|
+  | Foundry + `contracts/out/` built | **594 pass, 0 fail** | none |
+  | Foundry, fresh clone before any build | **590 pass** | bytecode comparator |
+  | no Foundry at all, no `contracts/out/` | **583 pass** | both |
+
+  README §8.2 now carries that table with the condition for each row. Neither skip was removed
+  or weakened: `contracts/out/` is rebuildable output that rightly is not committed, and the
+  local-chain suite boots a real Anvil, where a mocked substitute would test the mock.
+  Also committed `apps/server/package-lock.json` (963 lines, scanned clean: no local paths, no
+  credentials, every `resolved` host is `registry.npmjs.org`). `apps/web` already committed one;
+  `apps/server` shipped only `pnpm-lock.yaml`, so the `npm install` both prompts publish
+  resolved every transitive dependency fresh from the registry on the reader's machine.
+  `pnpm-lock.yaml` is byte-unchanged and `pnpm install --frozen-lockfile` still succeeds.
+  No file under `07-submission/` was touched.
 
 ### Phase S2 — Application of AI: put the live model on the flagship path (P1; target 6→8)
 
