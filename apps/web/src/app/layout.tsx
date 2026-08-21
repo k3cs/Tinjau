@@ -50,9 +50,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${display.variable} ${body.variable} ${data.variable}`}>
       <body className="bg-paper font-body text-coal antialiased">
         <DirectionContract />
+        <a href="#main-content" className="sr-only fixed left-4 top-4 z-50 border border-black bg-signal px-4 py-3 font-data text-xs font-semibold uppercase text-black focus:not-sr-only">
+          Skip to main content
+        </a>
         <div className="flex min-h-screen flex-col">
           <SiteHeader />
-          <main className="flex-1">{children}</main>
+          <div id="main-content" tabIndex={-1} className="flex-1">{children}</div>
           <SiteFooter />
         </div>
       </body>

@@ -24,7 +24,7 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     dataMode: "REPLAY",
     evidence: "EDGAR adapter + immutable scenario fixtures",
     limitation: "The guided demo replays frozen filings; it does not claim continuous production coverage.",
-    href: "/demo?scene=confirmed&stage=listen",
+    href: "/demo",
   },
   {
     id: "x-listener",
@@ -35,7 +35,7 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     dataMode: "SIMULATED",
     evidence: "Negative-control social fixture",
     limitation: "No live X discovery provider is authorized for this MVP.",
-    href: "/demo?scene=rumor&stage=listen",
+    href: "/demo",
   },
   {
     id: "evidence-graph",
@@ -46,7 +46,7 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     dataMode: "REPLAY",
     evidence: "14 labeled evaluation cases + evidence graph tests",
     limitation: "Heuristic derivations surface disagreements for review; they do not silently repair them.",
-    href: "/demo?scene=rumor&stage=relate",
+    href: "/demo",
   },
   {
     id: "risk-policy",
@@ -57,7 +57,7 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     dataMode: "REPLAY",
     evidence: "Cross-language truth table and policy tests",
     limitation: "A final signed orchestration path is still pending.",
-    href: "/demo?scene=rumor&stage=decide",
+    href: "/demo",
   },
   {
     id: "okx-reference",
@@ -68,7 +68,7 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     dataMode: "OBSERVED",
     evidence: "Fixture-backed adapter and freshness tests",
     limitation: "The adapter supplies input; it is not the final confirmation engine.",
-    href: "/demo?scene=confirmed&stage=confirm",
+    href: "/demo",
   },
   {
     id: "pool-telemetry",
@@ -79,7 +79,7 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     dataMode: "OBSERVED",
     evidence: "Chain-196 replay fixtures + telemetry tests",
     limitation: "Thin and empty windows remain unavailable or insufficient rather than being imputed.",
-    href: "/demo?scene=confirmed&stage=confirm",
+    href: "/demo",
   },
   {
     id: "confirmation-engine",
@@ -99,7 +99,7 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     dataMode: "REPLAY",
     evidence: "Local contracts + 93 contract tests",
     limitation: "Final contracts are not yet deployed; no final address exists.",
-    href: "/demo?scene=confirmed&stage=record",
+    href: "/demo",
   },
   {
     id: "fee-hook",
@@ -110,7 +110,7 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     dataMode: "OBSERVED",
     evidence: "Deployed AfterhoursFeeHook historical artifact",
     limitation: "The immutable historical name is factual; final Tinjau registry-to-hook integration is pending.",
-    href: "/demo?scene=confirmed&stage=act",
+    href: "/demo",
   },
   {
     id: "x-publisher",
@@ -121,7 +121,7 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     dataMode: "REPLAY",
     evidence: "Guarded registry-event X bot",
     limitation: "The existing bot is not yet integrated with the final risk pipeline.",
-    href: "/demo?scene=rumor&stage=act",
+    href: "/demo",
   },
   {
     id: "policy-benchmark",
@@ -132,7 +132,7 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     dataMode: "REPLAY",
     evidence: "Frozen benchmark method and scenario manifest",
     limitation: "T5 has not produced validated outcomes; the claim gate remains closed.",
-    href: "/demo?scene=comparison",
+    href: "/demo",
   },
   {
     id: "exchange-os",

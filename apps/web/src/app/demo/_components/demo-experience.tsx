@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useReducer, useState } from "react";
-import { useRouter } from "next/navigation";
 import { getMissionDefinition } from "@/lib/demo/missions";
 import { INITIAL_MISSION_STATE, missionReducer } from "@/lib/demo/mission-reducer";
 import { readMissionSession, writeMissionSession } from "@/lib/demo/mission-storage";
@@ -11,7 +10,6 @@ import { MissionSelect } from "./mission-select";
 import { StateExplanationModal } from "./state-explanation-modal";
 
 export function DemoExperience() {
-  const router = useRouter();
   const [state, dispatch] = useReducer(missionReducer, INITIAL_MISSION_STATE);
   const [hydrated, setHydrated] = useState(false);
 
@@ -23,12 +21,11 @@ export function DemoExperience() {
   useEffect(() => {
     if (!hydrated) return;
     writeMissionSession(state);
-    if (state.missionId && state.currentStageId) {
-      router.replace(`/demo?mission=${state.missionId}&stage=${state.currentStageId}`, { scroll: false });
-    } else {
-      router.replace("/demo", { scroll: false });
-    }
-  }, [hydrated, router, state]);
+    const nextUrl = state.missionId && state.currentStageId
+      ? `/demo?mission=${state.missionId}&stage=${state.currentStageId}`
+      : "/demo";
+    window.history.replaceState(window.history.state, "", nextUrl);
+  }, [hydrated, state]);
 
   if (!hydrated) {
     return (

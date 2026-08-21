@@ -3,7 +3,7 @@ import { SystemSchematic } from "./system-schematic";
 
 export function LandingHero() {
   return (
-    <section id="product" className="paper-grid border-b border-black/20">
+    <section id="product" className="border-b border-black/20">
       <div className="mx-auto grid min-h-[calc(100svh-4rem)] max-w-[1440px] gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(34rem,1.1fr)] lg:items-center lg:px-8 lg:py-20">
         <div className="max-w-3xl">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2 font-data text-[10px] font-semibold uppercase tracking-[0.08em] text-coal-muted">

@@ -20,4 +20,8 @@ test("Proof of Work shows testnet evidence without claiming final deployment", a
   await expect(page.getByText("AfterhoursFeeHook", { exact: true })).toBeVisible();
   await expect(page.getByText("No final address — deployment pending").first()).toBeVisible();
   await expect(page.getByText("BUILDER CONTROLLED").first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Capability evidence" })).toBeVisible();
+  await expect(page.getByText("Market-confirmation engine", { exact: true })).toBeVisible();
+  await expect(page.getByText("PENDING", { exact: true }).first()).toBeVisible();
+  await expect(page.getByRole("link", { name: /scoreboard/i })).toHaveCount(0);
 });

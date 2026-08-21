@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CapabilityBadge } from "@/components/capability-badge";
+import { DataModeLabel } from "@/components/data-mode-label";
 import { deploymentExplorerUrl } from "@/lib/product/deployments";
 import { PROOF_SUMMARY, getBuildCommit } from "@/lib/product/proof";
 
@@ -48,11 +49,26 @@ export default function ProofPage() {
                   </div>
                   <div className="flex items-start gap-3 md:justify-end">
                     <CapabilityBadge maturity={deployment.maturity} onLight />
-                    {href && <a href={href} target="_blank" rel="noreferrer" className="inline-flex min-h-8 items-center border-b border-black font-data text-[10px] font-semibold uppercase tracking-[0.06em]">Explorer ↗</a>}
+                    {href && <a href={href} target="_blank" rel="noreferrer" className="inline-flex min-h-8 items-center gap-2 border-b border-black font-data text-[10px] font-semibold uppercase tracking-[0.06em]">Explorer<svg aria-hidden viewBox="0 0 16 16" className="h-3 w-3" fill="none"><path d="M6 3h7v7M13 3L4 12" stroke="currentColor" strokeWidth="1.5" /></svg></a>}
                   </div>
                 </article>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-black bg-paper-bright px-4 py-20 sm:px-6 lg:px-8 lg:py-28" aria-labelledby="capability-proof-title">
+        <div className="mx-auto grid max-w-[1440px] gap-8 lg:grid-cols-[0.45fr_1fr]">
+          <div><h2 id="capability-proof-title" className="font-display text-4xl font-bold tracking-display">Capability evidence</h2><p className="mt-4 max-w-md text-sm leading-relaxed text-coal-muted">Maturity says whether the path exists. Data mode says what kind of material proves it. The two axes never substitute for each other.</p></div>
+          <div className="border-t border-black">
+            {PROOF_SUMMARY.capabilities.map((capability) => (
+              <article key={capability.id} id={`capability-${capability.id}`} className="scroll-mt-24 border-b border-black/20 py-5">
+                <div className="flex flex-wrap items-start justify-between gap-4"><div><p className="font-data text-[10px] text-coal-muted">{capability.stage}</p><h3 className="mt-1 font-semibold">{capability.name}</h3></div><div className="flex flex-wrap gap-2"><CapabilityBadge maturity={capability.maturity} onLight />{capability.dataMode && <DataModeLabel mode={capability.dataMode} onLight />}</div></div>
+                <p className="mt-4 text-sm leading-relaxed text-coal-muted">{capability.evidence}</p>
+                <p className="mt-2 text-xs leading-relaxed text-coal-muted">Limit: {capability.limitation}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>

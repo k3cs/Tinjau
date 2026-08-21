@@ -2,7 +2,7 @@
 
 export default function ErrorPage({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
   return (
-    <div className="paper-grid min-h-[calc(100vh-4rem)] bg-paper px-4 py-16 text-coal sm:px-6 lg:px-8">
+    <div className="min-h-[calc(100vh-4rem)] bg-paper px-4 py-16 text-coal sm:px-6 lg:px-8">
       <section className="mx-auto max-w-2xl border border-black bg-paper-bright p-6 sm:p-8">
         <p className="data-label text-coal-muted">Product page unavailable</p>
         <h1 className="mt-4 font-display text-3xl font-semibold tracking-display">

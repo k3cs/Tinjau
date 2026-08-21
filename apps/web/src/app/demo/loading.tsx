@@ -1,6 +1,6 @@
 export default function DemoLoading() {
   return (
-    <div className="demo-shell circuit-field" aria-busy="true" aria-label="Loading guided demo">
+    <div className="demo-shell" aria-busy="true" aria-label="Loading guided demo">
       <div className="mx-auto max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8">
         <div className="grid min-h-72 border border-edge lg:grid-cols-2">
           <div className="animate-pulse border-b border-edge bg-canvas-soft lg:border-b-0 lg:border-r motion-reduce:animate-none" />

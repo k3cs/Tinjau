@@ -6,12 +6,13 @@ import { usePathname } from "next/navigation";
 const NAV = [
   { href: "/#product", label: "Product" },
   { href: "/#system", label: "System" },
-  { href: "/#why-x-layer", label: "Why X Layer" },
+  { href: "/developers", label: "Developers" },
+  { href: "/proof", label: "Proof" },
 ];
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const onDemo = pathname.startsWith("/demo") || pathname.startsWith("/compare");
+  const onDemo = pathname.startsWith("/demo");
 
   return (
     <header
@@ -39,15 +40,17 @@ export function SiteHeader() {
           aria-label="Primary navigation"
         >
           {NAV.map((item) => {
+            const active = !item.href.startsWith("/#") && pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={active ? "page" : undefined}
                 className={`flex min-h-12 flex-1 items-center justify-center border-b-2 border-transparent px-3 font-data text-[10px] font-medium uppercase tracking-[0.06em] transition-colors duration-100 ease-tinjau sm:min-h-16 sm:flex-none sm:px-4 ${
                   onDemo
                     ? "text-ink-muted hover:border-edge-strong hover:text-ink"
                     : "text-coal-muted hover:border-black hover:text-coal"
-                }`}
+                } ${active ? (onDemo ? "border-signal text-ink" : "border-black text-coal") : ""}`}
               >
                 {item.label}
               </Link>
@@ -64,7 +67,7 @@ export function SiteHeader() {
               : "border-black bg-black text-white hover:bg-signal hover:text-black"
           }`}
         >
-          Start demo <span aria-hidden className="ml-2">↗</span>
+          Start demo
         </Link>
       </div>
     </header>

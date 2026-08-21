@@ -59,6 +59,17 @@
 
   a {
     text-underline-offset: 4px;
+    touch-action: manipulation;
+  }
+
+  button,
+  summary {
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
   }
 
   .tabular {
@@ -68,22 +79,6 @@
 }
 
 @layer components {
-  .circuit-field {
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-    background-size: 32px 32px;
-    background-position: -1px -1px;
-  }
-
-  .paper-grid {
-    background-image:
-      linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-    background-position: -1px -1px;
-    background-size: 40px 40px;
-  }
-
   .section-rule {
     @apply border-t border-black/20;
   }

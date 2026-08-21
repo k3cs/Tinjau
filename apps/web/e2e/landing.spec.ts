@@ -21,5 +21,12 @@ test("primary landing CTA enters the guided walkthrough", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: /Start the 3-scene demo/ }).click();
   await expect(page).toHaveURL(/\/demo/);
-  await expect(page.getByRole("heading", { name: "Rumor enters. Authority does not." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Choose a field exercise." })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Start Scene A/ })).toBeVisible();
+});
+
+test("global navigation exposes developer and proof routes", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("navigation", { name: "Primary navigation" }).getByRole("link", { name: "Developers" })).toHaveAttribute("href", "/developers");
+  await expect(page.getByRole("navigation", { name: "Primary navigation" }).getByRole("link", { name: "Proof" })).toHaveAttribute("href", "/proof");
 });

@@ -29,12 +29,16 @@ Tinjau should feel like a serious market-infrastructure product whose public sit
 whose demo can be audited. It uses the visual discipline of OKX and X Layer—black, white, precise typography,
 and one electric signal color—without imitating their page layouts.
 
-The two public routes deliberately change density:
+The public routes deliberately change density by purpose:
 
 - `/` is an editorial product narrative on warm paper. It explains the blind window, the system path, the
   safety boundary, and why X Layer is part of the architecture.
-- `/demo` is a carbon-black operational surface. It exposes nine stages, three scenes, provenance, policy
-  constraints, on-chain boundaries, and the comparison handoff.
+- `/demo` is a carbon-black guided field exercise. It starts at Mission Select, reveals evidence only after a
+  constrained decision, and keeps the coach console visible beside system output.
+- `/developers` is a role-based integration guide. Every step is labeled as implemented, historical, or pending,
+  and pending paths do not publish executable setup commands.
+- `/proof` is the evidence ledger. It separates historical X Layer deployments, builder-controlled test assets,
+  final deployment readiness, capability maturity, data mode, and build provenance.
 
 The interface must never use visual confidence to imply technical completeness. What exists, what is replayed,
 and what remains pending are visible in the same viewport as the claim.
@@ -68,14 +72,19 @@ Landing sections use an asymmetric editorial grid, long horizontal rules, and ge
 system story is a connected path, not a feature-card collection. Explanatory prose remains narrow enough to
 scan while diagrams can use the full content width.
 
-The demo keeps three stable layers:
+The demo keeps four stable layers:
 
-1. scene navigation and persistent current-state summary;
-2. the nine-stage walkthrough rail;
-3. the active evidence, decision, or action surface.
+1. mission identity and explicit progress;
+2. the nine-stage walkthrough rail, with completed stages reviewable and future stages locked;
+3. the permanent coach console: what happened, objective, known, unknown, why it matters, and constrained choices;
+4. system output that begins empty and accumulates only the records earned by accepted decisions.
 
 On narrow screens, the stage rail scrolls horizontally with keyboard focus. Data tables may scroll, but core
 state, reason, and capability labels must remain readable without horizontal page overflow.
+
+Mission state is preserved in `sessionStorage`, scoped to the browser tab. A refresh restores valid progress;
+invalid or fabricated state fails closed to Mission Select. Query parameters mirror progress for orientation but
+cannot unlock a stage or start a mission on their own.
 
 ## Truth model
 
@@ -100,11 +109,15 @@ badges should be derived from it instead of being improvised per component.
 - Source links expose the original source and provenance. Disabled or unavailable links explain why.
 - Comparison rows preserve `null` and `pending`; missing economics are never displayed as zero.
 - The historical contract name `AfterhoursFeeHook` may appear only with an explicit historical explanation.
+- Unsafe mission choices remain selectable for teaching, but rejection cannot advance progress or reveal output.
+- Important state changes and guardrail rejections may open a focused modal. Routine steps remain in the permanent
+  console so the flow is not interrupted by repeated overlays.
 
 ## Motion
 
 Motion exists to explain sequence and state change. Use short entrance choreography for the landing narrative,
-stage transitions for the demo, and restrained active-path feedback. Honor `prefers-reduced-motion`.
+progressive output reveals, and important modal transitions. Honor `prefers-reduced-motion`; correctness never
+depends on animation completion.
 
 Do not use perpetual movement, parallax, floating shapes, springy decorative icons, animated gradients, or
 stagger every element on a page. Buttons may change color or translate by one pixel; panels do not hover-float.

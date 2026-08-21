@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function SiteFooter() {
   return (
     <footer className="border-t border-edge bg-canvas text-ink">
@@ -9,6 +11,11 @@ export function SiteFooter() {
           </p>
         </div>
         <div className="font-data text-[10px] uppercase leading-relaxed tracking-[0.06em] text-ink-muted lg:text-right">
+          <nav aria-label="Footer navigation" className="mb-4 flex flex-wrap gap-x-5 gap-y-2 lg:justify-end">
+            <Link href="/demo" className="text-ink-secondary hover:text-white">Demo</Link>
+            <Link href="/developers" className="text-ink-secondary hover:text-white">Developers</Link>
+            <Link href="/proof" className="text-ink-secondary hover:text-white">Proof</Link>
+          </nav>
           <p>Hackathon MVP · replay-backed</p>
           <p className="mt-1">X Layer testnet path · no production-liquidity claim</p>
         </div>
