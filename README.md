@@ -7,6 +7,12 @@ recovers deterministically, and then measures whether the response helped.
 **This README states the measured result, including the part that failed.** The economic claim did
 not survive the benchmark, and nothing below is written to work around that.
 
+> **Reading this after the hackathon deadline?** The submitted state is the tag
+> [`submission-final`](https://github.com/k3cs/Tinjau/tree/submission-final), commit `58ab29dd`,
+> dated 2026-08-21 19:28:21 UTC. Everything added since is listed and dated in
+> [`POST-SUBMISSION.md`](./POST-SUBMISSION.md), so nothing later can be mistaken for part of the
+> submission.
+
 - Product narrative and constraints: [`PRODUCT.md`](./PRODUCT.md)
 - Execution plan, ownership, and the full deviations log:
   [`docs/buildx-orion-2026/outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md`](./docs/buildx-orion-2026/outputs/04-planning/tinjau-lp-risk-autopilot-task-tracker.md)
