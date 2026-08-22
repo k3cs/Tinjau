@@ -16,7 +16,12 @@ numbers can be trusted should read §7 (the post-mortem) before §4 (the result)
 - Date: 2026-08-22 (run at `2026-08-21T19:20:06Z` UTC)
 - Task: S3.2, executing `s3-1-paired-pool-preregistration.md` (frozen, committed `7d1caa6`)
 - Chain: X Layer **Testnet**, id **1952**. No mainnet action was taken or is authorised.
-- Raw data: `s3-2-paired-pool-raw.json` and `data/s3_2_paired_pool_result.json` (identical bytes)
+- Raw data: `data/s3_2_paired_pool_result.json`. **Deviation 9, added at commit time.** The
+  pre-registration's §7.1 names the path `s3-2-paired-pool-raw.json`, and the run wrote both that
+  path and the `data/` one with byte-identical contents. The duplicate was removed and the
+  `data/` path kept, because every other study in this repository publishes under `data/` and
+  storing 490 KB of the same bytes twice is not a service to anyone. The frozen document was not
+  edited; this note is the record, and the file it names is the file below.
 - Script: `apps/server/src/studies/pairedPoolExperiment.ts`
 
 ---
@@ -70,7 +75,7 @@ the frozen document rather than the other way round.
    default and `--rehearse-local` is the §10 Anvil rehearsal. The npm alias
    `experiment:paired-pool` exists as §9 asks.
 5. **§7.1 — raw artifact path.** Written to **both** the pre-registered
-   `s3-2-paired-pool-raw.json` and the tracker's `data/s3_2_paired_pool_result.json`, identical
+   `data/s3_2_paired_pool_result.json` (see deviation 9 on the path), identical
    bytes, so the pre-registered name is not quietly dropped.
 6. **§9 — environment.** Addresses come from `deployed-addresses.json` (stack
    `production-envelope`) because none of the `TINJAU_*` variables is set here. Every resolved
@@ -422,7 +427,7 @@ npx tsx src/studies/pairedPoolExperiment.ts --rehearse-local # full run on a loc
 npx tsx src/studies/pairedPoolExperiment.ts --execute        # X Layer Testnet, irreversible
 ```
 
-The result is recomputable from `s3-2-paired-pool-raw.json` without re-running the chain: it carries
+The result is recomputable from `data/s3_2_paired_pool_result.json` without re-running the chain: it carries
 a row for every `(run, arm, swap index)` triple attempted — 480 rows — plus both pools' start and
 end states, all three marks, `Δf̄`, every gate with its pass/fail and its detail, every transaction
 hash, gas, and the frozen trade script including `K` and the (empty) dropped-row list.
