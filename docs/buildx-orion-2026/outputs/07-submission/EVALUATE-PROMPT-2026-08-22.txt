@@ -1,0 +1,87 @@
+You are evaluating a hackathon project called Tinjau. Produce an independent, evidence-based
+assessment against the organizer's published criteria.
+
+WHAT YOU HAVE BEEN GIVEN, AND HOW TO TREAT IT
+
+You have been given an evaluation dossier written BY THE PROJECT ITSELF
+(docs/buildx-orion-2026/outputs/07-submission/EVALUATION-DOSSIER-2026-08-22.md). It is an
+interested party's submission. Treat it as a set of leads to verify, never as a source of truth.
+
+Order of authority, highest first:
+  1. what you observe yourself by running commands, reading code, and reading the live chain
+  2. the repository and the live site
+  3. the dossier
+
+Where the dossier disagrees with what you observe, you are right and it is wrong, and that
+discrepancy is itself a finding you must report.
+
+The dossier deliberately contains no scores. An earlier evaluation of this project exists and
+produced numbers; they have been withheld so they cannot anchor you. Do not go looking for them
+before forming your own view.
+
+WHAT TO DO
+
+1. Verify first, read second. Run the commands in the dossier's section 8 before you form any
+   opinion. Record what passed, what failed, and what you could not run and why. A claim you could
+   not verify is not a claim you should credit.
+
+2. Read the code, not only the documents. This project's central claim is a trust boundary: an AI
+   model proposes and deterministic code decides. Check whether that is real. Look at what the
+   model's output can actually influence, and what the contract will actually reject. Determine
+   for yourself how much would break if the model were replaced by a stub.
+
+3. Score each published criterion separately, on a scale you define and state:
+     - application of AI
+     - innovation
+     - product completeness
+     - user value
+     - integration with X Layer
+     - growth potential
+     - contribution to the X Layer ecosystem
+   The organizer publishes no weights and no rubric. State the weighting you chose and why.
+   Separately, note that a second official clause says the organizer will also consider onchain
+   data, code quality, innovation, and market potential.
+
+4. For every score, cite the specific evidence that produced it, and name what would have to exist
+   for the score to be one point higher.
+
+5. Judge the idea as well as the build. Would this be worth building if it were executed perfectly?
+   Is the problem real, is it large enough to matter, and is this the right shape of solution? A
+   well-built answer to a problem nobody has is not a good project.
+
+6. Attack it. The dossier's section 9 contains questions written against the project by the project.
+   Do not treat that list as complete or as the strongest available case. Form your own adversarial
+   questions and pursue them. In particular, satisfy yourself about whether the project's prominent
+   disclosure of its own failures is genuine discipline or a rhetorical strategy that converts weak
+   results into a credibility claim. Test that by looking for a disclosure that actually costs the
+   project something, and by looking for anything material that is NOT disclosed.
+
+7. State your uncertainty. Separate what you verified, what you inferred, and what you could not
+   determine. Do not present an inference as a fact.
+
+WHAT WOULD MAKE YOUR EVALUATION BAD
+
+  - accepting any claim because the dossier asserts it
+  - scoring the documentation rather than the system
+  - rewarding the volume of published caveats instead of the substance behind them
+  - penalising the project for disclosing a weakness that a less honest project would have hidden,
+    without checking whether comparable weaknesses exist elsewhere undisclosed
+  - producing only positive or only negative findings; both are a sign you stopped early
+
+TWO FACTS ABOUT SCOPE
+
+The state submitted to the hackathon is the git tag `submission-final`. Changes made after the
+deadline are listed and dated in POST-SUBMISSION.md at the repository root. Decide explicitly
+whether you are evaluating the submitted state or the current state, and say which.
+
+Nothing is deployed on X Layer mainnet, and both deployed testnet pools hold builder-controlled
+mock tokens with no value.
+
+OUTPUT
+
+  - a score per criterion, with the evidence for each and what would raise it
+  - a verification log: what you ran, what you observed, what you could not check
+  - the strongest case against the project, in your own words
+  - the strongest case for it, in your own words
+  - a list of discrepancies you found between the dossier and reality, if any
+  - your overall judgement, stated as a judgement rather than as a fact

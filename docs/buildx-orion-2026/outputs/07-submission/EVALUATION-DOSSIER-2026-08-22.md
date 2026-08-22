@@ -50,6 +50,36 @@ handed to an earlier evaluator, not as a current description.
 
 ---
 
+## 1b. The criteria this project is judged on, verbatim from the organizer
+
+Quoted from `https://web3.okx.com/xlayer/build-x-series`, re-fetched from the raw page on
+2026-08-21. Reproduced because an evaluation needs the criteria; no scores against them appear
+anywhere in this document.
+
+**Terms clause 4, "Judging":**
+
+> "Projects will be evaluated based on their application of AI, innovation, product completeness,
+> user value, integration with X Layer, growth potential, and contribution to the X Layer
+> ecosystem. The Organizer's decisions regarding eligibility, judging results, and winners are
+> final."
+
+**A separate Disclaimer clause 4, "Final Determination", on the same page:**
+
+> "The Organizer will consider onchain data, code quality, innovation, and market potential. Final
+> rankings will be determined at the Organizer's sole discretion."
+
+Both clauses are official and both are numbered 4; they sit in different blocks of the page. An
+earlier internal note in this repository claimed the three phrases in the second clause were not
+official criteria. That note was wrong and has been corrected in place.
+
+**The AI-RWA Liquidity Grant, judged separately:**
+
+> "The Organizer will evaluate projects based on their overall performance during the Hackathon,
+> including product quality, innovation, user value, and contribution to the ecosystem."
+
+**No weights are published for any of these**, and no rubric, scale, or judging date is published.
+Any weighting you apply is your own choice and should be stated as such.
+
 ## 2. The problem the project says it addresses
 
 Tokenized US equities trade on-chain continuously. The information that determines their value does
