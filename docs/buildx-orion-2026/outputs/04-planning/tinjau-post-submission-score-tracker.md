@@ -214,8 +214,16 @@ Run these before and after any change. All passed on 2026-08-22.
 # are correct and each prints a named notice explaining itself)
 cd apps/server && npm install && npm test
 
-# web: expect 32 pass, 0 fail
+# web contract tests: expect 32 pass, 0 fail
 cd apps/web && npm install && npm run test:contract
+
+# web end-to-end, in a real browser: expect 54 passed, 1 skipped, exit 0. Takes ~14 minutes
+# because Playwright builds the app first, which is why it was missing from the previous
+# tracker's baseline and why 55 browser assertions, several of them claim-discipline checks,
+# sat outside every verification loop of the 2026-08-21 sprint. Run it before believing any
+# change to apps/web is safe. If you revert source files to compare against a baseline, delete
+# .next first: a stale build against reverted sources produces convincing phantom failures.
+cd apps/web && npm run test:e2e
 
 # contracts: expect 145 pass, 0 fail, no setup step, no forge install
 cd contracts && forge test
