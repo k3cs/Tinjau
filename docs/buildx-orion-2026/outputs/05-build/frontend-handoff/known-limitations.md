@@ -331,8 +331,11 @@ What it therefore does **not** establish, each of which is load-bearing:
 result licenses no new sentence about LP outcomes.
 
 **Three testnet executions, two of them void, all three published.** Run 1 printed
-`OUTCOME BAND: CONFIRMS` with `D = 49,804 bps`, a 498% figure produced by a broken withdrawal
-readback in which three of four arms returned zero. Its run W "passed" at exactly zero for the
+`OUTCOME BAND: CONFIRMS` with `D = 49,804 bps`. Two framings of that same number appear across
+these documents and both are correct: it is **498% of notional**, and it is **255 times** the
+largest gap this fee differential can arithmetically produce. The second framing is the one that
+makes it obviously impossible. It was produced by a broken withdrawal readback in which three of
+four arms returned zero. Its run W "passed" at exactly zero for the
 wrong reason: nothing had been withdrawn on either side. It was caught, voided, and is published
 in full rather than deleted, because a result of that shape published unchecked would have been
 indefensible. Root cause was not the position tuple or the settlement flags but the RPC read lag
