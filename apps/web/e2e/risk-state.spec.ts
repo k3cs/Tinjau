@@ -14,8 +14,8 @@ test("Scene B separates current WATCH truth from an explicit lifecycle replay", 
   await choose(page, /Hold for market gate/);
   await expectAndDismissDialog(page, "WATCH retained");
   await choose(page, /Run market gate/);
-  await expectAndDismissDialog(page, "Confirmation unavailable");
-  await expect(page.getByText("Final confirmation unavailable", { exact: true })).toBeVisible();
+  await expectAndDismissDialog(page, "Market did not confirm");
+  await expect(page.getByText("Market gate refused to confirm", { exact: true })).toBeVisible();
 
   await choose(page, /Prepare current record/);
   await choose(page, /Apply final fee now/);

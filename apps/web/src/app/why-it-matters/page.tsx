@@ -26,6 +26,12 @@ export const metadata: Metadata = {
  * cannot be read without meeting the sentence that says these pools had no hook
  * attached, because that sentence is the difference between describing a problem
  * and claiming to have solved it.
+ *
+ * The paired-pool section added below is the opposite kind of evidence: pools we
+ * deployed, tokens we can mint, a trigger we wrote by hand. It sits after the
+ * guard rather than beside the exposure numbers, so a reader reaches it having
+ * already been told that nothing above it involved a Tinjau hook, and it
+ * restates its own conditions instead of inheriting the page's.
  */
 export default function WhyItMattersPage() {
   const { headline, scope, concentration, byForm } = EXPOSURE;
@@ -191,7 +197,126 @@ export default function WhyItMattersPage() {
         </div>
       </section>
 
+      {/*
+        S3.2, published here because its own pre-registration required the
+        result to land on this surface at the weight a positive one would have
+        received, whichever way it landed. It landed positive, which is the case
+        where that rule is easiest to obey and least meaningful, so the ratio is
+        given a tile of its own next to the number rather than a footnote.
+      */}
       <section className="section-rule">
+        <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 lg:px-8">
+          <div className="max-w-2xl">
+            <p className="data-label text-protect-soft">
+              Our pool, our trigger, testnet, mock tokens
+            </p>
+            <h2 className="mt-4 font-display text-heading-lg text-ink">
+              When the fee does move, it does what the arithmetic says it must.
+            </h2>
+            <p className="mt-4 max-w-[56ch] text-body-md text-ink-muted">
+              Registered in advance, then run once. Two X Layer Testnet pools we deployed
+              ourselves, holding mock tokens we can mint at will, replayed the same 120 recorded
+              swaps. One had the hook attached and was holding a PROTECT we constructed by hand.
+              The other had no hook. None of the {scope.pools} real pools above is involved in
+              this, and the two measurements cannot be added together.
+            </p>
+            <p className="mt-4 max-w-[56ch] text-body-md text-ink-muted">
+              The pre-registered outcome band came out <span className="font-data">CONFIRMS</span>,
+              meaning the gap cleared half the fee difference and the control read zero. It is
+              stated here first because the pre-registration required the band stated first
+              whichever way it landed, and it is worth very little on its own. The tile beside it
+              is the part that decides how much.
+            </p>
+          </div>
+
+          <div className="mt-8 grid gap-px border border-edge bg-edge lg:grid-cols-3">
+            <div className="bg-canvas p-6">
+              <p className="data-label text-ink-faint">The measured gap</p>
+              <p className="mt-3 font-data text-heading-md tabular text-ink">195.38 bps</p>
+              <p className="mt-2 text-body-sm text-ink-muted">
+                More of the flow&rsquo;s notional retained in the protected pool, under the
+                pre-registered primary mark. All three marks are published together (195.38,
+                158.22, 194.62 bps) and the sign held under each. The paired control run, both
+                pools charging the same fee, differed by exactly zero in base units.
+              </p>
+            </div>
+            <div className="bg-canvas p-6">
+              <p className="data-label text-watch-soft">Read this before that number</p>
+              <p className="mt-3 font-data text-heading-md tabular text-watch-soft">100.195%</p>
+              <p className="mt-2 text-body-sm text-ink-muted">
+                The same gap, as a share of what the fee difference alone must produce. Under a
+                fixed list of trades a higher fee necessarily leaves the position holding more.
+                This is a conformance test of the fee mechanism, written down as the expected
+                outcome before the run, not a discovery.
+              </p>
+            </div>
+            <div className="bg-canvas p-6">
+              <p className="data-label text-protect-soft">What it does not establish</p>
+              <p className="mt-3 font-display text-heading-sm text-ink">
+                Whether it acts at the right time
+              </p>
+              <p className="mt-2 text-body-sm text-ink-muted">
+                The PROTECT in that run was constructed, not earned. On the canonical replay the
+                same event resolves to WATCH, and the frozen scenario set is close to a census of
+                what this pool can measure, so there is no wider population of events in which to
+                look for one that would promote.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-10 grid gap-10 lg:grid-cols-2">
+            <div>
+              <h3 className="font-display text-heading-sm text-ink">
+                Conditions the number does not survive without
+              </h3>
+              <ul className="mt-6 space-y-4">
+                {[
+                  "Both pools are builder-controlled and hold freely-mintable mock tokens with no value. Neither is a market: no external liquidity, no external participant, no price discovery.",
+                  "Zero flow elasticity is assumed. The identical trade list was replayed under a 40x fee difference, and in a real market a 2% fee deters much of the flow a 0.05% fee attracts. The net direction of that bias is unmeasured.",
+                  "195.38 bps is an upper bound on a full protection episode, not a typical figure. Only 364 s of the 3,600 s plateau was exercised, so the decay curve, which is most of a real episode, contributed nothing.",
+                  "One event, one hour, 120 swaps, one asset, one pool. It ran on a different pool and a different chain from the three-policy benchmark, so the two may not be combined into one figure.",
+                ].map((condition) => (
+                  <li key={condition} className="flex gap-3 text-body-sm text-ink-muted">
+                    <span aria-hidden className="mt-2.5 h-px w-4 shrink-0 bg-watch" />
+                    {condition}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-display text-heading-sm text-ink">
+                Three runs. Two were void, and both are published.
+              </h3>
+              <p className="mt-4 max-w-[52ch] text-body-sm text-ink-muted">
+                The first run printed the same passing band at 49,804 bps, which is 255 times the
+                largest gap this fee can produce. Three of its four withdrawals had never read
+                back. The cause was the one already on our limitations list (this chain&rsquo;s RPC
+                answering from a node that had not yet seen the burn) rather than a fault in the
+                logic. It was caught, voided, and kept in full rather than deleted. The second run
+                turned the same staleness into a loud refusal and stopped without reporting a
+                number. The run that produced the figure above pins every reading to a block, and
+                records that the naive read still returned zero while it did so.
+              </p>
+
+              <div className="mt-8 rounded-xl border-2 border-watch bg-watch/[0.07] p-5">
+                <p className="data-label text-watch-soft">Read this before quoting the number</p>
+                <p className="mt-3 text-body-sm text-ink-secondary">
+                  The gap is the fee arithmetic arriving where it was predicted to arrive, on a
+                  pool we control, under a trigger we wrote. It is{" "}
+                  <span className="font-medium text-ink">not</span> a measurement of harm
+                  prevented, and it opens no new sentence about LP outcomes:{" "}
+                  <span className="font-data">canClaimLossAvoided</span> stays{" "}
+                  <span className="font-medium text-ink">false</span> and every claim ruled out
+                  above stays ruled out.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-rule bg-canvas-sunken">
         <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <p className="data-label text-signal">Who this is for</p>

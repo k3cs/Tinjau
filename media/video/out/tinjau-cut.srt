@@ -1,0 +1,159 @@
+1
+00:00:00,000 --> 00:00:05,333
+Someone put money into a pool holding tokenised Nvidia shares.
+
+2
+00:00:05,333 --> 00:00:11,200
+Where they live it's the middle of the night. They're asleep.
+
+3
+00:00:11,200 --> 00:00:12,800
+The pool isn't.
+
+4
+00:00:12,800 --> 00:00:20,500
+Then a report: Nvidia in talks for a two hundred and fifty billion dollar deal.
+
+5
+00:00:20,500 --> 00:00:24,633
+CNBC has it. So do three more outlets.
+
+6
+00:00:24,633 --> 00:00:27,200
+Five reports in one evening.
+
+7
+00:00:27,200 --> 00:00:32,133
+A pool can get this wrong twice over.
+
+8
+00:00:32,133 --> 00:00:35,200
+Ignore it, or believe it.
+
+9
+00:00:35,200 --> 00:00:37,933
+Tinjau reads the reports themselves.
+
+10
+00:00:37,933 --> 00:00:42,333
+Two name the Journal in their own words.
+
+11
+00:00:42,333 --> 00:00:49,467
+One names no source at all. One we wrote ourselves, as a test.
+
+12
+00:00:49,467 --> 00:00:54,400
+Five claims, one usable source. Pay attention. Change nothing.
+
+13
+00:00:54,400 --> 00:00:57,700
+That call was never the model's to make.
+
+14
+00:00:57,700 --> 00:01:03,033
+It reads the filing three times and reports where the three readings disagree.
+
+15
+00:01:03,033 --> 00:01:08,800
+It can't set a fee and it can't authorise anything. The contract does that.
+
+16
+00:01:08,800 --> 00:01:12,900
+Three weeks later the company files the real thing.
+
+17
+00:01:12,900 --> 00:01:17,033
+The real number is a hundred and five billion.
+
+18
+00:01:17,033 --> 00:01:21,600
+The report going round was more than twice too big.
+
+19
+00:01:21,600 --> 00:01:27,867
+Now the pool may protect itself — but only when the market agrees too,
+
+20
+00:01:27,867 --> 00:01:32,300
+and that gate refuses far more often than it fires.
+
+21
+00:01:32,300 --> 00:01:38,133
+The fee goes up, capped at two percent, then winds itself back down.
+
+22
+00:01:38,133 --> 00:01:40,800
+Nobody has to switch it off.
+
+23
+00:01:40,800 --> 00:01:42,867
+Here's what surprised us.
+
+24
+00:01:42,867 --> 00:01:49,567
+Days earlier, routine paperwork moved the price more than that hundred-billion announcement did.
+
+25
+00:01:49,567 --> 00:01:56,800
+A system watching only price raised its fee on the boring one. Tinjau didn't.
+
+26
+00:01:56,800 --> 00:01:58,933
+Does it save money?
+
+27
+00:01:58,933 --> 00:02:04,267
+We wrote down what counts as success before running anything.
+
+28
+00:02:04,267 --> 00:02:06,400
+The first test failed.
+
+29
+00:02:06,400 --> 00:02:15,467
+The second ran two identical pools through the same trades — one protected, one not. It confirmed.
+
+30
+00:02:15,467 --> 00:02:20,800
+It still doesn't let us say Tinjau reduces LP loss.
+
+31
+00:02:20,800 --> 00:02:25,767
+That record is where this stops being ours.
+
+32
+00:02:25,767 --> 00:02:32,567
+Here's a different contract reading it and deciding for itself —
+
+33
+00:02:32,567 --> 00:02:40,000
+no permission, no API key, nothing of ours anywhere in the path.
+
+34
+00:02:40,000 --> 00:02:45,500
+Building on this network, we found a fault in it:
+
+35
+00:02:45,500 --> 00:02:52,067
+a read can come back seconds behind a write that already happened.
+
+36
+00:02:52,067 --> 00:02:57,000
+We measured it, wrote down how to reproduce it,
+
+37
+00:02:57,000 --> 00:02:59,200
+and handed it back.
+
+38
+00:02:59,200 --> 00:03:04,000
+Our pool is ours, the tokens are test tokens,
+
+39
+00:03:04,000 --> 00:03:07,200
+and nobody outside uses this yet.
+
+40
+00:03:07,200 --> 00:03:10,400
+Every limit is on the site.

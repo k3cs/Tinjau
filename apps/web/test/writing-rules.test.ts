@@ -404,19 +404,38 @@ test("the assumed bonded-evidence input is disclosed wherever the bit is shown",
  * its `known` field is where it states what the stage has established. Saying
  * the bonded condition passes, full stop, is the overclaim in its most
  * readable form.
+ *
+ * S2.1 changed which sentence is the overclaim. Until then the bit was assumed
+ * and the demo had to say so; the bit is now computed for this scenario from a
+ * live three-way parse, so "assumed" would be the false statement. What
+ * replaces it is the qualification that survived the run: computed and assumed
+ * resolved to the same WATCH with the same reason codes, so the computation
+ * demonstrated that the assumption held here and nothing more. A demo that
+ * announces the bit is computed while dropping that line reads as though the
+ * live parse earned the verdict, which is the same overclaim wearing the
+ * opposite word.
  */
-test("the demo mission does not present the bonded condition as established", async () => {
+test("the demo mission states the bonded bit is computed and that it changed no verdict", async () => {
   const mission = readFileSync(
     join(WEB_ROOT, "src/lib/demo/missions/confirmed.ts"),
     "utf8",
   );
   assert.ok(
     !/known: "Official and bonded evidence conditions pass\."/.test(mission),
-    "the confirmed mission must not state the bonded condition passes without saying it was assumed",
+    "the confirmed mission must not state the bonded condition passes without qualification",
   );
   assert.match(
     mission,
-    /bonded[- ]evidence condition is assumed|bonded-evidence leg assumed/i,
-    "the confirmed mission must say the bonded-evidence value was assumed rather than computed",
+    /bonded[- ]evidence condition is computed|bonded-evidence leg computed/i,
+    "the confirmed mission must say the bonded-evidence value is computed for this scenario",
+  );
+  assert.ok(
+    !/bonded[- ]evidence condition is assumed|bonded-evidence leg assumed/i.test(mission),
+    "the bit is computed for this scenario now; saying it was assumed is the stale claim",
+  );
+  assert.match(
+    mission,
+    /changed no verdict|resolve WATCH/i,
+    "the confirmed mission must record that the computed run reached the same WATCH as the assumption",
   );
 });

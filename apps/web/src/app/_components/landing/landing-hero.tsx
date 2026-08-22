@@ -23,7 +23,7 @@ export function LandingHero() {
         </div>
 
         <h1 className="mt-8 max-w-[18ch] text-balance font-display text-hero-sm text-ink sm:text-hero-md xl:text-hero-lg">
-          Someone always reads the news first.
+          The pool cannot read the news. The people in it pay.
         </h1>
 
         <p className="mt-7 max-w-[50ch] text-body-md text-ink-secondary">

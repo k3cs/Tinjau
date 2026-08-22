@@ -123,8 +123,10 @@ export const PRODUCT_CAPABILITIES: ProductCapability[] = [
     // PoolManager's own Swap event rather than from a view function.
     maturity: "IMPLEMENTED",
     dataMode: "OBSERVED",
-    evidence: "TinjauFeeHook on X Layer Testnet; fees read from PoolManager Swap events",
-    limitation: "The pool is builder-controlled test liquidity with mock tokens, so it demonstrates enforcement and is not a market.",
+    evidence:
+      "TinjauFeeHook on X Layer Testnet; fees read from PoolManager Swap events; a pre-registered paired-pool run on 2026-08-21 in which two otherwise identical builder-controlled testnet pools replayed the same 120 recorded swaps, one enforcing a constructed PROTECT and one with no hook, and the protected pool's position retained 195.38 bps more of the flow's notional under the pre-registered primary mark (158.22 and 194.62 bps under the other two marks, all three published, sign held under each) against a realised fee differential of 195 bps, with the paired control run differing by exactly zero in base units",
+    limitation:
+      "The pool is builder-controlled test liquidity with mock tokens, so it demonstrates enforcement and is not a market. Read the paired-pool ratio before its number: the gap is 100.195% of the fee differential's own arithmetic ceiling, because under a fixed trade list a higher fee necessarily leaves the position holding more. That makes it a conformance test of the fee mechanism, predicted in advance, rather than a discovery. Its PROTECT was constructed rather than earned, so it establishes nothing about whether Tinjau acts at the right times; it assumes zero flow elasticity under a 40x fee difference; and only 364 s of the 3,600 s plateau was exercised, so 195.38 bps is an upper bound on a full episode. Three testnet executions, two of them void, all three published. It opens no claim about LP outcomes and cannot share a figure with the three-policy benchmark.",
     href: "/demo",
   },
   {
