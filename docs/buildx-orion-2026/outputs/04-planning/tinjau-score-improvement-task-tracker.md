@@ -2,7 +2,7 @@
 
 Stage 4+ planning artifact for workspace `buildx-orion-2026`.
 
-- Status: **ready — Dien handing this tracker to an executing agent constitutes approval of the
+- Status: **CLOSED 2026-08-22. Every task is `[x]`, `[!]` blocked, or time-expired; successor tracker: `tinjau-post-submission-score-tracker.md`. Historical evidence, not a source of open work.** Originally: **ready — Dien handing this tracker to an executing agent constitutes approval of the
   P0 sprint (S1.1–S1.3) and the S0 bookkeeping; every other task additionally needs the
   named per-task confirmations, and every §0.8 boundary crossing needs Dien at the moment of
   the action**
@@ -316,7 +316,7 @@ gate wins.
   only the first had been read. Corrected in the same commit, as a dated correction that quotes
   the original error rather than erasing it.
 
-- [ ] **S0.2 — At the deadline, tag the submitted state; afterwards, keep a post-submission changelog**
+- [x] **S0.2 — At the deadline, tag the submitted state; afterwards, keep a post-submission changelog**
   Depends on: the deadline instant (2026-08-21 23:59 UTC); do not tag earlier.
   Owner: agent.
   Work: when the deadline passes, tag the last pre-deadline commit on `main` as
@@ -325,7 +325,26 @@ gate wins.
   integrity rules in one paragraph. Link it from the README's top.
   Acceptance: the tag exists on the last commit whose push preceded 23:59 UTC; every later
   commit touching judge-facing surfaces appends a dated line to `POST-SUBMISSION.md`.
-  Evidence: —
+  Evidence: **done 2026-08-22 04:0x UTC, commit `0e4da44`. The tag was applied about four
+  hours LATE and that is recorded rather than hidden.**
+  Tag **`submission-final`** points at commit **`58ab29dd`**, dated **2026-08-21 19:28:21 UTC**, the
+  last commit whose commit and push both preceded the 23:59 UTC deadline. Verified by listing every
+  commit with its committer timestamp in UTC against the deadline instant: **exactly one commit
+  landed after it** (`252d42cb`, the outreach kit, 2026-08-22 03:54 UTC). Everything else made the
+  submission.
+  The tag was supposed to be applied at the deadline instant and was not: agents were still running
+  and the clock was missed. **Nothing was backdated to compensate** — no commit amended, no date
+  altered, no dated document edited to look earlier. A tag applied late still points at the right
+  commit, and the commit's own timestamp is the evidence. The tag's annotation states the delay
+  explicitly.
+  `POST-SUBMISSION.md` created at the repository root, linked from the README's top block, carrying
+  the tag and commit, the rules it follows (nothing backdated, corrections written as corrections
+  quoting what they replace), the reason work continued past the deadline (two published
+  requirements extend past submission, and the Liquidity Grant is judged on overall performance),
+  and the honest statement that **whether judges consider post-deadline changes at all is not
+  determinable from published material** — which is precisely why the file exists: if judges read
+  the frozen state the tag defines it exactly, and if they read the live repository the file says
+  which parts arrived late.
 
 ### Phase S1 — Fix the three audit defects (P0; the pre-deadline sprint of §0.3)
 
@@ -654,7 +673,7 @@ submission itself.
   benchmark. Two runs: control **W** (canonical B unchanged, both arms must charge 500, difference
   must be exactly 0 in base units) is the falsifiable one and is on canonical data.
 
-- [ ] **S3.2 — Run the paired-pool experiment and publish whatever it shows**
+- [x] **S3.2 — Run the paired-pool experiment and publish whatever it shows**
   Depends on: S3.1; requires testnet gas (Dien confirms).
   Work: execute per the pre-registration; publish per-swap raw data, both pools' end states, and
   the comparison under the frozen metrics; update the site's user-value answer only in the
@@ -662,7 +681,34 @@ submission itself.
   Acceptance: results are reproducible from published raw data; the claim gate output states
   exactly which sentence (if any) the result newly licenses; a null or adverse result is
   published with the same prominence a positive one would have received.
-  Evidence: —
+  Evidence: **done, commit `58ab29dd` (pre-deadline, 2026-08-21 19:28:21 UTC), with the
+  write-up refinement and site surfaces landing post-deadline and logged in `POST-SUBMISSION.md`.**
+  Band **`CONFIRMS`**, `D = 195.3812 bps` primary mark; all three marks published (195.38 / 158.22 /
+  194.62 bps), sign held under each. Control **run W returned bit-identical withdrawals and exactly
+  zero** in base units, which was the pre-registered hard prediction and the falsifiable half of the
+  design. **Read the ratio before the band: D is 100.195% of the fee differential's own arithmetic
+  ceiling**, so this is a conformance test the pre-registration predicted in advance, not a
+  discovery. An Anvil rehearsal on a separate chain reproduces the retained values to 17 significant
+  figures. It establishes nothing about whether Tinjau acts at the right times (the trigger is
+  CONSTRUCTED, canonical B does not promote, and S3.3 showed there is no wider event population),
+  assumes zero flow elasticity under a 40x fee difference, and exercised only 364 s of the 3,600 s
+  plateau so the figure is an upper bound. `canClaimLossAvoided` stays `false`.
+  **Three testnet executions, two void, all three published.** Run 1 printed `CONFIRMS` at
+  **49,804 bps**, a 498% figure produced by a broken withdrawal readback in which three of four arms
+  returned zero, and whose control "passed" at zero for the wrong reason: nothing had been withdrawn
+  at all. It is published in full rather than deleted. Root cause was **not** a logic error in the
+  harness but the RPC read lag of §0.6(g)/known-limitations §1: the "after" balance was served by a
+  node that had not seen the burn. The orchestrator's initial diagnosis named the wrong mechanism
+  (position tuple, `msg.sender`, currency ordering) and was corrected by the run's own raw balances.
+  Attempt 2 turned the same staleness into a loud `block is out of range` and aborted rather than
+  reporting a number; the successful run pins readings to block numbers and records that naive
+  `"latest"` reads still returned `0/0` during it, so the fix is visible rather than asserted.
+  **Validity gate 8 was added mid-experiment** (a burn must read back as a burn) and recorded as a
+  deviation rather than written into the frozen pre-registration; it is one-directional and can only
+  ever void a run, never turn a null into a positive. Nine deviations total; `s3-1` was not edited.
+  Publication surface per the pre-registration's §7: raw data, write-up with the band stated first,
+  `known-limitations.md` §17b, and the site (`why-it-matters` plus the `fee-hook` capability), where
+  the 100.195% ratio is given its own tile beside the number rather than a footnote.
 
 - [x] **S3.3 — Widen the canonical scenario set hunting for a real PROTECT, pre-registered**
   Depends on: S0.1
@@ -907,7 +953,7 @@ submission itself.
   the log-following snippet chunks unconditionally, and a pinned call to a missing block returns
   `-32019 "block is out of range"`, which the retry snippet now matches.
 
-- [ ] **S6.3 — Demand-evidence outreach kit** (P2)
+- [x] **S6.3 — Demand-evidence outreach kit** (P2)
   Depends on: S6.1, S3.2
   Owner: agent prepares materials only; all contact is Dien's (§0.8).
   Work: the growth score moves on "a single external LP, pool operator, or protocol expressing
@@ -918,7 +964,26 @@ submission itself.
   Acceptance: materials exist per audience, pass the web claim-gate test's standards, and Dien
   has what they need to start conversations; any expression of interest that results is recorded
   as evidence with the counterpart's consent.
-  Evidence: —
+  Evidence: **done, commit `252d42cb`, POST-DEADLINE (2026-08-22 03:54 UTC), logged in
+  `POST-SUBMISSION.md`.** Materials only at `../05-build/s6-3-outreach-kit.md`; **no approach was
+  made to anyone**, and all contact remains Dien's under §0.8.
+  The substantive finding is a refusal: **"attach Tinjau to your pool" cannot honestly be offered to
+  anyone.** X Layer's real tokenized-equity pools are Uniswap v3, `TinjauFeeHook` is v4, and a v4
+  hook is part of the `PoolKey` and fixed at initialize, so no existing liquidity can ever carry it.
+  What survives is narrower and true: the registry is a read-only, Uniswap-version-agnostic signal
+  source a v3 operator or market maker can read off-chain to drive their own controls; and
+  separately, if someone is launching a new v4 pool anyway, the hook is a candidate at
+  initialization. Each audience's not-established block sits inline with the offer rather than as a
+  footnote, and the protocol pitch leads with the hardest sentence available: the signal has never
+  been shown to fire correctly on real data, and what has been measured is the refusal, not the
+  firing. All three pitches were gated behind an explicit `PAIRED-POOL: PENDING` marker so none
+  could be sent before that result existed, and the kit refuses to characterise the voided run at
+  all. Two phrasings were tightened on review: "a genuinely available integration today" now says
+  the code path works and spells out that the registry is testnet-only with no mainnet behind it,
+  and "restraint is measured, firing is not" was replaced because it was a compression of README §5
+  rather than a claim-gated form of words. Self-check grep over `reduce`, `prevent`, `avoid`,
+  `first`, `only`, `unique`, `proven`, `protects`, `saves` returned no prohibited usage; every hit
+  was either restrictive scoping, an identifier, or a quotation inside the do-not-say list.
 
 ### Phase S7 — X Layer integration: beyond testnet (P2; target 8→9, human-gated)
 
